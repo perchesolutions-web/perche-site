@@ -108,7 +108,6 @@ tr:last-child td{border-bottom:none;}
   .dash-body{padding:2rem 1rem 3rem;}
 }
 </style>
-<script src="https://unpkg.com/gotrue-js@0.9.29/dist/gotrue.js"></script>
 </head>
 <body>
 
@@ -273,7 +272,7 @@ function populate(email){
   document.getElementById('reportOpt').innerHTML='<strong>This month we optimized:</strong> '+d.opt+'<br><br><strong>Next month:</strong> '+d.next;
 }
 
-// LOGIN using gotrue-js
+// LOGIN - direct GoTrue API with correct urlencoded format
 document.getElementById('loginBtn').addEventListener('click', function(){
   var email=document.getElementById('loginEmail').value.trim();
   var pass=document.getElementById('loginPassword').value;
@@ -281,14 +280,40 @@ document.getElementById('loginBtn').addEventListener('click', function(){
   var btn=document.getElementById('loginBtn');
   if(!email||!pass){err.style.display='block';err.textContent='Please enter your email and password.';return;}
   btn.disabled=true; btn.textContent='Signing in...'; err.style.display='none';
-  var auth=new GoTrue({APIUrl:GOTRUE,audience:'',setCookie:false});
-  auth.login(email,pass).then(function(user){
-    localStorage.setItem('perche_session',JSON.stringify({email:user.email,exp:Date.now()+3600000}));
-    populate(user.email); show('dashScreen');
-  }).catch(function(e){
+
+  // GoTrue token endpoint requires JSON with grant_type
+  fetch(GOTRUE+'/token?grant_type=password',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'Accept':'application/json'
+    },
+    body:JSON.stringify({email:email,password:pass})
+  })
+  .then(function(r){
+    return r.json().then(function(d){ return {ok:r.ok, status:r.status, data:d}; });
+  })
+  .then(function(result){
+    console.log('GoTrue response:',result.status, JSON.stringify(result.data));
+    if(!result.ok || !result.data.access_token){
+      throw new Error(result.data.error_description || result.data.msg || 'Login failed');
+    }
+    return result.data;
+  })
+  .then(function(data){
+    localStorage.setItem('perche_session',JSON.stringify({
+      email:data.email||email,
+      exp:Date.now()+((data.expires_in||3600)*1000)
+    }));
+    populate(data.email||email);
+    show('dashScreen');
+  })
+  .catch(function(e){
     console.error('Login error:',e);
-    err.style.display='block'; err.textContent='Incorrect email or password. Please try again.';
-    btn.disabled=false; btn.textContent='Sign In →';
+    err.style.display='block';
+    err.textContent='Login failed. Please check your email and password and try again. If the problem continues, use Forgot Password.';
+    btn.disabled=false;
+    btn.textContent='Sign In →';
   });
 });
 
@@ -307,8 +332,11 @@ document.getElementById('backToLogin').addEventListener('click',function(){ show
 document.getElementById('resetBtn').addEventListener('click',function(){
   var email=document.getElementById('resetEmail').value.trim();
   if(!email) return;
-  var auth=new GoTrue({APIUrl:GOTRUE,audience:'',setCookie:false});
-  auth.requestPasswordRecovery(email)
+  fetch(GOTRUE+'/recover',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({email:email})
+  })
   .then(function(){ alert('Reset link sent to '+email+'. Check your inbox.'); show('loginScreen'); })
   .catch(function(){ alert('Something went wrong. Email perchesolutions@gmail.com for help.'); });
 });
