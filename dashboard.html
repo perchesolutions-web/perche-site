@@ -410,23 +410,8 @@ body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── NETLIFY IDENTITY SETUP ─────────────────────────────────────
-var netlifyIdentity = window.netlifyIdentity;
-
-// Client data map — add each client here when they onboard
-// Key = their email address, Value = their business info
+// ── CLIENT DATA ────────────────────────────────────────────────
 var CLIENT_DATA = {
-  // EXAMPLE — replace with real clients when they onboard:
-  // 'marcus@riversidhvac.com': {
-  //   bizName: 'Riverside HVAC & Plumbing',
-  //   plan: 'Growth',
-  //   calls: 247, jobs: 61, emergency: 14, revenue: '$21,350',
-  //   hours: '42 hrs', afterHours: 23, invoices: '61/61',
-  //   weeks: [54, 71, 62, 60],
-  //   weekPcts: ['55%','72%','63%','88%'],
-  //   optimization: 'Updated emergency escalation script to detect no heat and flooding keywords.',
-  //   nextMonth: 'Adding seasonal tune-up reminders for maintenance agreement customers.'
-  // },
   'demo@perchesolutions.com': {
     bizName: 'Demo Client — Riverside HVAC',
     plan: 'Growth',
@@ -438,6 +423,9 @@ var CLIENT_DATA = {
     nextMonth: 'Adding seasonal tune-up reminder sequences for maintenance agreement customers.'
   }
 };
+
+// ── GOTRUE API — direct login, no widget needed ─────────────────
+var GOTRUE_URL = 'https://perchesolutions.com/.netlify/identity';
 
 function getMonth() {
   var d = new Date();
@@ -474,7 +462,6 @@ function showReset() {
 function populateDashboard(user) {
   var email = user.email;
   var data = CLIENT_DATA[email] || CLIENT_DATA['demo@perchesolutions.com'];
-
   document.getElementById('navClientName').textContent = data.bizName;
   document.getElementById('bizName').textContent = data.bizName;
   document.getElementById('dashPeriod').textContent = getMonth() + ' · ' + data.plan + ' Plan';
@@ -486,16 +473,10 @@ function populateDashboard(user) {
   document.getElementById('roiAfterHours').textContent = data.afterHours;
   document.getElementById('roiInvoices').textContent = data.invoices;
   document.getElementById('reportMonth').textContent = getMonth() + ' — Performance Report';
-
-  // Bar chart
   var bars = document.querySelectorAll('.bar');
   var vals = document.querySelectorAll('.bar-val');
-  var pcts = data.weekPcts;
-  var wks = data.weeks;
-  bars.forEach(function(b, i) { b.style.height = pcts[i]; });
-  vals.forEach(function(v, i) { v.textContent = wks[i]; });
-
-  // Report text
+  data.weekPcts.forEach(function(p, i) { if(bars[i]) bars[i].style.height = p; });
+  data.weeks.forEach(function(v, i) { if(vals[i]) vals[i].textContent = v; });
   document.getElementById('reportText').innerHTML =
     'Your AI system handled <strong>' + data.calls + ' inbound calls</strong> this month with a 100% answer rate. ' +
     'Of those, <strong>' + data.jobs + ' jobs were booked automatically</strong>. ' +
@@ -503,109 +484,116 @@ function populateDashboard(user) {
     '<strong>' + data.afterHours + ' jobs were booked after hours</strong> — calls that would have gone to voicemail. ' +
     'Total estimated revenue attributed to AI: <strong>' + data.revenue + '</strong>. ' +
     'Your dispatcher saved an estimated <strong>' + data.hours + '</strong> of manual routing this month.';
-
   document.getElementById('reportOptimization').innerHTML =
     '<strong>This month we optimized:</strong> ' + data.optimization + '<br><br>' +
-    '<strong>Next month we\'re working on:</strong> ' + data.nextMonth;
+    '<strong>Next month we're working on:</strong> ' + data.nextMonth;
 }
 
-// ── LOGIN HANDLER ──────────────────────────────────────────────
+// ── LOGIN with GoTrue API directly ──────────────────────────────
 function handleLogin() {
   var email = document.getElementById('loginEmail').value.trim();
   var password = document.getElementById('loginPassword').value;
   var btn = document.getElementById('loginBtn');
   var err = document.getElementById('loginError');
-
   if (!email || !password) {
     err.textContent = 'Please enter your email and password.';
     err.style.display = 'block';
     return;
   }
-
   btn.disabled = true;
   btn.textContent = 'Signing in...';
   err.style.display = 'none';
 
-  // Store reference to error UI for the error event handler
-  window._loginBtn = btn;
-  window._loginErr = err;
-
-  // netlifyIdentity.login fires the global 'login' event on success
-  // and 'error' event on failure - it does NOT return a promise
-  netlifyIdentity.login(email, password, true);
+  fetch(GOTRUE_URL + '/token?grant_type=password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, password: password })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (data.access_token) {
+      // Store session
+      localStorage.setItem('gotrue.user', JSON.stringify({
+        email: email,
+        token: data.access_token,
+        expires_at: Date.now() + (data.expires_in * 1000)
+      }));
+      showDashboard({ email: email });
+    } else {
+      throw new Error(data.error_description || 'Login failed');
+    }
+  })
+  .catch(function(e) {
+    err.textContent = 'Incorrect email or password. Please try again.';
+    err.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Sign In →';
+  });
 }
 
-// Allow Enter key
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
     handleLogin();
   }
 });
 
+// ── FORGOT PASSWORD ──────────────────────────────────────────────
 function handleForgotPassword() { showReset(); }
 
 function sendResetEmail() {
   var email = document.getElementById('resetEmail').value.trim();
   if (!email) return;
-  netlifyIdentity.requestPasswordRecovery(email)
-    .then(function() {
-      alert('Password reset email sent to ' + email + '. Check your inbox.');
-      showLogin();
-    })
-    .catch(function() {
-      alert('Email not found. Please contact perchesolutions@gmail.com for help.');
-    });
+  fetch(GOTRUE_URL + '/recover', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email })
+  })
+  .then(function() {
+    alert('Password reset email sent to ' + email + '. Check your inbox.');
+    showLogin();
+  })
+  .catch(function() {
+    alert('Something went wrong. Please email perchesolutions@gmail.com for help.');
+  });
 }
 
+// ── LOGOUT ───────────────────────────────────────────────────────
 function handleLogout() {
-  netlifyIdentity.logout()
-    .then(function() { showLogin(); });
+  localStorage.removeItem('gotrue.user');
+  showLogin();
 }
 
-// ── INIT ──────────────────────────────────────────────────
-var netlifyIdentity = window.netlifyIdentity;
-
-// Single login event handler - fires on successful login from any flow
-netlifyIdentity.on('login', function(user) {
-  netlifyIdentity.close();
-  showDashboard(user);
-});
-
-// Single logout handler
-netlifyIdentity.on('error', function(err) {
-  // Login failed - re-enable button and show error
-  if (window._loginBtn) {
-    window._loginBtn.disabled = false;
-    window._loginBtn.textContent = 'Sign In →';
-    window._loginBtn = null;
+// ── INIT — check for saved session ──────────────────────────────
+(function() {
+  // Check for invite/recovery token
+  var h = window.location.hash || '';
+  if (h.indexOf('invite_token') > -1 || h.indexOf('recovery_token') > -1) {
+    // Let the Netlify Identity widget handle this
+    showLoading();
+    var s = document.createElement('script');
+    s.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+    s.onload = function() {
+      window.netlifyIdentity.on('login', function(user) {
+        localStorage.setItem('gotrue.user', JSON.stringify({ email: user.email }));
+        showDashboard(user);
+      });
+      window.netlifyIdentity.init({ logo: false });
+    };
+    document.head.appendChild(s);
+    return;
   }
-  if (window._loginErr) {
-    window._loginErr.textContent = 'Incorrect email or password. Please try again.';
-    window._loginErr.style.display = 'block';
-    window._loginErr = null;
-  }
-});
 
-netlifyIdentity.on('logout', function() {
-  showLogin();
-});
-
-// Init - check if already logged in
-netlifyIdentity.on('init', function(user) {
-  if (user) {
-    showDashboard(user);
-  } else {
-    var h = window.location.hash || '';
-    var hasToken = h.indexOf('invite_token') > -1 || h.indexOf('recovery_token') > -1;
-    if (hasToken) {
-      showLoading();
-    } else {
-      showLogin();
+  // Check for saved session
+  try {
+    var saved = JSON.parse(localStorage.getItem('gotrue.user') || 'null');
+    if (saved && saved.email && saved.expires_at && Date.now() < saved.expires_at) {
+      showDashboard(saved);
+      return;
     }
-  }
-});
+  } catch(e) {}
 
-netlifyIdentity.init({ logo: false });
+  showLogin();
+})();
 </script>
 </body>
 </html>
