@@ -4,45 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Client Dashboard — Perché AI Solutions</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --black:#0A0A0A;--black-soft:#111;--white:#FFF;--white-dim:rgba(255,255,255,0.85);
-  --gray-light:#777;--gray-accent:#555;--border:rgba(255,255,255,0.08);
-  --border-hover:rgba(255,255,255,0.15);--green:#4ade80;--blue:#60a5fa;
-}
+:root{--black:#0A0A0A;--black-soft:#111;--white:#FFF;--white-dim:rgba(255,255,255,0.85);--gray-light:#777;--gray-accent:#555;--border:rgba(255,255,255,0.08);--border-hover:rgba(255,255,255,0.15);--green:#4ade80;--blue:#60a5fa;}
 html,body{height:100%;margin:0;padding:0;}
 body{background:#0A0A0A;color:#fff;font-family:'DM Sans',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;}
-
-/* ── SCREENS ── */
 .screen{display:none;min-height:100vh;}
 .screen.active{display:flex;}
 
-/* ── LOGIN ── */
-#loginScreen{align-items:center;justify-content:center;padding:2rem;}
+/* LOGIN */
+#loginScreen{align-items:center;justify-content:center;padding:2rem;flex-direction:column;gap:1.5rem;}
 .login-box{width:100%;max-width:420px;border:1px solid var(--border-hover);border-radius:8px;padding:3rem 2.5rem;background:#111;}
 .login-logo{font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:0.3rem;}
 .login-tagline{font-size:0.75rem;color:var(--gray-accent);margin-bottom:2rem;}
 .login-title{font-family:'DM Serif Display',serif;font-size:1.9rem;letter-spacing:-0.02em;margin-bottom:0.5rem;}
 .login-sub{font-size:0.82rem;color:var(--gray-light);margin-bottom:1.75rem;line-height:1.6;}
-.form-group{margin-bottom:1.1rem;}
-.form-group label{display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);margin-bottom:0.4rem;}
-.form-group input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border-hover);border-radius:4px;padding:0.8rem 1rem;color:#fff;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
-.form-group input:focus{border-color:rgba(255,255,255,0.3);}
-.form-group input::placeholder{color:var(--gray-accent);}
-.btn-login{width:100%;background:#fff;color:#000;border:none;border-radius:4px;padding:0.85rem;font-size:0.9rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:0.5rem;}
+.btn-login{width:100%;background:#fff;color:#000;border:none;border-radius:4px;padding:0.85rem;font-size:0.9rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;}
 .btn-login:hover{opacity:0.88;}
-.btn-login:disabled{opacity:0.5;cursor:not-allowed;}
-.login-error{display:none;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:4px;padding:0.7rem 1rem;font-size:0.8rem;color:#f87171;margin-bottom:1rem;}
-.login-forgot{text-align:center;margin-top:1rem;font-size:0.8rem;color:var(--gray-light);}
-.login-forgot a{color:var(--blue);text-decoration:none;cursor:pointer;}
+.login-note{font-size:0.75rem;color:var(--gray-accent);text-align:center;max-width:420px;}
 
-/* ── RESET ── */
-#resetScreen{align-items:center;justify-content:center;padding:2rem;}
-
-/* ── DASHBOARD ── */
+/* DASHBOARD */
 #dashScreen{flex-direction:column;}
 .dash-nav{position:sticky;top:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
 .dash-nav-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;}
@@ -88,7 +72,7 @@ table{width:100%;border-collapse:collapse;}
 th{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-accent);text-align:left;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);}
 td{font-size:0.78rem;color:var(--white-dim);padding:0.7rem 0.75rem;border-bottom:1px solid var(--border);}
 tr:last-child td{border-bottom:none;}
-.tag{display:inline-flex;align-items:center;padding:0.15rem 0.55rem;border-radius:100px;font-size:0.65rem;font-weight:600;}
+.tag{display:inline-flex;padding:0.15rem 0.55rem;border-radius:100px;font-size:0.65rem;font-weight:600;}
 .tag-green{background:rgba(74,222,128,0.1);color:var(--green);}
 .tag-red{background:rgba(248,113,113,0.1);color:#f87171;}
 .tag-amber{background:rgba(251,191,36,0.1);color:#fbbf24;}
@@ -101,59 +85,30 @@ tr:last-child td{border-bottom:none;}
 .report-opt{margin-top:1rem;padding:0.875rem 1rem;border-left:2px solid var(--border-hover);font-size:0.82rem;color:var(--white-dim);line-height:1.7;}
 .report-opt strong{color:#fff;}
 .dash-footer{text-align:center;font-size:0.72rem;color:var(--gray-accent);padding:1.5rem 0;border-top:1px solid var(--border);}
-@media(max-width:800px){
-  .kpi-grid{grid-template-columns:1fr 1fr!important;}
-  .row2{grid-template-columns:1fr!important;}
-  .roi-strip{grid-template-columns:1fr!important;}
-  .dash-body{padding:2rem 1rem 3rem;}
-}
+@media(max-width:800px){.kpi-grid{grid-template-columns:1fr 1fr!important;}.row2{grid-template-columns:1fr!important;}.roi-strip{grid-template-columns:1fr!important;}.dash-body{padding:2rem 1rem 3rem;}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div id="loginScreen" class="screen">
   <div class="login-box">
     <div class="login-logo">Perché AI Solutions</div>
     <div class="login-tagline">Client Performance Portal</div>
     <h1 class="login-title">Sign in to your<br>dashboard</h1>
-    <p class="login-sub">Enter the email and password you set when you were invited.</p>
-    <div class="login-error" id="loginError">Incorrect email or password. Please try again.</div>
-    <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" id="loginEmail" placeholder="you@yourbusiness.com" autocomplete="email">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
-    </div>
-    <button class="btn-login" id="loginBtn">Sign In &rarr;</button>
-    <div class="login-forgot"><a id="forgotLink">Forgot your password?</a></div>
+    <p class="login-sub">Click the button below to sign in with your Perché AI account.</p>
+    <button class="btn-login" onclick="window.netlifyIdentity.open('login')">Sign In &rarr;</button>
   </div>
+  <p class="login-note">First time? Check your email for an invite link from Perché AI Solutions.</p>
 </div>
 
-<!-- RESET PASSWORD SCREEN -->
-<div id="resetScreen" class="screen">
-  <div class="login-box">
-    <div class="login-logo">Perché AI Solutions</div>
-    <h1 class="login-title" style="margin-top:1.5rem;">Reset password</h1>
-    <p class="login-sub">Enter your email and we'll send a reset link.</p>
-    <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" id="resetEmail" placeholder="you@yourbusiness.com">
-    </div>
-    <button class="btn-login" id="resetBtn">Send Reset Link &rarr;</button>
-    <div class="login-forgot"><a id="backToLogin">Back to sign in</a></div>
-  </div>
-</div>
-
-<!-- DASHBOARD SCREEN -->
+<!-- DASHBOARD -->
 <div id="dashScreen" class="screen">
   <nav class="dash-nav">
     <div class="dash-nav-logo">Perché AI Solutions</div>
     <div class="dash-nav-right">
       <span class="dash-client-name" id="navName"></span>
-      <button class="btn-logout" id="logoutBtn">Sign Out</button>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
     </div>
   </nav>
   <div class="dash-body">
@@ -161,20 +116,17 @@ tr:last-child td{border-bottom:none;}
     <div class="dash-bizname" id="bizName">Loading...</div>
     <div class="dash-period" id="dashPeriod"></div>
     <div class="status-badge"><div class="status-dot"></div>System Live &amp; Monitoring</div>
-
     <div class="kpi-grid">
       <div class="kpi"><span class="kpi-num" id="kpiCalls">247</span><span class="kpi-label">Calls Answered by AI</span><span class="kpi-delta">↑ 100% answer rate</span></div>
-      <div class="kpi"><span class="kpi-num" id="kpiJobs">61</span><span class="kpi-label">Jobs Booked Automatically</span><span class="kpi-delta" id="jobsDelta">↑ vs last month</span></div>
+      <div class="kpi"><span class="kpi-num" id="kpiJobs">61</span><span class="kpi-label">Jobs Booked Automatically</span><span class="kpi-delta">↑ vs last month</span></div>
       <div class="kpi"><span class="kpi-num" id="kpiEmergency">14</span><span class="kpi-label">Emergency Jobs Captured</span><span class="kpi-delta">↑ After-hours calls</span></div>
       <div class="kpi featured"><span class="kpi-num" id="kpiRevenue">$21,350</span><span class="kpi-label">Revenue Recovered</span><span class="kpi-delta">↑ AI-attributed jobs</span></div>
     </div>
-
     <div class="roi-strip">
       <div class="roi-card"><div class="roi-num" id="roiHours">42 hrs</div><div class="roi-label">Dispatcher Hours Saved</div></div>
       <div class="roi-card"><div class="roi-num" id="roiAfterHours">23</div><div class="roi-label">After-Hours Jobs Captured</div></div>
       <div class="roi-card"><div class="roi-num" id="roiInvoices">61/61</div><div class="roi-label">Invoices Sent Automatically</div></div>
     </div>
-
     <div class="row2">
       <div class="panel">
         <div class="panel-title">Calls Answered — This Month</div>
@@ -195,7 +147,6 @@ tr:last-child td{border-bottom:none;}
         </div>
       </div>
     </div>
-
     <div class="calls-panel">
       <div class="panel-title">Recent Calls — Last 7 Days</div>
       <table>
@@ -210,23 +161,17 @@ tr:last-child td{border-bottom:none;}
         </tbody>
       </table>
     </div>
-
     <div class="report-box">
       <div class="report-month" id="reportMonth">April 2025 — Performance Report</div>
       <div class="report-sub">Delivered by Perché AI Solutions · Auto-sent on the 1st of every month</div>
-      <div class="report-body" id="reportBody">Loading...</div>
+      <div class="report-body" id="reportBody"></div>
       <div class="report-opt" id="reportOpt"></div>
     </div>
-
-    <div class="dash-footer">
-      Perché AI Solutions &nbsp;·&nbsp; (614) 323-3534 &nbsp;·&nbsp; p&#101;rch&#101;solutions&#64;gmail&#46;com
-    </div>
+    <div class="dash-footer">Perché AI Solutions &nbsp;·&nbsp; (614) 323-3534 &nbsp;·&nbsp; p&#101;rch&#101;solutions&#64;gmail&#46;com</div>
   </div>
 </div>
 
 <script>
-var GOTRUE = 'https://perchesolutions.com/.netlify/identity';
-
 var CLIENT_DATA = {
   'demo@perchesolutions.com': {
     bizName:'Demo — Riverside HVAC',plan:'Growth',
@@ -244,11 +189,9 @@ function getMonth(){
 }
 
 function show(id){
-  ['loginScreen','resetScreen','dashScreen'].forEach(function(s){
-    var el=document.getElementById(s);
-    el.classList.remove('active');
-  });
-  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  var el = document.getElementById(id);
+  if(el) el.classList.add('active');
 }
 
 function populate(email){
@@ -272,110 +215,34 @@ function populate(email){
   document.getElementById('reportOpt').innerHTML='<strong>This month we optimized:</strong> '+d.opt+'<br><br><strong>Next month:</strong> '+d.next;
 }
 
-// LOGIN - direct GoTrue API with correct urlencoded format
-document.getElementById('loginBtn').addEventListener('click', function(){
-  var email=document.getElementById('loginEmail').value.trim();
-  var pass=document.getElementById('loginPassword').value;
-  var err=document.getElementById('loginError');
-  var btn=document.getElementById('loginBtn');
-  if(!email||!pass){err.style.display='block';err.textContent='Please enter your email and password.';return;}
-  btn.disabled=true; btn.textContent='Signing in...'; err.style.display='none';
+function logout(){
+  window.netlifyIdentity.logout();
+}
 
-  // GoTrue token endpoint requires JSON with grant_type
-  fetch(GOTRUE+'/token?grant_type=password',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'Accept':'application/json'
-    },
-    body:JSON.stringify({email:email,password:pass})
-  })
-  .then(function(r){
-    return r.json().then(function(d){ return {ok:r.ok, status:r.status, data:d}; });
-  })
-  .then(function(result){
-    console.log('GoTrue response:',result.status, JSON.stringify(result.data));
-    if(!result.ok || !result.data.access_token){
-      throw new Error(result.data.error_description || result.data.msg || 'Login failed');
-    }
-    return result.data;
-  })
-  .then(function(data){
-    localStorage.setItem('perche_session',JSON.stringify({
-      email:data.email||email,
-      exp:Date.now()+((data.expires_in||3600)*1000)
-    }));
-    populate(data.email||email);
-    show('dashScreen');
-  })
-  .catch(function(e){
-    console.error('Login error:',e);
-    err.style.display='block';
-    err.textContent='Error: '+e.message;
-    btn.disabled=false;
-    btn.textContent='Sign In →';
-  });
+// Always show login screen by default immediately
+// This prevents the black screen — JS will update it if user is already logged in
+show('loginScreen');
+
+// Set up Netlify Identity events
+window.netlifyIdentity.on('login', function(user){
+  window.netlifyIdentity.close();
+  populate(user.email);
+  show('dashScreen');
+  if(window.location.hash) window.history.replaceState(null,'',window.location.pathname);
 });
 
-document.addEventListener('keydown',function(e){
-  if(e.key==='Enter'&&document.getElementById('loginScreen').classList.contains('active')) document.getElementById('loginBtn').click();
-});
-
-// LOGOUT
-document.getElementById('logoutBtn').addEventListener('click',function(){
-  localStorage.removeItem('perche_session'); show('loginScreen');
-});
-
-// FORGOT / RESET
-document.getElementById('forgotLink').addEventListener('click',function(){ show('resetScreen'); });
-document.getElementById('backToLogin').addEventListener('click',function(){ show('loginScreen'); });
-document.getElementById('resetBtn').addEventListener('click',function(){
-  var email=document.getElementById('resetEmail').value.trim();
-  if(!email) return;
-  fetch(GOTRUE+'/recover',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body:JSON.stringify({email:email})
-  })
-  .then(function(){ alert('Reset link sent to '+email+'. Check your inbox.'); show('loginScreen'); })
-  .catch(function(){ alert('Something went wrong. Email perchesolutions@gmail.com for help.'); });
-});
-
-// INIT — runs immediately, no waiting
-(function(){
-  // Check for invite/recovery token
-  var h=window.location.hash||'';
-  if(h.indexOf('invite_token')>-1||h.indexOf('recovery_token')>-1){
-    // Load identity widget to process the token
-    var s=document.createElement('script');
-    s.src='https://identity.netlify.com/v1/netlify-identity-widget.js';
-    s.onload=function(){
-      window.netlifyIdentity.on('init',function(){
-        // After init, open the widget so it processes the token and shows password form
-        window.netlifyIdentity.open();
-      });
-      window.netlifyIdentity.on('login',function(u){
-        // User set password and is now logged in via widget
-        // Now store session and use our custom dashboard
-        window.netlifyIdentity.close();
-        localStorage.setItem('perche_session',JSON.stringify({email:u.email,exp:Date.now()+3600000}));
-        // Clear the hash so token doesn't re-trigger
-        window.history.replaceState(null,null,window.location.pathname);
-        populate(u.email); show('dashScreen');
-      });
-      window.netlifyIdentity.init({logo:false});
-    };
-    document.head.appendChild(s);
-    return;
-  }
-  // Check saved session
-  try{
-    var s=JSON.parse(localStorage.getItem('perche_session')||'null');
-    if(s&&s.email&&s.exp&&Date.now()<s.exp){ populate(s.email); show('dashScreen'); return; }
-  }catch(e){}
-  // Default: show login
+window.netlifyIdentity.on('logout', function(){
   show('loginScreen');
-})();
+});
+
+window.netlifyIdentity.on('init', function(user){
+  if(user){
+    populate(user.email);
+    show('dashScreen');
+  } else {
+    show('loginScreen');
+  }
+});
 </script>
 </body>
 </html>
