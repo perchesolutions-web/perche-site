@@ -30,6 +30,23 @@ li{font-size:0.9rem;color:#aaa;line-height:1.8;margin-bottom:0.3rem;}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+(function(){
+  var hash = window.location.hash || '';
+  var search = window.location.search || '';
+  var hasToken = (
+    hash.indexOf('invite_token') > -1 ||
+    hash.indexOf('recovery_token') > -1 ||
+    search.indexOf('invite_token') > -1 ||
+    search.indexOf('recovery_token') > -1
+  );
+  if(hasToken){
+    window.location.replace('/dashboard.html' + window.location.hash + window.location.search);
+    return;
+  }
+})();
+</script>
 </head>
 <body>
 <nav>
@@ -42,7 +59,7 @@ li{font-size:0.9rem;color:#aaa;line-height:1.8;margin-bottom:0.3rem;}
     <p class="page-sub">Last updated: April 2025 &nbsp;·&nbsp; Perché AI Solutions &nbsp;·&nbsp; Columbus, OH</p>
 
     <h2>1. Who We Are</h2>
-    <p>Perché AI Solutions ("we," "us," or "our") is an AI automation agency based in Columbus, Ohio. We operate the website perchesolutions.com and provide AI automation services to home service contractors. You can reach us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="45352037262d20362a2930312c2a2b36052228242c296b262a28">[email&#160;protected]</a> or (614) 323-3534.</p>
+    <p>Perché AI Solutions ("we," "us," or "our") is an AI automation agency based in Columbus, Ohio. We operate the website perchesolutions.com and provide AI automation services to home service contractors. You can reach us at <a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a> or (614) 323-3534.</p>
 
     <h2>2. Information We Collect</h2>
     <p>We collect information you provide directly to us:</p>
@@ -74,13 +91,13 @@ li{font-size:0.9rem;color:#aaa;line-height:1.8;margin-bottom:0.3rem;}
     </ul>
 
     <h2>5. Data Retention</h2>
-    <p>We retain your information for as long as you are a client and for a reasonable period after that for legal and business purposes. You may request deletion of your data at any time by emailing <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="66160314050e0315090a13120f09081526010b070f0a4805090b">[email&#160;protected]</a>.</p>
+    <p>We retain your information for as long as you are a client and for a reasonable period after that for legal and business purposes. You may request deletion of your data at any time by emailing <a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a>.</p>
 
     <h2>6. Security</h2>
     <p>We use industry-standard security measures to protect your information. Payment data is handled entirely by Stripe and is never stored on our servers. However, no method of transmission over the internet is 100% secure.</p>
 
     <h2>7. Your Rights</h2>
-    <p>You have the right to access, correct, or delete your personal information. To exercise these rights, contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c7c697e6f64697f636079786563627f4c6b616d6560226f6361">[email&#160;protected]</a>. We will respond within 30 days.</p>
+    <p>You have the right to access, correct, or delete your personal information. To exercise these rights, contact us at <a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a>. We will respond within 30 days.</p>
 
     <h2>8. Cookies</h2>
     <p>Our website uses minimal cookies — primarily for basic site functionality. We do not use advertising or tracking cookies. You can disable cookies in your browser settings without affecting your ability to use our site.</p>

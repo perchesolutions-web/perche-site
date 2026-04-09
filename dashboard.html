@@ -403,13 +403,13 @@ body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif
     </div>
 
     <div class="dash-footer">
-      Perché AI Solutions &nbsp;·&nbsp; (614) 323-3534 &nbsp;·&nbsp; perchesolutions@gmail.com<br>
+      Perché AI Solutions &nbsp;·&nbsp; (614) 323-3534 &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="68180d1a0b000d1b07041d1c0107061b280f05090104460b0705">[email&#160;protected]</a><br>
       <span style="margin-top:0.5rem;display:block;">Questions about your report? Reply to your monthly email or call us directly.</span>
     </div>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── NETLIFY IDENTITY SETUP ─────────────────────────────────────
 var netlifyIdentity = window.netlifyIdentity;
 
@@ -565,16 +565,37 @@ function handleLogout() {
     .then(function() { showLogin(); });
 }
 
-// ── INIT ───────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────
+var netlifyIdentity = window.netlifyIdentity;
+
 netlifyIdentity.on('init', function(user) {
   if (user) {
     showDashboard(user);
   } else {
-    showLogin();
+    // Check for invite or recovery token in URL
+    var hash = window.location.hash || '';
+    var search = window.location.search || '';
+    var hasToken = (
+      hash.indexOf('invite_token') > -1 ||
+      hash.indexOf('recovery_token') > -1 ||
+      search.indexOf('invite_token') > -1 ||
+      search.indexOf('recovery_token') > -1
+    );
+    if (hasToken) {
+      // Open the identity widget to handle the token
+      setTimeout(function(){ netlifyIdentity.open(); }, 300);
+    } else {
+      showLogin();
+    }
   }
 });
 
-netlifyIdentity.init({ logo: false, namePlaceholder: 'Business Name' });
+// After completing invite signup or password recovery, show dashboard
+netlifyIdentity.on('login', function(user) {
+  showDashboard(user);
+});
+
+netlifyIdentity.init({ logo: false });
 </script>
 </body>
 </html>

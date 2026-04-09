@@ -1,0 +1,8 @@
+/*
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Content-Security-Policy: script-src 'self' 'unsafe-inline' https://assets.calendly.com https://identity.netlify.com https://cdn.emailjs.com https://cdnjs.cloudflare.com; frame-src https://calendly.com

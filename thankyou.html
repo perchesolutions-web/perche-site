@@ -45,6 +45,23 @@ li{font-size:0.9rem;color:#aaa;line-height:1.8;margin-bottom:0.3rem;}
 .ty-contact{font-size:0.85rem;color:#666;}
 .ty-contact a{color:#60a5fa;}
 </style>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+(function(){
+  var hash = window.location.hash || '';
+  var search = window.location.search || '';
+  var hasToken = (
+    hash.indexOf('invite_token') > -1 ||
+    hash.indexOf('recovery_token') > -1 ||
+    search.indexOf('invite_token') > -1 ||
+    search.indexOf('recovery_token') > -1
+  );
+  if(hasToken){
+    window.location.replace('/dashboard.html' + window.location.hash + window.location.search);
+    return;
+  }
+})();
+</script>
 </head>
 <body>
 <nav>
@@ -67,7 +84,7 @@ li{font-size:0.9rem;color:#aaa;line-height:1.8;margin-bottom:0.3rem;}
 
     <p class="ty-contact">
       Questions in the meantime? Call us at <a href="tel:6143233534">(614) 323-3534</a><br>
-      or email <a href="/cdn-cgi/l/email-protection#8efeebfcede6ebfde1e2fbfae7e1e0fdcee9e3efe7e2a0ede1e3"><span class="__cf_email__" data-cfemail="a7d7c2d5c4cfc2d4c8cbd2d3cec8c9d4e7c0cac6cecb89c4c8ca">[email&#160;protected]</span></a>
+      or email <a href="mailto:perchesolutions@gmail.com"><span class="__cf_email__" data-cfemail="a7d7c2d5c4cfc2d4c8cbd2d3cec8c9d4e7c0cac6cecb89c4c8ca">perchesolutions@gmail.com</span></a>
     </p>
   </div>
 </div>

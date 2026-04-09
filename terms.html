@@ -30,6 +30,23 @@ li{font-size:0.9rem;color:#aaa;line-height:1.8;margin-bottom:0.3rem;}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+(function(){
+  var hash = window.location.hash || '';
+  var search = window.location.search || '';
+  var hasToken = (
+    hash.indexOf('invite_token') > -1 ||
+    hash.indexOf('recovery_token') > -1 ||
+    search.indexOf('invite_token') > -1 ||
+    search.indexOf('recovery_token') > -1
+  );
+  if(hasToken){
+    window.location.replace('/dashboard.html' + window.location.hash + window.location.search);
+    return;
+  }
+})();
+</script>
 </head>
 <body>
 <nav>
@@ -52,7 +69,7 @@ li{font-size:0.9rem;color:#aaa;line-height:1.8;margin-bottom:0.3rem;}
     <p>Monthly retainer fees are billed automatically via Stripe. Failure to maintain a valid payment method may result in service suspension after 7 days notice.</p>
 
     <h2>4. Minimum Commitment</h2>
-    <p>All plans require a 3-month minimum commitment from the go-live date. After the initial 3 months, services are month-to-month and may be cancelled with 30 days written notice to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d6d786f7e75786e727168697472736e5d7a707c7471337e7270">[email&#160;protected]</a>.</p>
+    <p>All plans require a 3-month minimum commitment from the go-live date. After the initial 3 months, services are month-to-month and may be cancelled with 30 days written notice to <a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a>.</p>
 
     <h2>5. Client Responsibilities</h2>
     <p>To deliver your services, you agree to:</p>
@@ -86,5 +103,5 @@ li{font-size:0.9rem;color:#aaa;line-height:1.8;margin-bottom:0.3rem;}
     <h2>12. Contact</h2>
     <p>Perché AI Solutions<br>
     Columbus, Ohio<br>
-    Email: <a href="/cdn-cgi/l/email-protection#39495c4b5a515c4a56554c4d5056574a795e54585055175a5654"><span class="__cf_email__" data-cfemail="6a1a0f1809020f1905061f1e030504192a0d070b030644090507">[email&#160;protected]</span></a><br>
+    Email: <a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a><br>
   

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- deploy:1775591187 -->
+<!-- deploy:1775767543 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -285,6 +285,9 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     section{padding:4rem 0!important;}
   }
 
+  .calendly-embed-wrap{flex:1;min-width:320px;border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+  @media(max-width:900px){.contact-layout{grid-template-columns:1fr!important;}.calendly-inline-widget{height:580px!important;}}
+
   .cs-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:2rem;align-items:start;}
   .cs-card{border:1px solid var(--border);border-radius:4px;padding:2.5rem;background:var(--black);}
   .cs-card.cs-featured{border-color:rgba(255,255,255,0.2);}
@@ -312,6 +315,34 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
   .cs-cta-box p{font-size:1rem;color:var(--white-dim);}
   @media(max-width:900px){.cs-grid{grid-template-columns:1fr!important;}.cs-stats{grid-template-columns:1fr 1fr;}}
 </style>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+// Netlify Identity — handle invite and recovery tokens
+(function(){
+  var hash = window.location.hash || '';
+  var search = window.location.search || '';
+  var hasToken = (
+    hash.indexOf('invite_token') > -1 ||
+    hash.indexOf('recovery_token') > -1 ||
+    hash.indexOf('confirmation_token') > -1 ||
+    search.indexOf('invite_token') > -1 ||
+    search.indexOf('recovery_token') > -1 ||
+    search.indexOf('confirmation_token') > -1
+  );
+  if(hasToken){
+    // Redirect to dashboard which has the full identity widget
+    window.location.replace('/dashboard.html' + window.location.hash + window.location.search);
+    return;
+  }
+  window.addEventListener('load', function(){
+    if(window.netlifyIdentity){
+      window.netlifyIdentity.on('login', function(){
+        window.location.href = '/dashboard.html';
+      });
+    }
+  });
+})();
+</script>
 </head>
 <body>
 <div class="mobile-nav" id="mobileNav">
@@ -322,6 +353,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
   <a href="#results">Results</a>
   <a href="#pricing">Pricing</a>
   <a href="#about">About</a>
+  <a href="#contact">Contact Us</a>
+  <a href="dashboard.html">Client Login</a>
   <a href="#contact">Contact</a>
 </div>
 <nav id="mainNav">
@@ -332,6 +365,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     <li><a href="#results">Results</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="dashboard.html" style="color:var(--gray-light);">Client Login</a></li>
     <li><a href="#contact" class="nav-cta">Free Audit &rarr;</a></li>
   </ul>
   <div class="hamburger" onclick="openMobileNav()"><span></span><span></span><span></span></div>
@@ -540,17 +575,17 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
           <div class="cs-stat"><span class="cs-num">11 hrs</span><span class="cs-stat-label">Dispatcher time saved/week</span></div>
         </div>
         <div class="cs-divider"></div>
-        <div class="cs-quote"><span class="cs-quote-mark">&ldquo;</span><p class="cs-quote-text">I was skeptical. These guys actually built the thing, tested it with real calls, and showed me the results on day 30. We got our money back in week two.</p><span class="cs-author">&mdash; Marcus R., Owner &nbsp;&middot;&nbsp; Riverside HVAC &amp; Plumbing</span></div>
+        <div class="cs-quote"><span class="cs-quote-mark">&ldquo;</span><p class="cs-quote-text">I was skeptical. These guys actually built the thing, tested it with real calls, and showed me the results on day 30. We got our money back in week two.</p><span class="cs-author">&mdash; Marcus R., Owner</span></div>
       </div>
       <div class="cs-sidebar">
         <div class="cs-timeline">
           <span class="cs-label">How It Happened</span>
-          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 1</strong> &mdash; Intake form completed. Discovery call to map call flow.</div></div>
-          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 5</strong> &mdash; AI Receptionist built. Twilio + Housecall Pro integrated.</div></div>
-          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 8</strong> &mdash; 10 test calls done. Client approved voice and script.</div></div>
-          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 9</strong> &mdash; Soft launch. First real call at 11:43 PM. $385 job booked.</div></div>
-          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 14</strong> &mdash; Full launch. Dispatch automation live.</div></div>
-          <div class="cs-step"><div class="cs-step-dot cs-step-active"></div><div><strong>Day 30</strong> &mdash; ROI report. 14 jobs. $5,320 revenue.</div></div>
+          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 1</strong> &mdash; Intake form completed.</div></div>
+          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 5</strong> &mdash; AI Receptionist built + CRM integrated.</div></div>
+          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 8</strong> &mdash; 10 test calls done. Client approved.</div></div>
+          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 9</strong> &mdash; Soft launch. First call at 11:43 PM. $385 job booked.</div></div>
+          <div class="cs-step"><div class="cs-step-dot"></div><div><strong>Day 14</strong> &mdash; Full launch + dispatch automation live.</div></div>
+          <div class="cs-step"><div class="cs-step-dot cs-step-active"></div><div><strong>Day 30</strong> &mdash; 14 jobs. $5,320 revenue.</div></div>
         </div>
         <div class="cs-cta-box"><p>Want results like this?</p><a href="https://calendly.com/perchesolutions/free-worldflow-audit" target="_blank" class="btn-primary" style="display:inline-flex;margin-top:1rem;">Book Your Free Audit &rarr;</a></div>
       </div>
@@ -690,56 +725,20 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
 </section>
 <section id="contact">
   <div class="container">
-    <div class="cta-banner">
-      <h2>Ready to stop losing jobs to<br><em>missed calls and manual chaos?</em></h2>
-      <a href="https://calendly.com/perchesolutions/free-worldflow-audit" target="_blank" class="btn-dark">Book Your Free Audit Today &rarr;</a>
+    <div class="section-header">
+      <span class="eyebrow">Get Started</span>
+      <h2 class="section-h2">Book your free<br><em class="serif-italic">workflow audit</em></h2>
+      <p class="section-sub">Pick a time below. 30 minutes. No pitch. Just a clear picture of what we'd build for you.</p>
     </div>
-    <div class="contact-grid" id="contact-form">
-      <div class="contact-info">
-        <h3>Let&rsquo;s look at your business together</h3>
-        <p>Tell us about your setup &mdash; phones, CRM, team size, biggest headaches &mdash; and we&rsquo;ll show you exactly where you&rsquo;re losing money and what we&rsquo;d fix first. No pitch. No pressure. Just clarity.</p>
+    <div class="contact-layout">
+      <div class="contact-details">
         <div class="contact-detail"><div class="cd-icon">PH</div><span><strong>Phone:</strong> <a href="tel:6143233534" style="color:#60a5fa;text-decoration:none;">(614) 323-3534</a></span></div>
-        <div class="contact-detail"><div class="cd-icon">SV</div><span>Serving contractors <strong>nationwide</strong></span></div>
-        <div class="contact-detail"><div class="cd-icon">EM</div><span><strong>Email:</strong> <a href="mailto:perchesolutions@gmail.com" style="color:#60a5fa;text-decoration:none;">perchesolutions@gmail.com</a></span></div>
+        <div class="contact-detail"><div class="cd-icon">EM</div><span><strong>Email:</strong> <a href="mailto:perchesolutions@gmail.com" style="color:#60a5fa;text-decoration:none;">p&#101;rch&#101;solutions&#64;gmail&#46;com</a></span></div>
         <div class="contact-detail"><div class="cd-icon">RS</div><span>Response within <strong>one business day</strong></span></div>
-        <div class="contact-detail"><div class="cd-icon">AU</div><span>Free 30-minute audit &mdash; <strong>zero obligation</strong></span></div>
-        <div style="margin-top:2rem;padding:1.5rem;border:1px solid var(--border);border-radius:2px;">
-          <p style="font-size:0.75rem;color:var(--gray-light);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;margin-bottom:0.75rem;">What happens after you submit</p>
-          <p style="font-size:0.85rem;color:var(--white-dim);line-height:1.7;margin-bottom:0.4rem;">1. We review your info same day</p>
-          <p style="font-size:0.85rem;color:var(--white-dim);line-height:1.7;margin-bottom:0.4rem;">2. We send you a calendar link to book a 30-min call</p>
-          <p style="font-size:0.85rem;color:var(--white-dim);line-height:1.7;">3. On the call we show you exactly what we&rsquo;d build and what it would cost</p>
-        </div>
+        <div class="contact-detail"><div class="cd-icon">SV</div><span>Serving contractors <strong>nationwide</strong></span></div>
       </div>
-      <div>
-        <div style="margin-bottom:1.5rem;padding:1.25rem 1.5rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.15);border-radius:4px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
-          <div>
-            <p style="font-size:0.9rem;color:var(--white);font-weight:600;margin-bottom:0.2rem;">Prefer to pick a time now?</p>
-            <p style="font-size:0.8rem;color:var(--gray-light);margin:0;">Book directly on our calendar &mdash; instant confirmation.</p>
-          </div>
-          <a href="https://calendly.com/perchesolutions/free-worldflow-audit" target="_blank" class="btn-primary" style="white-space:nowrap;flex-shrink:0;">Book on Calendly &rarr;</a>
-        </div>
-        <p style="font-size:0.75rem;color:var(--gray-accent);text-align:center;margin-bottom:1.25rem;">Or fill out the form below and we&rsquo;ll send a calendar link within one business day.</p>
-        <div id="contactFormWrap" class="contact-form-wrap">
-          <div class="form-row">
-            <div class="form-field"><label>Your Name</label><input type="text" id="f_name" placeholder="John Smith"></div>
-            <div class="form-field"><label>Business Type</label><select id="f_type"><option value="" disabled selected>Select your trade</option><option>HVAC</option><option>Plumbing</option><option>Electrical</option><option>Multi-Trade</option><option>Other Home Services</option></select></div>
-          </div>
-          <div class="form-row">
-            <div class="form-field"><label>Phone Number</label><input type="tel" id="f_phone" placeholder="(555) 000-0000"></div>
-            <div class="form-field"><label>Email Address</label><input type="email" id="f_email" placeholder="john@yourbusiness.com"></div>
-          </div>
-          <div class="form-row">
-            <div class="form-field"><label>Number of Technicians</label><select id="f_techs"><option value="" disabled selected>Select range</option><option>1&ndash;3 techs</option><option>4&ndash;8 techs</option><option>9&ndash;15 techs</option><option>16+ techs</option></select></div>
-            <div class="form-field"><label>CRM / Scheduling Tool</label><select id="f_crm"><option value="" disabled selected>Select one</option><option>ServiceTitan</option><option>Housecall Pro</option><option>Jobber</option><option>FieldEdge</option><option>Google Calendar</option><option>None / Paper</option><option>Other</option></select></div>
-          </div>
-          <div class="form-field"><label>What&rsquo;s your biggest challenge right now?</label><textarea id="f_msg" placeholder="Missed calls after hours, too much admin work, slow invoicing, dispatch chaos..."></textarea></div>
-          <button type="button" id="submitBtn" class="btn-primary" style="width:100%;justify-content:center;">Get My Free Workflow Audit &rarr;</button>
-          <p style="font-size:0.75rem;color:var(--gray-accent);text-align:center;">No commitment. No pitch deck. Just a clear plan for your business.</p>
-        </div>
-        <div id="formSuccess" class="form-success">
-          <h3>Request Received</h3>
-          <p>Thanks for reaching out. We&rsquo;ll review your info and send a calendar link to <strong id="confirmEmail"></strong> within one business day.</p>
-        </div>
+      <div class="calendly-embed-wrap">
+        <iframe src="https://calendly.com/perchesolutions/free-worldflow-audit?hide_gdpr_banner=1&embed_domain=perchesolutions.com&embed_type=Inline" width="100%" height="700" frameborder="0" scrolling="yes" title="Book a Free Workflow Audit" style="border:none;border-radius:4px;"></iframe>
       </div>
     </div>
   </div>
@@ -753,9 +752,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       </div>
       <div class="footer-col"><h6>Services</h6><ul><li><a href="#services">AI Receptionist</a></li><li><a href="#services">Smart Dispatch</a></li><li><a href="#services">Maintenance Engine</a></li><li><a href="#services">Lead-to-Cash</a></li><li><a href="#services">Managed Retainer</a></li></ul></div>
       <div class="footer-col"><h6>Company</h6><ul><li><a href="#how-it-works">How It Works</a></li><li><a href="#results">Results</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#about">About Us</a></li><li><a href="#faq">FAQ</a></li></ul></div>
-      <div class="footer-col"><h6>Contact</h6><ul><li><a href="#contact">Free Audit</a></li><li><a href="tel:6143233534">(614) 323-3534</a></li>
-        <li><a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a></li>
-      </ul></div>
+      <div class="footer-col"><h6>Contact</h6><ul><li><a href="#contact">Free Audit</a></li><li><a href="mailto:perchesolutions@gmail.com" style="color:#60a5fa;text-decoration:none;">p&#101;rch&#101;solutions&#64;gmail&#46;com</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">&copy; 2025 Perché AI Solutions &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:var(--gray-accent);text-decoration:none;">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="terms.html" style="color:var(--gray-accent);text-decoration:none;">Terms of Service</a></span>
@@ -763,7 +760,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     </div>
   </div>
 </footer>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
@@ -809,7 +806,7 @@ document.getElementById('submitBtn').addEventListener('click', function() {
       to_email:'perchesolutions@gmail.com',client_email:email,client_name:name,
       business_name:name+(type?' ('+type+')':''),plan:'Free Workflow Audit Request',
       summary:bodyText,reply_to:email
-    }).then(function(){ showSuccess(); }).catch(function(err){
+       }).then(function(){ showSuccess(); }).catch(function(err){
       console.error(err);
       window.location.href='mailto:perchesolutions@gmail.com?subject='+subject+'&body='+bodyEnc;
       setTimeout(showSuccess,500);
