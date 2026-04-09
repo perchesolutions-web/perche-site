@@ -311,7 +311,7 @@ document.getElementById('loginBtn').addEventListener('click', function(){
   .catch(function(e){
     console.error('Login error:',e);
     err.style.display='block';
-    err.textContent='Login failed. Please check your email and password and try again. If the problem continues, use Forgot Password.';
+    err.textContent='Error: '+e.message;
     btn.disabled=false;
     btn.textContent='Sign In →';
   });
@@ -346,12 +346,21 @@ document.getElementById('resetBtn').addEventListener('click',function(){
   // Check for invite/recovery token
   var h=window.location.hash||'';
   if(h.indexOf('invite_token')>-1||h.indexOf('recovery_token')>-1){
-    // Load identity widget just for token handling
+    // Load identity widget to process the token
     var s=document.createElement('script');
     s.src='https://identity.netlify.com/v1/netlify-identity-widget.js';
     s.onload=function(){
+      window.netlifyIdentity.on('init',function(){
+        // After init, open the widget so it processes the token and shows password form
+        window.netlifyIdentity.open();
+      });
       window.netlifyIdentity.on('login',function(u){
+        // User set password and is now logged in via widget
+        // Now store session and use our custom dashboard
+        window.netlifyIdentity.close();
         localStorage.setItem('perche_session',JSON.stringify({email:u.email,exp:Date.now()+3600000}));
+        // Clear the hash so token doesn't re-trigger
+        window.history.replaceState(null,null,window.location.pathname);
         populate(u.email); show('dashScreen');
       });
       window.netlifyIdentity.init({logo:false});
