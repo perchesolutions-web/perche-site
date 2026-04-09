@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Perché AI — Account Setup</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0A0A0A;color:#fff;font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;}
+p{font-size:0.9rem;color:#666;text-align:center;}
+a{color:#60a5fa;text-decoration:none;}
+</style>
+</head>
+<body>
+<p>Setting up your account...</p>
+<p><a href="/">Back to home</a></p>
+<script>
+// This page exists solely to handle Netlify Identity tokens
+// invite_token, recovery_token, confirmation_token all land here
+window.addEventListener('load', function(){
+  var identity = window.netlifyIdentity;
+  if(!identity){ return; }
+
+  // After user sets password or logs in via this page, go to dashboard
+  identity.on('login', function(){
+    identity.close();
+    window.location.href = '/dashboard.html';
+  });
+
+  identity.init({ logo: false });
+});
+</script>
+</body>
+</html>
