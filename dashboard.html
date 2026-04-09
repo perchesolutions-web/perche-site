@@ -526,16 +526,13 @@ function handleLogin() {
   btn.textContent = 'Signing in...';
   err.style.display = 'none';
 
-  netlifyIdentity.login(email, password, true)
-    .then(function(user) {
-      showDashboard(user);
-    })
-    .catch(function(e) {
-      err.textContent = 'Incorrect email or password. Please try again.';
-      err.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = 'Sign In →';
-    });
+  // Store reference to error UI for the error event handler
+  window._loginBtn = btn;
+  window._loginErr = err;
+
+  // netlifyIdentity.login fires the global 'login' event on success
+  // and 'error' event on failure - it does NOT return a promise
+  netlifyIdentity.login(email, password, true);
 }
 
 // Allow Enter key
@@ -568,31 +565,44 @@ function handleLogout() {
 // ── INIT ──────────────────────────────────────────────────
 var netlifyIdentity = window.netlifyIdentity;
 
+// Single login event handler - fires on successful login from any flow
+netlifyIdentity.on('login', function(user) {
+  netlifyIdentity.close();
+  showDashboard(user);
+});
+
+// Single logout handler
+netlifyIdentity.on('error', function(err) {
+  // Login failed - re-enable button and show error
+  if (window._loginBtn) {
+    window._loginBtn.disabled = false;
+    window._loginBtn.textContent = 'Sign In →';
+    window._loginBtn = null;
+  }
+  if (window._loginErr) {
+    window._loginErr.textContent = 'Incorrect email or password. Please try again.';
+    window._loginErr.style.display = 'block';
+    window._loginErr = null;
+  }
+});
+
+netlifyIdentity.on('logout', function() {
+  showLogin();
+});
+
+// Init - check if already logged in
 netlifyIdentity.on('init', function(user) {
   if (user) {
     showDashboard(user);
   } else {
-    // Check for invite or recovery token in URL
-    var hash = window.location.hash || '';
-    var search = window.location.search || '';
-    var hasToken = (
-      hash.indexOf('invite_token') > -1 ||
-      hash.indexOf('recovery_token') > -1 ||
-      search.indexOf('invite_token') > -1 ||
-      search.indexOf('recovery_token') > -1
-    );
+    var h = window.location.hash || '';
+    var hasToken = h.indexOf('invite_token') > -1 || h.indexOf('recovery_token') > -1;
     if (hasToken) {
-      // Open the identity widget to handle the token
-      setTimeout(function(){ netlifyIdentity.open(); }, 300);
+      showLoading();
     } else {
       showLogin();
     }
   }
-});
-
-// After completing invite signup or password recovery, show dashboard
-netlifyIdentity.on('login', function(user) {
-  showDashboard(user);
 });
 
 netlifyIdentity.init({ logo: false });
