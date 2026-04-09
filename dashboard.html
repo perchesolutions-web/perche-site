@@ -1,598 +1,346 @@
 <!DOCTYPE html>
-<!-- deploy:1775600001 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Client Dashboard — Perché AI Solutions</title>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --black:#0A0A0A;
-  --black-soft:#111111;
-  --white:#FFFFFF;
-  --white-dim:rgba(255,255,255,0.85);
-  --gray-light:#777;
-  --gray-accent:#555;
-  --border:rgba(255,255,255,0.08);
-  --border-hover:rgba(255,255,255,0.15);
-  --green:#4ade80;
-  --blue:#60a5fa;
-  --red:#f87171;
+  --black:#0A0A0A;--black-soft:#111;--white:#FFF;--white-dim:rgba(255,255,255,0.85);
+  --gray-light:#777;--gray-accent:#555;--border:rgba(255,255,255,0.08);
+  --border-hover:rgba(255,255,255,0.15);--green:#4ade80;--blue:#60a5fa;
 }
-html{font-size:16px;}
-body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;min-height:100vh;}
+html,body{height:100%;margin:0;padding:0;}
+body{background:#0A0A0A;color:#fff;font-family:'DM Sans',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;}
 
-/* ── LOGIN SCREEN ── */
-#loginScreen{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  background:var(--black);padding:2rem;
-}
-.login-box{
-  width:100%;max-width:440px;
-  border:1px solid var(--border-hover);border-radius:8px;
-  padding:3rem 2.5rem;background:var(--black-soft);
-}
-.login-logo{
-  font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--white);
-  margin-bottom:0.4rem;
-}
-.login-tagline{font-size:0.8rem;color:var(--gray-accent);margin-bottom:2.5rem;}
-.login-title{font-family:'DM Serif Display',serif;font-size:2rem;letter-spacing:-0.02em;margin-bottom:0.5rem;}
-.login-sub{font-size:0.85rem;color:var(--gray-light);margin-bottom:2rem;}
-.form-group{margin-bottom:1.25rem;}
-.form-group label{display:block;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-light);margin-bottom:0.5rem;}
-.form-group input{
-  width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border-hover);
-  border-radius:4px;padding:0.875rem 1rem;color:var(--white);font-size:0.9rem;
-  font-family:'DM Sans',sans-serif;transition:border-color 0.2s;outline:none;
-}
-.form-group input:focus{border-color:rgba(255,255,255,0.35);}
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;}
+
+/* ── LOGIN ── */
+#loginScreen{align-items:center;justify-content:center;padding:2rem;}
+.login-box{width:100%;max-width:420px;border:1px solid var(--border-hover);border-radius:8px;padding:3rem 2.5rem;background:#111;}
+.login-logo{font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:0.3rem;}
+.login-tagline{font-size:0.75rem;color:var(--gray-accent);margin-bottom:2rem;}
+.login-title{font-family:'DM Serif Display',serif;font-size:1.9rem;letter-spacing:-0.02em;margin-bottom:0.5rem;}
+.login-sub{font-size:0.82rem;color:var(--gray-light);margin-bottom:1.75rem;line-height:1.6;}
+.form-group{margin-bottom:1.1rem;}
+.form-group label{display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);margin-bottom:0.4rem;}
+.form-group input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border-hover);border-radius:4px;padding:0.8rem 1rem;color:#fff;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
+.form-group input:focus{border-color:rgba(255,255,255,0.3);}
 .form-group input::placeholder{color:var(--gray-accent);}
-.btn-login{
-  width:100%;background:var(--white);color:var(--black);border:none;border-radius:4px;
-  padding:0.875rem;font-size:0.9rem;font-weight:600;font-family:'DM Sans',sans-serif;
-  cursor:pointer;transition:opacity 0.2s;margin-top:0.5rem;
-}
+.btn-login{width:100%;background:#fff;color:#000;border:none;border-radius:4px;padding:0.85rem;font-size:0.9rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:0.5rem;}
 .btn-login:hover{opacity:0.88;}
 .btn-login:disabled{opacity:0.5;cursor:not-allowed;}
-.login-forgot{text-align:center;margin-top:1.25rem;font-size:0.8rem;color:var(--gray-light);}
+.login-error{display:none;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:4px;padding:0.7rem 1rem;font-size:0.8rem;color:#f87171;margin-bottom:1rem;}
+.login-forgot{text-align:center;margin-top:1rem;font-size:0.8rem;color:var(--gray-light);}
 .login-forgot a{color:var(--blue);text-decoration:none;cursor:pointer;}
-.login-forgot a:hover{text-decoration:underline;}
-.login-error{
-  background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);
-  border-radius:4px;padding:0.75rem 1rem;font-size:0.8rem;color:#f87171;
-  margin-bottom:1rem;display:none;
-}
 
-/* ── DASHBOARD SCREEN ── */
-#dashboardScreen{display:none;}
-.dash-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;
-  background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-.dash-nav-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--white);}
-.dash-nav-right{display:flex;align-items:center;gap:1.5rem;}
+/* ── RESET ── */
+#resetScreen{align-items:center;justify-content:center;padding:2rem;}
+
+/* ── DASHBOARD ── */
+#dashScreen{flex-direction:column;}
+.dash-nav{position:sticky;top:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.dash-nav-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;}
+.dash-nav-right{display:flex;align-items:center;gap:1rem;}
 .dash-client-name{font-size:0.8rem;color:var(--gray-light);}
-.dash-logout{font-size:0.8rem;color:var(--gray-light);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;}
-.dash-logout:hover{color:var(--white);}
-.dash-content{padding:7rem 2rem 4rem;max-width:1200px;margin:0 auto;}
-.dash-header{margin-bottom:3rem;}
-.dash-greeting{font-size:0.75rem;color:var(--gray-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;}
-.dash-biz-name{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-0.02em;margin-bottom:0.5rem;}
-.dash-period{font-size:0.85rem;color:var(--gray-accent);}
-.status-badge{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  background:#0f1f0f;border:1px solid rgba(74,222,128,0.3);
-  border-radius:100px;padding:0.3rem 0.9rem;font-size:0.75rem;color:var(--green);
-  margin-top:0.75rem;
-}
+.btn-logout{font-size:0.8rem;color:var(--gray-light);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-logout:hover{color:#fff;}
+.dash-body{padding:3rem 2rem 4rem;max-width:1100px;margin:0 auto;width:100%;}
+.dash-greeting{font-size:0.7rem;color:var(--gray-light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;}
+.dash-bizname{font-family:'DM Serif Display',serif;font-size:2.5rem;letter-spacing:-0.02em;margin-bottom:0.3rem;}
+.dash-period{font-size:0.85rem;color:var(--gray-accent);margin-bottom:0.75rem;}
+.status-badge{display:inline-flex;align-items:center;gap:0.5rem;background:#0f1f0f;border:1px solid rgba(74,222,128,0.3);border-radius:100px;padding:0.25rem 0.85rem;font-size:0.72rem;color:var(--green);margin-bottom:2rem;}
 .status-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
-
-/* KPI GRID */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:2rem;}
-.kpi-card{background:var(--black-soft);padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:0.4rem;}
-.kpi-card.featured{background:#0a1a0a;}
-.kpi-num{font-family:'DM Serif Display',serif;font-size:2.4rem;letter-spacing:-0.03em;line-height:1;color:var(--white);}
-.kpi-card.featured .kpi-num{color:var(--green);}
-.kpi-label{font-size:0.72rem;color:var(--gray-light);letter-spacing:0.04em;line-height:1.4;}
-.kpi-delta{font-size:0.7rem;font-weight:600;color:var(--green);margin-top:0.2rem;}
-.kpi-delta.down{color:var(--red);}
-.kpi-delta.neutral{color:var(--gray-light);}
-
-/* ROW 2 */
-.dash-row2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
-.dash-panel{background:var(--black-soft);border:1px solid var(--border);border-radius:8px;padding:1.75rem;}
-.panel-title{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-light);margin-bottom:1.5rem;}
-
-/* BAR CHART */
-.bar-chart{display:flex;align-items:flex-end;gap:0.75rem;height:120px;margin-top:0.5rem;}
-.bar-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:0.4rem;flex:1;}
-.bar-val{font-family:'DM Serif Display',serif;font-size:1.3rem;letter-spacing:-0.02em;color:var(--white);line-height:1;}
-.bar{width:100%;background:var(--border-hover);border-radius:3px 3px 0 0;transition:height 0.6s ease;}
-.bar.active{background:var(--white);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1.5rem;}
+.kpi{background:#111;padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:0.3rem;}
+.kpi.featured{background:#0a1a0a;}
+.kpi-num{font-family:'DM Serif Display',serif;font-size:2.2rem;letter-spacing:-0.03em;line-height:1;color:#fff;}
+.kpi.featured .kpi-num{color:var(--green);}
+.kpi-label{font-size:0.7rem;color:var(--gray-light);letter-spacing:0.04em;}
+.kpi-delta{font-size:0.68rem;font-weight:600;color:var(--green);}
+.roi-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;}
+.roi-card{background:#0a1a0a;border:1px solid rgba(74,222,128,0.2);border-radius:8px;padding:1.25rem;text-align:center;}
+.roi-num{font-family:'DM Serif Display',serif;font-size:1.8rem;letter-spacing:-0.02em;color:var(--green);}
+.roi-label{font-size:0.7rem;color:var(--green);opacity:0.7;margin-top:0.3rem;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+.panel{background:#111;border:1px solid var(--border);border-radius:8px;padding:1.5rem;}
+.panel-title{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);margin-bottom:1.25rem;}
+.bar-chart{display:flex;align-items:flex-end;gap:0.75rem;height:110px;}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:0.35rem;flex:1;}
+.bar-val{font-family:'DM Serif Display',serif;font-size:1.3rem;letter-spacing:-0.02em;color:#fff;line-height:1;}
+.bar-fill{width:100%;background:var(--border-hover);border-radius:3px 3px 0 0;}
+.bar-fill.active{background:#fff;}
 .bar-lbl{font-size:0.65rem;color:var(--gray-light);}
-
-/* METRICS LIST */
-.metric-list{display:flex;flex-direction:column;gap:1rem;}
-.metric-row{display:flex;justify-content:space-between;align-items:center;}
-.metric-name{font-size:0.8rem;color:var(--gray-light);}
-.metric-val{font-size:0.9rem;font-weight:600;color:var(--white);}
-.metric-bar-wrap{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:0.3rem;}
-.metric-bar-fill{height:100%;background:var(--white);border-radius:2px;transition:width 0.8s ease;}
-
-/* RECENT CALLS */
-.calls-table{width:100%;border-collapse:collapse;margin-top:0.5rem;}
-.calls-table th{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-accent);text-align:left;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);}
-.calls-table td{font-size:0.8rem;color:var(--white-dim);padding:0.75rem;border-bottom:1px solid var(--border);}
-.calls-table tr:last-child td{border-bottom:none;}
-.tag{display:inline-flex;align-items:center;padding:0.2rem 0.6rem;border-radius:100px;font-size:0.65rem;font-weight:600;letter-spacing:0.04em;}
-.tag.booked{background:rgba(74,222,128,0.1);color:var(--green);}
-.tag.missed{background:rgba(248,113,113,0.1);color:var(--red);}
-.tag.emergency{background:rgba(251,191,36,0.1);color:#fbbf24;}
-.tag.after-hours{background:rgba(96,165,250,0.1);color:var(--blue);}
-
-/* ROI BANNER */
-.roi-banner{
-  background:#0a1a0a;border:1px solid rgba(74,222,128,0.2);border-radius:8px;
-  padding:2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
-  margin-bottom:2rem;text-align:center;
-}
-.roi-stat{display:flex;flex-direction:column;gap:0.4rem;}
-.roi-num{font-family:'DM Serif Display',serif;font-size:2rem;letter-spacing:-0.03em;color:var(--green);}
-.roi-label{font-size:0.75rem;color:var(--gray-light);}
-
-/* REPORT SECTION */
-.report-box{background:var(--black-soft);border:1px solid var(--border);border-radius:8px;padding:1.75rem;margin-bottom:2rem;}
-.report-month{font-family:'DM Serif Display',serif;font-size:1.3rem;letter-spacing:-0.02em;margin-bottom:0.5rem;}
-.report-sub{font-size:0.8rem;color:var(--gray-light);margin-bottom:1.25rem;}
-.report-text{font-size:0.875rem;color:var(--white-dim);line-height:1.8;}
-.report-text strong{color:var(--white);}
-.report-optimization{
-  margin-top:1.25rem;padding:1rem 1.25rem;
-  background:rgba(255,255,255,0.03);border-left:3px solid var(--white);
-  font-size:0.85rem;color:var(--white-dim);line-height:1.7;
-}
-
-/* FOOTER */
-.dash-footer{text-align:center;padding:2rem;font-size:0.75rem;color:var(--gray-accent);border-top:1px solid var(--border);}
-
-/* LOADING */
-#loadingScreen{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:1rem;
-}
-.loader{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--white);border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-/* RESET PASSWORD */
-#resetScreen{display:none;min-height:100vh;align-items:center;justify-content:center;padding:2rem;}
-
-/* RESPONSIVE */
-@media(max-width:900px){
+.metric-list{display:flex;flex-direction:column;gap:0.9rem;}
+.mrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.mname{font-size:0.78rem;color:var(--gray-light);}
+.mval{font-size:0.85rem;font-weight:600;color:#fff;}
+.mbar-wrap{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.mbar-fill{height:100%;background:#fff;border-radius:2px;}
+.calls-panel{background:#111;border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;}
+table{width:100%;border-collapse:collapse;}
+th{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-accent);text-align:left;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);}
+td{font-size:0.78rem;color:var(--white-dim);padding:0.7rem 0.75rem;border-bottom:1px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+.tag{display:inline-flex;align-items:center;padding:0.15rem 0.55rem;border-radius:100px;font-size:0.65rem;font-weight:600;}
+.tag-green{background:rgba(74,222,128,0.1);color:var(--green);}
+.tag-red{background:rgba(248,113,113,0.1);color:#f87171;}
+.tag-amber{background:rgba(251,191,36,0.1);color:#fbbf24;}
+.tag-blue{background:rgba(96,165,250,0.1);color:var(--blue);}
+.report-box{background:#111;border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;}
+.report-month{font-family:'DM Serif Display',serif;font-size:1.25rem;letter-spacing:-0.02em;margin-bottom:0.3rem;}
+.report-sub{font-size:0.72rem;color:var(--gray-accent);margin-bottom:1rem;}
+.report-body{font-size:0.87rem;color:var(--white-dim);line-height:1.8;}
+.report-body strong{color:#fff;}
+.report-opt{margin-top:1rem;padding:0.875rem 1rem;border-left:2px solid var(--border-hover);font-size:0.82rem;color:var(--white-dim);line-height:1.7;}
+.report-opt strong{color:#fff;}
+.dash-footer{text-align:center;font-size:0.72rem;color:var(--gray-accent);padding:1.5rem 0;border-top:1px solid var(--border);}
+@media(max-width:800px){
   .kpi-grid{grid-template-columns:1fr 1fr!important;}
-  .dash-row2{grid-template-columns:1fr!important;}
-  .roi-banner{grid-template-columns:1fr!important;gap:1.5rem;}
-  .dash-content{padding:6rem 1.25rem 3rem;}
-}
-@media(max-width:500px){
-  .kpi-grid{grid-template-columns:1fr!important;}
-  .login-box{padding:2rem 1.5rem;}
+  .row2{grid-template-columns:1fr!important;}
+  .roi-strip{grid-template-columns:1fr!important;}
+  .dash-body{padding:2rem 1rem 3rem;}
 }
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
-<div id="loadingScreen">
-  <div class="loader"></div>
-  <p style="font-size:0.8rem;color:var(--gray-accent);">Loading your dashboard...</p>
-</div>
-
-<!-- LOGIN -->
-<div id="loginScreen" style="display:none;">
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="screen">
   <div class="login-box">
     <div class="login-logo">Perché AI Solutions</div>
     <div class="login-tagline">Client Performance Portal</div>
     <h1 class="login-title">Sign in to your<br>dashboard</h1>
-    <p class="login-sub">Enter the email and password you set up when you onboarded.</p>
+    <p class="login-sub">Enter the email and password you set when you were invited.</p>
     <div class="login-error" id="loginError">Incorrect email or password. Please try again.</div>
     <div class="form-group">
       <label>Email Address</label>
-      <input type="email" id="loginEmail" placeholder="your@email.com" autocomplete="email">
+      <input type="email" id="loginEmail" placeholder="you@yourbusiness.com" autocomplete="email">
     </div>
     <div class="form-group">
       <label>Password</label>
       <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
     </div>
-    <button class="btn-login" id="loginBtn" onclick="handleLogin()">Sign In &rarr;</button>
-    <div class="login-forgot">
-      <a onclick="handleForgotPassword()">Forgot your password?</a>
-    </div>
+    <button class="btn-login" id="loginBtn">Sign In &rarr;</button>
+    <div class="login-forgot"><a id="forgotLink">Forgot your password?</a></div>
   </div>
 </div>
 
 <!-- RESET PASSWORD SCREEN -->
-<div id="resetScreen" style="display:none;min-height:100vh;align-items:center;justify-content:center;padding:2rem;">
+<div id="resetScreen" class="screen">
   <div class="login-box">
     <div class="login-logo">Perché AI Solutions</div>
-    <h1 class="login-title" style="margin-top:1.5rem;">Reset your<br>password</h1>
-    <p class="login-sub">Enter your email and we'll send you a reset link.</p>
+    <h1 class="login-title" style="margin-top:1.5rem;">Reset password</h1>
+    <p class="login-sub">Enter your email and we'll send a reset link.</p>
     <div class="form-group">
       <label>Email Address</label>
-      <input type="email" id="resetEmail" placeholder="your@email.com">
+      <input type="email" id="resetEmail" placeholder="you@yourbusiness.com">
     </div>
-    <button class="btn-login" onclick="sendResetEmail()">Send Reset Link &rarr;</button>
-    <div class="login-forgot"><a onclick="showLogin()">Back to sign in</a></div>
+    <button class="btn-login" id="resetBtn">Send Reset Link &rarr;</button>
+    <div class="login-forgot"><a id="backToLogin">Back to sign in</a></div>
   </div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboardScreen" style="display:none;">
+<!-- DASHBOARD SCREEN -->
+<div id="dashScreen" class="screen">
   <nav class="dash-nav">
     <div class="dash-nav-logo">Perché AI Solutions</div>
     <div class="dash-nav-right">
-      <span class="dash-client-name" id="navClientName"></span>
-      <button class="dash-logout" onclick="handleLogout()">Sign Out</button>
+      <span class="dash-client-name" id="navName"></span>
+      <button class="btn-logout" id="logoutBtn">Sign Out</button>
     </div>
   </nav>
+  <div class="dash-body">
+    <div class="dash-greeting">Client Dashboard</div>
+    <div class="dash-bizname" id="bizName">Loading...</div>
+    <div class="dash-period" id="dashPeriod"></div>
+    <div class="status-badge"><div class="status-dot"></div>System Live &amp; Monitoring</div>
 
-  <div class="dash-content">
-    <!-- HEADER -->
-    <div class="dash-header">
-      <div class="dash-greeting">Client Dashboard</div>
-      <div class="dash-biz-name" id="bizName">Loading...</div>
-      <div class="dash-period" id="dashPeriod"></div>
-      <div class="status-badge"><div class="status-dot"></div>System Live &amp; Monitoring</div>
-    </div>
-
-    <!-- KPI GRID -->
     <div class="kpi-grid">
-      <div class="kpi-card">
-        <span class="kpi-num" id="kpiCalls">247</span>
-        <span class="kpi-label">Calls Answered by AI</span>
-        <span class="kpi-delta">↑ 100% answer rate</span>
-      </div>
-      <div class="kpi-card">
-        <span class="kpi-num" id="kpiJobs">61</span>
-        <span class="kpi-label">Jobs Booked Automatically</span>
-        <span class="kpi-delta" id="kpiJobsDelta">↑ vs last month</span>
-      </div>
-      <div class="kpi-card">
-        <span class="kpi-num" id="kpiEmergency">14</span>
-        <span class="kpi-label">Emergency Jobs Captured</span>
-        <span class="kpi-delta">↑ After-hours calls</span>
-      </div>
-      <div class="kpi-card featured">
-        <span class="kpi-num" id="kpiRevenue">$21,350</span>
-        <span class="kpi-label">Revenue Recovered</span>
-        <span class="kpi-delta">↑ AI-attributed jobs</span>
-      </div>
+      <div class="kpi"><span class="kpi-num" id="kpiCalls">247</span><span class="kpi-label">Calls Answered by AI</span><span class="kpi-delta">↑ 100% answer rate</span></div>
+      <div class="kpi"><span class="kpi-num" id="kpiJobs">61</span><span class="kpi-label">Jobs Booked Automatically</span><span class="kpi-delta" id="jobsDelta">↑ vs last month</span></div>
+      <div class="kpi"><span class="kpi-num" id="kpiEmergency">14</span><span class="kpi-label">Emergency Jobs Captured</span><span class="kpi-delta">↑ After-hours calls</span></div>
+      <div class="kpi featured"><span class="kpi-num" id="kpiRevenue">$21,350</span><span class="kpi-label">Revenue Recovered</span><span class="kpi-delta">↑ AI-attributed jobs</span></div>
     </div>
 
-    <!-- ROI BANNER -->
-    <div class="roi-banner">
-      <div class="roi-stat">
-        <span class="roi-num" id="roiHours">42 hrs</span>
-        <span class="roi-label">Dispatcher Hours Saved This Month</span>
-      </div>
-      <div class="roi-stat">
-        <span class="roi-num" id="roiAfterHours">23</span>
-        <span class="roi-label">After-Hours Jobs (Would Have Been Missed)</span>
-      </div>
-      <div class="roi-stat">
-        <span class="roi-num" id="roiInvoices">61/61</span>
-        <span class="roi-label">Invoices Sent Automatically</span>
-      </div>
+    <div class="roi-strip">
+      <div class="roi-card"><div class="roi-num" id="roiHours">42 hrs</div><div class="roi-label">Dispatcher Hours Saved</div></div>
+      <div class="roi-card"><div class="roi-num" id="roiAfterHours">23</div><div class="roi-label">After-Hours Jobs Captured</div></div>
+      <div class="roi-card"><div class="roi-num" id="roiInvoices">61/61</div><div class="roi-label">Invoices Sent Automatically</div></div>
     </div>
 
-    <!-- ROW 2 -->
-    <div class="dash-row2">
-      <!-- BAR CHART -->
-      <div class="dash-panel">
+    <div class="row2">
+      <div class="panel">
         <div class="panel-title">Calls Answered — This Month</div>
-        <div class="bar-chart" id="barChart">
-          <div class="bar-col">
-            <span class="bar-val">54</span>
-            <div class="bar" style="height:55%"></div>
-            <span class="bar-lbl">Wk 1</span>
-          </div>
-          <div class="bar-col">
-            <span class="bar-val">71</span>
-            <div class="bar" style="height:72%"></div>
-            <span class="bar-lbl">Wk 2</span>
-          </div>
-          <div class="bar-col">
-            <span class="bar-val">62</span>
-            <div class="bar" style="height:63%"></div>
-            <span class="bar-lbl">Wk 3</span>
-          </div>
-          <div class="bar-col">
-            <span class="bar-val">60</span>
-            <div class="bar active" style="height:88%"></div>
-            <span class="bar-lbl">Wk 4</span>
-          </div>
+        <div class="bar-chart">
+          <div class="bar-col"><span class="bar-val" id="w1v">54</span><div class="bar-fill" id="w1b" style="height:55%"></div><span class="bar-lbl">Wk 1</span></div>
+          <div class="bar-col"><span class="bar-val" id="w2v">71</span><div class="bar-fill active" id="w2b" style="height:72%"></div><span class="bar-lbl">Wk 2</span></div>
+          <div class="bar-col"><span class="bar-val" id="w3v">62</span><div class="bar-fill" id="w3b" style="height:63%"></div><span class="bar-lbl">Wk 3</span></div>
+          <div class="bar-col"><span class="bar-val" id="w4v">60</span><div class="bar-fill" id="w4b" style="height:61%"></div><span class="bar-lbl">Wk 4</span></div>
         </div>
       </div>
-
-      <!-- SECONDARY METRICS -->
-      <div class="dash-panel">
+      <div class="panel">
         <div class="panel-title">Performance Breakdown</div>
         <div class="metric-list">
-          <div>
-            <div class="metric-row">
-              <span class="metric-name">AI Booking Rate</span>
-              <span class="metric-val">78%</span>
-            </div>
-            <div class="metric-bar-wrap"><div class="metric-bar-fill" style="width:78%"></div></div>
-          </div>
-          <div>
-            <div class="metric-row">
-              <span class="metric-name">Call Completion Rate</span>
-              <span class="metric-val">94%</span>
-            </div>
-            <div class="metric-bar-wrap"><div class="metric-bar-fill" style="width:94%"></div></div>
-          </div>
-          <div>
-            <div class="metric-row">
-              <span class="metric-name">After-Hours Coverage</span>
-              <span class="metric-val">100%</span>
-            </div>
-            <div class="metric-bar-wrap"><div class="metric-bar-fill" style="width:100%"></div></div>
-          </div>
-          <div>
-            <div class="metric-row">
-              <span class="metric-name">Maintenance Upsell Rate</span>
-              <span class="metric-val">3.2×</span>
-            </div>
-            <div class="metric-bar-wrap"><div class="metric-bar-fill" style="width:64%"></div></div>
-          </div>
+          <div><div class="mrow"><span class="mname">AI Booking Rate</span><span class="mval">78%</span></div><div class="mbar-wrap"><div class="mbar-fill" style="width:78%"></div></div></div>
+          <div><div class="mrow"><span class="mname">Call Completion Rate</span><span class="mval">94%</span></div><div class="mbar-wrap"><div class="mbar-fill" style="width:94%"></div></div></div>
+          <div><div class="mrow"><span class="mname">After-Hours Coverage</span><span class="mval">100%</span></div><div class="mbar-wrap"><div class="mbar-fill" style="width:100%"></div></div></div>
+          <div><div class="mrow"><span class="mname">Maintenance Upsell Rate</span><span class="mval">3.2×</span></div><div class="mbar-wrap"><div class="mbar-fill" style="width:64%"></div></div></div>
         </div>
       </div>
     </div>
 
-    <!-- RECENT CALLS -->
-    <div class="dash-panel" style="margin-bottom:2rem;">
+    <div class="calls-panel">
       <div class="panel-title">Recent Calls — Last 7 Days</div>
-      <table class="calls-table">
-        <thead>
-          <tr>
-            <th>Date &amp; Time</th>
-            <th>Duration</th>
-            <th>Outcome</th>
-            <th>Type</th>
-            <th>Job Value</th>
-          </tr>
-        </thead>
-        <tbody id="callsTable">
-          <tr><td>Today, 2:14 AM</td><td>3m 42s</td><td><span class="tag booked">Booked</span></td><td><span class="tag after-hours">After Hours</span></td><td>$385</td></tr>
-          <tr><td>Yesterday, 6:47 PM</td><td>2m 18s</td><td><span class="tag booked">Booked</span></td><td>—</td><td>$420</td></tr>
-          <tr><td>Yesterday, 11:23 AM</td><td>4m 01s</td><td><span class="tag emergency">Emergency</span></td><td><span class="tag after-hours">P1</span></td><td>$850</td></tr>
-          <tr><td>2 days ago, 8:55 PM</td><td>1m 52s</td><td><span class="tag booked">Booked</span></td><td><span class="tag after-hours">After Hours</span></td><td>$310</td></tr>
-          <tr><td>2 days ago, 3:30 PM</td><td>0m 45s</td><td><span class="tag missed">Not Booked</span></td><td>—</td><td>—</td></tr>
-          <tr><td>3 days ago, 7:12 AM</td><td>2m 58s</td><td><span class="tag booked">Booked</span></td><td>—</td><td>$395</td></tr>
-          <tr><td>3 days ago, 10:44 PM</td><td>3m 11s</td><td><span class="tag booked">Booked</span></td><td><span class="tag after-hours">After Hours</span></td><td>$440</td></tr>
+      <table>
+        <thead><tr><th>Date &amp; Time</th><th>Duration</th><th>Outcome</th><th>Type</th><th>Job Value</th></tr></thead>
+        <tbody>
+          <tr><td>Today, 2:14 AM</td><td>3m 42s</td><td><span class="tag tag-green">Booked</span></td><td><span class="tag tag-blue">After Hours</span></td><td>$385</td></tr>
+          <tr><td>Yesterday, 6:47 PM</td><td>2m 18s</td><td><span class="tag tag-green">Booked</span></td><td>—</td><td>$420</td></tr>
+          <tr><td>Yesterday, 11:23 AM</td><td>4m 01s</td><td><span class="tag tag-amber">Emergency</span></td><td><span class="tag tag-amber">P1</span></td><td>$850</td></tr>
+          <tr><td>2 days ago, 8:55 PM</td><td>1m 52s</td><td><span class="tag tag-green">Booked</span></td><td><span class="tag tag-blue">After Hours</span></td><td>$310</td></tr>
+          <tr><td>2 days ago, 3:30 PM</td><td>0m 45s</td><td><span class="tag tag-red">Not Booked</span></td><td>—</td><td>—</td></tr>
+          <tr><td>3 days ago, 10:44 PM</td><td>3m 11s</td><td><span class="tag tag-green">Booked</span></td><td><span class="tag tag-blue">After Hours</span></td><td>$440</td></tr>
         </tbody>
       </table>
     </div>
 
-    <!-- MONTHLY REPORT -->
     <div class="report-box">
       <div class="report-month" id="reportMonth">April 2025 — Performance Report</div>
-      <div class="report-sub">Delivered by Perché AI Solutions · Generated automatically on the 1st</div>
-      <div class="report-text" id="reportText">
-        Your AI system handled <strong>247 inbound calls</strong> this month with a 100% answer rate. 
-        Of those, <strong>61 jobs were booked automatically</strong> — up from 38 last month. 
-        <strong>14 emergency calls</strong> were flagged and escalated appropriately. 
-        <strong>23 jobs were booked after 5 PM or on weekends</strong> — calls that would have gone to voicemail without the AI. 
-        Total estimated revenue attributed to AI-booked jobs: <strong>$21,350</strong>. 
-        Your dispatcher saved an estimated <strong>42 hours</strong> of manual routing and follow-up.
-      </div>
-      <div class="report-optimization" id="reportOptimization">
-        <strong>This month we optimized:</strong> Updated the emergency escalation script to better detect 
-        "no heat" and "flooding" keywords — emergency capture rate improved from 71% to 94%.<br><br>
-        <strong>Next month we're working on:</strong> Adding seasonal tune-up reminder sequences for your 
-        maintenance agreement customers before summer peak season.
-      </div>
+      <div class="report-sub">Delivered by Perché AI Solutions · Auto-sent on the 1st of every month</div>
+      <div class="report-body" id="reportBody">Loading...</div>
+      <div class="report-opt" id="reportOpt"></div>
     </div>
 
     <div class="dash-footer">
-      Perché AI Solutions &nbsp;·&nbsp; (614) 323-3534 &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="68180d1a0b000d1b07041d1c0107061b280f05090104460b0705">[email&#160;protected]</a><br>
-      <span style="margin-top:0.5rem;display:block;">Questions about your report? Reply to your monthly email or call us directly.</span>
+      Perché AI Solutions &nbsp;·&nbsp; (614) 323-3534 &nbsp;·&nbsp; p&#101;rch&#101;solutions&#64;gmail&#46;com
     </div>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── CLIENT DATA ────────────────────────────────────────────────
+<script>
+var GOTRUE = 'https://perchesolutions.com/.netlify/identity';
+
 var CLIENT_DATA = {
   'demo@perchesolutions.com': {
-    bizName: 'Demo Client — Riverside HVAC',
-    plan: 'Growth',
-    calls: 247, jobs: 61, emergency: 14, revenue: '$21,350',
-    hours: '42 hrs', afterHours: 23, invoices: '61/61',
-    weeks: [54, 71, 62, 60],
-    weekPcts: ['55%','72%','63%','88%'],
-    optimization: 'Updated emergency escalation script — emergency capture rate improved from 71% to 94%.',
-    nextMonth: 'Adding seasonal tune-up reminder sequences for maintenance agreement customers.'
+    bizName:'Demo — Riverside HVAC',plan:'Growth',
+    calls:247,jobs:61,emergency:14,revenue:'$21,350',
+    hours:'42 hrs',afterHours:23,invoices:'61/61',
+    weeks:[54,71,62,60],pcts:['55%','72%','63%','61%'],
+    opt:'Updated emergency escalation script — capture rate improved from 71% to 94%.',
+    next:'Adding seasonal tune-up reminders for maintenance agreement customers.'
   }
 };
 
-// ── GOTRUE API — direct login, no widget needed ─────────────────
-var GOTRUE_URL = 'https://perchesolutions.com/.netlify/identity';
-
-function getMonth() {
-  var d = new Date();
-  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  return months[d.getMonth()] + ' ' + d.getFullYear();
+function getMonth(){
+  var m=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var d=new Date(); return m[d.getMonth()]+' '+d.getFullYear();
 }
 
-function showLoading() {
-  document.getElementById('loadingScreen').style.display = 'flex';
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('dashboardScreen').style.display = 'none';
-  document.getElementById('resetScreen').style.display = 'none';
-}
-function showLogin() {
-  document.getElementById('loadingScreen').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('dashboardScreen').style.display = 'none';
-  document.getElementById('resetScreen').style.display = 'none';
-}
-function showDashboard(user) {
-  document.getElementById('loadingScreen').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('resetScreen').style.display = 'none';
-  document.getElementById('dashboardScreen').style.display = 'block';
-  populateDashboard(user);
-}
-function showReset() {
-  document.getElementById('loadingScreen').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('dashboardScreen').style.display = 'none';
-  document.getElementById('resetScreen').style.display = 'flex';
-}
-
-function populateDashboard(user) {
-  var email = user.email;
-  var data = CLIENT_DATA[email] || CLIENT_DATA['demo@perchesolutions.com'];
-  document.getElementById('navClientName').textContent = data.bizName;
-  document.getElementById('bizName').textContent = data.bizName;
-  document.getElementById('dashPeriod').textContent = getMonth() + ' · ' + data.plan + ' Plan';
-  document.getElementById('kpiCalls').textContent = data.calls;
-  document.getElementById('kpiJobs').textContent = data.jobs;
-  document.getElementById('kpiEmergency').textContent = data.emergency;
-  document.getElementById('kpiRevenue').textContent = data.revenue;
-  document.getElementById('roiHours').textContent = data.hours;
-  document.getElementById('roiAfterHours').textContent = data.afterHours;
-  document.getElementById('roiInvoices').textContent = data.invoices;
-  document.getElementById('reportMonth').textContent = getMonth() + ' — Performance Report';
-  var bars = document.querySelectorAll('.bar');
-  var vals = document.querySelectorAll('.bar-val');
-  data.weekPcts.forEach(function(p, i) { if(bars[i]) bars[i].style.height = p; });
-  data.weeks.forEach(function(v, i) { if(vals[i]) vals[i].textContent = v; });
-  document.getElementById('reportText').innerHTML =
-    'Your AI system handled <strong>' + data.calls + ' inbound calls</strong> this month with a 100% answer rate. ' +
-    'Of those, <strong>' + data.jobs + ' jobs were booked automatically</strong>. ' +
-    '<strong>' + data.emergency + ' emergency calls</strong> were flagged and escalated. ' +
-    '<strong>' + data.afterHours + ' jobs were booked after hours</strong> — calls that would have gone to voicemail. ' +
-    'Total estimated revenue attributed to AI: <strong>' + data.revenue + '</strong>. ' +
-    'Your dispatcher saved an estimated <strong>' + data.hours + '</strong> of manual routing this month.';
-  document.getElementById('reportOptimization').innerHTML =
-    '<strong>This month we optimized:</strong> ' + data.optimization + '<br><br>' +
-    '<strong>Next month we're working on:</strong> ' + data.nextMonth;
-}
-
-// ── LOGIN with GoTrue API directly ──────────────────────────────
-function handleLogin() {
-  var email = document.getElementById('loginEmail').value.trim();
-  var password = document.getElementById('loginPassword').value;
-  var btn = document.getElementById('loginBtn');
-  var err = document.getElementById('loginError');
-  if (!email || !password) {
-    err.textContent = 'Please enter your email and password.';
-    err.style.display = 'block';
-    return;
-  }
-  btn.disabled = true;
-  btn.textContent = 'Signing in...';
-  err.style.display = 'none';
-
-  fetch(GOTRUE_URL + '/token?grant_type=password', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email, password: password })
-  })
-  .then(function(res) { return res.json(); })
-  .then(function(data) {
-    if (data.access_token) {
-      // Store session
-      localStorage.setItem('gotrue.user', JSON.stringify({
-        email: email,
-        token: data.access_token,
-        expires_at: Date.now() + (data.expires_in * 1000)
-      }));
-      showDashboard({ email: email });
-    } else {
-      throw new Error(data.error_description || 'Login failed');
-    }
-  })
-  .catch(function(e) {
-    err.textContent = 'Incorrect email or password. Please try again.';
-    err.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = 'Sign In →';
+function show(id){
+  ['loginScreen','resetScreen','dashScreen'].forEach(function(s){
+    var el=document.getElementById(s);
+    el.classList.remove('active');
   });
+  document.getElementById(id).classList.add('active');
 }
 
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
-    handleLogin();
-  }
+function populate(email){
+  var d=CLIENT_DATA[email]||CLIENT_DATA['demo@perchesolutions.com'];
+  document.getElementById('navName').textContent=d.bizName;
+  document.getElementById('bizName').textContent=d.bizName;
+  document.getElementById('dashPeriod').textContent=getMonth()+' · '+d.plan+' Plan';
+  document.getElementById('kpiCalls').textContent=d.calls;
+  document.getElementById('kpiJobs').textContent=d.jobs;
+  document.getElementById('kpiEmergency').textContent=d.emergency;
+  document.getElementById('kpiRevenue').textContent=d.revenue;
+  document.getElementById('roiHours').textContent=d.hours;
+  document.getElementById('roiAfterHours').textContent=d.afterHours;
+  document.getElementById('roiInvoices').textContent=d.invoices;
+  document.getElementById('reportMonth').textContent=getMonth()+' — Performance Report';
+  document.getElementById('w1v').textContent=d.weeks[0]; document.getElementById('w1b').style.height=d.pcts[0];
+  document.getElementById('w2v').textContent=d.weeks[1]; document.getElementById('w2b').style.height=d.pcts[1];
+  document.getElementById('w3v').textContent=d.weeks[2]; document.getElementById('w3b').style.height=d.pcts[2];
+  document.getElementById('w4v').textContent=d.weeks[3]; document.getElementById('w4b').style.height=d.pcts[3];
+  document.getElementById('reportBody').innerHTML='Your AI system handled <strong>'+d.calls+' inbound calls</strong> this month with a 100% answer rate. Of those, <strong>'+d.jobs+' jobs were booked automatically</strong>. <strong>'+d.emergency+' emergency calls</strong> were flagged. <strong>'+d.afterHours+' after-hours jobs</strong> captured. Revenue attributed to AI: <strong>'+d.revenue+'</strong>.';
+  document.getElementById('reportOpt').innerHTML='<strong>This month we optimized:</strong> '+d.opt+'<br><br><strong>Next month:</strong> '+d.next;
+}
+
+// LOGIN
+document.getElementById('loginBtn').addEventListener('click', function(){
+  var email=document.getElementById('loginEmail').value.trim();
+  var pass=document.getElementById('loginPassword').value;
+  var err=document.getElementById('loginError');
+  var btn=document.getElementById('loginBtn');
+  if(!email||!pass){err.style.display='block';err.textContent='Please enter your email and password.';return;}
+  btn.disabled=true; btn.textContent='Signing in...'; err.style.display='none';
+  fetch(GOTRUE+'/token?grant_type=password',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:email,password:pass})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(data.access_token){
+      localStorage.setItem('perche_session',JSON.stringify({email:email,exp:Date.now()+(data.expires_in||3600)*1000}));
+      populate(email); show('dashScreen');
+    } else {
+      throw new Error('bad credentials');
+    }
+  }).catch(function(){
+    err.style.display='block'; err.textContent='Incorrect email or password. Please try again.';
+    btn.disabled=false; btn.textContent='Sign In →';
+  });
 });
 
-// ── FORGOT PASSWORD ──────────────────────────────────────────────
-function handleForgotPassword() { showReset(); }
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&document.getElementById('loginScreen').classList.contains('active')) document.getElementById('loginBtn').click();
+});
 
-function sendResetEmail() {
-  var email = document.getElementById('resetEmail').value.trim();
-  if (!email) return;
-  fetch(GOTRUE_URL + '/recover', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email })
-  })
-  .then(function() {
-    alert('Password reset email sent to ' + email + '. Check your inbox.');
-    showLogin();
-  })
-  .catch(function() {
-    alert('Something went wrong. Please email perchesolutions@gmail.com for help.');
-  });
-}
+// LOGOUT
+document.getElementById('logoutBtn').addEventListener('click',function(){
+  localStorage.removeItem('perche_session'); show('loginScreen');
+});
 
-// ── LOGOUT ───────────────────────────────────────────────────────
-function handleLogout() {
-  localStorage.removeItem('gotrue.user');
-  showLogin();
-}
+// FORGOT / RESET
+document.getElementById('forgotLink').addEventListener('click',function(){ show('resetScreen'); });
+document.getElementById('backToLogin').addEventListener('click',function(){ show('loginScreen'); });
+document.getElementById('resetBtn').addEventListener('click',function(){
+  var email=document.getElementById('resetEmail').value.trim();
+  if(!email) return;
+  fetch(GOTRUE+'/recover',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})})
+  .then(function(){ alert('Reset link sent to '+email+'. Check your inbox.'); show('loginScreen'); })
+  .catch(function(){ alert('Something went wrong. Email perchesolutions@gmail.com for help.'); });
+});
 
-// ── INIT — check for saved session ──────────────────────────────
-(function() {
+// INIT — runs immediately, no waiting
+(function(){
   // Check for invite/recovery token
-  var h = window.location.hash || '';
-  if (h.indexOf('invite_token') > -1 || h.indexOf('recovery_token') > -1) {
-    // Let the Netlify Identity widget handle this
-    showLoading();
-    var s = document.createElement('script');
-    s.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
-    s.onload = function() {
-      window.netlifyIdentity.on('login', function(user) {
-        localStorage.setItem('gotrue.user', JSON.stringify({ email: user.email }));
-        showDashboard(user);
+  var h=window.location.hash||'';
+  if(h.indexOf('invite_token')>-1||h.indexOf('recovery_token')>-1){
+    // Load identity widget just for token handling
+    var s=document.createElement('script');
+    s.src='https://identity.netlify.com/v1/netlify-identity-widget.js';
+    s.onload=function(){
+      window.netlifyIdentity.on('login',function(u){
+        localStorage.setItem('perche_session',JSON.stringify({email:u.email,exp:Date.now()+3600000}));
+        populate(u.email); show('dashScreen');
       });
-      window.netlifyIdentity.init({ logo: false });
+      window.netlifyIdentity.init({logo:false});
     };
     document.head.appendChild(s);
     return;
   }
-
-  // Check for saved session
-  try {
-    var saved = JSON.parse(localStorage.getItem('gotrue.user') || 'null');
-    if (saved && saved.email && saved.expires_at && Date.now() < saved.expires_at) {
-      showDashboard(saved);
-      return;
-    }
-  } catch(e) {}
-
-  showLogin();
+  // Check saved session
+  try{
+    var s=JSON.parse(localStorage.getItem('perche_session')||'null');
+    if(s&&s.email&&s.exp&&Date.now()<s.exp){ populate(s.email); show('dashScreen'); return; }
+  }catch(e){}
+  // Default: show login
+  show('loginScreen');
 })();
 </script>
 </body>
