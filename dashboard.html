@@ -172,9 +172,12 @@ tr:last-child td{border-bottom:none;}
 </div>
 
 <script>
+var SCRIPT_URL =  + SCRIPT_URL + ;
+
+// Fallback static data while live data loads
 var CLIENT_DATA = {
   'demo@perchesolutions.com': {
-    bizName:'Demo — Riverside HVAC',plan:'Growth',
+    bizName:'Summit Air Demo',plan:'Growth',
     calls:247,jobs:61,emergency:14,revenue:'$21,350',
     hours:'42 hrs',afterHours:23,invoices:'61/61',
     weeks:[54,71,62,60],pcts:['55%','72%','63%','61%'],
@@ -182,6 +185,20 @@ var CLIENT_DATA = {
     next:'Adding seasonal tune-up reminders for maintenance agreement customers.'
   }
 };
+
+function fetchLiveData(email, callback) {
+  var url = SCRIPT_URL + '?email=' + encodeURIComponent(email);
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(data.status === 'success') {
+        callback(null, data);
+      } else {
+        callback('No live data', null);
+      }
+    })
+    .catch(function(e){ callback(e, null); });
+}
 
 function getMonth(){
   var m=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -194,11 +211,10 @@ function show(id){
   if(el) el.classList.add('active');
 }
 
-function populate(email){
-  var d=CLIENT_DATA[email]||CLIENT_DATA['demo@perchesolutions.com'];
+function populateFromData(d) {
   document.getElementById('navName').textContent=d.bizName;
   document.getElementById('bizName').textContent=d.bizName;
-  document.getElementById('dashPeriod').textContent=getMonth()+' · '+d.plan+' Plan';
+  document.getElementById('dashPeriod').textContent=getMonth()+' · '+(d.plan||'Starter')+' Plan';
   document.getElementById('kpiCalls').textContent=d.calls;
   document.getElementById('kpiJobs').textContent=d.jobs;
   document.getElementById('kpiEmergency').textContent=d.emergency;
@@ -212,7 +228,54 @@ function populate(email){
   document.getElementById('w3v').textContent=d.weeks[2]; document.getElementById('w3b').style.height=d.pcts[2];
   document.getElementById('w4v').textContent=d.weeks[3]; document.getElementById('w4b').style.height=d.pcts[3];
   document.getElementById('reportBody').innerHTML='Your AI system handled <strong>'+d.calls+' inbound calls</strong> this month with a 100% answer rate. Of those, <strong>'+d.jobs+' jobs were booked automatically</strong>. <strong>'+d.emergency+' emergency calls</strong> were flagged. <strong>'+d.afterHours+' after-hours jobs</strong> captured. Revenue attributed to AI: <strong>'+d.revenue+'</strong>.';
-  document.getElementById('reportOpt').innerHTML='<strong>This month we optimized:</strong> '+d.opt+'<br><br><strong>Next month:</strong> '+d.next;
+  document.getElementById('reportOpt').innerHTML='<strong>This month we optimized:</strong> '+(d.opt||'System running smoothly.')+'<br><br><strong>Next month:</strong> '+(d.next||'Continued optimization.');
+}
+
+function populate(email){
+  // Show static data immediately
+  var fallback = CLIENT_DATA[email] || CLIENT_DATA['demo@perchesolutions.com'];
+  populateFromData(fallback);
+
+  // Then fetch live data from Google Sheet
+  fetchLiveData(email, function(err, liveData) {
+    if (err || !liveData) return; // keep showing static data
+    var kpis = liveData.kpis;
+    var weeks = liveData.weeks || [0,0,0,0];
+    var maxWeek = Math.max.apply(null, weeks) || 1;
+    var pcts = weeks.map(function(w){ return Math.round((w/maxWeek)*90)+'%'; });
+    var d = {
+      bizName: liveData.bizName || fallback.bizName,
+      plan: fallback.plan,
+      calls: kpis.totalCalls,
+      jobs: kpis.jobsBooked,
+      emergency: kpis.emergencyJobs,
+      revenue: kpis.revenue,
+      hours: kpis.dispatcherHours,
+      afterHours: kpis.afterHoursCalls,
+      invoices: kpis.invoicesSent,
+      weeks: weeks,
+      pcts: pcts,
+      opt: fallback.opt,
+      next: fallback.next
+    };
+    populateFromData(d);
+
+    // Update recent calls table if data exists
+    if (liveData.recentCalls && liveData.recentCalls.length > 0) {
+      var tbody = document.getElementById('callsTable');
+      if (tbody) {
+        tbody.innerHTML = liveData.recentCalls.map(function(c){
+          var outcomeTag = (c.outcome||'').indexOf('Booked') > -1
+            ? '<span class="tag tag-green">Booked</span>'
+            : (c.emergency === 'YES'
+              ? '<span class="tag tag-amber">Emergency</span>'
+              : '<span class="tag tag-red">Not Booked</span>');
+          var typeTag = c.afterHours === 'YES' ? '<span class="tag tag-blue">After Hours</span>' : '—';
+          return '<tr><td>'+c.date+', '+c.time+'</td><td>—</td><td>'+outcomeTag+'</td><td>'+typeTag+'</td><td>—</td></tr>';
+        }).join('');
+      }
+    }
+  });
 }
 
 function logout(){

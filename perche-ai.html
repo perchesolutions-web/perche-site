@@ -1,7 +1,33 @@
 <!DOCTYPE html>
-<!-- deploy:1775767543 -->
+<!-- deploy:1775768872 -->
 <html lang="en">
 <head>
+<script>
+// Run immediately - before any other script loads
+// If this is an identity token URL, replace entire page with minimal handler
+(function(){
+  var h = window.location.hash || '';
+  if(h.indexOf('invite_token') > -1 || h.indexOf('recovery_token') > -1 || h.indexOf('confirmation_token') > -1){
+    document.addEventListener('DOMContentLoaded', function(){
+      document.body.innerHTML = '<div style="min-height:100vh;background:#0A0A0A;display:flex;align-items:center;justify-content:center;font-family:sans-serif;"><p style="color:#666;font-size:14px;">Setting up your account...</p></div>';
+    });
+  }
+})();
+</script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+window.addEventListener('load', function(){
+  var h = window.location.hash || '';
+  if(h.indexOf('invite_token') > -1 || h.indexOf('recovery_token') > -1 || h.indexOf('confirmation_token') > -1){
+    // Replace page with clean identity handler
+    document.documentElement.innerHTML = '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Account Setup — Perché AI</title><script src=\"https://identity.netlify.com/v1/netlify-identity-widget.js\"><\/script></head><body style=\"min-height:100vh;background:#0A0A0A;display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#fff;\"><p style=\"color:#666;font-size:14px;\">Loading account setup...</p><script>window.netlifyIdentity&&window.netlifyIdentity.on(\"login\",function(){window.location.href=\"/dashboard.html\"});<\/script></body></html>';
+    return;
+  }
+  if(window.netlifyIdentity){
+    window.netlifyIdentity.on('login', function(){ window.location.href = '/dashboard.html'; });
+  }
+});
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Perché AI Solutions — AI That Actually Works for Home Service Pros</title>
@@ -315,34 +341,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
   .cs-cta-box p{font-size:1rem;color:var(--white-dim);}
   @media(max-width:900px){.cs-grid{grid-template-columns:1fr!important;}.cs-stats{grid-template-columns:1fr 1fr;}}
 </style>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-// Netlify Identity — handle invite and recovery tokens
-(function(){
-  var hash = window.location.hash || '';
-  var search = window.location.search || '';
-  var hasToken = (
-    hash.indexOf('invite_token') > -1 ||
-    hash.indexOf('recovery_token') > -1 ||
-    hash.indexOf('confirmation_token') > -1 ||
-    search.indexOf('invite_token') > -1 ||
-    search.indexOf('recovery_token') > -1 ||
-    search.indexOf('confirmation_token') > -1
-  );
-  if(hasToken){
-    // Redirect to dashboard which has the full identity widget
-    window.location.replace('/dashboard.html' + window.location.hash + window.location.search);
-    return;
-  }
-  window.addEventListener('load', function(){
-    if(window.netlifyIdentity){
-      window.netlifyIdentity.on('login', function(){
-        window.location.href = '/dashboard.html';
-      });
-    }
-  });
-})();
-</script>
+
 </head>
 <body>
 <div class="mobile-nav" id="mobileNav">
@@ -733,7 +732,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     <div class="contact-layout">
       <div class="contact-details">
         <div class="contact-detail"><div class="cd-icon">PH</div><span><strong>Phone:</strong> <a href="tel:6143233534" style="color:#60a5fa;text-decoration:none;">(614) 323-3534</a></span></div>
-        <div class="contact-detail"><div class="cd-icon">EM</div><span><strong>Email:</strong> <a href="mailto:perchesolutions@gmail.com" style="color:#60a5fa;text-decoration:none;">p&#101;rch&#101;solutions&#64;gmail&#46;com</a></span></div>
+        <div class="contact-detail"><div class="cd-icon">EM</div><span><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#9aeaffe8f9f2ffe9f5f6efeef3f5f4e9dafdf7fbf3f6b4f9f5f7" style="color:#60a5fa;text-decoration:none;">p&#101;rch&#101;solutions&#64;gmail&#46;com</a></span></div>
         <div class="contact-detail"><div class="cd-icon">RS</div><span>Response within <strong>one business day</strong></span></div>
         <div class="contact-detail"><div class="cd-icon">SV</div><span>Serving contractors <strong>nationwide</strong></span></div>
       </div>
@@ -752,7 +751,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
       </div>
       <div class="footer-col"><h6>Services</h6><ul><li><a href="#services">AI Receptionist</a></li><li><a href="#services">Smart Dispatch</a></li><li><a href="#services">Maintenance Engine</a></li><li><a href="#services">Lead-to-Cash</a></li><li><a href="#services">Managed Retainer</a></li></ul></div>
       <div class="footer-col"><h6>Company</h6><ul><li><a href="#how-it-works">How It Works</a></li><li><a href="#results">Results</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#about">About Us</a></li><li><a href="#faq">FAQ</a></li></ul></div>
-      <div class="footer-col"><h6>Contact</h6><ul><li><a href="#contact">Free Audit</a></li><li><a href="mailto:perchesolutions@gmail.com" style="color:#60a5fa;text-decoration:none;">p&#101;rch&#101;solutions&#64;gmail&#46;com</a></li></ul></div>
+      <div class="footer-col"><h6>Contact</h6><ul><li><a href="#contact">Free Audit</a></li><li><a href="/cdn-cgi/l/email-protection#68180d1a0b000d1b07041d1c0107061b280f05090104460b0705" style="color:#60a5fa;text-decoration:none;">p&#101;rch&#101;solutions&#64;gmail&#46;com</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">&copy; 2025 Perché AI Solutions &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:var(--gray-accent);text-decoration:none;">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="terms.html" style="color:var(--gray-accent);text-decoration:none;">Terms of Service</a></span>
@@ -760,7 +759,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     </div>
   </div>
 </footer>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
