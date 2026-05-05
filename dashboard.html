@@ -234,7 +234,7 @@ function populateFromData(d) {
 function populate(email){
   // Show static data immediately
   var fallback = CLIENT_DATA[email] || CLIENT_DATA['demo@perchesolutions.com'];
-  populateFromData(fallback);
+  // populateFromData(fallback); // skip to avoid demo flash
 
   // Then fetch live data from Google Sheet
   fetchLiveData('demo@perchesolutions.com', function(err, liveData) {
