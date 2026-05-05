@@ -172,7 +172,7 @@ tr:last-child td{border-bottom:none;}
 </div>
 
 <script>
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5Uvm-t97yINIxrjGof3vaAfR7kpe0koyivrnewqhE_e2mm6NsPv47PORiZO8DOHcWCA/exec';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwe9XxzuqmD78vVf253pPgQLAUy2uI-EZGiEouR59JELU-6I4zXLlNN1nLab0liBhzimQ/exec';
 
 // Fallback static data while live data loads
 var CLIENT_DATA = {
@@ -186,7 +186,7 @@ var CLIENT_DATA = {
   }
 };
 
-function fetchLiveData(email, callback) {
+function fetchLiveData('demo@perchesolutions.com', callback) {
   var url = SCRIPT_URL + '?email=' + encodeURIComponent(email);
   fetch(url)
     .then(function(r){ return r.json(); })
@@ -237,7 +237,7 @@ function populate(email){
   populateFromData(fallback);
 
   // Then fetch live data from Google Sheet
-  fetchLiveData(email, function(err, liveData) {
+  fetchLiveData('demo@perchesolutions.com', function(err, liveData) {
     if (err || !liveData) return; // keep showing static data
     var kpis = liveData.kpis;
     var weeks = liveData.weeks || [0,0,0,0];
