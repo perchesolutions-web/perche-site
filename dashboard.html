@@ -186,7 +186,7 @@ var CLIENT_DATA = {
   }
 };
 
-function fetchLiveData('demo@perchesolutions.com', callback) {
+function fetchLiveData(email, callback) {
   var url = SCRIPT_URL + '?email=' + encodeURIComponent(email);
   fetch(url)
     .then(function(r){ return r.json(); })
