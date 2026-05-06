@@ -111,7 +111,7 @@ button{cursor:pointer;font-family:var(--font-sans);}
 .logos{padding:2.5rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .logos-in{display:flex;align-items:center;gap:3rem;flex-wrap:wrap;justify-content:center;}
 .logos-lbl{font-size:.68rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-right:.5rem;}
-.crm{font-size:.78rem;font-weight:500;color:var(--muted);letter-spacing:.04em;opacity:.45;transition:opacity .2s;}
+.crm{font-size:.78rem;font-weight:500;color:rgba(255,255,255,0.6);letter-spacing:.04em;transition:opacity .2s;}
 .crm:hover{opacity:1;}
 
 /* MISSED REV */
@@ -200,8 +200,8 @@ button{cursor:pointer;font-family:var(--font-sans);}
 .bfill{width:100%;border-radius:2px 2px 0 0;}
 .blit{background:var(--white);}
 .bdim{background:rgba(255,255,255,.2);}
-.blbl{font-size:.6rem;color:var(--muted);}
-.bval{font-size:.75rem;font-weight:500;}
+.blbl{font-size:.72rem;color:var(--muted);}
+.bval{font-size:1.4rem;font-weight:300;font-family:var(--font-serif);}
 .mets{display:flex;flex-direction:column;gap:.9rem;}
 .met{display:flex;flex-direction:column;gap:.35rem;}
 .mrow{display:flex;justify-content:space-between;}
@@ -328,12 +328,12 @@ button{cursor:pointer;font-family:var(--font-sans);}
 .fu.v{opacity:1;transform:none;}
 
 /* RESPONSIVE */
-@media(max-width:1000px){
+@media(max-width:1000px){.hhl{text-align:center;}.hbadge{display:flex;justify-content:center;}.hsub{text-align:center;max-width:100%;}.hbtns{justify-content:center;}.hproof{justify-content:center;}.cgrid .fu:first-child{display:flex;flex-direction:column;align-items:center;text-align:center;}.cgrid .crow{width:100%;}.cgrid .bp{align-self:center;}.cgrid .proc{text-align:left;width:100%;}
   .nav-links,.nbtn{display:none;}
   .hmb{display:block;}
   .wrap{padding:0 1.5rem;}
   .nav,.nav.s{padding:1.25rem 1.5rem;}
-  .hgrid,.mgrid,.ggrid,.cgrid{grid-template-columns:1fr!important;gap:3rem;}
+  .hgrid,.mgrid,.ggrid,.cgrid{grid-template-columns:1fr!important;gap:3rem;}.cgrid .cdet{align-items:flex-start;}.cgrid .crow{flex-direction:row;text-align:left;}
   .steps,.sgrid{grid-template-columns:1fr 1fr;}
   .krow{grid-template-columns:1fr 1fr;}
   .dbot{grid-template-columns:1fr;}
@@ -343,7 +343,7 @@ button{cursor:pointer;font-family:var(--font-sans);}
   .igrid{grid-template-columns:1fr 1fr;}
   .trial-box{grid-template-columns:1fr;gap:1.5rem;}
   .ftop{grid-template-columns:1fr 1fr;}
-  .sec{padding:5rem 0;}
+  .sec{padding:5rem 0;}.cdet{align-items:center;}.crow{flex-direction:column;align-items:center;text-align:center;}.crow strong,.crow span{text-align:center;}.proc{text-align:left;}
   .hero{padding:8rem 0 5rem;}
   .frow2{grid-template-columns:1fr;}
   .dgrid{grid-template-columns:1fr;}
@@ -893,7 +893,6 @@ button{cursor:pointer;font-family:var(--font-sans);}
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="dashboard.html">Client Login</a></li>
-          <li><a href="onboarding.html">Onboarding</a></li>
           <li><a href="privacy.html">Privacy Policy</a></li>
           <li><a href="terms.html">Terms of Service</a></li>
         </ul>
