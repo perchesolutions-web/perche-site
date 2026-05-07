@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Perché AI — AI Receptionist for Home Service Businesses</title>
-<meta name="description" content="Never miss another service call. Perché AI answers every call 24/7, books jobs automatically, and syncs to your CRM. Try it live right now.">
+<meta name="description" content="AI receptionist that answers every call 24/7, books jobs, and syncs to your CRM. Built for HVAC, plumbing, roofing, and electrical contractors.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
@@ -12,407 +12,449 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --black:#000;--s1:#0f0f0f;--s2:#171717;--s3:#1f1f1f;
+  --black:#000;--s1:#0d0d0d;--s2:#161616;--s3:#1e1e1e;
   --b1:rgba(255,255,255,.07);--b2:rgba(255,255,255,.13);--b3:rgba(255,255,255,.22);
-  --white:#fff;--d1:rgba(255,255,255,.78);--d2:rgba(255,255,255,.48);--d3:rgba(255,255,255,.28);
-  --green:#4ade80;--gbg:rgba(74,222,128,.08);--gborder:rgba(74,222,128,.18);
-  --red:#ef4444;--rbg:rgba(239,68,68,.08);--rborder:rgba(239,68,68,.18);
-  --serif:'Fraunces',serif;--sans:'Geist',sans-serif;
+  --white:#fff;--d1:rgba(255,255,255,.72);--d2:rgba(255,255,255,.42);--d3:rgba(255,255,255,.22);
+  --green:#4ade80;--gbg:rgba(74,222,128,.08);--gbr:rgba(74,222,128,.18);
+  --red:#ef4444;--rbg:rgba(239,68,68,.08);--rbr:rgba(239,68,68,.2);
+  --ff:'Fraunces',serif;--fs:'Geist',sans-serif;
   --r:6px;--rl:12px;
 }
 html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--white);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body{background:var(--black);color:var(--white);font-family:var(--fs);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 a{color:inherit;text-decoration:none;}
-button{cursor:pointer;font-family:var(--sans);}
-::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(--black);}::-webkit-scrollbar-thumb{background:var(--b2);}
+button{cursor:pointer;font-family:var(--fs);}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--b2);}
 
-/* ── NAV ── */
+/* NAV */
 .nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:1.4rem 3rem;display:flex;align-items:center;justify-content:space-between;transition:all .3s;}
 .nav.s{background:rgba(0,0,0,.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--b1);padding:1rem 3rem;}
-.logo{font-family:var(--serif);font-size:1.25rem;font-weight:400;}
+.logo{font-family:var(--ff);font-size:1.3rem;font-weight:400;}
 .logo em{color:var(--green);font-style:normal;}
-.navlinks{display:flex;align-items:center;gap:2.25rem;}
-.navlinks a{font-size:.8rem;color:var(--d2);letter-spacing:.02em;transition:color .2s;}
-.navlinks a:hover{color:var(--white);}
-.navlinks a.hi{color:var(--green);}
-.navcta{background:var(--white);color:var(--black);border:none;border-radius:var(--r);padding:.6rem 1.4rem;font-size:.8rem;font-weight:600;font-family:var(--sans);transition:all .2s;}
-.navcta:hover{background:rgba(255,255,255,.88);}
+.nl{display:flex;align-items:center;gap:2.5rem;}
+.nl a{font-size:.8rem;color:var(--d2);letter-spacing:.02em;transition:color .2s;}
+.nl a:hover{color:var(--white);}
+.nl a.ac{color:var(--green);}
+.nbtn{background:var(--white);color:var(--black);border:none;border-radius:var(--r);padding:.55rem 1.4rem;font-size:.8rem;font-weight:600;font-family:var(--fs);transition:all .2s;}
+.nbtn:hover{background:rgba(255,255,255,.88);}
 .hmb{display:none;background:none;border:none;color:var(--white);font-size:1.4rem;}
 .mm{display:none;position:fixed;inset:0;background:var(--black);z-index:899;padding:5rem 2rem 2rem;flex-direction:column;gap:1.75rem;}
 .mm.o{display:flex;}
-.mm a{font-family:var(--serif);font-size:1.75rem;border-bottom:1px solid var(--b1);padding-bottom:1.25rem;}
-.mm .navcta{width:100%;text-align:center;padding:1rem;font-size:1rem;margin-top:1rem;}
+.mm a{font-family:var(--ff);font-size:1.6rem;border-bottom:1px solid var(--b1);padding-bottom:1.25rem;}
+.mm .nbtn{width:100%;text-align:center;padding:1rem;font-size:1rem;margin-top:.5rem;}
 
-/* ── LAYOUT ── */
-.wrap{max-width:1160px;margin:0 auto;padding:0 3rem;}
-.sec{padding:6rem 0;position:relative;}
-.sec.dk{background:var(--s1);}
+/* WRAP */
+.w{max-width:1160px;margin:0 auto;padding:0 3rem;}
+.w-sm{max-width:780px;margin:0 auto;padding:0 3rem;}
 
-/* ── TYPE ── */
-.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--d2);margin-bottom:1.25rem;}
-.eyebrow-dot{width:4px;height:4px;background:var(--green);border-radius:50%;}
-.d1{font-family:var(--serif);font-size:clamp(2.8rem,5vw,5rem);font-weight:300;line-height:1.0;letter-spacing:-.025em;}
+/* TYPE */
+.chip{display:inline-flex;align-items:center;gap:.45rem;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--d2);margin-bottom:1rem;}
+.chip-dot{width:4px;height:4px;background:var(--green);border-radius:50%;}
+.d1{font-family:var(--ff);font-size:clamp(2.8rem,5vw,5rem);font-weight:300;line-height:1.0;letter-spacing:-.025em;}
 .d1 em{font-style:italic;color:var(--green);}
-.h2{font-family:var(--serif);font-size:clamp(1.9rem,3.2vw,3rem);font-weight:300;line-height:1.08;letter-spacing:-.02em;}
+.h2{font-family:var(--ff);font-size:clamp(1.9rem,3.2vw,3rem);font-weight:300;line-height:1.1;letter-spacing:-.02em;}
 .h2 em{font-style:italic;color:var(--green);}
-.h3{font-family:var(--serif);font-size:1.35rem;font-weight:300;letter-spacing:-.01em;}
+.h3{font-family:var(--ff);font-size:1.35rem;font-weight:300;letter-spacing:-.01em;line-height:1.3;}
 .body{font-size:.95rem;color:var(--d1);line-height:1.75;}
-.small{font-size:.82rem;color:var(--d2);line-height:1.7;}
-strong{font-weight:600;}
+.sm{font-size:.82rem;color:var(--d2);line-height:1.7;}
+.xs{font-size:.72rem;color:var(--d2);}
 
-/* ── BUTTONS ── */
-.bp{display:inline-flex;align-items:center;gap:.5rem;background:var(--white);color:var(--black);border:none;border-radius:var(--r);padding:.85rem 2rem;font-size:.88rem;font-weight:600;font-family:var(--sans);transition:all .2s;}
+/* BTNS */
+.bp{display:inline-flex;align-items:center;gap:.5rem;background:var(--white);color:var(--black);border:none;border-radius:var(--r);padding:.8rem 1.75rem;font-size:.85rem;font-weight:600;font-family:var(--fs);transition:all .2s;cursor:pointer;}
 .bp:hover{background:rgba(255,255,255,.88);transform:translateY(-1px);}
-.bs{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--white);border:1px solid var(--b2);border-radius:var(--r);padding:.85rem 2rem;font-size:.88rem;font-family:var(--sans);transition:all .2s;}
-.bs:hover{border-color:var(--b3);background:var(--s2);}
-.bg{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--black);border:none;border-radius:var(--r);padding:.85rem 2rem;font-size:.88rem;font-weight:600;font-family:var(--sans);transition:all .2s;}
+.bs{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--white);border:1px solid var(--b2);border-radius:var(--r);padding:.8rem 1.75rem;font-size:.85rem;font-family:var(--fs);transition:all .2s;cursor:pointer;}
+.bs:hover{border-color:var(--b3);background:var(--s1);}
+.bg{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--black);border:none;border-radius:var(--r);padding:.8rem 1.75rem;font-size:.85rem;font-weight:600;font-family:var(--fs);transition:all .2s;cursor:pointer;}
 .bg:hover{background:#6ee7a0;transform:translateY(-1px);}
+.bdemo{display:inline-flex;align-items:center;gap:.6rem;background:var(--gbg);border:1px solid var(--gbr);color:var(--green);border-radius:var(--r);padding:.8rem 1.75rem;font-size:.85rem;font-weight:600;font-family:var(--fs);transition:all .2s;cursor:pointer;}
+.bdemo:hover{background:rgba(74,222,128,.14);}
+
+/* PULSE */
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+@keyframes ring{0%{transform:scale(1);opacity:.6;}100%{transform:scale(1.8);opacity:0;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
 
 /* ── HERO ── */
-.hero{min-height:100vh;display:flex;align-items:center;padding:9rem 0 5rem;overflow:hidden;}
-.hero::before{content:'';position:absolute;top:-10%;left:50%;width:900px;height:700px;background:radial-gradient(ellipse,rgba(74,222,128,.05) 0%,transparent 65%);transform:translateX(-50%);pointer-events:none;}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:9rem 0 5rem;overflow:hidden;position:relative;}
+.hero::before{content:'';position:absolute;top:0;left:50%;width:900px;height:500px;background:radial-gradient(ellipse,rgba(74,222,128,.05) 0%,transparent 70%);transform:translateX(-50%);pointer-events:none;}
 .hgrid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
-.hbadge{display:inline-flex;align-items:center;gap:.6rem;background:var(--gbg);border:1px solid var(--gborder);border-radius:100px;padding:.3rem 1rem;font-size:.68rem;font-weight:600;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.75rem;}
-.hbadge-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 2s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
-.hhead{margin-bottom:1.25rem;}
-.hsub{max-width:480px;margin-bottom:2rem;}
+.hbadge{display:inline-flex;align-items:center;gap:.5rem;background:var(--gbg);border:1px solid var(--gbr);border-radius:100px;padding:.3rem .9rem;font-size:.65rem;font-weight:600;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.75rem;}
+.hbadge-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+.hhl{margin-bottom:1.25rem;}
+.hsub{max-width:460px;margin-bottom:2rem;}
 
-/* demo CTA bar */
-.demo-bar{
-  background:var(--s2);border:1px solid var(--b2);border-radius:var(--rl);
+/* DEMO STRIP */
+.demo-strip{
+  background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);
   padding:1.25rem 1.5rem;margin-bottom:2rem;
+  display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;
 }
-.demo-bar-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
-.demo-bar-label-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 1.5s infinite;}
-.demo-bar-headline{font-size:.95rem;font-weight:600;margin-bottom:.5rem;}
-.demo-bar-sub{font-size:.78rem;color:var(--d2);margin-bottom:1rem;}
-.demo-btns{display:flex;gap:.75rem;flex-wrap:wrap;}
-.demo-phone-btn{
+.demo-strip-left{display:flex;flex-direction:column;gap:.3rem;}
+.demo-strip-title{font-size:.8rem;font-weight:600;color:var(--white);}
+.demo-strip-sub{font-size:.72rem;color:var(--d2);}
+.demo-number{
   display:inline-flex;align-items:center;gap:.6rem;
-  background:var(--green);color:var(--black);
-  border:none;border-radius:var(--r);
-  padding:.7rem 1.25rem;font-size:.82rem;font-weight:700;
-  font-family:var(--sans);transition:all .2s;
+  background:var(--gbg);border:1px solid var(--gbr);
+  border-radius:var(--r);padding:.6rem 1.1rem;
+  font-family:var(--ff);font-size:1.1rem;font-weight:400;color:var(--green);
+  position:relative;
 }
-.demo-phone-btn:hover{background:#6ee7a0;}
-.demo-watch-btn{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:transparent;color:var(--white);
-  border:1px solid var(--b2);border-radius:var(--r);
-  padding:.7rem 1.25rem;font-size:.82rem;
-  font-family:var(--sans);transition:all .2s;
+.demo-ring{
+  width:10px;height:10px;border-radius:50%;background:var(--green);
+  position:relative;flex-shrink:0;
 }
-.demo-watch-btn:hover{border-color:var(--b3);background:var(--s3);}
+.demo-ring::after{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:var(--green);animation:ring 1.5s infinite;
+}
+.demo-strip-btns{display:flex;gap:.75rem;align-items:center;margin-left:auto;}
 
-.hbtns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;}
-.hproof{display:flex;flex-wrap:wrap;gap:1.75rem;padding-top:2rem;border-top:1px solid var(--b1);}
-.proof-it{font-size:.75rem;color:var(--d2);display:flex;align-items:center;gap:.45rem;}
-.proof-dot{width:4px;height:4px;background:var(--green);border-radius:50%;}
+/* hero proof strip */
+.hproof{display:flex;flex-wrap:wrap;gap:1.75rem;padding-top:1.75rem;border-top:1px solid var(--b1);}
+.hpi{font-size:.75rem;color:var(--d2);display:flex;align-items:center;gap:.4rem;}
+.hpi-dot{width:4px;height:4px;background:var(--green);border-radius:50%;}
 
-/* hero card */
-.hcard{background:var(--s2);border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;}
-.hcard-top{padding:1rem 1.25rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;}
-.dots{display:flex;gap:.4rem;}
+/* HERO CARD */
+.hcard{background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;}
+.hcard-top{padding:.9rem 1.1rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;}
+.dots{display:flex;gap:.35rem;}
 .dot{width:9px;height:9px;border-radius:50%;}
 .dr{background:#ff5f56;}.dy{background:#febc2e;}.dg{background:#28c840;}
-.alive{display:flex;align-items:center;gap:.5rem;font-size:.68rem;font-weight:600;color:var(--green);}
-.alive-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 1.5s infinite;}
-.hcard-body{padding:1.25rem;}
-.call-alert{background:var(--gbg);border:1px solid var(--gborder);border-radius:var(--r);padding:.7rem 1rem;font-size:.75rem;font-weight:500;color:var(--green);margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem;}
-.msgs{display:flex;flex-direction:column;gap:.8rem;}
-.msg{max-width:88%;padding:.7rem 1rem;border-radius:var(--r);font-size:.8rem;line-height:1.55;}
-.msg.ai{background:var(--s3);color:var(--d1);align-self:flex-start;border:1px solid var(--b1);}
+.alive{display:flex;align-items:center;gap:.45rem;font-size:.65rem;font-weight:600;color:var(--green);}
+.alive-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 1.5s infinite;}
+.hcard-body{padding:1.1rem;}
+.ca{background:var(--gbg);border:1px solid var(--gbr);border-radius:var(--r);padding:.65rem .9rem;font-size:.72rem;font-weight:500;color:var(--green);margin-bottom:1rem;display:flex;align-items:center;gap:.45rem;}
+.msgs{display:flex;flex-direction:column;gap:.7rem;}
+.msg{max-width:88%;padding:.65rem .9rem;border-radius:var(--r);font-size:.78rem;line-height:1.55;}
+.msg.ai{background:var(--s2);color:var(--d1);align-self:flex-start;border:1px solid var(--b1);}
 .msg.usr{background:var(--white);color:var(--black);align-self:flex-end;font-weight:500;}
-.mlbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--d2);margin-bottom:.2rem;}
-.cbar{margin-top:1.25rem;padding:.85rem 1rem;background:rgba(74,222,128,.06);border:1px solid var(--gborder);border-radius:var(--r);}
-.cbar-title{font-size:.68rem;font-weight:600;color:var(--green);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem;}
-.cbar-sub{font-size:.78rem;color:var(--d2);}
+.mlbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--d2);margin-bottom:.18rem;}
+.cbar{margin-top:1rem;padding:.8rem .9rem;background:rgba(74,222,128,.06);border:1px solid var(--gbr);border-radius:var(--r);}
+.cbar-t{font-size:.65rem;font-weight:600;color:var(--green);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem;}
+.cbar-s{font-size:.75rem;color:var(--d2);}
 .hcard-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--b1);}
-.hstat{padding:.9rem 1rem;text-align:center;border-right:1px solid var(--b1);}
-.hstat:last-child{border-right:none;}
-.hstat-n{font-family:var(--serif);font-size:1.3rem;font-weight:300;color:var(--green);}
-.hstat-l{font-size:.62rem;color:var(--d2);margin-top:.15rem;}
+.hs{padding:.85rem .9rem;text-align:center;border-right:1px solid var(--b1);}
+.hs:last-child{border-right:none;}
+.hs-n{font-family:var(--ff);font-size:1.25rem;font-weight:300;color:var(--green);}
+.hs-l{font-size:.58rem;color:var(--d2);margin-top:.1rem;}
 
-/* ── LOGOS ── */
-.logos-bar{padding:2.25rem 0;border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);}
+/* PROOF NUMBERS */
+.proof-bar{background:var(--s1);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);padding:2rem 0;}
+.proof-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.pn{text-align:center;padding:0 2rem;border-right:1px solid var(--b1);}
+.pn:last-child{border-right:none;}
+.pn-num{font-family:var(--ff);font-size:2.5rem;font-weight:300;color:var(--white);line-height:1;}
+.pn-lbl{font-size:.72rem;color:var(--d2);margin-top:.35rem;}
+
+/* LOGOS */
+.logos{padding:2rem 0;border-bottom:1px solid var(--b1);}
 .logos-in{display:flex;align-items:center;gap:3rem;flex-wrap:wrap;justify-content:center;}
-.logos-lbl{font-size:.68rem;color:var(--d2);letter-spacing:.1em;text-transform:uppercase;margin-right:.5rem;}
-.crm{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:.04em;transition:color .2s;}
+.logos-lbl{font-size:.65rem;color:var(--d2);letter-spacing:.1em;text-transform:uppercase;margin-right:.5rem;}
+.crm{font-size:.8rem;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:.04em;transition:color .2s;}
 .crm:hover{color:var(--white);}
 
-/* ── PROOF STRIP ── */
-.proof-strip{padding:4rem 0;}
-.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden;}
-.proof-box{background:var(--s1);padding:2rem 1.5rem;text-align:center;}
-.proof-num{font-family:var(--serif);font-size:2.75rem;font-weight:300;color:var(--green);line-height:1;margin-bottom:.35rem;}
-.proof-lbl{font-size:.78rem;color:var(--d2);line-height:1.5;}
+/* SEC */
+.sec{padding:6rem 0;}
+.sec.dark{background:var(--s1);}
+.sec.darker{background:var(--black);}
+.sh{margin-bottom:3rem;}
+.sh.c{text-align:center;}
+.sh.c .h2{max-width:580px;margin:0 auto .75rem;}
+.sh.c .sm{max-width:480px;margin:0 auto;}
 
-/* ── MISSED REV ── */
-.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+/* HOW IT WORKS */
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden;}
+.hstep{background:var(--s1);padding:2rem 1.75rem;transition:background .2s;}
+.hstep:hover{background:var(--s2);}
+.hstep-n{font-family:var(--ff);font-size:2.5rem;font-weight:300;color:var(--d3);line-height:1;margin-bottom:1.25rem;}
+.hstep-title{font-size:.95rem;font-weight:600;margin-bottom:.6rem;}
+.hstep-body{font-size:.78rem;color:var(--d2);line-height:1.65;margin-bottom:1rem;}
+.hstep-tag{display:inline-block;background:var(--gbg);border:1px solid var(--gbr);border-radius:100px;padding:.22rem .7rem;font-size:.62rem;font-weight:600;color:var(--green);letter-spacing:.06em;}
+
+/* LIVE DEMO */
+.demo-grid{display:grid;grid-template-columns:280px 1fr;gap:2.5rem;align-items:start;}
+.scen-list{display:flex;flex-direction:column;gap:.4rem;}
+.scen-btn{width:100%;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:.85rem 1.1rem;text-align:left;color:var(--white);font-size:.8rem;font-family:var(--fs);transition:all .2s;display:flex;align-items:center;gap:.65rem;cursor:pointer;}
+.scen-btn:hover,.scen-btn.a{border-color:var(--gbr);background:var(--gbg);}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--b2);flex-shrink:0;transition:background .2s;}
+.scen-btn.a .sdot{background:var(--green);}
+.tout{margin-top:1.25rem;padding:1.1rem;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);}
+.tout-t{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--d2);margin-bottom:.65rem;}
+.tout-list{display:flex;flex-direction:column;gap:.35rem;}
+.ti{font-size:.78rem;color:var(--d1);}
+.ti.hi{color:var(--green);}
+.tcard{background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;}
+.thead{padding:.9rem 1.1rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;}
+.tstat{display:flex;align-items:center;gap:.45rem;font-size:.7rem;font-weight:600;color:var(--green);}
+.ttime{font-size:.7rem;color:var(--d2);}
+.tbody{padding:1.25rem;display:flex;flex-direction:column;gap:.8rem;min-height:280px;}
+.tmsg{display:flex;flex-direction:column;gap:.18rem;}
+.tlbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--d2);}
+.tb{display:inline-block;padding:.6rem .85rem;border-radius:var(--r);font-size:.78rem;line-height:1.55;max-width:88%;}
+.tb.ai{background:var(--s2);border:1px solid var(--b1);color:var(--d1);}
+.tb.usr{background:var(--white);color:var(--black);font-weight:500;}
+.tb.sys{background:var(--gbg);border:1px solid var(--gbr);color:var(--green);font-size:.7rem;font-weight:500;}
+
+/* MISSED REVENUE */
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
 .pains{display:flex;flex-direction:column;gap:.85rem;margin-top:2rem;}
-.pain{display:flex;align-items:flex-start;gap:1rem;padding:1.1rem;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);transition:border-color .2s;}
+.pain{display:flex;align-items:flex-start;gap:.9rem;padding:1.1rem;background:var(--s1);border:1px solid var(--b1);border-radius:var(--rl);transition:border-color .2s;}
 .pain:hover{border-color:var(--b2);}
-.pain-ico{width:32px;height:32px;flex-shrink:0;background:var(--rbg);border:1px solid var(--rborder);border-radius:var(--r);display:flex;align-items:center;justify-content:center;}
+.pain-ico{width:32px;height:32px;flex-shrink:0;background:var(--rbg);border:1px solid var(--rbr);border-radius:var(--r);display:flex;align-items:center;justify-content:center;}
 .pain-ico svg{color:var(--red);}
 .pain strong{display:block;font-size:.83rem;font-weight:600;margin-bottom:.15rem;}
-.pain span{font-size:.76rem;color:var(--d2);line-height:1.55;}
-.calc{background:var(--s2);border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;position:sticky;top:7rem;}
-.calc-hd{padding:1.1rem 1.5rem;border-bottom:1px solid var(--b1);font-size:.68rem;font-weight:600;color:var(--d2);letter-spacing:.08em;text-transform:uppercase;}
-.calc-bd{padding:1.5rem;}
-.crow{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid var(--b1);}
+.pain span{font-size:.76rem;color:var(--d2);line-height:1.6;}
+.calc{background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;position:sticky;top:7rem;}
+.calc-hd{padding:1.1rem 1.4rem;border-bottom:1px solid var(--b1);font-size:.67rem;font-weight:600;color:var(--d2);letter-spacing:.08em;text-transform:uppercase;}
+.calc-bd{padding:1.4rem;}
+.crow{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--b1);}
 .crow:last-of-type{border-bottom:none;}
 .clbl{font-size:.8rem;color:var(--d2);}
 .cval{font-size:.85rem;font-weight:500;}
 .cval.r{color:var(--red);}
-.ctotal{margin:1.1rem 0;padding:1.5rem;background:var(--rbg);border:1px solid var(--rborder);border-radius:var(--r);text-align:center;}
-.ctotal-lbl{font-size:.65rem;color:var(--d2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem;}
-.ctotal-n{font-family:var(--serif);font-size:2.75rem;font-weight:300;color:var(--red);line-height:1;}
-.cnote{font-size:.7rem;color:var(--d2);text-align:center;margin-top:.6rem;}
+.ctot{margin:1.1rem 0;padding:1.4rem;background:var(--rbg);border:1px solid var(--rbr);border-radius:var(--r);text-align:center;}
+.ctot-l{font-size:.65rem;color:var(--d2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.45rem;}
+.ctot-n{font-family:var(--ff);font-size:2.75rem;font-weight:300;color:var(--red);line-height:1;}
+.cnote{font-size:.7rem;color:var(--d2);text-align:center;margin-top:.65rem;}
 
-/* ── HOW IT WORKS ── */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden;margin-top:3rem;}
-.step{background:var(--s1);padding:2rem 1.75rem;position:relative;transition:background .2s;}
-.step:hover{background:var(--s2);}
-.step-n{font-family:var(--serif);font-size:2.25rem;font-weight:300;color:rgba(255,255,255,.08);line-height:1;margin-bottom:1.25rem;}
-.step-title{font-size:.95rem;font-weight:600;margin-bottom:.6rem;line-height:1.3;}
-.step-body{font-size:.78rem;color:var(--d2);line-height:1.65;margin-bottom:.9rem;}
-.step-outcome{font-size:.73rem;font-weight:600;color:var(--green);display:flex;align-items:center;gap:.4rem;}
-
-/* ── LIVE DEMO ── */
-.demo-sec{padding:6rem 0;background:var(--s1);}
-.demo-grid{display:grid;grid-template-columns:300px 1fr;gap:3rem;align-items:start;margin-top:3rem;}
-.scen-list{display:flex;flex-direction:column;gap:.5rem;}
-.scen-btn{width:100%;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);padding:.9rem 1.1rem;text-align:left;color:var(--white);font-size:.8rem;font-family:var(--sans);transition:all .2s;display:flex;align-items:center;gap:.7rem;}
-.scen-btn:hover,.scen-btn.a{border-color:var(--gborder);background:var(--gbg);}
-.sdot{width:5px;height:5px;border-radius:50%;background:var(--b2);flex-shrink:0;transition:background .2s;}
-.scen-btn.a .sdot{background:var(--green);}
-.outcomes-box{margin-top:1.5rem;padding:1.1rem;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);}
-.outcomes-title{font-size:.63rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--d2);margin-bottom:.65rem;}
-.outcome-list{display:flex;flex-direction:column;gap:.35rem;}
-.outcome-it{font-size:.78rem;color:var(--d1);}
-.outcome-it.hi{color:var(--green);}
-.tcard{background:var(--s2);border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;}
-.thead{padding:1rem 1.25rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;}
-.tstatus{display:flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:600;color:var(--green);}
-.ttime{font-size:.7rem;color:var(--d2);}
-.tbody{padding:1.5rem;display:flex;flex-direction:column;gap:.85rem;min-height:280px;}
-.tmsg{display:flex;flex-direction:column;gap:.2rem;}
-.tlbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--d2);}
-.tb{display:inline-block;padding:.6rem .9rem;border-radius:var(--r);font-size:.78rem;line-height:1.55;max-width:88%;}
-.tb.ai{background:var(--s3);border:1px solid var(--b1);color:var(--d1);}
-.tb.usr{background:var(--white);color:var(--black);font-weight:500;}
-.tb.sys{background:var(--gbg);border:1px solid var(--gborder);color:var(--green);font-size:.7rem;font-weight:500;}
-
-/* ── DASHBOARD PROOF ── */
-.dframe{background:var(--s2);border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;margin-top:3rem;}
-.dtop{padding:1.1rem 1.5rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;}
+/* DASHBOARD */
+.dframe{background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);overflow:hidden;margin-top:3rem;}
+.dtop{padding:1.1rem 1.6rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;}
 .dbrand{font-size:.82rem;font-weight:600;}
-.lpill{display:flex;align-items:center;gap:.4rem;background:var(--gbg);border:1px solid var(--gborder);border-radius:100px;padding:.2rem .7rem;font-size:.63rem;font-weight:600;color:var(--green);}
-.ldot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 2s infinite;}
+.lpill{display:flex;align-items:center;gap:.35rem;background:var(--gbg);border:1px solid var(--gbr);border-radius:100px;padding:.18rem .65rem;font-size:.62rem;font-weight:600;color:var(--green);}
+.ldot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
 .dperiod{font-size:.72rem;color:var(--d2);}
 .krow{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--b1);}
-.kbox{padding:1.35rem 1.5rem;border-right:1px solid var(--b1);}
-.kbox:last-child{border-right:none;}
-.knum{font-family:var(--serif);font-size:1.9rem;font-weight:300;line-height:1;margin-bottom:.25rem;}
-.kbox.hi .knum{color:var(--green);}
-.klbl{font-size:.66rem;color:var(--d2);letter-spacing:.04em;}
-.kdelta{font-size:.63rem;color:var(--green);margin-top:.2rem;font-weight:500;}
+.kb{padding:1.4rem 1.6rem;border-right:1px solid var(--b1);}
+.kb:last-child{border-right:none;}
+.kn{font-family:var(--ff);font-size:1.9rem;font-weight:300;line-height:1;margin-bottom:.25rem;}
+.kb.hi .kn{color:var(--green);}
+.kl{font-size:.65rem;color:var(--d2);letter-spacing:.04em;}
+.kd{font-size:.62rem;color:var(--green);margin-top:.18rem;font-weight:500;}
 .dbot{display:grid;grid-template-columns:1fr 1fr;}
-.dpanel{padding:1.35rem 1.5rem;border-right:1px solid var(--b1);}
+.dpanel{padding:1.4rem 1.6rem;border-right:1px solid var(--b1);}
 .dpanel:last-child{border-right:none;}
-.ptitle{font-size:.63rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--d2);margin-bottom:1.1rem;}
+.ptitle{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--d2);margin-bottom:1.1rem;}
 .bars{display:flex;align-items:flex-end;gap:.5rem;height:64px;margin-bottom:.4rem;}
 .bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:.25rem;}
 .bfill{width:100%;border-radius:2px 2px 0 0;}
 .blit{background:var(--white);}
 .bdim{background:rgba(255,255,255,.2);}
+.bval{font-family:var(--ff);font-size:1.1rem;font-weight:300;}
 .blbl{font-size:.58rem;color:var(--d2);}
-.bval{font-family:var(--serif);font-size:1.25rem;font-weight:300;}
-.mets{display:flex;flex-direction:column;gap:.85rem;}
+.mets{display:flex;flex-direction:column;gap:.8rem;}
 .met{display:flex;flex-direction:column;gap:.3rem;}
 .mrow{display:flex;justify-content:space-between;}
 .mname{font-size:.75rem;color:var(--d2);}
 .mval{font-size:.75rem;font-weight:500;}
-.mbar{height:2px;background:rgba(255,255,255,.08);border-radius:1px;overflow:hidden;}
+.mbar{height:2px;background:var(--d3);border-radius:1px;overflow:hidden;}
 .mfill{height:100%;background:var(--white);border-radius:1px;}
 
-/* ── SERVICES ── */
-.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden;margin-top:3rem;}
-.sitem{background:var(--s1);padding:1.75rem;transition:background .2s;}
-.sitem:hover{background:var(--s2);}
-.snum{font-size:.63rem;font-weight:600;color:var(--d2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.1rem;}
-.stitle{font-size:.9rem;font-weight:600;margin-bottom:.5rem;}
-.sbody{font-size:.76rem;color:var(--d2);line-height:1.65;}
+/* SERVICES */
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden;}
+.si{background:var(--s1);padding:1.75rem;transition:background .2s;}
+.si:hover{background:var(--s2);}
+.si-n{font-size:.62rem;font-weight:600;color:var(--d2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;}
+.si-t{font-size:.9rem;font-weight:600;margin-bottom:.5rem;}
+.si-b{font-size:.76rem;color:var(--d2);line-height:1.65;}
 
-/* ── OBJECTIONS ── */
-.obj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:3rem;}
-.obj-item{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rl);padding:1.5rem;transition:border-color .2s;}
-.obj-item:hover{border-color:var(--b2);}
-.obj-q{font-size:.88rem;font-weight:600;margin-bottom:.6rem;line-height:1.35;}
+/* OBJECTIONS */
+.obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden;}
+.obj{background:var(--s1);padding:1.75rem;transition:background .2s;}
+.obj:hover{background:var(--s2);}
+.obj-q{font-size:.88rem;font-weight:600;margin-bottom:.6rem;color:var(--white);}
 .obj-a{font-size:.78rem;color:var(--d2);line-height:1.65;}
+.obj-a strong{color:var(--white);font-weight:500;}
 
-/* ── GUARANTEE ── */
-.guarantee{background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);padding:3rem;text-align:center;margin-top:3rem;}
-.guarantee-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--gbg);border:1px solid var(--gborder);border-radius:100px;padding:.3rem 1rem;font-size:.68rem;font-weight:600;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem;}
-.guarantee-headline{font-family:var(--serif);font-size:clamp(1.5rem,2.5vw,2.25rem);font-weight:300;margin-bottom:1rem;line-height:1.2;}
-.guarantee-body{font-size:.88rem;color:var(--d1);line-height:1.75;max-width:620px;margin:0 auto;}
+/* GUARANTEE */
+.guar-box{background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);padding:3rem;text-align:center;position:relative;overflow:hidden;}
+.guar-box::before{content:'';position:absolute;top:0;left:50%;width:600px;height:200px;background:radial-gradient(ellipse,rgba(74,222,128,.05) 0%,transparent 70%);transform:translateX(-50%);pointer-events:none;}
+.guar-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--gbg);border:1px solid var(--gbr);border-radius:100px;padding:.35rem 1rem;font-size:.68rem;font-weight:600;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.25rem;}
+.guar-hl{font-family:var(--ff);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:300;margin-bottom:1rem;line-height:1.2;}
+.guar-body{font-size:.88rem;color:var(--d2);max-width:560px;margin:0 auto 2rem;line-height:1.75;}
+.guar-items{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;margin-bottom:2rem;}
+.guar-item{text-align:center;}
+.guar-n{font-family:var(--ff);font-size:1.75rem;font-weight:300;color:var(--green);}
+.guar-l{font-size:.72rem;color:var(--d2);margin-top:.2rem;}
 
-/* ── PRICING ── */
-.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem;}
-.pcard{background:var(--s1);border:1px solid var(--b1);border-radius:var(--rl);padding:1.75rem;position:relative;transition:all .2s;}
-.pcard:hover{transform:translateY(-3px);border-color:var(--b2);}
-.pcard.feat{border-color:var(--gborder);}
-.fbadge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--green);color:var(--black);font-size:.63rem;font-weight:700;letter-spacing:.08em;padding:.25rem 1rem;border-radius:100px;white-space:nowrap;}
-.ptier{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--d2);margin-bottom:.6rem;}
-.phl{font-family:var(--serif);font-size:1.05rem;font-weight:300;line-height:1.3;margin-bottom:1.25rem;}
-.psetup{font-family:var(--serif);font-size:2.1rem;font-weight:300;line-height:1;}
-.psetup small{font-family:var(--sans);font-size:.78rem;color:var(--d2);font-weight:300;}
-.pmo{font-size:.8rem;color:var(--d2);margin-bottom:1.5rem;margin-top:.3rem;}
+/* MANAGED */
+.mg-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.mlist{display:flex;flex-direction:column;border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden;}
+.mi{padding:1.4rem;border-bottom:1px solid var(--b1);transition:background .2s;display:flex;align-items:flex-start;gap:.9rem;}
+.mi:last-child{border-bottom:none;}
+.mi:hover{background:var(--s2);}
+.mi-n{font-family:var(--ff);font-size:1.2rem;color:var(--d3);flex-shrink:0;line-height:1;}
+.mi strong{display:block;font-size:.85rem;font-weight:600;margin-bottom:.2rem;}
+.mi span{font-size:.76rem;color:var(--d2);line-height:1.6;}
+
+/* PRICING */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3rem;}
+.pc{background:var(--s1);border:1px solid var(--b1);border-radius:var(--rl);padding:1.75rem;position:relative;transition:all .2s;}
+.pc:hover{transform:translateY(-2px);border-color:var(--b2);}
+.pc.feat{border-color:rgba(74,222,128,.22);}
+.fbadge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--green);color:var(--black);font-size:.62rem;font-weight:700;letter-spacing:.08em;padding:.22rem .9rem;border-radius:100px;white-space:nowrap;}
+.ptier{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--d2);margin-bottom:.65rem;}
+.phl{font-family:var(--ff);font-size:1rem;font-weight:300;line-height:1.3;margin-bottom:1.25rem;}
+.psetup{font-family:var(--ff);font-size:2rem;font-weight:300;line-height:1;}
+.psetup small{font-family:var(--fs);font-size:.75rem;color:var(--d2);font-weight:300;}
+.pmo{font-size:.78rem;color:var(--d2);margin:.3rem 0 1.5rem;}
 .pmo strong{color:var(--white);font-weight:500;}
-.phr{border:none;border-top:1px solid var(--b1);margin:0 0 1.25rem;}
-.pfeats{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.75rem;}
-.pfeats li{display:flex;align-items:flex-start;gap:.55rem;font-size:.78rem;color:var(--d1);line-height:1.5;}
-.pcheck{color:var(--green);font-size:.72rem;flex-shrink:0;margin-top:.1rem;}
-.pbtn{display:block;width:100%;text-align:center;background:var(--s3);color:var(--white);border:1px solid var(--b2);border-radius:var(--r);padding:.8rem;font-size:.82rem;font-weight:500;font-family:var(--sans);transition:all .2s;}
+.phr{border:none;border-top:1px solid var(--b1);margin:0 0 1.4rem;}
+.pfeats{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.75rem;}
+.pfeats li{display:flex;align-items:flex-start;gap:.5rem;font-size:.78rem;color:var(--d1);line-height:1.5;}
+.pck{color:var(--green);font-size:.72rem;flex-shrink:0;margin-top:.08rem;}
+.pbtn{display:block;width:100%;text-align:center;background:var(--s2);color:var(--white);border:1px solid var(--b2);border-radius:var(--r);padding:.8rem;font-size:.82rem;font-weight:500;font-family:var(--fs);transition:all .2s;}
 .pbtn:hover{background:var(--b2);}
-.pcard.feat .pbtn{background:var(--green);color:var(--black);border-color:transparent;font-weight:600;}
-.pcard.feat .pbtn:hover{background:#6ee7a0;}
-.trial-box{margin-top:1.75rem;padding:2.25rem;border:1px solid var(--gborder);border-radius:var(--rl);background:var(--gbg);display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;}
-.trial-box h3{font-family:var(--serif);font-size:1.65rem;font-weight:300;margin-bottom:.5rem;}
+.pc.feat .pbtn{background:var(--green);color:var(--black);border-color:transparent;font-weight:600;}
+.pc.feat .pbtn:hover{background:#6ee7a0;}
+.trial-box{margin-top:1.75rem;padding:2.25rem;border:1px solid var(--gbr);border-radius:var(--rl);background:var(--gbg);display:grid;grid-template-columns:1fr auto;align-items:center;gap:2.5rem;}
+.trial-box h3{font-family:var(--ff);font-size:1.6rem;font-weight:300;margin-bottom:.4rem;}
 .trial-box p{font-size:.82rem;color:var(--d2);line-height:1.6;}
-.trial-spots{font-size:.7rem;color:var(--green);font-weight:600;margin-top:.5rem;}
+.tspots{font-size:.7rem;color:var(--green);font-weight:600;margin-top:.4rem;}
 
-/* ── INDUSTRIES ── */
-.igrid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden;margin-top:3rem;}
-.iitem{background:var(--s1);padding:1.6rem;transition:background .2s;}
-.iitem:hover{background:var(--s2);}
-.iitem.icta{background:var(--gbg);}
-.iico{width:36px;height:36px;border-radius:var(--r);background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;}
-.iico svg{color:var(--d2);}
+/* INDUSTRIES */
+.igrid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--rl);overflow:hidden;}
+.ii{background:var(--s1);padding:1.6rem;transition:background .2s;}
+.ii:hover{background:var(--s2);}
+.ii.icta{background:var(--gbg);}
+.iico{width:36px;height:36px;border-radius:var(--r);background:var(--d3);display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;}
+.iico svg{color:var(--d1);}
 .iname{font-size:.85rem;font-weight:600;margin-bottom:.35rem;}
 .ibody{font-size:.72rem;color:var(--d2);line-height:1.6;margin-bottom:.75rem;}
 .istat{font-size:.65rem;font-weight:600;color:var(--green);}
 
-/* ── FAQ ── */
-.faq-wrap{max-width:720px;margin:3rem auto 0;}
-.fitem{border-bottom:1px solid var(--b1);}
-.fitem summary{list-style:none;padding:1.25rem 0;font-size:.88rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:color .2s;}
-.fitem summary::-webkit-details-marker{display:none;}
-.fitem summary:hover{color:var(--d1);}
+/* FAQ */
+.fwrap{max-width:700px;margin:3rem auto 0;}
+.fi{border-bottom:1px solid var(--b1);}
+.fi summary{list-style:none;padding:1.3rem 0;font-size:.88rem;font-weight:400;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:color .2s;}
+.fi summary::-webkit-details-marker{display:none;}
+.fi summary:hover{color:var(--d1);}
 .ftog{font-size:1.1rem;color:var(--d2);transition:transform .2s;flex-shrink:0;}
-.fitem[open] .ftog{transform:rotate(45deg);color:var(--white);}
-.fbody{padding:0 0 1.25rem;font-size:.82rem;color:var(--d2);line-height:1.8;max-width:640px;}
+.fi[open] .ftog{transform:rotate(45deg);color:var(--white);}
+.fbody{padding:0 0 1.3rem;font-size:.82rem;color:var(--d2);line-height:1.8;max-width:600px;}
 
-/* ── CTA ── */
-.cta-sec{padding:8rem 0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(74,222,128,.04) 0%,transparent 70%);}
+/* CTA */
+.cta-sec{padding:8rem 0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(74,222,128,.04) 0%,transparent 70%);}
 .cta-in{text-align:center;max-width:660px;margin:0 auto;}
-.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem;}
+.cta-btns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem;}
 .cta-note{font-size:.72rem;color:var(--d2);margin-top:1.25rem;}
 
-/* ── CONTACT ── */
-.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
+/* CONTACT */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
 .cdet{display:flex;flex-direction:column;gap:1.4rem;margin-bottom:2rem;}
-.crow2{display:flex;align-items:flex-start;gap:1rem;}
+.crow2{display:flex;align-items:flex-start;gap:.9rem;}
 .cico{width:36px;height:36px;flex-shrink:0;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);display:flex;align-items:center;justify-content:center;}
 .cico svg{color:var(--d2);}
-.crow2 strong{display:block;font-size:.8rem;font-weight:600;margin-bottom:.15rem;}
+.crow2 strong{display:block;font-size:.8rem;font-weight:600;margin-bottom:.12rem;}
 .crow2 span{font-size:.78rem;color:var(--d2);}
-.proc{padding:1.35rem;background:var(--s2);border:1px solid var(--b1);border-radius:var(--rl);}
-.proc-title{font-size:.63rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--d2);margin-bottom:.85rem;}
-.proc-steps{display:flex;flex-direction:column;gap:.5rem;}
-.pstep{font-size:.78rem;color:var(--d1);display:flex;align-items:center;gap:.55rem;}
-.pstep-dot{width:4px;height:4px;background:var(--green);border-radius:50%;flex-shrink:0;}
+.proc{padding:1.4rem;background:var(--s1);border:1px solid var(--b1);border-radius:var(--rl);}
+.proc-t{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--d2);margin-bottom:.9rem;}
+.psteps{display:flex;flex-direction:column;gap:.5rem;}
+.ps{font-size:.78rem;color:var(--d1);display:flex;align-items:center;gap:.5rem;}
+.ps-dot{width:4px;height:4px;background:var(--green);border-radius:50%;flex-shrink:0;}
 .form{display:flex;flex-direction:column;gap:.9rem;}
-.fr2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
 .fg{display:flex;flex-direction:column;gap:.35rem;}
 .fl{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--d2);}
-.fi,.fsel,.fta{background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);padding:.75rem 1rem;color:var(--white);font-size:.83rem;font-family:var(--sans);outline:none;transition:border-color .2s;width:100%;}
-.fi:focus,.fsel:focus,.fta:focus{border-color:rgba(74,222,128,.3);}
-.fi::placeholder,.fta::placeholder{color:var(--d2);}
+.fi2,.fsel,.fta{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r);padding:.75rem .9rem;color:var(--white);font-size:.82rem;font-family:var(--fs);outline:none;transition:border-color .2s;width:100%;}
+.fi2:focus,.fsel:focus,.fta:focus{border-color:rgba(74,222,128,.3);}
+.fi2::placeholder,.fta::placeholder{color:var(--d2);}
 .fsel{color:var(--d1);}
-.fsel option{background:var(--s2);}
+.fsel option{background:var(--s1);}
 .fta{resize:vertical;min-height:90px;}
-.fsub{background:var(--white);color:var(--black);border:none;border-radius:var(--r);padding:.85rem;font-size:.85rem;font-weight:600;font-family:var(--sans);transition:all .2s;margin-top:.4rem;width:100%;}
+.fsub{background:var(--white);color:var(--black);border:none;border-radius:var(--r);padding:.85rem;font-size:.85rem;font-weight:600;font-family:var(--fs);transition:all .2s;width:100%;margin-top:.25rem;cursor:pointer;}
 .fsub:hover{background:rgba(255,255,255,.88);}
-.fsuc{display:none;padding:1.75rem;text-align:center;background:var(--gbg);border:1px solid var(--gborder);border-radius:var(--r);font-size:.82rem;color:var(--green);font-weight:500;}
+.fsuc{display:none;padding:1.75rem;text-align:center;background:var(--gbg);border:1px solid var(--gbr);border-radius:var(--r);font-size:.82rem;color:var(--green);font-weight:500;}
 
-/* ── FOOTER ── */
+/* FOOTER */
 .foot{padding:4.5rem 0 2.5rem;border-top:1px solid var(--b1);}
 .ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3.5rem;}
-.flogo{font-family:var(--serif);font-size:1.2rem;margin-bottom:.7rem;}
+.flogo{font-family:var(--ff);font-size:1.2rem;margin-bottom:.65rem;}
 .flogo em{color:var(--green);font-style:normal;}
-.ftagline{font-size:.78rem;color:var(--d2);line-height:1.7;max-width:250px;}
-.fcol-title{font-size:.63rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--d2);margin-bottom:1.1rem;}
+.ftagline{font-size:.78rem;color:var(--d2);line-height:1.7;max-width:240px;}
+.fc-t{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--d2);margin-bottom:1.1rem;}
 .fcol ul{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
 .fcol ul li a{font-size:.78rem;color:var(--d2);transition:color .2s;}
 .fcol ul li a:hover{color:var(--white);}
-.fbot{display:flex;align-items:center;justify-content:space-between;padding-top:2.25rem;border-top:1px solid var(--b1);}
+.fbot{display:flex;align-items:center;justify-content:space-between;padding-top:2rem;border-top:1px solid var(--b1);}
 .fcopy{font-size:.72rem;color:var(--d2);}
 .flinks{display:flex;gap:1.75rem;}
 .flinks a{font-size:.72rem;color:var(--d2);transition:color .2s;}
 .flinks a:hover{color:var(--white);}
 
-/* ── MODAL ── */
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:2rem;}
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:2rem;}
 .modal.o{display:flex;}
 .min{background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);width:100%;max-width:880px;max-height:90vh;overflow:hidden;position:relative;}
-.mclose{position:absolute;top:1rem;right:1rem;z-index:10;background:var(--s2);border:1px solid var(--b1);border-radius:50%;width:34px;height:34px;color:var(--white);font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.mclose{position:absolute;top:1rem;right:1rem;z-index:10;background:var(--s2);border:1px solid var(--b1);border-radius:50%;width:32px;height:32px;color:var(--white);font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:background .2s;cursor:pointer;}
 .mclose:hover{background:var(--b2);}
 .cal-wrap{height:680px;overflow-y:auto;}
 
-/* ── VIDEO MODAL ── */
-.vmodal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:2001;align-items:center;justify-content:center;padding:2rem;}
-.vmodal.o{display:flex;}
-.vmodal-inner{position:relative;max-width:760px;width:100%;}
-.vmodal-close{position:absolute;top:-2.5rem;right:0;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer;opacity:.7;}
-.vmodal-close:hover{opacity:1;}
-.demo-placeholder{background:var(--s2);border:1px solid var(--b2);border-radius:var(--rl);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;}
-.demo-placeholder p{font-size:.85rem;color:var(--d2);text-align:center;max-width:320px;line-height:1.6;}
-
-/* ── FADE ── */
-.fu{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s;}
+/* FADE */
+.fu{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
 .fu.v{opacity:1;transform:none;}
 
-/* ── RESPONSIVE ── */
+/* MOBILE */
 @media(max-width:1000px){
-  .navlinks,.navcta{display:none;}.hmb{display:block;}
-  .wrap{padding:0 1.5rem;}
-  .nav,.nav.s{padding:1.25rem 1.5rem;}
-  .hgrid,.mgrid,.ggrid,.cgrid{grid-template-columns:1fr!important;gap:3rem;}
-  .hgrid{text-align:center;}
-  .hbadge,.hbtns,.hproof,.demo-btns{justify-content:center;}
-  .hsub{max-width:100%;text-align:center;}
-  .demo-bar{text-align:left;}
-  .steps,.sgrid{grid-template-columns:1fr 1fr;}
+  .nl,.nbtn{display:none;}
+  .hmb{display:block;}
+  .w,.w-sm{padding:0 1.4rem;}
+  .nav,.nav.s{padding:1.1rem 1.4rem;}
+  .hgrid{grid-template-columns:1fr;gap:2.5rem;}
+  .hhl,.hbadge,.hsub,.demo-strip,.hbtns,.hproof{text-align:center;}
+  .hbadge{display:flex;justify-content:center;}
+  .hbtns{justify-content:center;}
+  .hproof{justify-content:center;}
+  .hsub{max-width:100%;}
+  .demo-strip{flex-direction:column;align-items:center;text-align:center;}
+  .demo-strip-btns{margin-left:0;}
+  .proof-inner{grid-template-columns:1fr 1fr;}
+  .pn{border-right:none;border-bottom:1px solid var(--b1);}
+  .pn:nth-child(odd){border-right:1px solid var(--b1);}
+  .how-steps{grid-template-columns:1fr 1fr;}
+  .rev-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .demo-grid{grid-template-columns:1fr;}
   .krow{grid-template-columns:1fr 1fr;}
   .dbot{grid-template-columns:1fr;}
   .dpanel{border-right:none;border-bottom:1px solid var(--b1);}
   .dpanel:last-child{border-bottom:none;}
-  .proof-grid{grid-template-columns:1fr 1fr;}
-  .pgrid{grid-template-columns:1fr;}
-  .igrid{grid-template-columns:1fr 1fr;}
-  .trial-box{grid-template-columns:1fr;gap:1.5rem;}
+  .sgrid{grid-template-columns:1fr 1fr;}
   .obj-grid{grid-template-columns:1fr;}
-  .ftop{grid-template-columns:1fr 1fr;}
-  .ftop>div:first-child{grid-column:span 2;}
-  .sec{padding:5rem 0;}
-  .hero{padding:8rem 0 4rem;}
-  .fr2{grid-template-columns:1fr;}
-  .demo-grid{grid-template-columns:1fr;}
-  .cgrid .fu:first-child{display:flex;flex-direction:column;align-items:center;text-align:center;}
-  .cgrid .crow2{width:100%;}
-  .cgrid .bp{align-self:center;}
-  .cgrid .proc{text-align:left;width:100%;}
+  .mg-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .pgrid{grid-template-columns:1fr;}
+  .trial-box{grid-template-columns:1fr;gap:1.25rem;}
+  .igrid{grid-template-columns:1fr 1fr;}
+  .cg{grid-template-columns:1fr;gap:2.5rem;}
+  .cg .fu:first-child{display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .cg .crow2{width:100%;}
+  .cg .bp{align-self:center;}
+  .cg .proc{text-align:left;width:100%;}
+  .ftop{grid-template-columns:1fr 1fr 1fr;}
+  .ftop>div:first-child{grid-column:span 3;}
+  /* Center specific section headings */
+  #revenue .chip,#revenue .h2{text-align:center;}
+  #revenue .chip{justify-content:center;}
+  #services .sh{text-align:center;}
+  #services .sh .chip{justify-content:center;}
+  #objections .h2{text-align:center;}
+  .sec{padding:4.5rem 0;}
+  .hero{padding:7.5rem 0 4rem;}
+  .frow2{grid-template-columns:1fr;}
 }
+
+
+
 @media(max-width:560px){
-  .steps,.sgrid,.igrid,.proof-grid{grid-template-columns:1fr;}
-  .ftop{grid-template-columns:1fr;}
-  .ftop>div:first-child{grid-column:span 1;}
+  .how-steps,.sgrid,.obj-grid,.igrid{grid-template-columns:1fr;}
+  .proof-inner{grid-template-columns:1fr 1fr;}
+  .ftop{grid-template-columns:1fr 1fr;}
   .fbot{flex-direction:column;gap:1rem;text-align:center;}
-  .hbtns,.cta-btns,.demo-btns{flex-direction:column;align-items:center;}
+  .hbtns,.cta-btns{flex-direction:column;align-items:center;}
   .d1{font-size:2.5rem;}
   .h2{font-size:1.8rem;}
+  .guar-items{gap:1.5rem;}
 }
 </style>
 </head>
@@ -421,88 +463,95 @@ strong{font-weight:600;}
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="logo">Perché<em>AI</em></div>
-  <div class="navlinks">
+  <div class="nl">
     <a href="#how">How It Works</a>
-    <a href="#demo">Live Demo</a>
+    <a href="#services">Services</a>
+    <a href="#industries">Industries</a>
     <a href="#pricing">Pricing</a>
     <a href="#contact">Contact</a>
-    <a href="dashboard.html" class="hi">Client Login</a>
+    <a href="dashboard.html" class="ac">Client Login</a>
   </div>
-  <button class="navcta" onclick="openModal()">Book Free Audit</button>
+  <button class="nbtn" onclick="openModal()">Book Free Audit</button>
   <button class="hmb" id="hmb">&#9776;</button>
 </nav>
 <div class="mm" id="mm">
   <a href="#how" onclick="closeMM()">How It Works</a>
-  <a href="#demo" onclick="closeMM()">Live Demo</a>
+  <a href="#services" onclick="closeMM()">Services</a>
+  <a href="#industries" onclick="closeMM()">Industries</a>
   <a href="#pricing" onclick="closeMM()">Pricing</a>
   <a href="#contact" onclick="closeMM()">Contact</a>
   <a href="dashboard.html">Client Login</a>
-  <button class="navcta" onclick="openModal();closeMM()">Book Free Audit</button>
+  <button class="nbtn" onclick="openModal();closeMM()">Book Free Audit</button>
 </div>
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="wrap">
+  <div class="w">
     <div class="hgrid">
       <div>
-        <div class="hbadge"><div class="hbadge-dot"></div>Built for Home Service Businesses</div>
-        <h1 class="d1 hhead">Never Miss<br>Another<br><em>Service Call</em></h1>
-        <p class="body hsub">Your AI receptionist answers every call 24/7, books jobs automatically, and syncs to your CRM. Respond to missed calls in under 60 seconds — even at 2am.</p>
+        <div class="hbadge"><div class="hbadge-dot"></div>AI Receptionist for Home Service Businesses</div>
+        <h1 class="d1 hhl">Never Miss a<br><em>High-Value</em><br>Customer Call</h1>
+        <p class="body hsub">Your AI receptionist answers every call 24/7, books the job, and syncs to your CRM automatically. Fully managed. No dispatcher needed.</p>
 
-        <!-- DEMO CTA BAR -->
-        <div class="demo-bar">
-          <div class="demo-bar-label"><div class="demo-bar-label-dot"></div>Try It Right Now</div>
-          <div class="demo-bar-headline">Hear the AI Answer a Real Service Call</div>
-          <div class="demo-bar-sub">See how missed calls turn into booked jobs automatically.</div>
-          <div class="demo-btns">
-            <a href="tel:+12166160378" class="demo-phone-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
-              Call +1 (216) 616-0378
+        <!-- DEMO STRIP - above the fold -->
+        <div class="demo-strip">
+          <div>
+            <div class="demo-ring"></div>
+          </div>
+          <div class="demo-strip-left">
+            <div class="demo-strip-title">Listen to the AI Answer a Real Service Call</div>
+            <div class="demo-strip-sub">See how missed calls turn into booked jobs automatically.</div>
+          </div>
+          <div class="demo-number">+1 (216) 616-0378</div>
+          <div class="demo-strip-btns">
+            <a href="tel:+12166160378" class="bdemo">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+              Try the AI Live
             </a>
-            <button class="demo-watch-btn" onclick="openVideoModal()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              Watch 2-Minute Demo
-            </button>
+            <a href="#demo" class="bs" style="padding:.6rem 1.1rem;font-size:.78rem;">Watch Demo</a>
           </div>
         </div>
 
         <div class="hbtns">
-          <button class="bp" onclick="openModal()">Book Free Revenue Audit</button>
-          <a href="https://buy.stripe.com/3cI14mgAg8sR2EFcIzfMA0c" class="bs">Start Free 30-Day Trial</a>
+          <button class="bp" onclick="openModal()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            Book Free Workflow Audit
+          </button>
+          <a href="https://buy.stripe.com/3cI14mgAg8sR2EFcIzfMA0c" class="bs">Start 30-Day Free Trial</a>
         </div>
         <div class="hproof">
-          <div class="proof-it"><div class="proof-dot"></div>Answers in under 2 seconds</div>
-          <div class="proof-it"><div class="proof-dot"></div>Books jobs after hours</div>
-          <div class="proof-it"><div class="proof-dot"></div>Syncs to your CRM</div>
-          <div class="proof-it"><div class="proof-dot"></div>Fully managed</div>
+          <div class="hpi"><div class="hpi-dot"></div>Responds in under 60 seconds</div>
+          <div class="hpi"><div class="hpi-dot"></div>Books jobs after hours</div>
+          <div class="hpi"><div class="hpi-dot"></div>Syncs to your CRM</div>
+          <div class="hpi"><div class="hpi-dot"></div>Fully managed</div>
         </div>
       </div>
       <div>
         <div class="hcard">
           <div class="hcard-top">
             <div class="dots"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div></div>
-            <div class="alive"><div class="alive-dot"></div>AI Receptionist &mdash; Live Call</div>
+            <div class="alive"><div class="alive-dot"></div>Live Call — 11:47 PM</div>
           </div>
           <div class="hcard-body">
-            <div class="call-alert">
+            <div class="ca">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
-              Inbound call &mdash; (513) 847-2291 &mdash; 2:14 AM
+              Inbound call — (513) 847-2291
             </div>
             <div class="msgs">
               <div><div class="mlbl">AI Receptionist</div><div class="msg ai">Thank you for calling Summit HVAC. How can I help you tonight?</div></div>
-              <div style="align-self:flex-end"><div class="mlbl" style="text-align:right">Caller</div><div class="msg usr">My AC stopped. It's 96 degrees and I have kids at home</div></div>
-              <div><div class="mlbl">AI Receptionist</div><div class="msg ai">That's an emergency. I'm flagging this as priority and getting a technician to call you within 15 minutes. What's your name and address?</div></div>
-              <div style="align-self:flex-end"><div class="mlbl" style="text-align:right">Caller</div><div class="msg usr">Marcus Johnson, 4821 Oak Street</div></div>
+              <div style="align-self:flex-end"><div class="mlbl" style="text-align:right">Caller</div><div class="msg usr">My furnace stopped. It's 18 degrees and I have two kids</div></div>
+              <div><div class="mlbl">AI Receptionist</div><div class="msg ai">That's a heating emergency. I'm getting a technician to call you within 15 minutes. What's your name and address?</div></div>
+              <div style="align-self:flex-end"><div class="mlbl" style="text-align:right">Caller</div><div class="msg usr">Mike Rodriguez, 5512 Elm Street</div></div>
             </div>
             <div class="cbar">
-              <div class="cbar-title">Job Captured &mdash; CRM Updated</div>
-              <div class="cbar-sub">Emergency flagged &nbsp;&middot;&nbsp; Technician alerted &nbsp;&middot;&nbsp; SMS confirmation sent &nbsp;&middot;&nbsp; 0:28 elapsed</div>
+              <div class="cbar-t">Emergency Captured &mdash; 11:48 PM</div>
+              <div class="cbar-s">Lead synced to CRM &nbsp;&middot;&nbsp; Technician alerted &nbsp;&middot;&nbsp; SMS sent to Mike</div>
             </div>
           </div>
           <div class="hcard-stats">
-            <div class="hstat"><div class="hstat-n">28s</div><div class="hstat-l">Response time</div></div>
-            <div class="hstat"><div class="hstat-n">2am</div><div class="hstat-l">After hours</div></div>
-            <div class="hstat"><div class="hstat-n">$0</div><div class="hstat-l">Revenue lost</div></div>
+            <div class="hs"><div class="hs-n">0s</div><div class="hs-l">Wait Time</div></div>
+            <div class="hs"><div class="hs-n">24/7</div><div class="hs-l">Coverage</div></div>
+            <div class="hs"><div class="hs-n">$0</div><div class="hs-l">Missed Revenue</div></div>
           </div>
         </div>
       </div>
@@ -510,119 +559,171 @@ strong{font-weight:600;}
   </div>
 </section>
 
+<!-- PROOF NUMBERS -->
+<div class="proof-bar">
+  <div class="w">
+    <div class="proof-inner">
+      <div class="pn"><div class="pn-num">247</div><div class="pn-lbl">Calls answered last month</div></div>
+      <div class="pn"><div class="pn-num">61</div><div class="pn-lbl">Jobs booked automatically</div></div>
+      <div class="pn"><div class="pn-num">14</div><div class="pn-lbl">After-hours jobs captured</div></div>
+      <div class="pn"><div class="pn-num">$23K</div><div class="pn-lbl">Revenue recovered</div></div>
+    </div>
+  </div>
+</div>
+
 <!-- LOGOS -->
-<div class="logos-bar">
-  <div class="wrap">
+<div class="logos">
+  <div class="w">
     <div class="logos-in">
       <span class="logos-lbl">Integrates with</span>
       <span class="crm">ServiceTitan</span>
       <span class="crm">Housecall Pro</span>
       <span class="crm">Jobber</span>
       <span class="crm">GoHighLevel</span>
-      <span class="crm">Salesforce</span>
       <span class="crm">Twilio</span>
     </div>
   </div>
 </div>
 
-<!-- PROOF STRIP -->
-<div class="proof-strip">
-  <div class="wrap">
-    <div class="proof-grid fu">
-      <div class="proof-box"><div class="proof-num">247</div><div class="proof-lbl">Calls answered automatically last month</div></div>
-      <div class="proof-box"><div class="proof-num">61</div><div class="proof-lbl">Jobs booked without a dispatcher</div></div>
-      <div class="proof-box"><div class="proof-num">14</div><div class="proof-lbl">After-hours emergencies captured</div></div>
-      <div class="proof-box"><div class="proof-num">$23K</div><div class="proof-lbl">Revenue recovered in one month</div></div>
-    </div>
-  </div>
-</div>
-
 <!-- HOW IT WORKS -->
-<section class="sec dk" id="how">
-  <div class="wrap">
-    <div class="eyebrow fu"><div class="eyebrow-dot"></div>How It Works</div>
-    <h2 class="h2 fu">Three Steps. Fully Automatic.</h2>
-    <div class="steps fu">
-      <div class="step">
-        <div class="step-n">01</div>
-        <div class="step-title">Customer Calls or Texts</div>
-        <div class="step-body">Someone calls your number at any hour — mid-job, after 5pm, weekends. Every call is answered in under 2 seconds.</div>
-        <div class="step-outcome"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>Zero missed calls</div>
+<section class="sec dark" id="how">
+  <div class="w">
+    <div class="sh fu">
+      <div class="chip"><div class="chip-dot"></div>How It Works</div>
+      <h2 class="h2" style="margin-bottom:.75rem;">From Missed Call to Booked Job in 3 Steps</h2>
+      <p class="sm">No dispatcher. No voicemail. Every call handled automatically.</p>
+    </div>
+    <div class="how-steps fu">
+      <div class="hstep">
+        <div class="hstep-n">01</div>
+        <div class="hstep-title">Customer Calls or Submits a Form</div>
+        <div class="hstep-body">Your existing phone number forwards to your AI receptionist. Works for inbound calls, web forms, and missed call text-backs. No number change needed.</div>
+        <div class="hstep-tag">Zero setup friction for customers</div>
       </div>
-      <div class="step">
-        <div class="step-n">02</div>
-        <div class="step-title">AI Qualifies and Books</div>
-        <div class="step-body">The AI identifies the job type, collects customer info, handles emergencies with priority routing, and confirms the appointment — automatically.</div>
-        <div class="step-outcome"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>No dispatcher needed</div>
+      <div class="hstep">
+        <div class="hstep-n">02</div>
+        <div class="hstep-title">AI Answers, Qualifies, and Books Instantly</div>
+        <div class="hstep-body">The AI identifies the service type, assesses urgency, collects caller details, and books the appointment or escalates emergencies — all within 60 seconds of the call.</div>
+        <div class="hstep-tag">Responds in under 60 seconds</div>
       </div>
-      <div class="step">
-        <div class="step-n">03</div>
-        <div class="step-title">Job Appears in Your CRM</div>
-        <div class="step-body">Appointment syncs instantly to ServiceTitan, Housecall Pro, or Jobber. Customer gets an SMS confirmation. Your tech gets notified. Done.</div>
-        <div class="step-outcome"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>CRM updated in real time</div>
+      <div class="hstep">
+        <div class="hstep-n">03</div>
+        <div class="hstep-title">Qualified Job Appears in Your CRM</div>
+        <div class="hstep-body">Appointment details sync automatically to ServiceTitan, Housecall Pro, or Jobber. Customer gets an SMS confirmation. Your team sees the job without touching a keyboard.</div>
+        <div class="hstep-tag">CRM updated &middot; SMS sent &middot; Team notified</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- LIVE DEMO -->
-<section class="demo-sec" id="demo">
-  <div class="wrap">
-    <div class="eyebrow fu"><div class="eyebrow-dot"></div>Live Scenarios</div>
-    <h2 class="h2 fu">Real Calls. Real Outcomes.</h2>
+<section class="sec" id="demo">
+  <div class="w">
+    <div class="sh fu">
+      <div class="chip"><div class="chip-dot"></div>Live Demo</div>
+      <h2 class="h2" style="margin-bottom:.5rem;">Hear It Handle Real Scenarios</h2>
+      <p class="sm" style="margin-bottom:1.5rem;">Call <a href="tel:+12166160378" style="color:var(--green);font-weight:500;">+1 (216) 616-0378</a> to try it live, or watch how it handles these situations.</p>
+    </div>
     <div class="demo-grid fu">
       <div>
-        <p class="small" style="margin-bottom:.85rem;">Select a scenario:</p>
+        <p class="xs" style="margin-bottom:.75rem;letter-spacing:.06em;text-transform:uppercase;">Select scenario</p>
         <div class="scen-list">
-          <button class="scen-btn a" onclick="showS(0,this)"><div class="sdot"></div>Emergency AC — 96&deg; outside, 2am</button>
-          <button class="scen-btn" onclick="showS(1,this)"><div class="sdot"></div>Routine tune-up booking</button>
-          <button class="scen-btn" onclick="showS(2,this)"><div class="sdot"></div>After-hours furnace failure</button>
-          <button class="scen-btn" onclick="showS(3,this)"><div class="sdot"></div>Spam call — handled automatically</button>
+          <button class="scen-btn a" onclick="showS(0,this)"><div class="sdot"></div>Emergency — no heat, 18 degrees</button>
+          <button class="scen-btn" onclick="showS(1,this)"><div class="sdot"></div>Routine maintenance booking</button>
+          <button class="scen-btn" onclick="showS(2,this)"><div class="sdot"></div>After-hours AC failure</button>
+          <button class="scen-btn" onclick="showS(3,this)"><div class="sdot"></div>Spam call handled automatically</button>
         </div>
-        <div class="outcomes-box">
-          <div class="outcomes-title">What Your Business Gets</div>
-          <div class="outcome-list" id="outcomeList">
-            <div class="outcome-it hi">Job captured at 2am — no voicemail</div>
-            <div class="outcome-it">Technician alerted in under 60 seconds</div>
-            <div class="outcome-it">Customer SMS confirmation sent automatically</div>
-            <div class="outcome-it">Lead synced to CRM — no manual entry</div>
+        <div class="tout">
+          <div class="tout-t">What your business gets</div>
+          <div class="tout-list" id="toutList">
+            <div class="ti hi">Emergency captured — 11:48 PM, would have been voicemail</div>
+            <div class="ti">Technician alerted within 60 seconds</div>
+            <div class="ti">SMS confirmation sent to caller automatically</div>
+            <div class="ti">Job synced to CRM, no manual entry</div>
           </div>
         </div>
       </div>
       <div class="tcard">
         <div class="thead">
-          <div class="tstatus"><div class="alive-dot"></div><span id="tTitle">AI Receptionist &mdash; Emergency</span></div>
-          <div class="ttime" id="tTime">Inbound &middot; 2:14 AM</div>
+          <div class="tstat"><div class="alive-dot"></div><span id="tTitle">Emergency Call — 11:47 PM</span></div>
+          <div class="ttime" id="tTime">Inbound &middot; After Hours</div>
         </div>
         <div class="tbody" id="tBody">
           <div class="tmsg"><div class="tlbl">AI Receptionist</div><div class="tb ai">Thank you for calling Summit HVAC. How can I help you tonight?</div></div>
-          <div class="tmsg" style="align-items:flex-end"><div class="tlbl" style="text-align:right">Caller</div><div class="tb usr">My AC is not working. It's 96 degrees and I have kids</div></div>
-          <div class="tmsg"><div class="tlbl">AI Receptionist</div><div class="tb ai">That's an emergency — especially with children. I'm getting a technician to call you within 15 minutes. What's your name and address?</div></div>
-          <div class="tmsg" style="align-items:flex-end"><div class="tlbl" style="text-align:right">Caller</div><div class="tb usr">Sarah Chen, 2847 Maple Drive</div></div>
-          <div class="tmsg"><div class="tlbl">AI Receptionist</div><div class="tb ai">Got it Sarah. Priority emergency flagged. A technician will call you within 15 minutes — keep your phone nearby.</div></div>
-          <div class="tmsg"><div class="tlbl">System</div><div class="tb sys">Emergency flagged &nbsp;&middot;&nbsp; Tech alerted &nbsp;&middot;&nbsp; SMS sent &nbsp;&middot;&nbsp; CRM updated &nbsp;&middot;&nbsp; 0:31 elapsed</div></div>
+          <div class="tmsg" style="align-items:flex-end"><div class="tlbl" style="text-align:right">Caller</div><div class="tb usr">My furnace stopped working. It's 18 degrees outside and I have two kids at home</div></div>
+          <div class="tmsg"><div class="tlbl">AI Receptionist</div><div class="tb ai">That's a heating emergency. I'm getting a technician to call you within 15 minutes. What's your name and address?</div></div>
+          <div class="tmsg" style="align-items:flex-end"><div class="tlbl" style="text-align:right">Caller</div><div class="tb usr">Mike Rodriguez, 5512 Elm Street</div></div>
+          <div class="tmsg"><div class="tlbl">AI Receptionist</div><div class="tb ai">Got it, Mike. This is marked as priority emergency. Keep your phone nearby — someone will call you within 15 minutes.</div></div>
+          <div class="tmsg"><div class="tlbl">System — 11:48 PM</div><div class="tb sys">Emergency flagged &nbsp;&middot;&nbsp; On-call tech notified &nbsp;&middot;&nbsp; SMS sent to Mike &nbsp;&middot;&nbsp; CRM updated</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DASHBOARD PROOF -->
+<!-- MISSED REVENUE -->
+<section class="sec dark" id="revenue">
+  <div class="w">
+    <div class="rev-grid">
+      <div class="fu">
+        <div class="chip"><div class="chip-dot"></div>The Cost of Doing Nothing</div>
+        <h2 class="h2" style="margin-bottom:1rem;">Missed Calls Are Your Biggest Expense</h2>
+        <p class="body" style="margin-bottom:2rem;">Most contractors don't track missed calls. But the math is brutal — and it compounds every single week.</p>
+        <div class="pains">
+          <div class="pain">
+            <div class="pain-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+            <div><strong>40% of calls go unanswered</strong><span>Peak hours, busy season, and anything after 5pm — all going to voicemail while your competitor answers</span></div>
+          </div>
+          <div class="pain">
+            <div class="pain-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><strong>First to respond wins the job 78% of the time</strong><span>Speed to lead is everything. If you call back in 2 hours they have already booked someone else</span></div>
+          </div>
+          <div class="pain">
+            <div class="pain-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <div><strong>After-hours callers are ready to book</strong><span>Someone calling at 11pm about no heat is not shopping around. They need help now and will pay for fast response</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="fu">
+        <div class="calc">
+          <div class="calc-hd">Your Annual Revenue Loss — Estimate</div>
+          <div class="calc-bd">
+            <div class="crow"><span class="clbl">Missed calls per week</span><span class="cval r">~5 calls</span></div>
+            <div class="crow"><span class="clbl">Conversion rate on answered calls</span><span class="cval">60%</span></div>
+            <div class="crow"><span class="clbl">Average job value</span><span class="cval">$380</span></div>
+            <div class="crow"><span class="clbl">Jobs lost per week</span><span class="cval r">3 jobs</span></div>
+            <div class="crow"><span class="clbl">Revenue lost per week</span><span class="cval r">$1,140</span></div>
+            <div class="ctot">
+              <div class="ctot-l">Estimated Annual Revenue Loss</div>
+              <div class="ctot-n">$59,280</div>
+            </div>
+            <div class="cnote">Based on industry averages for HVAC and plumbing companies</div>
+          </div>
+        </div>
+        <button class="bp" style="width:100%;margin-top:1rem;justify-content:center;" onclick="openModal()">Get My Free Revenue Audit</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD PREVIEW -->
 <section class="sec" id="dashboard">
-  <div class="wrap">
-    <div class="eyebrow fu" style="justify-content:center;"><div class="eyebrow-dot"></div>Your Monthly ROI Dashboard</div>
-    <h2 class="h2 fu" style="text-align:center;max-width:520px;margin:0 auto .85rem;">See Exactly What the System Is Worth Every Month</h2>
-    <p class="small fu" style="text-align:center;max-width:440px;margin:0 auto;">Every client gets a live dashboard updated in real time. These are real numbers from a single month of operation.</p>
+  <div class="w">
+    <div class="sh c fu">
+      <div class="chip" style="justify-content:center;"><div class="chip-dot"></div>Real-Time Analytics</div>
+      <h2 class="h2">See Exactly What Your AI Is Worth</h2>
+      <p class="sm">Every client gets a live dashboard. Clear numbers every month.</p>
+    </div>
     <div class="dframe fu">
       <div class="dtop">
-        <div style="display:flex;align-items:center;gap:1rem;"><div class="dbrand">Client Performance Portal</div><div class="lpill"><div class="ldot"></div>Live</div></div>
+        <div style="display:flex;align-items:center;gap:.9rem;"><div class="dbrand">Client Performance Portal</div><div class="lpill"><div class="ldot"></div>Live</div></div>
         <div class="dperiod">May 2026 &nbsp;&middot;&nbsp; Growth Plan</div>
       </div>
       <div class="krow">
-        <div class="kbox"><div class="knum">247</div><div class="klbl">Calls answered by AI</div><div class="kdelta">100% answer rate</div></div>
-        <div class="kbox"><div class="knum">61</div><div class="klbl">Jobs booked automatically</div><div class="kdelta">+18% vs last month</div></div>
-        <div class="kbox"><div class="knum">14</div><div class="klbl">After-hours jobs captured</div><div class="kdelta">Would have been voicemail</div></div>
-        <div class="kbox hi"><div class="knum">$23,180</div><div class="klbl">Revenue recovered</div><div class="kdelta">AI-attributed jobs</div></div>
+        <div class="kb"><div class="kn">247</div><div class="kl">Calls Answered by AI</div><div class="kd">100% answer rate</div></div>
+        <div class="kb"><div class="kn">61</div><div class="kl">Jobs Booked Automatically</div><div class="kd">+18% vs last month</div></div>
+        <div class="kb"><div class="kn">14</div><div class="kl">Emergency Jobs Captured</div><div class="kd">After-hours recovery</div></div>
+        <div class="kb hi"><div class="kn">$23,180</div><div class="kl">Revenue Recovered</div><div class="kd">AI-attributed jobs</div></div>
       </div>
       <div class="dbot">
         <div class="dpanel">
@@ -635,186 +736,190 @@ strong{font-weight:600;}
           </div>
         </div>
         <div class="dpanel">
-          <div class="ptitle">Performance</div>
+          <div class="ptitle">Performance Breakdown</div>
           <div class="mets">
-            <div class="met"><div class="mrow"><span class="mname">AI booking rate</span><span class="mval">78%</span></div><div class="mbar"><div class="mfill" style="width:78%"></div></div></div>
-            <div class="met"><div class="mrow"><span class="mname">Call completion</span><span class="mval">94%</span></div><div class="mbar"><div class="mfill" style="width:94%"></div></div></div>
-            <div class="met"><div class="mrow"><span class="mname">After-hours coverage</span><span class="mval">100%</span></div><div class="mbar"><div class="mfill" style="width:100%"></div></div></div>
-            <div class="met"><div class="mrow"><span class="mname">Dispatcher hours saved</span><span class="mval">42 hrs</span></div><div class="mbar"><div class="mfill" style="width:70%"></div></div></div>
+            <div class="met"><div class="mrow"><span class="mname">AI Booking Rate</span><span class="mval">78%</span></div><div class="mbar"><div class="mfill" style="width:78%"></div></div></div>
+            <div class="met"><div class="mrow"><span class="mname">After-Hours Coverage</span><span class="mval">100%</span></div><div class="mbar"><div class="mfill" style="width:100%"></div></div></div>
+            <div class="met"><div class="mrow"><span class="mname">Call Completion Rate</span><span class="mval">94%</span></div><div class="mbar"><div class="mfill" style="width:94%"></div></div></div>
+            <div class="met"><div class="mrow"><span class="mname">Dispatcher Hours Saved</span><span class="mval">42 hrs</span></div><div class="mbar"><div class="mfill" style="width:70%"></div></div></div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MISSED REVENUE -->
-<section class="sec dk">
-  <div class="wrap">
-    <div class="mgrid">
-      <div class="fu">
-        <div class="eyebrow"><div class="eyebrow-dot"></div>The Cost of Doing Nothing</div>
-        <h2 class="h2" style="margin-bottom:1.1rem;">Every Missed Call Has a Price Tag</h2>
-        <p class="body" style="margin-bottom:2rem;">Contractors typically miss 3 to 5 calls per week. At an average job value of $380 that is nearly $60,000 a year walking out the door — to your competitors.</p>
-        <div class="pains">
-          <div class="pain"><div class="pain-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div><div><strong>40% of calls go unanswered</strong><span>During busy season, lunch, and after hours — when demand is highest</span></div></div>
-          <div class="pain"><div class="pain-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><strong>First to respond gets the job 78% of the time</strong><span>Most businesses respond in hours. Your AI responds in seconds.</span></div></div>
-          <div class="pain"><div class="pain-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div><strong>After-hours callers are your highest-intent leads</strong><span>Someone calling at 11pm with no AC is desperate and ready to book</span></div></div>
-        </div>
-      </div>
-      <div class="fu">
-        <div class="calc">
-          <div class="calc-hd">Annual Missed Revenue &mdash; Estimate</div>
-          <div class="calc-bd">
-            <div class="crow"><span class="clbl">Missed calls per week</span><span class="cval r">~5 calls</span></div>
-            <div class="crow"><span class="clbl">Conversion rate (answered calls)</span><span class="cval">60%</span></div>
-            <div class="crow"><span class="clbl">Average job value</span><span class="cval">$380</span></div>
-            <div class="crow"><span class="clbl">Jobs lost per week</span><span class="cval r">3 jobs</span></div>
-            <div class="crow"><span class="clbl">Revenue lost per week</span><span class="cval r">$1,140</span></div>
-            <div class="ctotal"><div class="ctotal-lbl">Estimated Annual Revenue Loss</div><div class="ctotal-n">$59,280</div></div>
-            <div class="cnote">Industry averages for HVAC and plumbing contractors</div>
-          </div>
-        </div>
-        <button class="bp" style="width:100%;margin-top:1rem;justify-content:center;" onclick="openModal()">Get My Free Revenue Audit</button>
       </div>
     </div>
   </div>
 </section>
 
 <!-- SERVICES -->
-<section class="sec" id="services">
-  <div class="wrap">
-    <div class="eyebrow fu"><div class="eyebrow-dot"></div>What's Included</div>
-    <h2 class="h2 fu">Everything in One Managed System</h2>
+<section class="sec dark" id="services">
+  <div class="w">
+    <div class="sh fu">
+      <div class="chip"><div class="chip-dot"></div>What's Included</div>
+      <h2 class="h2">Everything Runs Automatically</h2>
+    </div>
     <div class="sgrid fu">
-      <div class="sitem"><div class="snum">01</div><div class="stitle">24/7 AI Voice Receptionist</div><div class="sbody">Answers every call in under 2 seconds. Books jobs, handles emergencies, and qualifies leads — automatically, around the clock.</div></div>
-      <div class="sitem"><div class="snum">02</div><div class="stitle">Missed Call Text-Back</div><div class="sbody">When a call slips through, an SMS fires to the caller within 60 seconds. Re-engages leads before they call the next contractor on Google.</div></div>
-      <div class="sitem"><div class="snum">03</div><div class="stitle">CRM Integration</div><div class="sbody">Every booked appointment syncs into ServiceTitan, Housecall Pro, or Jobber automatically. No manual data entry. No missed details.</div></div>
-      <div class="sitem"><div class="snum">04</div><div class="stitle">After-Hours Lead Capture</div><div class="sbody">Capture every call while your techs are in the field, after 5pm, weekends, and holidays. These are your highest-intent prospects.</div></div>
-      <div class="sitem"><div class="snum">05</div><div class="stitle">Live ROI Dashboard</div><div class="sbody">A real-time dashboard showing calls answered, jobs booked, revenue recovered, and dispatcher hours saved. Updated after every call.</div></div>
-      <div class="sitem"><div class="snum">06</div><div class="stitle">Fully Managed — We Handle Everything</div><div class="sbody">Weekly call monitoring, monthly script optimization, CRM maintenance, and emergency escalation support. You run the business. We run the front desk.</div></div>
+      <div class="si"><div class="si-n">01</div><div class="si-t">24/7 AI Voice Receptionist</div><div class="si-b">Answers every call instantly. Qualifies the lead, books the job, and escalates emergencies — trained specifically for your service type and area.</div></div>
+      <div class="si"><div class="si-n">02</div><div class="si-t">Missed Call Text-Back</div><div class="si-b">When a call slips through, an SMS fires back in seconds. Re-engages the lead before they call your competitor.</div></div>
+      <div class="si"><div class="si-n">03</div><div class="si-t">CRM Integration &amp; Sync</div><div class="si-b">Every booked job syncs directly into ServiceTitan, Housecall Pro, or Jobber. Your dispatcher sees the job without any manual entry.</div></div>
+      <div class="si"><div class="si-n">04</div><div class="si-t">After-Hours Lead Capture</div><div class="si-b">Captures every after-hours call, weekend inquiry, and holiday emergency. These are your highest-intent prospects — they need help now.</div></div>
+      <div class="si"><div class="si-n">05</div><div class="si-t">Live ROI Dashboard</div><div class="si-b">Your dashboard shows calls answered, jobs booked, dispatcher hours saved, and revenue recovered. Updated after every single call.</div></div>
+      <div class="si"><div class="si-n">06</div><div class="si-t">Fully Managed &amp; Optimized</div><div class="si-b">We monitor weekly, optimize scripts monthly, and fix anything that breaks. You never touch the system — you just show up for the work it books.</div></div>
     </div>
   </div>
 </section>
 
 <!-- OBJECTIONS -->
-<section class="sec dk" id="objections">
-  <div class="wrap">
-    <div class="eyebrow fu"><div class="eyebrow-dot"></div>Common Questions</div>
-    <h2 class="h2 fu">What Contractors Ask Before Switching to AI</h2>
+<section class="sec" id="objections">
+  <div class="w">
+    <div class="sh c fu">
+      <div class="chip" style="justify-content:center;"><div class="chip-dot"></div>Common Questions</div>
+      <h2 class="h2">What Contractors Ask Before Switching to AI</h2>
+    </div>
     <div class="obj-grid fu">
-      <div class="obj-item">
-        <div class="obj-q">"Will it sound robotic?"</div>
-        <div class="obj-a">No. We use natural voice AI that sounds like a professional receptionist. Most callers cannot tell the difference. You can call our demo number right now and hear it yourself: <strong>+1 (216) 616-0378</strong>.</div>
+      <div class="obj">
+        <div class="obj-q">"Will it sound robotic to my customers?"</div>
+        <div class="obj-a">No. The AI uses natural voice technology and is trained to sound like a professional receptionist. <strong>Most callers cannot tell the difference.</strong> We build and test the voice before anything goes live — you approve it first.</div>
       </div>
-      <div class="obj-item">
+      <div class="obj">
         <div class="obj-q">"What if it gets something wrong?"</div>
-        <div class="obj-a">The AI handles 95%+ of calls correctly. When it is uncertain, it collects the caller's info and ensures a human follows up. Nothing falls through the cracks — we monitor every call weekly.</div>
+        <div class="obj-a">The AI handles over 95% of calls correctly. When it's unsure, <strong>it takes the caller's information and flags it for a human follow-up.</strong> Nothing falls through the cracks — it always captures the lead.</div>
       </div>
-      <div class="obj-item">
+      <div class="obj">
         <div class="obj-q">"Can a human take over if needed?"</div>
-        <div class="obj-a">Yes. Emergency calls are immediately escalated to your on-call technician. You can also set up call forwarding rules so certain call types always reach a live person.</div>
+        <div class="obj-a">Yes. <strong>Emergency calls get immediately routed to your on-call technician.</strong> For any call where a human is specifically requested, the AI collects their info and ensures a callback within the hour.</div>
       </div>
-      <div class="obj-item">
-        <div class="obj-q">"Will this work after hours?"</div>
-        <div class="obj-a">That is exactly when it matters most. Your AI answers 24/7 — weeknights, weekends, holidays. After-hours calls are often your most urgent, highest-value leads.</div>
+      <div class="obj">
+        <div class="obj-q">"Will this work after hours and on weekends?"</div>
+        <div class="obj-a">That's exactly when it's most valuable. <strong>The AI runs 24/7 with no degradation in quality</strong> — same response at 3am Sunday as 10am Tuesday. After-hours calls are often your highest-intent leads.</div>
       </div>
-      <div class="obj-item">
+      <div class="obj">
         <div class="obj-q">"Can it integrate with my CRM?"</div>
-        <div class="obj-a">Yes. We integrate with ServiceTitan, Housecall Pro, Jobber, GoHighLevel, and most major CRMs. Jobs sync automatically after every booked call — no manual entry.</div>
+        <div class="obj-a">Yes. We integrate with ServiceTitan, Housecall Pro, Jobber, GoHighLevel, and most major CRMs. <strong>Every booked job syncs automatically</strong> — no duplicate data entry, no manual logging.</div>
       </div>
-      <div class="obj-item">
-        <div class="obj-q">"What does 'fully managed' actually mean?"</div>
-        <div class="obj-a">You never touch anything. We build it, test it, launch it, monitor it weekly, optimize it monthly, and fix anything that breaks. Your only job is showing up for the work your AI books.</div>
+      <div class="obj">
+        <div class="obj-q">"Do I need to change my phone number?"</div>
+        <div class="obj-a">No. <strong>Your existing number stays exactly as it is.</strong> We set up a forwarding line — callers dial your number as always, the AI handles it behind the scenes. No disruption to your current setup.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- GUARANTEE -->
-<section class="sec">
-  <div class="wrap">
-    <div class="guarantee fu">
-      <div class="guarantee-badge">Our Guarantee</div>
-      <h2 class="guarantee-headline">Results in 30 Days — or We Keep Working Until You Get Them</h2>
-      <p class="guarantee-body">If the system does not improve your call response speed and lead capture within the first 30 days, we continue optimizing it at no additional cost — until it does. You are not paying for a tool. You are paying for outcomes.</p>
+<section class="sec dark">
+  <div class="w">
+    <div class="guar-box fu">
+      <div class="guar-badge">Our Guarantee</div>
+      <h2 class="guar-hl">If It Doesn't Work,<br>We Keep Optimizing Until It Does</h2>
+      <p class="guar-body">If your AI system does not improve response speed and lead handling within the first 30 days, we continue optimizing it at no additional cost until it does. We only win when you win.</p>
+      <div class="guar-items">
+        <div class="guar-item"><div class="guar-n">30</div><div class="guar-l">Day free trial</div></div>
+        <div class="guar-item"><div class="guar-n">0</div><div class="guar-l">Setup fee on trial</div></div>
+        <div class="guar-item"><div class="guar-n">24/7</div><div class="guar-l">System uptime</div></div>
+        <div class="guar-item"><div class="guar-n">5-7</div><div class="guar-l">Days to go live</div></div>
+      </div>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="https://buy.stripe.com/3cI14mgAg8sR2EFcIzfMA0c" class="bg">Claim My Free 30-Day Trial</a>
+        <button class="bs" onclick="openModal()">Book Free Audit First</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANAGED -->
+<section class="sec" id="managed">
+  <div class="w">
+    <div class="mg-grid">
+      <div class="fu">
+        <div class="chip"><div class="chip-dot"></div>Done For You</div>
+        <h2 class="h2" style="margin-bottom:1.1rem;">We Run It.<br>You Answer the Jobs.</h2>
+        <p class="body" style="margin-bottom:2.25rem;">This is not software you figure out yourself. Our team builds, manages, and optimizes everything. You focus on doing the work — we handle the front desk.</p>
+        <button class="bp" onclick="openModal()">Book Your Free Setup Call</button>
+      </div>
+      <div class="mlist fu">
+        <div class="mi"><div class="mi-n">01</div><div><strong>Full Build &amp; Launch in 5-7 Days</strong><span>We handle scripting, CRM integration, testing, and call forwarding setup. You review and approve before anything goes live.</span></div></div>
+        <div class="mi"><div class="mi-n">02</div><div><strong>Weekly Call Monitoring</strong><span>Our team listens to real call recordings weekly. We catch issues before they affect your business and report back every week.</span></div></div>
+        <div class="mi"><div class="mi-n">03</div><div><strong>Monthly Script Optimization</strong><span>Your AI improves every month based on real call data, seasonal patterns, and your feedback.</span></div></div>
+        <div class="mi"><div class="mi-n">04</div><div><strong>Emergency Escalation 24/7</strong><span>Urgent calls get routed to your on-call tech immediately — any time of day or night.</span></div></div>
+        <div class="mi"><div class="mi-n">05</div><div><strong>Monthly ROI Reports</strong><span>On the 1st of every month you receive a full performance breakdown showing exactly what the system recovered in revenue.</span></div></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section class="sec dk" id="pricing">
-  <div class="wrap">
-    <div class="eyebrow fu" style="justify-content:center;"><div class="eyebrow-dot"></div>Investment</div>
-    <h2 class="h2 fu" style="text-align:center;">Pay for Results, Not Software</h2>
-    <p class="small fu" style="text-align:center;max-width:420px;margin:.6rem auto 0;">Most clients recover their full monthly investment within the first week of going live</p>
+<section class="sec dark" id="pricing">
+  <div class="w">
+    <div class="sh c fu">
+      <div class="chip" style="justify-content:center;"><div class="chip-dot"></div>Pricing</div>
+      <h2 class="h2">Built Around Your ROI</h2>
+      <p class="sm">Most clients recover their full monthly cost within the first week of going live</p>
+    </div>
     <div class="pgrid">
-      <div class="pcard fu">
+      <div class="pc fu">
         <div class="ptier">Starter</div>
-        <div class="phl">Stop missing calls and start booking more jobs</div>
+        <div class="phl">Answer Every Call. Book More Jobs.</div>
         <div class="psetup">$750 <small>setup</small></div>
         <div class="pmo">then <strong>$497/month</strong></div>
         <hr class="phr">
         <ul class="pfeats">
-          <li><span class="pcheck">&#10003;</span>24/7 AI Voice Receptionist</li>
-          <li><span class="pcheck">&#10003;</span>Answers in under 2 seconds</li>
-          <li><span class="pcheck">&#10003;</span>SMS appointment confirmations</li>
-          <li><span class="pcheck">&#10003;</span>Basic CRM integration</li>
-          <li><span class="pcheck">&#10003;</span>Emergency call escalation</li>
-          <li><span class="pcheck">&#10003;</span>Monthly performance report</li>
-          <li><span class="pcheck">&#10003;</span>Weekly call monitoring</li>
+          <li><span class="pck">&#10003;</span>24/7 AI Voice Receptionist</li>
+          <li><span class="pck">&#10003;</span>Inbound call answering &amp; booking</li>
+          <li><span class="pck">&#10003;</span>SMS appointment confirmations</li>
+          <li><span class="pck">&#10003;</span>Basic CRM integration</li>
+          <li><span class="pck">&#10003;</span>Emergency call escalation</li>
+          <li><span class="pck">&#10003;</span>Monthly performance report</li>
+          <li><span class="pck">&#10003;</span>Weekly call monitoring</li>
         </ul>
         <a href="https://buy.stripe.com/7sY9ASgAgcJ74MN7offMA05" class="pbtn">Get Started</a>
       </div>
-      <div class="pcard feat fu">
+      <div class="pc feat fu">
         <div class="fbadge">Most Popular</div>
         <div class="ptier">Growth</div>
-        <div class="phl">Recover after-hours revenue and automate follow-up</div>
+        <div class="phl">Recover After-Hours Revenue &amp; Automate Follow-Up</div>
         <div class="psetup">$1,250 <small>setup</small></div>
         <div class="pmo">then <strong>$797/month</strong></div>
         <hr class="phr">
         <ul class="pfeats">
-          <li><span class="pcheck">&#10003;</span>Everything in Starter</li>
-          <li><span class="pcheck">&#10003;</span>Missed call text-back in 60 seconds</li>
-          <li><span class="pcheck">&#10003;</span>Advanced CRM workflows</li>
-          <li><span class="pcheck">&#10003;</span>Live ROI dashboard</li>
-          <li><span class="pcheck">&#10003;</span>Multi-user SMS notifications</li>
-          <li><span class="pcheck">&#10003;</span>After-hours lead capture</li>
-          <li><span class="pcheck">&#10003;</span>Monthly script optimization</li>
-          <li><span class="pcheck">&#10003;</span>Call recordings &amp; transcripts</li>
+          <li><span class="pck">&#10003;</span>Everything in Starter</li>
+          <li><span class="pck">&#10003;</span>Missed call text-back automation</li>
+          <li><span class="pck">&#10003;</span>Advanced CRM workflows</li>
+          <li><span class="pck">&#10003;</span>Live ROI dashboard access</li>
+          <li><span class="pck">&#10003;</span>Multi-user SMS notifications</li>
+          <li><span class="pck">&#10003;</span>After-hours lead capture system</li>
+          <li><span class="pck">&#10003;</span>Monthly script optimization</li>
+          <li><span class="pck">&#10003;</span>Call recordings &amp; transcripts</li>
         </ul>
         <a href="https://buy.stripe.com/eVq8wOfwcfVj7YZ4c3fMA06" class="pbtn">Get Started</a>
       </div>
-      <div class="pcard fu">
+      <div class="pc fu">
         <div class="ptier">Full Stack</div>
-        <div class="phl">Full revenue automation for multi-location operations</div>
+        <div class="phl">Full Revenue Automation for Multi-Location Growth</div>
         <div class="psetup">$2,000 <small>setup</small></div>
         <div class="pmo">then <strong>$1,197/month</strong></div>
         <hr class="phr">
         <ul class="pfeats">
-          <li><span class="pcheck">&#10003;</span>Everything in Growth</li>
-          <li><span class="pcheck">&#10003;</span>Custom automation workflows</li>
-          <li><span class="pcheck">&#10003;</span>Advanced lead qualification</li>
-          <li><span class="pcheck">&#10003;</span>Multi-location support</li>
-          <li><span class="pcheck">&#10003;</span>Priority support line</li>
-          <li><span class="pcheck">&#10003;</span>Advanced CRM integrations</li>
-          <li><span class="pcheck">&#10003;</span>Custom reporting</li>
-          <li><span class="pcheck">&#10003;</span>Quarterly strategy reviews</li>
+          <li><span class="pck">&#10003;</span>Everything in Growth</li>
+          <li><span class="pck">&#10003;</span>Custom automation workflows</li>
+          <li><span class="pck">&#10003;</span>Advanced lead qualification AI</li>
+          <li><span class="pck">&#10003;</span>Multi-location support</li>
+          <li><span class="pck">&#10003;</span>Priority support line</li>
+          <li><span class="pck">&#10003;</span>Advanced CRM integrations</li>
+          <li><span class="pck">&#10003;</span>Custom reporting &amp; analytics</li>
+          <li><span class="pck">&#10003;</span>Quarterly strategy reviews</li>
         </ul>
         <a href="https://buy.stripe.com/4gMaEWdo45gF2EF0ZRfMA07" class="pbtn">Get Started</a>
       </div>
     </div>
     <div class="trial-box fu" id="trial">
       <div>
-        <div class="eyebrow" style="margin-bottom:.75rem;"><div class="eyebrow-dot"></div>Limited — 10 Founding Client Spots</div>
-        <h3 class="h3" style="margin-bottom:.5rem;">Try It Free for 30 Days</h3>
-        <p class="small" style="margin-bottom:.5rem;">We build your complete AI receptionist system and run it live for one full month at no cost. No setup fee. No contract. You pay nothing until you see results.</p>
-        <div class="trial-spots">Only 10 founding client spots this month &mdash; claim yours before they are gone</div>
+        <div class="chip" style="margin-bottom:.65rem;"><div class="chip-dot"></div>Limited — 10 Founding Client Spots</div>
+        <h3 style="font-family:var(--ff);font-size:1.6rem;font-weight:300;margin-bottom:.4rem;">Try It Free for 30 Days</h3>
+        <p class="sm" style="margin-bottom:.4rem;">We build your complete AI receptionist and run it live for one full month at no cost. No setup fee. No contract. Pay nothing until you see results.</p>
+        <div class="tspots">Only 10 founding spots this month &mdash; claim yours before they are gone</div>
       </div>
       <div>
         <a href="https://buy.stripe.com/3cI14mgAg8sR2EFcIzfMA0c" class="bg" style="white-space:nowrap;">
           Claim My Free Month
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
@@ -823,108 +928,113 @@ strong{font-weight:600;}
 
 <!-- INDUSTRIES -->
 <section class="sec" id="industries">
-  <div class="wrap">
-    <div class="eyebrow fu"><div class="eyebrow-dot"></div>Industries We Serve</div>
-    <h2 class="h2 fu">Built for Contractors and Local Service Businesses</h2>
+  <div class="w">
+    <div class="sh fu">
+      <div class="chip"><div class="chip-dot"></div>Industries We Serve</div>
+      <h2 class="h2">Built for Home Service Contractors</h2>
+    </div>
     <div class="igrid fu">
-      <div class="iitem">
+      <div class="ii">
         <div class="iico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 2A2.5 2.5 0 0112 4.5v15a2.5 2.5 0 01-5 0v-15A2.5 2.5 0 019.5 2z"/><path d="M14.5 8A2.5 2.5 0 0117 10.5v9a2.5 2.5 0 01-5 0v-9A2.5 2.5 0 0114.5 8z"/></svg></div>
         <div class="iname">HVAC</div>
-        <div class="ibody">Emergency AC and heating calls captured 24/7. Peak season surge management. Priority dispatch for no-heat and no-AC calls.</div>
+        <div class="ibody">Emergency AC and heating calls captured 24/7. Seasonal surge management with priority dispatch automation.</div>
         <div class="istat">Avg. $23K/month recovered</div>
       </div>
-      <div class="iitem">
+      <div class="ii">
         <div class="iico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/></svg></div>
         <div class="iname">Plumbing</div>
-        <div class="ibody">Burst pipes, drain clogs, water heater failures. Every call answered instantly — especially the 2am emergencies that become your best jobs.</div>
+        <div class="ibody">Burst pipe emergencies, drain clogs, water heater failures. Every call answered instantly around the clock.</div>
         <div class="istat">100% after-hours coverage</div>
       </div>
-      <div class="iitem">
+      <div class="ii">
         <div class="iico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
         <div class="iname">Roofing</div>
-        <div class="ibody">Storm damage leads captured the moment they call. Estimate requests qualified and scheduled — no chasing leads manually.</div>
+        <div class="ibody">Storm damage leads captured immediately. Estimate requests qualified and scheduled without a dispatcher.</div>
         <div class="istat">3x faster lead response</div>
       </div>
-      <div class="iitem">
+      <div class="ii">
         <div class="iico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
         <div class="iname">Electrical</div>
-        <div class="ibody">Safety emergencies escalated instantly. Panel upgrades, EV installs, and service calls booked without tying up your dispatcher.</div>
+        <div class="ibody">Safety emergencies escalated instantly. Panel upgrades, EV installs, and service calls booked automatically.</div>
         <div class="istat">Zero missed emergencies</div>
       </div>
-      <div class="iitem icta">
-        <div class="iico" style="background:rgba(74,222,128,.12);border:1px solid var(--gborder);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--green)"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg></div>
+      <div class="ii icta">
+        <div class="iico" style="background:rgba(74,222,128,.15);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--green)"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg></div>
         <div class="iname">Your Industry</div>
-        <div class="ibody">If your business runs on inbound calls, we can build a system for you. Let's talk.</div>
-        <button class="bg" style="width:100%;justify-content:center;font-size:.75rem;margin-top:.75rem;" onclick="openModal()">Let's Talk</button>
+        <div class="ibody">If your business relies on inbound calls, we can build a system for you.</div>
+        <button class="bg" style="width:100%;justify-content:center;font-size:.75rem;margin-top:.5rem;padding:.6rem .9rem;" onclick="openModal()">Let's Talk</button>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="sec dk" id="faq">
-  <div class="wrap">
-    <div class="eyebrow fu" style="justify-content:center;"><div class="eyebrow-dot"></div>FAQ</div>
-    <h2 class="h2 fu" style="text-align:center;">Common Questions</h2>
-    <div class="faq-wrap fu">
-      <details class="fitem"><summary>How long does setup take?<span class="ftog">+</span></summary><div class="fbody">Most clients are live within 5 to 7 business days. We handle the entire build — scripting, testing, CRM integration, and call forwarding setup. You review and approve before anything goes live.</div></details>
-      <details class="fitem"><summary>Will callers know they are talking to an AI?<span class="ftog">+</span></summary><div class="fbody">Many callers cannot tell the difference. You can test it yourself by calling <strong>+1 (216) 616-0378</strong> right now. If a caller directly asks, the AI is always honest. We never deceive customers.</div></details>
-      <details class="fitem"><summary>What if the AI gets something wrong?<span class="ftog">+</span></summary><div class="fbody">The AI handles 95%+ of calls correctly. When it is uncertain it collects the caller's info and flags the call for follow-up. Our team reviews recordings every week and catches anything before it becomes a problem.</div></details>
-      <details class="fitem"><summary>Do I need to change my existing phone number?<span class="ftog">+</span></summary><div class="fbody">No. We set up a dedicated AI number and your existing number forwards to it. Callers notice nothing different — the AI answers immediately in your business name.</div></details>
-      <details class="fitem"><summary>Which CRMs do you work with?<span class="ftog">+</span></summary><div class="fbody">ServiceTitan, Housecall Pro, Jobber, GoHighLevel, and most major CRMs via API. If you use something different, contact us — we can usually build a custom integration.</div></details>
-      <details class="fitem"><summary>Is there a contract?<span class="ftog">+</span></summary><div class="fbody">No long-term contracts. Month-to-month after initial setup. Cancel anytime with 30 days notice. Our clients stay because the system works.</div></details>
-      <details class="fitem"><summary>What is included in the free trial?<span class="ftog">+</span></summary><div class="fbody">Everything. We build your complete AI receptionist, integrate it with your systems, and run it live for 30 days at no cost. No setup fee, no monthly charge. Most clients see ROI in the first week.</div></details>
+<section class="sec dark" id="faq">
+  <div class="w">
+    <div class="sh c fu">
+      <div class="chip" style="justify-content:center;"><div class="chip-dot"></div>FAQ</div>
+      <h2 class="h2">Quick Answers</h2>
+    </div>
+    <div class="fwrap fu">
+      <details class="fi"><summary>How long does setup take?<span class="ftog">+</span></summary><div class="fbody">Most clients are live within 5 to 7 business days. We handle scripting, testing, CRM integration, and call forwarding. You approve everything before it goes live.</div></details>
+      <details class="fi"><summary>Do I need to change my phone number?<span class="ftog">+</span></summary><div class="fbody">No. Your existing number stays the same. We set up a forwarding line — callers dial your number as always, the AI handles it in the background.</div></details>
+      <details class="fi"><summary>What happens if the AI gets something wrong?<span class="ftog">+</span></summary><div class="fbody">The AI handles 95%+ of calls correctly. When it's unsure, it takes the caller's information and flags it for human follow-up. The lead is always captured.</div></details>
+      <details class="fi"><summary>Which CRMs do you integrate with?<span class="ftog">+</span></summary><div class="fbody">ServiceTitan, Housecall Pro, Jobber, GoHighLevel, and most major CRMs. If you use something else, contact us — we can usually build a custom integration.</div></details>
+      <details class="fi"><summary>Is there a long-term contract?<span class="ftog">+</span></summary><div class="fbody">No. Month-to-month after the initial setup. Cancel anytime with 30 days notice. Our clients stay because the system works.</div></details>
+      <details class="fi"><summary>What is included in the free 30-day trial?<span class="ftog">+</span></summary><div class="fbody">Everything. Full build, CRM integration, and live operation for 30 days at no cost. No setup fee, no monthly charge. You decide at day 30 whether to continue. Most clients see ROI within the first week.</div></details>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-sec">
-  <div class="wrap">
+  <div class="w">
     <div class="cta-in fu">
-      <div class="eyebrow" style="justify-content:center;margin-bottom:1.25rem;"><div class="eyebrow-dot"></div>10 founding client spots — 7 remaining</div>
-      <h2 class="h2" style="margin-bottom:1rem;">Stop Losing <em>$50K a Year</em><br>to Missed Calls</h2>
-      <p class="body" style="max-width:520px;margin:0 auto;">Book a free 30-minute revenue audit. We calculate your exact missed revenue and show you what your AI receptionist would look like — no pitch, just numbers.</p>
+      <div class="chip" style="justify-content:center;margin-bottom:1.25rem;"><div class="chip-dot"></div>10 founding spots remaining</div>
+      <h2 class="h2" style="margin-bottom:1rem;">Stop Losing <em>$50K+</em><br>to Missed Calls</h2>
+      <p class="body">Try it free for 30 days. We build everything — you just show up for the work it books.</p>
       <div class="cta-btns">
-        <button class="bp" onclick="openModal()" style="font-size:.9rem;padding:1rem 2.25rem;">Book Free Revenue Audit</button>
-        <a href="https://buy.stripe.com/3cI14mgAg8sR2EFcIzfMA0c" class="bs" style="font-size:.9rem;padding:1rem 2.25rem;">Claim Free 30-Day Trial</a>
+        <a href="tel:+12166160378" class="bdemo" style="font-size:.88rem;padding:.85rem 1.75rem;">Try the AI Live — Call Now</a>
+        <a href="https://buy.stripe.com/3cI14mgAg8sR2EFcIzfMA0c" class="bg" style="font-size:.88rem;padding:.85rem 1.75rem;">Start Free 30-Day Trial</a>
+        <button class="bs" onclick="openModal()" style="font-size:.88rem;padding:.85rem 1.75rem;">Book Free Audit</button>
       </div>
-      <p class="cta-note">No setup fee &nbsp;&middot;&nbsp; No contract &nbsp;&middot;&nbsp; Live in 5 to 7 business days</p>
+      <p class="cta-note">No setup fee &nbsp;&middot;&nbsp; No contract &nbsp;&middot;&nbsp; Live in 5-7 business days</p>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section class="sec dk" id="contact">
-  <div class="wrap">
-    <div class="eyebrow fu"><div class="eyebrow-dot"></div>Get In Touch</div>
-    <h2 class="h2 fu" style="margin-bottom:3rem;">Let's Talk About Your Business</h2>
-    <div class="cgrid">
+<section class="sec dark" id="contact">
+  <div class="w">
+    <div class="sh fu">
+      <div class="chip"><div class="chip-dot"></div>Get In Touch</div>
+      <h2 class="h2" style="margin-bottom:3rem;">Let's Talk About Your Business</h2>
+    </div>
+    <div class="cg">
       <div class="fu">
         <div class="cdet">
-          <div class="crow2"><div class="cico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg></div><div><strong>Phone</strong><span>(614) 323-3534</span></div></div>
-          <div class="crow2"><div class="cico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><strong>Email</strong><span>p&#101;rch&#101;solutions&#64;gmail&#46;com</span></div></div>
-          <div class="crow2"><div class="cico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><strong>Book a Call</strong><span>Free 30-minute revenue audit — no sales pitch</span></div></div>
+          <div class="crow2"><div class="cico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg></div><div><strong>Phone</strong><span>(614) 323-3534</span></div></div>
+          <div class="crow2"><div class="cico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><strong>Email</strong><span>p&#101;rch&#101;solutions&#64;gmail&#46;com</span></div></div>
+          <div class="crow2"><div class="cico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div><strong>Book a Call</strong><span>Free 30-minute revenue audit — no pitch, just data</span></div></div>
         </div>
         <button class="bp" onclick="openModal()" style="margin-bottom:2rem;">Schedule Free Audit</button>
         <div class="proc">
-          <div class="proc-title">What Happens Next</div>
-          <div class="proc-steps">
-            <div class="pstep"><div class="pstep-dot"></div>Book your free 30-minute revenue audit</div>
-            <div class="pstep"><div class="pstep-dot"></div>We calculate your exact missed revenue</div>
-            <div class="pstep"><div class="pstep-dot"></div>You hear the AI live on the call</div>
-            <div class="pstep"><div class="pstep-dot"></div>System built and live in 5 to 7 days</div>
-            <div class="pstep"><div class="pstep-dot"></div>ROI visible in the first week</div>
+          <div class="proc-t">What Happens After You Reach Out</div>
+          <div class="psteps">
+            <div class="ps"><div class="ps-dot"></div>We calculate your exact missed revenue</div>
+            <div class="ps"><div class="ps-dot"></div>We demo the AI live on the call</div>
+            <div class="ps"><div class="ps-dot"></div>System built and live in 5 to 7 business days</div>
+            <div class="ps"><div class="ps-dot"></div>You see ROI in the first week</div>
           </div>
         </div>
       </div>
       <div class="fu">
         <form class="form" id="cform">
-          <div class="fr2">
-            <div class="fg"><label class="fl">Your Name</label><input class="fi" id="fn" type="text" placeholder="John Smith" required></div>
-            <div class="fg"><label class="fl">Phone Number</label><input class="fi" id="fp" type="tel" placeholder="(555) 000-0000"></div>
+          <div class="frow2">
+            <div class="fg"><label class="fl">Your Name</label><input class="fi2" id="fn" type="text" placeholder="John Smith" required></div>
+            <div class="fg"><label class="fl">Phone Number</label><input class="fi2" id="fp" type="tel" placeholder="(555) 000-0000"></div>
           </div>
-          <div class="fg"><label class="fl">Business Email</label><input class="fi" id="fe" type="email" placeholder="you@yourbusiness.com" required></div>
+          <div class="fg"><label class="fl">Business Email</label><input class="fi2" id="fe" type="email" placeholder="you@yourbusiness.com" required></div>
           <div class="fg">
             <label class="fl">Business Type</label>
             <select class="fsel" id="ft">
@@ -933,7 +1043,7 @@ strong{font-weight:600;}
               <option>Electrical</option><option>Other Home Service</option><option>Other</option>
             </select>
           </div>
-          <div class="fg"><label class="fl">Current CRM (optional)</label><input class="fi" id="fc" type="text" placeholder="e.g. ServiceTitan, Jobber, none"></div>
+          <div class="fg"><label class="fl">Current CRM (optional)</label><input class="fi2" id="fc" type="text" placeholder="e.g. ServiceTitan, Jobber, none"></div>
           <div class="fg"><label class="fl">Biggest Challenge Right Now</label><textarea class="fta" id="fm" placeholder="e.g. Missing after-hours calls, dispatcher overwhelmed during peak season..."></textarea></div>
           <button type="button" class="fsub" onclick="submitForm()">Send Message &amp; Book Audit</button>
         </form>
@@ -945,40 +1055,15 @@ strong{font-weight:600;}
 
 <!-- FOOTER -->
 <footer class="foot">
-  <div class="wrap">
+  <div class="w">
     <div class="ftop">
       <div>
         <div class="flogo">Perché<em>AI</em></div>
         <p class="ftagline">Fully managed AI receptionist systems for home service businesses. We handle the front desk. You handle the work.</p>
       </div>
-      <div class="fcol">
-        <div class="fcol-title">Services</div>
-        <ul>
-          <li><a href="#services">AI Voice Receptionist</a></li>
-          <li><a href="#services">CRM Integration</a></li>
-          <li><a href="#services">Missed Call Recovery</a></li>
-          <li><a href="#services">After-Hours Capture</a></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <div class="fcol-title">Industries</div>
-        <ul>
-          <li><a href="#industries">HVAC</a></li>
-          <li><a href="#industries">Plumbing</a></li>
-          <li><a href="#industries">Roofing</a></li>
-          <li><a href="#industries">Electrical</a></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <div class="fcol-title">Company</div>
-        <ul>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#trial">Free Trial</a></li>
-          <li><a href="dashboard.html">Client Login</a></li>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-        </ul>
-      </div>
+      <div class="fcol"><div class="fc-t">Services</div><ul><li><a href="#services">AI Voice Receptionist</a></li><li><a href="#services">CRM Integration</a></li><li><a href="#services">Missed Call Recovery</a></li><li><a href="#services">After-Hours Capture</a></li></ul></div>
+      <div class="fcol"><div class="fc-t">Industries</div><ul><li><a href="#industries">HVAC</a></li><li><a href="#industries">Plumbing</a></li><li><a href="#industries">Roofing</a></li><li><a href="#industries">Electrical</a></li></ul></div>
+      <div class="fcol"><div class="fc-t">Company</div><ul><li><a href="#pricing">Pricing</a></li><li><a href="#faq">FAQ</a></li><li><a href="dashboard.html">Client Login</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li></ul></div>
     </div>
     <div class="fbot">
       <div class="fcopy">&copy; 2026 Perché AI Solutions &nbsp;&middot;&nbsp; (614) 323-3534 &nbsp;&middot;&nbsp; p&#101;rch&#101;solutions&#64;gmail&#46;com</div>
@@ -987,24 +1072,12 @@ strong{font-weight:600;}
   </div>
 </footer>
 
-<!-- CALENDLY MODAL -->
+<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="min">
     <button class="mclose" onclick="closeModal()">&#10005;</button>
     <div class="cal-wrap">
       <div class="calendly-inline-widget" data-url="https://calendly.com/perchesolutions/free-worldflow-audit?hide_gdpr_banner=1" style="min-width:320px;height:680px;"></div>
-    </div>
-  </div>
-</div>
-
-<!-- VIDEO MODAL -->
-<div class="vmodal" id="vmodal">
-  <div class="vmodal-inner">
-    <button class="vmodal-close" onclick="closeVideoModal()">&#10005;</button>
-    <div class="demo-placeholder">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <p>Call <strong style="color:var(--white);">+1 (216) 616-0378</strong> to hear the AI live right now — or book an audit call and we will demo it live with your business details.</p>
-      <button class="bp" onclick="closeVideoModal();openModal()">Book Live Demo Call</button>
     </div>
   </div>
 </div>
@@ -1019,55 +1092,52 @@ document.getElementById('hmb').addEventListener('click',function(){document.getE
 function closeMM(){document.getElementById('mm').classList.remove('o');}
 function openModal(){document.getElementById('modal').classList.add('o');}
 function closeModal(){document.getElementById('modal').classList.remove('o');}
-function openVideoModal(){document.getElementById('vmodal').classList.add('o');}
-function closeVideoModal(){document.getElementById('vmodal').classList.remove('o');}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.getElementById('vmodal').addEventListener('click',function(e){if(e.target===this)closeVideoModal();});
-var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('v');});},{threshold:.1});
+var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('v');});},{threshold:.08});
 document.querySelectorAll('.fu').forEach(function(el){obs.observe(el);});
 
 var scenarios=[
-  {title:'AI Receptionist &mdash; Emergency Call',time:'Inbound &middot; 2:14 AM',
+  {title:'Emergency Call — 11:47 PM',time:'Inbound &middot; After Hours',
    msgs:[
-    {t:'ai',l:'AI Receptionist',x:'Thank you for calling Summit HVAC. How can I help you tonight?'},
-    {t:'usr',l:'Caller',x:"My AC is not working. It's 96 degrees and I have kids at home"},
-    {t:'ai',l:'AI Receptionist',x:"That's an emergency — especially with children. I'm flagging this as priority and getting a technician to call you within 15 minutes. What's your name and address?"},
-    {t:'usr',l:'Caller',x:'Sarah Chen, 2847 Maple Drive'},
-    {t:'ai',l:'AI Receptionist',x:'Got it Sarah. A technician will call you within 15 minutes — keep your phone nearby.'},
-    {t:'sys',l:'System',x:'Emergency flagged &nbsp;&middot;&nbsp; Tech alerted &nbsp;&middot;&nbsp; SMS sent &nbsp;&middot;&nbsp; CRM updated &nbsp;&middot;&nbsp; 0:31 elapsed'},
+    {t:'ai',l:'AI Receptionist',m:'Thank you for calling Summit HVAC. How can I help you tonight?'},
+    {t:'usr',l:'Caller',m:"My furnace stopped working. It's 18 degrees outside and I have two kids at home"},
+    {t:'ai',l:'AI Receptionist',m:"That's a heating emergency. I'm getting a technician to call you within 15 minutes. What's your name and address?"},
+    {t:'usr',l:'Caller',m:'Mike Rodriguez, 5512 Elm Street'},
+    {t:'ai',l:'AI Receptionist',m:"Got it, Mike. This is marked as priority emergency. Keep your phone nearby — someone will call within 15 minutes."},
+    {t:'sys',l:'System — 11:48 PM',m:'Emergency flagged &nbsp;&middot;&nbsp; On-call tech notified &nbsp;&middot;&nbsp; SMS sent to Mike &nbsp;&middot;&nbsp; CRM updated'},
    ],
-   outcomes:['Job captured at 2am — no voicemail','Technician alerted in under 60 seconds','Customer SMS confirmation sent automatically','Lead synced to CRM — no manual entry']
+   outcomes:['Emergency captured — 11:48 PM, would have been voicemail','Technician alerted within 60 seconds','SMS confirmation sent to caller automatically','Job synced to CRM, no manual entry']
   },
-  {title:'AI Receptionist &mdash; Appointment Booking',time:'Inbound &middot; 10:23 AM',
+  {title:'Appointment Booking — 10:23 AM',time:'Inbound &middot; Business Hours',
    msgs:[
-    {t:'ai',l:'AI Receptionist',x:'Thank you for calling Summit HVAC. How can I help you today?'},
-    {t:'usr',l:'Caller',x:'Hi I need to schedule an annual AC tune-up before summer'},
-    {t:'ai',l:'AI Receptionist',x:'Great timing. I have Thursday at 10am or Friday at 2pm available. Which works better?'},
-    {t:'usr',l:'Caller',x:'Thursday morning works great'},
-    {t:'ai',l:'AI Receptionist',x:"Perfect — Thursday at 10am for an AC tune-up. Can I get your name, address, and best phone number?"},
-    {t:'sys',l:'System',x:'Appointment booked &nbsp;&middot;&nbsp; CRM updated &nbsp;&middot;&nbsp; Customer SMS sent &nbsp;&middot;&nbsp; 1:12 elapsed'},
+    {t:'ai',l:'AI Receptionist',m:'Thank you for calling Summit HVAC. How can I help you today?'},
+    {t:'usr',l:'Caller',m:"I'd like to schedule an AC tune-up before summer"},
+    {t:'ai',l:'AI Receptionist',m:"Great timing. I have Thursday at 10am or Friday at 2pm. Which works better?"},
+    {t:'usr',l:'Caller',m:'Thursday morning works great'},
+    {t:'ai',l:'AI Receptionist',m:"Perfect. Can I get your name, address, and best phone number?"},
+    {t:'sys',l:'System — 10:24 AM',m:'Appointment booked &nbsp;&middot;&nbsp; CRM updated &nbsp;&middot;&nbsp; SMS confirmation sent to customer'},
    ],
-   outcomes:['Job booked without dispatcher involvement','Real availability offered instantly','Customer confirmed and SMS sent','CRM updated — technician sees it immediately']
+   outcomes:['Appointment booked without a dispatcher touching it','Customer offered real available time slots','Confirmation SMS sent automatically to caller','CRM updated — job ready for dispatch']
   },
-  {title:'AI Receptionist &mdash; After-Hours Emergency',time:'Inbound &middot; 11:47 PM',
+  {title:'After-Hours AC Failure — 2:14 AM',time:'Inbound &middot; After Hours',
    msgs:[
-    {t:'ai',l:'AI Receptionist',x:'Thank you for calling Summit HVAC. How can I help you tonight?'},
-    {t:'usr',l:'Caller',x:'Our furnace stopped. It is 18 degrees outside and we have no heat'},
-    {t:'ai',l:'AI Receptionist',x:"No heat in this weather is a serious emergency. I'm getting our on-call technician to call you within 15 minutes. Your name and address?"},
-    {t:'usr',l:'Caller',x:'Mike Rodriguez, 5512 Elm Street'},
-    {t:'ai',l:'AI Receptionist',x:'Mike, this is priority. Keep your phone nearby — someone will call you very shortly.'},
-    {t:'sys',l:'System',x:'After-hours emergency &nbsp;&middot;&nbsp; On-call tech notified &nbsp;&middot;&nbsp; SMS sent &nbsp;&middot;&nbsp; CRM logged'},
+    {t:'ai',l:'AI Receptionist',m:"Thank you for calling Summit HVAC. How can I help you tonight?"},
+    {t:'usr',l:'Caller',m:"My AC isn't working. It's 96 degrees in my house and I have kids"},
+    {t:'ai',l:'AI Receptionist',m:"That's urgent — especially with children. I'm getting a technician to call you within 15 minutes. What's your name and address?"},
+    {t:'usr',l:'Caller',m:'Sarah Chen, 2847 Maple Drive'},
+    {t:'ai',l:'AI Receptionist',m:"Got it, Sarah. Priority emergency flagged. Keep your phone nearby."},
+    {t:'sys',l:'System — 2:15 AM',m:'Emergency flagged &nbsp;&middot;&nbsp; Tech alerted &nbsp;&middot;&nbsp; SMS sent &nbsp;&middot;&nbsp; CRM logged'},
    ],
-   outcomes:['After-hours lead captured — not lost to voicemail','On-call tech notified immediately','Revenue that would have gone to a competitor','Customer will book again next season']
+   outcomes:['After-hours lead captured — would have gone to voicemail','On-call technician immediately notified at 2:15 AM','Revenue recovered that would have gone to a competitor','Customer retained with fast, professional response']
   },
-  {title:'AI Receptionist &mdash; Spam Call',time:'Inbound &middot; 2:31 PM',
+  {title:'Spam Call Handled — 2:31 PM',time:'Inbound &middot; Business Hours',
    msgs:[
-    {t:'ai',l:'AI Receptionist',x:'Thank you for calling Summit HVAC. How can I help you today?'},
-    {t:'usr',l:'Caller',x:'Hi I am calling about your Google listing and online marketing'},
-    {t:'ai',l:'AI Receptionist',x:'I appreciate you calling, but we are not interested in any services right now. Thank you and have a great day.'},
-    {t:'sys',l:'System',x:'Spam detected &nbsp;&middot;&nbsp; Call ended professionally &nbsp;&middot;&nbsp; Dispatcher time protected &nbsp;&middot;&nbsp; 0:09 elapsed'},
+    {t:'ai',l:'AI Receptionist',m:"Thank you for calling Summit HVAC. How can I help you today?"},
+    {t:'usr',l:'Caller',m:"Hi I'm calling about your Google business listing and online presence"},
+    {t:'ai',l:'AI Receptionist',m:"I appreciate you calling, but we're not interested in any services right now. Thank you and have a great day."},
+    {t:'sys',l:'System — 2:31 PM',m:'Spam detected &nbsp;&middot;&nbsp; Call ended professionally &nbsp;&middot;&nbsp; Dispatcher time protected'},
    ],
-   outcomes:['Dispatcher never interrupted','Caller handled professionally','Call ended in under 10 seconds','Team only sees real customer calls']
+   outcomes:['Spam filtered — zero dispatcher time wasted','Professional response, never rude or abrupt','Call ended cleanly without escalation','Team only handles real customer calls']
   }
 ];
 
@@ -1080,10 +1150,10 @@ function showS(i,btn){
   document.getElementById('tBody').innerHTML=s.msgs.map(function(m){
     var a=m.t==='usr'?'style="align-items:flex-end"':'';
     var la=m.t==='usr'?'style="text-align:right"':'';
-    return '<div class="tmsg" '+a+'><div class="tlbl" '+la+'>'+m.l+'</div><div class="tb '+m.t+'">'+m.x+'</div></div>';
+    return '<div class="tmsg" '+a+'><div class="tlbl" '+la+'>'+m.l+'</div><div class="tb '+m.t+'">'+m.m+'</div></div>';
   }).join('');
-  document.getElementById('outcomeList').innerHTML=s.outcomes.map(function(o,idx){
-    return '<div class="outcome-it'+(idx===0?' hi':'')+'">'+o+'</div>';
+  document.getElementById('toutList').innerHTML=s.outcomes.map(function(o,idx){
+    return '<div class="ti'+(idx===0?' hi':'')+'">'+o+'</div>';
   }).join('');
 }
 
