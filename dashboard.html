@@ -105,9 +105,13 @@ tr:last-child td{border-bottom:none;}
 <!-- DASHBOARD -->
 <div id="dashScreen" class="screen">
   <nav class="dash-nav">
-    <div class="dash-nav-logo">Perché AI Solutions</div>
+    <a href="/" class="dash-nav-logo" style="text-decoration:none;color:inherit;cursor:pointer;">Perché AI Solutions</a>
     <div class="dash-nav-right">
       <span class="dash-client-name" id="navName"></span>
+      <a href="/" class="btn-home" style="display:inline-flex;align-items:center;gap:0.4rem;background:transparent;color:var(--gray-accent);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:0.45rem 0.9rem;font-size:0.75rem;font-family:inherit;text-decoration:none;transition:all 0.2s;margin-right:0.5rem;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.25)'" onmouseout="this.style.color='var(--gray-accent)';this.style.borderColor='rgba(255,255,255,0.12)'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        Home
+      </a>
       <button class="btn-logout" onclick="logout()">Sign Out</button>
     </div>
   </nav>
@@ -172,7 +176,7 @@ tr:last-child td{border-bottom:none;}
 </div>
 
 <script>
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwe9XxzuqmD78vVf253pPgQLAUy2uI-EZGiEouR59JELU-6I4zXLlNN1nLab0liBhzimQ/exec';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5Uvm-t97yINIxrjGof3vaAfR7kpe0koyivrnewqhE_e2mm6NsPv47PORiZO8DOHcWCA/exec';
 
 // Fallback static data while live data loads
 var CLIENT_DATA = {
@@ -234,10 +238,10 @@ function populateFromData(d) {
 function populate(email){
   // Show static data immediately
   var fallback = CLIENT_DATA[email] || CLIENT_DATA['demo@perchesolutions.com'];
-  // populateFromData(fallback); // skip to avoid demo flash
+  populateFromData(fallback);
 
   // Then fetch live data from Google Sheet
-  fetchLiveData('demo@perchesolutions.com', function(err, liveData) {
+  fetchLiveData(email, function(err, liveData) {
     if (err || !liveData) return; // keep showing static data
     var kpis = liveData.kpis;
     var weeks = liveData.weeks || [0,0,0,0];
