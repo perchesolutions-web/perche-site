@@ -4,7 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Client Dashboard — Perché AI Solutions</title>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js">
+  function populateReputation(rep){
+    if(!rep)return;
+    var sec=document.getElementById("reputation-section");
+    if(sec)sec.style.display="block";
+    setRepEl("repAvgRating",rep.avgRating||"—");
+    setRepEl("repTotalReviews",rep.totalReviews!=null?rep.totalReviews:"—");
+    setRepEl("repAutoReplied",rep.autoReplied!=null?rep.autoReplied:"—");
+    setRepEl("repRequestsSent",rep.requestsSent!=null?rep.requestsSent:"—");
+    var se=document.getElementById("repAvgStars");
+    if(se){var rv=parseFloat(rep.avgRating)||0;se.textContent=repStars(rv);}
+    var feed=document.getElementById("repReviewsFeed");
+    if(!feed)return;
+    var reviews=rep.recentReviews||[];
+    if(!reviews.length){feed.innerHTML='<div class="rep-empty">No reviews logged yet.</div>';return;}
+    feed.innerHTML=reviews.map(function(r){
+      var s=Number(r.stars)||0;
+      var cls=s>=5?"stars-high":s>=3?"stars-mid":"stars-low";
+      var badge=r.action==="responded_auto"?'<span class="rep-badge">Auto-replied</span>':r.action==="flagged"?'<span class="rep-badge flagged">Flagged</span>':'<span class="rep-badge pending">Pending</span>';
+      var comment=r.comment?repEsc(String(r.comment).substring(0,120)):"<em>No comment</em>";
+      return '<div class="rep-review-item '+cls+'"><div class="rep-review-stars">'+repStars(s)+'</div><div class="rep-review-body"><div class="rep-review-author">'+repEsc(r.reviewer||"Anonymous")+badge+'</div><div class="rep-review-comment">'+comment+'</div><div class="rep-review-meta">'+( r.date||"")+'</div></div></div>';
+    }).join("");
+  }
+  function repStars(n){var f=Math.round(n),o="";for(var i=1;i<=5;i++)o+=i<=f?"★":"☆";return o;}
+  function setRepEl(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+  function repEsc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -85,6 +111,30 @@ tr:last-child td{border-bottom:none;}
 .report-opt strong{color:#fff;}
 .dash-footer{text-align:center;font-size:0.72rem;color:var(--gray-accent);padding:1.5rem 0;border-top:1px solid var(--border);}
 @media(max-width:800px){.kpi-grid{grid-template-columns:1fr 1fr!important;}.row2{grid-template-columns:1fr!important;}.roi-strip{grid-template-columns:1fr!important;}.dash-body{padding:2rem 1rem 3rem;}}
+
+/* ===== REPUTATION WIDGET ===== */
+.rep-section-title{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;border-top:1px solid var(--border);padding-top:2rem;}
+.rep-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1.25rem;}
+.rep-card{background:#111;padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:0.3rem;}
+.rep-card-value{font-family:'DM Serif Display',serif;font-size:2.2rem;letter-spacing:-0.03em;line-height:1;color:#fff;}
+.rep-card-label{font-size:0.7rem;color:var(--gray-light);letter-spacing:0.04em;}
+.rep-card-stars{font-size:1rem;letter-spacing:0.08em;color:#fbbf24;margin-top:0.1rem;}
+.rep-feed-wrap{background:#111;border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;}
+.rep-feed-title{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);margin-bottom:1rem;}
+.rep-review-item{border-left:3px solid var(--green);border-radius:4px;padding:0.65rem 0.85rem;margin-bottom:0.5rem;display:flex;gap:0.75rem;align-items:flex-start;background:rgba(255,255,255,0.02);}
+.rep-review-item.stars-low{border-left-color:#f87171;}
+.rep-review-item.stars-mid{border-left-color:#fbbf24;}
+.rep-review-item.stars-high{border-left-color:var(--green);}
+.rep-review-stars{font-size:0.8rem;white-space:nowrap;flex-shrink:0;padding-top:2px;color:#fbbf24;}
+.rep-review-body{flex:1;min-width:0;}
+.rep-review-author{font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.9);margin-bottom:0.15rem;}
+.rep-review-comment{font-size:0.78rem;color:var(--gray-light);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rep-review-meta{font-size:0.68rem;color:var(--gray-accent);margin-top:0.2rem;}
+.rep-badge{font-size:0.63rem;background:rgba(74,222,128,0.12);color:var(--green);border-radius:4px;padding:1px 5px;margin-left:5px;white-space:nowrap;}
+.rep-badge.pending{background:rgba(251,191,36,0.12);color:#fbbf24;}
+.rep-badge.flagged{background:rgba(248,113,113,0.12);color:#f87171;}
+.rep-empty{color:var(--gray-accent);font-size:0.8rem;font-style:italic;}
+@media(max-width:800px){.rep-cards{grid-template-columns:1fr 1fr!important;}}
 </style>
 </head>
 <body>
@@ -170,7 +220,8 @@ tr:last-child td{border-bottom:none;}
       <div class="report-body" id="reportBody"></div>
       <div class="report-opt" id="reportOpt"></div>
     </div>
-    <div class="dash-footer">Perché AI Solutions &nbsp;·&nbsp; (614) 323-3534 &nbsp;·&nbsp; p&#101;rch&#101;solutions&#64;gmail&#46;com</div>
+    <div id="reputation-section" style="display:none"><div class="rep-section-title">Google Review Performance</div><div class="rep-cards"><div class="rep-card"><span class="rep-card-value" id="repAvgRating">—</span><span class="rep-card-stars" id="repAvgStars"></span><span class="rep-card-label">Avg Rating</span></div><div class="rep-card"><span class="rep-card-value" id="repTotalReviews">—</span><span class="rep-card-label">Total Reviews</span></div><div class="rep-card"><span class="rep-card-value" id="repAutoReplied">—</span><span class="rep-card-label">Auto-Replied</span></div><div class="rep-card"><span class="rep-card-value" id="repRequestsSent">—</span><span class="rep-card-label">Requests Sent</span></div></div><div class="rep-feed-wrap"><div class="rep-feed-title">Recent Reviews — Last 5</div><div id="repReviewsFeed"><div class="rep-empty">Loading reviews…</div></div></div></div>
+      <div class="dash-footer">Perché AI Solutions &nbsp;·&nbsp; (614) 323-3534 &nbsp;·&nbsp; p&#101;rch&#101;solutions&#64;gmail&#46;com</div>
   </div>
 </div>
 
@@ -232,6 +283,7 @@ function populateFromData(d) {
   document.getElementById('w4v').textContent=d.weeks[3]; document.getElementById('w4b').style.height=d.pcts[3];
   document.getElementById('reportBody').innerHTML='Your AI system handled <strong>'+d.calls+' inbound calls</strong> this month with a 100% answer rate. Of those, <strong>'+d.jobs+' jobs were booked automatically</strong>. <strong>'+d.emergency+' emergency calls</strong> were flagged. <strong>'+d.afterHours+' after-hours jobs</strong> captured. Revenue attributed to AI: <strong>'+d.revenue+'</strong>.';
   document.getElementById('reportOpt').innerHTML='<strong>This month we optimized:</strong> '+(d.opt||'System running smoothly.')+'<br><br><strong>Next month:</strong> '+(d.next||'Continued optimization.');
+    if(d.reputation) populateReputation(d.reputation);
 }
 
 function populate(email){
