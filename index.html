@@ -25,6 +25,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:fl
 .nav-links a{font-size:0.8rem;font-weight:500;letter-spacing:0.04em;color:var(--gray-light);text-decoration:none;transition:color 0.2s;}
 .nav-links a:hover{color:var(--white);}
 .nav-cta{background:var(--white);color:var(--black)!important;padding:0.5rem 1.2rem;border-radius:2px;font-weight:600!important;transition:background 0.2s!important;}
+.nav-waitlist{display:inline-flex;align-items:center;padding:0.55rem 1.1rem;border:1.5px solid #4ade80;color:#4ade80!important;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;transition:background 0.2s,color 0.2s;margin-right:0.5rem;white-space:nowrap;}
+.nav-waitlist:hover{background:#4ade80;color:#000!important;}
 .nav-cta:hover{background:var(--white-dim)!important;}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;z-index:10000;position:relative;}
 .hamburger span{width:22px;height:1px;background:var(--white);display:block;}
@@ -333,6 +335,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:4rem 0
     <li><a href="#about">About</a></li>
     <li><a href="#contact" class="nav-cta">Free Audit &rarr;</a></li>
   </ul>
+  <a href="/waitlist.html" class="nav-waitlist">Join Waitlist</a>
   <div class="hamburger" onclick="openMobileNav()"><span></span><span></span><span></span></div>
 </nav>
 <section id="home">
