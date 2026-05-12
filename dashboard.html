@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Client Dashboard — Perché AI Solutions</title>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
   function populateReputation(rep){
     if(!rep)return;
     var sec=document.getElementById("reputation-section");
@@ -311,7 +312,8 @@ function populate(email){
       weeks: weeks,
       pcts: pcts,
       opt: fallback.opt,
-      next: fallback.next
+      next: fallback.next,
+        reputation: liveData.reputation || null
     };
     populateFromData(d);
 
