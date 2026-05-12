@@ -38,6 +38,8 @@ button{cursor:pointer;font-family:var(--sans);}
 .navlinks a:hover,.navlinks a.hi{color:var(--white);}
 .navlinks a.hi{color:var(--green);}
 .navcta{background:var(--white);color:var(--black);border:none;border-radius:var(--r);padding:.6rem 1.4rem;font-size:.8rem;font-weight:600;font-family:var(--sans);transition:all .2s;white-space:nowrap;}
+.nav-waitlist{display:inline-flex;align-items:center;padding:0.55rem 1.1rem;border:1.5px solid #4ade80;color:#4ade80!important;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;transition:background 0.2s,color 0.2s;margin-right:0.5rem;white-space:nowrap;}
+.nav-waitlist:hover{background:#4ade80;color:#000!important;}
 .navcta:hover{background:rgba(255,255,255,.88);}
 .hmb{display:none;background:none;border:none;color:var(--white);font-size:1.6rem;line-height:1;padding:.25rem;}
 .mm{display:none;position:fixed;inset:0;background:var(--black);z-index:899;padding:0;flex-direction:column;overflow-y:auto;}
@@ -465,6 +467,7 @@ strong{font-weight:600;}
     <a href="dashboard.html" class="hi">Client Login</a>
   </div>
   <button class="navcta" onclick="openModal()">Book Free Audit</button>
+  <a href="/waitlist.html" class="nav-waitlist">Join Waitlist</a>
   <button class="hmb" id="hmb" aria-label="Open menu">&#9776;</button>
 </nav>
 
