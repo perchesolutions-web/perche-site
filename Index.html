@@ -38,11 +38,14 @@ button{cursor:pointer;font-family:var(--sans);}
 .navlinks a:hover,.navlinks a.hi{color:var(--white);}
 .navlinks a.hi{color:var(--green);}
 .navcta{background:var(--white);color:var(--black);border:none;border-radius:var(--r);padding:.6rem 1.4rem;font-size:.8rem;font-weight:600;font-family:var(--sans);transition:all .2s;white-space:nowrap;}
-.nav-waitlist{display:inline-flex;align-items:center;padding:0.55rem 1.1rem;border:1.5px solid #4ade80;color:#4ade80!important;border-radius:6px;font-size:0.8rem;font-weight:600;text-decoration:none;transition:background 0.2s,color 0.2s;margin-right:0.5rem;white-space:nowrap;}
-.nav-waitlist:hover{background:#4ade80;color:#000!important;}
 .navcta:hover{background:rgba(255,255,255,.88);}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:1.5rem;}
+.modal.open{display:flex;}
+.modal-inner{background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);width:100%;max-width:880px;max-height:90vh;overflow:hidden;position:relative;}
+.modal-close{position:absolute;top:1rem;right:1rem;z-index:10;background:var(--s2);border:1px solid var(--b1);border-radius:50%;width:34px;height:34px;color:var(--white);font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .2s;cursor:pointer;}
+.modal-close:hover{background:var(--b2);}
 .hmb{display:none;background:none;border:none;color:var(--white);font-size:1.6rem;line-height:1;padding:.25rem;}
-.mm{display:none;position:fixed;inset:0;background:var(--black);z-index:899;padding:0;flex-direction:column;overflow-y:auto;}
+.mm{display:none;position:fixed;inset:0;background:var(--black);z-index:1000;padding:0;flex-direction:column;overflow-y:auto;}
 .mm.open{display:flex;}
 .mm-header{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 1.5rem;border-bottom:1px solid var(--b1);}
 .mm-close{background:none;border:none;color:var(--white);font-size:1.6rem;line-height:1;padding:.25rem;cursor:pointer;}
@@ -384,11 +387,6 @@ strong{font-weight:600;}
 .flinks a:hover{color:var(--white);}
 
 /* ── MODAL ── */
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:1.5rem;}
-.modal.open{display:flex;}
-.modal-inner{background:var(--s1);border:1px solid var(--b2);border-radius:var(--rl);width:100%;max-width:880px;max-height:90vh;overflow:hidden;position:relative;}
-.modal-close{position:absolute;top:1rem;right:1rem;z-index:10;background:var(--s2);border:1px solid var(--b1);border-radius:50%;width:34px;height:34px;color:var(--white);font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .2s;cursor:pointer;}
-.modal-close:hover{background:var(--b2);}
 .cal-wrap{height:680px;overflow-y:auto;}
 
 /* ── FADE ── */
@@ -485,7 +483,6 @@ strong{font-weight:600;}
     <a href="dashboard.html" class="hi">Client Login</a>
   </div>
   <button class="navcta" onclick="openModal()">Book Free Audit</button>
-  <a href="/waitlist.html" class="nav-waitlist">Join Waitlist</a>
   <button class="hmb" id="hmb" aria-label="Open menu">&#9776;</button>
 </nav>
 
@@ -798,7 +795,7 @@ strong{font-weight:600;}
     </div>
     <div class="rep-cta fu">
       <div><h3 class="h3" style="margin-bottom:.5rem;">Reviews Are the New Referrals</h3><p class="sm">When a homeowner searches for a contractor at 9pm, the company with 200 reviews beats the one with 12 every time. We make growing those reviews completely effortless.</p></div>
-      <button class="bp" onclick="openModal()">Add Reviews to My Plan</button>
+      <a href="https://buy.stripe.com/8x2eVc5VC38x2EFaArfMA0d" class="bp">Add Reviews to My Plan — $197/mo</a>
     </div>
   </div>
 </section>
@@ -877,7 +874,7 @@ strong{font-weight:600;}
         <div class="rep-right">
           <div class="rep-price-n">$197</div>
           <div class="rep-price-l">/month per location</div>
-          <button class="bp" onclick="openModal()" style="width:100%;justify-content:center;margin-top:1.25rem;">Get Started</button>
+          <a href="https://buy.stripe.com/8x2eVc5VC38x2EFaArfMA0d" class="bp" style="width:100%;justify-content:center;margin-top:1.25rem;">Get Started — $197/mo</a>
           <p class="sm" style="text-align:center;margin-top:.65rem;">No setup fee &middot; Cancel anytime</p>
         </div>
       </div>
@@ -898,7 +895,7 @@ strong{font-weight:600;}
           <li><span class="pck">&#10003;</span>Monthly revenue report</li>
           <li><span class="pck">&#10003;</span>Weekly call monitoring</li>
         </ul>
-        <a href="https://buy.stripe.com/7sY9ASgAgcJ74MN7offMA05" class="pbtn">Get Started</a>
+        <a href="https://buy.stripe.com/8x2eVc5VC38x2EFaArfMA0d" class="pbtn">Get Started</a>
       </div>
       <div class="pc feat fu">
         <div class="fbadge">Most Popular</div>
