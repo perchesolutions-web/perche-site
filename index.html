@@ -398,13 +398,9 @@ strong{font-weight:600;}
 .fu.d4{transition-delay:.34s;}
 .fu.d5{transition-delay:.42s;}
 .fu.d6{transition-delay:.5s;}
-
-/* ── ROTATING HERO WORD ── */
 #hero-rotate{display:inline-block;transition:opacity .28s ease,transform .28s ease;}
 #hero-rotate.hr-out{opacity:0;transform:translateY(-10px);}
 #hero-rotate.hr-in{opacity:0;transform:translateY(10px);}
-
-/* ── LOGO MARQUEE ── */
 .logos-marquee{overflow:hidden;position:relative;}
 .logos-marquee::before,.logos-marquee::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
 .logos-marquee::before{left:0;background:linear-gradient(90deg,var(--black),transparent);}
@@ -412,8 +408,6 @@ strong{font-weight:600;}
 .logos-track{display:flex;align-items:center;gap:2.5rem;width:max-content;animation:logo-scroll 22s linear infinite;}
 .logos-track:hover{animation-play-state:paused;}
 @keyframes logo-scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-
-/* ── SCROLL PROGRESS BAR ── */
 #progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--green);z-index:9999;width:0%;transition:width .1s linear;}
 
 /* ── RESPONSIVE 1000px ── */
@@ -597,35 +591,7 @@ strong{font-weight:600;}
   </div>
   <div class="logos-marquee">
     <div class="logos-track">
-      <span class="crm" style="color:rgba(255,255,255,.75);">ServiceTitan</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Housecall Pro</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Jobber</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">GoHighLevel</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Salesforce</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Twilio</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Google Business</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <!-- duplicate for seamless loop -->
-      <span class="crm" style="color:rgba(255,255,255,.75);">ServiceTitan</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Housecall Pro</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Jobber</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">GoHighLevel</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Salesforce</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Twilio</span>
-      <span class="crm" style="color:var(--d3);">·</span>
-      <span class="crm" style="color:rgba(255,255,255,.75);">Google Business</span>
-      <span class="crm" style="color:var(--d3);">·</span>
+      <span class="crm" style="color:rgba(255,255,255,.75);">ServiceTitan</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Housecall Pro</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Jobber</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">GoHighLevel</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Salesforce</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Twilio</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Google Business</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">ServiceTitan</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Housecall Pro</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Jobber</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">GoHighLevel</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Salesforce</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Twilio</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span><span class="crm" style="color:rgba(255,255,255,.75);">Google Business</span><span class="crm" style="color:var(--d3);">&nbsp;·&nbsp;</span>
     </div>
   </div>
 </div>
@@ -699,7 +665,7 @@ strong{font-weight:600;}
           <li><span class="sys-check">&#10003;</span>Live ROI dashboard showing recovered revenue</li>
         </ul>
       </div>
-      <div class="sys-card fu d2">
+      <div class="sys-card">
         <div class="sys-num">02</div>
         <div class="sys-title">AI Reputation Management System</div>
         <div class="sys-sub">Turns every completed job into a 5-star review automatically. Your reputation grows while you sleep.</div>
@@ -829,7 +795,7 @@ strong{font-weight:600;}
     <div class="rep-stats fu">
       <div class="rstat"><div class="rstat-n">40–60%</div><div class="rstat-l">Increase in Google reviews within 60 days</div></div>
       <div class="rstat"><div class="rstat-n cnt" data-target="4.8" data-decimal="1">0</div><div class="rstat-l">Average Google rating after automated review requests</div></div>
-      <div class="rstat"><div class="rstat-n cnt" data-target="78">0</div><div class="rstat-l">% of customers leave a review when asked right after service</div></div>
+      <div class="rstat"><div class="rstat-n cnt" data-target="78">0</div><div class="rstat-l">Of customers leave a review when asked right after service</div></div>
       <div class="rstat"><div class="rstat-n">3x</div><div class="rstat-l">More inbound calls when you have 50 or more reviews vs under 10</div></div>
     </div>
     <div class="rep-flow fu">
@@ -1140,9 +1106,7 @@ strong{font-weight:600;}
   </div>
 </footer>
 
-<!-- SCROLL PROGRESS -->
 <div id="progress-bar"></div>
-
 <!-- CALENDLY MODAL -->
 <div class="modal" id="modal">
   <div class="modal-inner">
@@ -1281,67 +1245,17 @@ function submitForm(){
       if(mm) mm.classList.remove('open');
     });
   });
-
-  // ── SCROLL PROGRESS BAR ──
+  // SCROLL PROGRESS
   var pb=document.getElementById('progress-bar');
-  window.addEventListener('scroll',function(){
-    var scrolled=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
-    if(pb) pb.style.width=Math.min(scrolled,100)+'%';
-  },{passive:true});
-
-  // ── ROTATING HERO WORDS ──
-  var heroWords=[
-    '<em>Missed Calls</em>',
-    '<em>Slow Follow-Up</em>',
-    '<em>Bad Reviews</em>',
-    '<em>Unanswered Leads</em>'
-  ];
-  var hwi=0;
-  var hwEl=document.getElementById('hero-rotate');
-  if(hwEl){
-    setInterval(function(){
-      hwEl.classList.add('hr-out');
-      setTimeout(function(){
-        hwi=(hwi+1)%heroWords.length;
-        hwEl.innerHTML=heroWords[hwi];
-        hwEl.classList.remove('hr-out');
-        hwEl.classList.add('hr-in');
-        // force reflow then remove hr-in to trigger fade-in from bottom
-        void hwEl.offsetWidth;
-        hwEl.classList.remove('hr-in');
-      },300);
-    },3000);
-  }
-
-  // ── ANIMATED NUMBER COUNTERS ──
-  function animateCounter(el){
-    if(el.dataset.counted) return;
-    el.dataset.counted='1';
-    var target=parseFloat(el.dataset.target||el.dataset.target||0);
-    var decimal=parseInt(el.dataset.decimal||0);
-    var duration=1600;
-    var start=performance.now();
-    function step(now){
-      var progress=Math.min((now-start)/duration,1);
-      // ease out cubic
-      var eased=1-Math.pow(1-progress,3);
-      var val=target*eased;
-      el.textContent=decimal?val.toFixed(decimal):Math.floor(val);
-      if(progress<1) requestAnimationFrame(step);
-      else el.textContent=decimal?target.toFixed(decimal):target;
-    }
-    requestAnimationFrame(step);
-  }
-
-  var cntObs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting) animateCounter(e.target);
-    });
-  },{threshold:0.5});
-  document.querySelectorAll('.cnt').forEach(function(el){ cntObs.observe(el); });
-
-  // ── STAGGER FADE-UP FOR ALREADY-OBSERVED GRIDS ──
-  // (the existing obs already handles .fu — stagger delays are in CSS)
+  window.addEventListener('scroll',function(){var s=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;if(pb)pb.style.width=Math.min(s,100)+'%';},{passive:true});
+  // ROTATING WORDS
+  var hWords=['<em>Missed Calls</em>','<em>Slow Follow-Up</em>','<em>Bad Reviews</em>','<em>Unanswered Leads</em>'];
+  var hwi=0,hwEl=document.getElementById('hero-rotate');
+  if(hwEl){setInterval(function(){hwEl.classList.add('hr-out');setTimeout(function(){hwi=(hwi+1)%hWords.length;hwEl.innerHTML=hWords[hwi];hwEl.classList.remove('hr-out');hwEl.classList.add('hr-in');void hwEl.offsetWidth;hwEl.classList.remove('hr-in');},300);},3000);}
+  // COUNTERS
+  function animCnt(el){if(el.dataset.counted)return;el.dataset.counted='1';var t=parseFloat(el.dataset.target||0),d=parseInt(el.dataset.decimal||0),dur=1600,s=performance.now();function step(n){var p=Math.min((n-s)/dur,1),e=1-Math.pow(1-p,3),v=t*e;el.textContent=d?v.toFixed(d):Math.floor(v);if(p<1)requestAnimationFrame(step);else el.textContent=d?t.toFixed(d):t;}requestAnimationFrame(step);}
+  var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)animCnt(e.target);});},{threshold:0.5});
+  document.querySelectorAll('.cnt').forEach(function(el){co.observe(el);});
 </script>
 </body>
 </html>
