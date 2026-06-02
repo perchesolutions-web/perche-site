@@ -3,87 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Client Dashboard — Perché AI Solutions</title>
+<title>Client Dashboard — PercheAI</title>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
-  function populateReputation(rep){
-    if(!rep)return;
-    var sec=document.getElementById("reputation-section");
-    if(sec)sec.style.display="block";
-    setRepEl("repAvgRating",rep.avgRating||"—");
-    setRepEl("repTotalReviews",rep.totalReviews!=null?rep.totalReviews:"—");
-    setRepEl("repAutoReplied",rep.autoReplied!=null?rep.autoReplied:"—");
-    setRepEl("repRequestsSent",rep.requestsSent!=null?rep.requestsSent:"—");
-    var se=document.getElementById("repAvgStars");
-    if(se){var rv=parseFloat(rep.avgRating)||0;se.textContent=repStars(rv);}
-    var feed=document.getElementById("repReviewsFeed");
-    if(!feed)return;
-    var reviews=rep.recentReviews||[];
-    if(!reviews.length){feed.innerHTML='<div class="rep-empty">No reviews logged yet.</div>';return;}
-    feed.innerHTML=reviews.map(function(r){
-      var s=Number(r.stars)||0;
-      var cls=s>=5?"stars-high":s>=3?"stars-mid":"stars-low";
-      var badge=r.action==="responded_auto"?'<span class="rep-badge">Auto-replied</span>':r.action==="flagged"?'<span class="rep-badge flagged">Flagged</span>':'<span class="rep-badge pending">Pending</span>';
-      var comment=r.comment?repEsc(String(r.comment).substring(0,120)):"<em>No comment</em>";
-      return '<div class="rep-review-item '+cls+'"><div class="rep-review-stars">'+repStars(s)+'</div><div class="rep-review-body"><div class="rep-review-author">'+repEsc(r.reviewer||"Anonymous")+badge+'</div><div class="rep-review-comment">'+comment+'</div><div class="rep-review-meta">'+( r.date||"")+'</div></div></div>';
-    }).join("");
-  }
-  function repStars(n){var f=Math.round(n),o="";for(var i=1;i<=5;i++)o+=i<=f?"★":"☆";return o;}
-  function setRepEl(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
-  function repEsc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function populateReputation(rep){
+if(!rep)return;
+var sec=document.getElementById("reputation-section");
+if(sec)sec.style.display="block";
+setRepEl("repAvgRating",rep.avgRating||"—");
+setRepEl("repTotalReviews",rep.totalReviews!=null?rep.totalReviews:"—");
+setRepEl("repAutoReplied",rep.autoReplied!=null?rep.autoReplied:"—");
+setRepEl("repRequestsSent",rep.requestsSent!=null?rep.requestsSent:"—");
+var se=document.getElementById("repAvgStars");
+if(se){var rv=parseFloat(rep.avgRating)||0;se.textContent=repStars(rv);}
+var feed=document.getElementById("repReviewsFeed");
+if(!feed)return;
+var reviews=rep.recentReviews||[];
+if(!reviews.length){feed.innerHTML='<div class="rep-empty">No reviews logged yet.</div>';return;}
+feed.innerHTML=reviews.map(function(r){
+var s=Number(r.stars)||0;
+var cls=s>=5?"stars-high":s>=3?"stars-mid":"stars-low";
+var badge=r.action==="responded_auto"?'<span class="rep-badge">Auto-replied</span>':r.action==="flagged"?'<span class="rep-badge flagged">Flagged</span>':'<span class="rep-badge pending">Pending</span>';
+var comment=r.comment?repEsc(String(r.comment).substring(0,120)):"<em>No comment</em>";
+return '<div class="rep-review-item '+cls+'"><div class="rep-review-stars">'+repStars(s)+'</div><div class="rep-review-body"><div class="rep-review-author">'+repEsc(r.reviewer||"Anonymous")+badge+'</div><div class="rep-review-comment">'+comment+'</div><div class="rep-review-meta">'+(r.date||"")+'</div></div></div>';
+}).join("");
+}
+function repStars(n){var f=Math.round(n),o="";for(var i=1;i<=5;i++)o+=i<=f?"★":"☆";return o;}
+function setRepEl(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+function repEsc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:boder-box;margin:0;padding:0;}
-:root{--black:#0A0A0A;--black-soft:#111;--white:#FFF;--white-im:rgba(255,255,255,0.85);--gray-light:#777;--gray-accent:#555;--border:rgba(255,255,255,0.08);--border-hover:rgba(255,255,255,0.15);--green:#4ade80;--blue:#60a5fa;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--black:#0A0A0A;--white:#FFF;--white-dim:rgba(255,255,255,0.85);--gray-light:#777;--gray-accent:#555;--border:rgba(255,255,255,0.08);--border-hover:rgba(255,255,255,0.15);--green:#4ade80;--red:#f87171;}
 html,body{height:100%;margin:0;padding:0;}
-body{background:#0A0A0A;color:#fff;ont-family:'DM Sans',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;}
+body{background:#0A0A0A;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;}
 .screen{display:none;min-height:100vh;}
 .screen.active{display:flex;}
+
 /* LOGIN */
 #loginScreen{align-items:center;justify-content:center;padding:2rem;flex-direction:column;gap:1.5rem;}
-.login-box{width:100%;max-width:420px;border:1px solid var(--border-hover);border-radius:8px;padding:3rem 2.5rem;background:#111;}
-.login-logo{font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:0.3rem;}
+.login-box{width:100%;max-width:420px;border:1px solid var(--border-hover);border-radius:12px;padding:3rem 2.5rem;background:#111;}
+.login-logo{font-size:1.2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.3rem;}
+.login-logo span{color:#f87171;}
 .login-tagline{font-size:0.75rem;color:var(--gray-accent);margin-bottom:2rem;}
-.login-title{font-family:'DM Serif Display',serif;font-size:1.9rem;letter-spacing:-0.02em;margin-bottom:0.5rem;}
+.login-title{font-size:1.9rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.5rem;line-height:1.15;}
 .login-sub{font-size:0.82rem;color:var(--gray-light);margin-bottom:1.75rem;line-height:1.6;}
-.btn-login{width:100%;background:#fff;color:#000;border:none;border-radius:4px;padding:0.85rem;font-size:0.9rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;}
-.btn-login:hover{opacity:0.88;}
+.btn-login{width:100%;background:#dc2626;color:#fff;border:none;border-radius:6px;padding:0.875rem;font-size:0.9rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background 0.2s;}
+.btn-login:hover{background:#b91c1c;}
 .login-note{font-size:0.75rem;color:var(--gray-accent);text-align:center;max-width:420px;}
 
 /* DASHBOARD */
 #dashScreen{flex-direction:column;}
-.dash-nav{position:sticky;top:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.dash-nav-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;}
+.dash-nav{position:sticky;top:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.dash-nav-logo{font-size:1.1rem;font-weight:800;letter-spacing:-0.02em;text-decoration:none;color:#fff;}
+.dash-nav-logo span{color:#f87171;}
 .dash-nav-right{display:flex;align-items:center;gap:1rem;}
 .dash-client-name{font-size:0.8rem;color:var(--gray-light);}
-.btn-logout{font-size:0.8rem;color:var(--gray-light);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-logout{font-size:0.8rem;color:var(--gray-light);background:none;border:none;cursor:pointer;font-family:inherit;}
 .btn-logout:hover{color:#fff;}
+.btn-home{display:inline-flex;align-items:center;gap:0.4rem;background:transparent;color:var(--gray-accent);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:0.45rem 0.9rem;font-size:0.75rem;font-family:inherit;text-decoration:none;transition:all 0.2s;}
+.btn-home:hover{color:#fff;border-color:rgba(255,255,255,0.25);}
 .dash-body{padding:3rem 2rem 4rem;max-width:1100px;margin:0 auto;width:100%;}
 .dash-greeting{font-size:0.7rem;color:var(--gray-light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;}
-.dash-bizname{font-family:'DM Serif Display',serif;font-size:2.5rem;letter-spacing:-0.02em;margin-bottom:0.3rem;}
+.dash-bizname{font-size:2.5rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.3rem;}
 .dash-period{font-size:0.85rem;color:var(--gray-accent);margin-bottom:0.75rem;}
 .status-badge{display:inline-flex;align-items:center;gap:0.5rem;background:#0f1f0f;border:1px solid rgba(74,222,128,0.3);border-radius:100px;padding:0.25rem 0.85rem;font-size:0.72rem;color:var(--green);margin-bottom:2rem;}
 .status-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1.5rem;}
+
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.5rem;}
 .kpi{background:#111;padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:0.3rem;}
-.kpi.featured{background:#0a1a0a;}
-.kpi-num{font-family:'DM Serif Display',serif;font-size:2.2rem;letter-spacing:-0.03em;line-height:1;color:#fff;}
-.kpi.featured .kpi-num{color:var(--green);}
+.kpi.featured{background:#1a0a0a;}
+.kpi-num{font-size:2.2rem;font-weight:800;letter-spacing:-0.03em;line-height:1;color:#fff;}
+.kpi.featured .kpi-num{color:#f87171;}
 .kpi-label{font-size:0.7rem;color:var(--gray-light);letter-spacing:0.04em;}
 .kpi-delta{font-size:0.68rem;font-weight:600;color:var(--green);}
+
+/* ROI strip */
 .roi-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;}
 .roi-card{background:#0a1a0a;border:1px solid rgba(74,222,128,0.2);border-radius:8px;padding:1.25rem;text-align:center;}
-.roi-num{font-family:'DM Serif Display',serif;font-size:1.8rem;letter-spacing:-0.02em;color:var(--green);}
+.roi-num{font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;color:var(--green);}
 .roi-label{font-size:0.7rem;color:var(--green);opacity:0.7;margin-top:0.3rem;}
+
+/* Panels */
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
 .panel{background:#111;border:1px solid var(--border);border-radius:8px;padding:1.5rem;}
 .panel-title{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);margin-bottom:1.25rem;}
 .bar-chart{display:flex;align-items:flex-end;gap:0.75rem;height:110px;}
 .bar-col{display:flex;flex-direction:column;align-items:center;gap:0.35rem;flex:1;}
-.bar-val{font-family:'DM Serif Display',serif;font-size:1.3rem;letter-spacing:-0.02em;color:#fff;line-height:1;}
+.bar-val{font-size:1.3rem;font-weight:800;letter-spacing:-0.02em;color:#fff;line-height:1;}
 .bar-fill{width:100%;background:var(--border-hover);border-radius:3px 3px 0 0;}
 .bar-fill.active{background:#fff;}
 .bar-lbl{font-size:0.65rem;color:var(--gray-light);}
@@ -93,6 +102,8 @@ body{background:#0A0A0A;color:#fff;ont-family:'DM Sans',sans-serif;font-weight:3
 .mval{font-size:0.85rem;font-weight:600;color:#fff;}
 .mbar-wrap{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
 .mbar-fill{height:100%;background:#fff;border-radius:2px;}
+
+/* Calls table */
 .calls-panel{background:#111;border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;}
 table{width:100%;border-collapse:collapse;}
 th{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-accent);text-align:left;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);}
@@ -102,22 +113,25 @@ tr:last-child td{border-bottom:none;}
 .tag-green{background:rgba(74,222,128,0.1);color:var(--green);}
 .tag-red{background:rgba(248,113,113,0.1);color:#f87171;}
 .tag-amber{background:rgba(251,191,36,0.1);color:#fbbf24;}
-.tag-blue{background:rgba(96,165,250,0.1);color:var(--blue);}
+.tag-blue{background:rgba(96,165,250,0.1);color:#60a5fa;}
+
+/* Report */
 .report-box{background:#111;border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;}
-.report-month{font-family:'DM Serif Display',serif;font-size:1.25rem;letter-spacing:-0.02em;margin-bottom:0.3rem;}
+.report-month{font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.3rem;}
 .report-sub{font-size:0.72rem;color:var(--gray-accent);margin-bottom:1rem;}
 .report-body{font-size:0.87rem;color:var(--white-dim);line-height:1.8;}
 .report-body strong{color:#fff;}
 .report-opt{margin-top:1rem;padding:0.875rem 1rem;border-left:2px solid var(--border-hover);font-size:0.82rem;color:var(--white-dim);line-height:1.7;}
 .report-opt strong{color:#fff;}
-.dash-footer{text-align:center;font-size:0.72rem;color:var(--gray-accent);padding:1.5rem 0;border-top:1px solid var(--border);}
-@media(max-width:800px){.kpi-grid{grid-template-columns:1fr 1fr!important;}.row2{grid-template-columns:1fr!important;}.roi-strip{grid-template-columns:1fr!important;}.dash-body{padding:2rem 1rem 3rem;}}
 
-/* ===== REPUTATION WIDGET ===== */
+/* Footer */
+.dash-footer{text-align:center;font-size:0.72rem;color:var(--gray-accent);padding:1.5rem 0;border-top:1px solid var(--border);}
+
+/* Reputation */
 .rep-section-title{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;border-top:1px solid var(--border);padding-top:2rem;}
 .rep-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1.25rem;}
 .rep-card{background:#111;padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:0.3rem;}
-.rep-card-value{font-family:'DM Serif Display',serif;font-size:2.2rem;letter-spacing:-0.03em;line-height:1;color:#fff;}
+.rep-card-value{font-size:2.2rem;font-weight:800;letter-spacing:-0.03em;line-height:1;color:#fff;}
 .rep-card-label{font-size:0.7rem;color:var(--gray-light);letter-spacing:0.04em;}
 .rep-card-stars{font-size:1rem;letter-spacing:0.08em;color:#fbbf24;margin-top:0.1rem;}
 .rep-feed-wrap{background:#111;border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;}
@@ -135,22 +149,28 @@ tr:last-child td{border-bottom:none;}
 .rep-badge.pending{background:rgba(251,191,36,0.12);color:#fbbf24;}
 .rep-badge.flagged{background:rgba(248,113,113,0.12);color:#f87171;}
 .rep-empty{color:var(--gray-accent);font-size:0.8rem;font-style:italic;}
-@media(max-width:800px){.rep-cards{grid-template-columns:1fr 1fr!important;}}
+
+/* Responsive */
+@media(max-width:800px){
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+  .row2{grid-template-columns:1fr;}
+  .roi-strip{grid-template-columns:1fr;}
+  .rep-cards{grid-template-columns:1fr 1fr;}
+  .dash-body{padding:2rem 1rem 3rem;}
+}
 @media(max-width:600px){
-  /* Nav: hide client name, shrink padding so it fits on one line */
   .dash-nav{padding:0.75rem 1rem;}
   .dash-client-name{display:none;}
   .dash-nav-logo{font-size:0.95rem;}
   .btn-home span{display:none;}
-  .btn-home{padding:0.4rem 0.6rem;gap:0;}
   .btn-logout{font-size:0.75rem;}
   .dash-nav-right{gap:0.5rem;}
-  /* Body header: scale down so period and badge don't collide */
   .dash-body{padding:1.5rem 1rem 3rem;}
-  .dash-bizname{font-size:1.6rem;letter-spacing:-0.01em;margin-bottom:0.4rem;}
-  .dash-greeting{font-size:0.65rem;margin-bottom:0.3rem;}
-  .dash-period{font-size:0.75rem;margin-bottom:0.6rem;line-height:1.5;}
-  .status-badge{display:flex;font-size:0.68rem;padding:0.2rem 0.65rem;margin-bottom:1.25rem;}
+  .dash-bizname{font-size:1.6rem;}
+  .dash-greeting{font-size:0.65rem;}
+  .dash-period{font-size:0.75rem;}
+  .status-badge{font-size:0.68rem;padding:0.2rem 0.65rem;margin-bottom:1.25rem;}
+  .kpi-grid{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
@@ -159,47 +179,51 @@ tr:last-child td{border-bottom:none;}
 <!-- LOGIN -->
 <div id="loginScreen" class="screen">
   <div class="login-box">
-    <div class="login-logo">Perché AI Solutions</div>
+    <div class="login-logo">Perche<span>AI</span></div>
     <div class="login-tagline">Client Performance Portal</div>
     <h1 class="login-title">Sign in to your<br>dashboard</h1>
-    <p class="login-sub">Click the button below to sign in with your Perché AI account.</p>
+    <p class="login-sub">Click the button below to sign in with your PercheAI account.</p>
     <button class="btn-login" onclick="window.netlifyIdentity.open('login')">Sign In &rarr;</button>
   </div>
-  <p class="login-note">First time? Check your email for an invite link from Perché AI Solutions.</p>
+  <p class="login-note">First time? Check your email for an invite link from PercheAI.</p>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashScreen" class="screen">
   <nav class="dash-nav">
-    <a href="/" class="dash-nav-logo" style="text-decoration:none;color:inherit;cursor:pointer;">Perché AI Solutions</a>
+    <a href="/" class="dash-nav-logo">Perche<span>AI</span></a>
     <div class="dash-nav-right">
       <span class="dash-client-name" id="navName"></span>
-      <a href="/" class="btn-home" style="display:inline-flex;align-items:center;gap:0.4rem;background:transparent;color:var(--gray-accent);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:0.45rem 0.9rem;font-size:0.75rem;font-family:inherit;text-decoration:none;transition:all 0.2s;margin-right:0.5rem;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.25)'" onmouseout="this.style.color='var(--gray-accent)';this.style.borderColor='rgba(255,255,255,0.12)'">
+      <a href="/" class="btn-home">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-        Home
+        <span>Home</span>
       </a>
       <button class="btn-logout" onclick="logout()">Sign Out</button>
     </div>
   </nav>
+
   <div class="dash-body">
     <div class="dash-greeting">Client Dashboard</div>
     <div class="dash-bizname" id="bizName">Loading...</div>
     <div class="dash-period" id="dashPeriod"></div>
     <div class="status-badge"><div class="status-dot"></div>System Live &amp; Monitoring</div>
+
     <div class="kpi-grid">
-      <div class="kpi"><span class="kpi-num" id="kpiCalls">247</span><span class="kpi-label">Calls Answered by AI</span><span class="kpi-delta">↑ 100% answer rate</span></div>
-      <div class="kpi"><span class="kpi-num" id="kpiJobs">61</span><span class="kpi-label">Jobs Booked Automatically</span><span class="kpi-delta">↑ vs last month</span></div>
-      <div class="kpi"><span class="kpi-num" id="kpiEmergency">14</span><span class="kpi-label">Emergency Jobs Captured</span><span class="kpi-delta">↑ After-hours calls</span></div>
-      <div class="kpi featured"><span class="kpi-num" id="kpiRevenue">$21,350</span><span class="kpi-label">Revenue Recovered</span><span class="kpi-delta">↑ AI-attributed jobs</span></div>
+      <div class="kpi"><span class="kpi-num" id="kpiCalls">247</span><span class="kpi-label">Calls Answered by AI</span><span class="kpi-delta">&#8593; 100% answer rate</span></div>
+      <div class="kpi"><span class="kpi-num" id="kpiJobs">61</span><span class="kpi-label">Jobs Booked Automatically</span><span class="kpi-delta">&#8593; vs last month</span></div>
+      <div class="kpi"><span class="kpi-num" id="kpiEmergency">14</span><span class="kpi-label">Emergency Jobs Captured</span><span class="kpi-delta">&#8593; After-hours calls</span></div>
+      <div class="kpi featured"><span class="kpi-num" id="kpiRevenue">$21,350</span><span class="kpi-label">Revenue Recovered</span><span class="kpi-delta">&#8593; AI-attributed jobs</span></div>
     </div>
+
     <div class="roi-strip">
       <div class="roi-card"><div class="roi-num" id="roiHours">42 hrs</div><div class="roi-label">Dispatcher Hours Saved</div></div>
       <div class="roi-card"><div class="roi-num" id="roiAfterHours">23</div><div class="roi-label">After-Hours Jobs Captured</div></div>
-      <div class="roi-card"><div class="roi-num" id="roiInvoices">61/61</div><div class="roi-label">Invoices Sent Automatically</div></div>
+      <div class="roi-card"><div class="roi-num" id="roiInvoices">61/61</div><div class="roi-label">Calls Recovered This Month</div></div>
     </div>
+
     <div class="row2">
       <div class="panel">
-        <div class="panel-title">Calls Answered — This Month</div>
+        <div class="panel-title">Calls Answered &mdash; This Month</div>
         <div class="bar-chart">
           <div class="bar-col"><span class="bar-val" id="w1v">54</span><div class="bar-fill" id="w1b" style="height:55%"></div><span class="bar-lbl">Wk 1</span></div>
           <div class="bar-col"><span class="bar-val" id="w2v">71</span><div class="bar-fill active" id="w2b" style="height:72%"></div><span class="bar-lbl">Wk 2</span></div>
@@ -213,45 +237,60 @@ tr:last-child td{border-bottom:none;}
           <div><div class="mrow"><span class="mname">AI Booking Rate</span><span class="mval">78%</span></div><div class="mbar-wrap"><div class="mbar-fill" style="width:78%"></div></div></div>
           <div><div class="mrow"><span class="mname">Call Completion Rate</span><span class="mval">94%</span></div><div class="mbar-wrap"><div class="mbar-fill" style="width:94%"></div></div></div>
           <div><div class="mrow"><span class="mname">After-Hours Coverage</span><span class="mval">100%</span></div><div class="mbar-wrap"><div class="mbar-fill" style="width:100%"></div></div></div>
-          <div><div class="mrow"><span class="mname">Maintenance Upsell Rate</span><span class="mval">3.2×</span></div><div class="mbar-wrap"><div class="mbar-fill" style="width:64%"></div></div></div>
+          <div><div class="mrow"><span class="mname">Review Response Rate</span><span class="mval">100%</span></div><div class="mbar-wrap"><div class="mbar-fill" style="width:100%"></div></div></div>
         </div>
       </div>
     </div>
+
     <div class="calls-panel">
-      <div class="panel-title">Recent Calls — Last 7 Days</div>
+      <div class="panel-title">Recent Calls &mdash; Last 7 Days</div>
       <table>
         <thead><tr><th>Date &amp; Time</th><th>Duration</th><th>Outcome</th><th>Type</th><th>Job Value</th></tr></thead>
         <tbody id="callsTable">
           <tr><td>Today, 2:14 AM</td><td>3m 42s</td><td><span class="tag tag-green">Booked</span></td><td><span class="tag tag-blue">After Hours</span></td><td>$385</td></tr>
-          <tr><td>Yesterday, 6:47 PM</td><td>2m 18s</td><td><span class="tag tag-green">Booked</span></td><td>—</td><td>$420</td></tr>
+          <tr><td>Yesterday, 6:47 PM</td><td>2m 18s</td><td><span class="tag tag-green">Booked</span></td><td>&mdash;</td><td>$420</td></tr>
           <tr><td>Yesterday, 11:23 AM</td><td>4m 01s</td><td><span class="tag tag-amber">Emergency</span></td><td><span class="tag tag-amber">P1</span></td><td>$850</td></tr>
           <tr><td>2 days ago, 8:55 PM</td><td>1m 52s</td><td><span class="tag tag-green">Booked</span></td><td><span class="tag tag-blue">After Hours</span></td><td>$310</td></tr>
-          <tr><td>2 days ago, 3:30 PM</td><td>0m 45s</td><td><span class="tag tag-red">Not Booked</span></td><td>—</td><td>—</td></tr>
+          <tr><td>2 days ago, 3:30 PM</td><td>0m 45s</td><td><span class="tag tag-red">Not Booked</span></td><td>&mdash;</td><td>&mdash;</td></tr>
           <tr><td>3 days ago, 10:44 PM</td><td>3m 11s</td><td><span class="tag tag-green">Booked</span></td><td><span class="tag tag-blue">After Hours</span></td><td>$440</td></tr>
         </tbody>
       </table>
     </div>
+
     <div class="report-box">
-      <div class="report-month" id="reportMonth">April 2025 — Performance Report</div>
-      <div class="report-sub">Delivered by Perché AI Solutions · Auto-sent on the 1st of every month</div>
+      <div class="report-month" id="reportMonth">Performance Report</div>
+      <div class="report-sub">Delivered by PercheAI &middot; Auto-sent on the 1st of every month</div>
       <div class="report-body" id="reportBody"></div>
       <div class="report-opt" id="reportOpt"></div>
     </div>
-    <div id="reputation-section" style="display:none"><div class="rep-section-title">Google Review Performance</div><div class="rep-cards"><div class="rep-card"><span class="rep-card-value" id="repAvgRating">—</span><span class="rep-card-stars" id="repAvgStars"></span><span class="rep-card-label">Avg Rating</span></div><div class="rep-card"><span class="rep-card-value" id="repTotalReviews">—</span><span class="rep-card-label">Total Reviews</span></div><div class="rep-card"><span class="rep-card-value" id="repAutoReplied">—</span><span class="rep-card-label">Auto-Replied</span></div><div class="rep-card"><span class="rep-card-value" id="repRequestsSent">—</span><span class="rep-card-label">Requests Sent</span></div></div><div class="rep-feed-wrap"><div class="rep-feed-title">Recent Reviews — Last 5</div><div id="repReviewsFeed"><div class="rep-empty">Loading reviews…</div></div></div></div>
-      <div class="dash-footer">Perché AI Solutions &nbsp;·&nbsp; (614) 323-3534 &nbsp;·&nbsp; p&#101;rch&#101;solutions&#64;gmail&#46;com</div>
+
+    <div id="reputation-section" style="display:none;">
+      <div class="rep-section-title">Google Review Performance</div>
+      <div class="rep-cards">
+        <div class="rep-card"><span class="rep-card-value" id="repAvgRating">&mdash;</span><span class="rep-card-stars" id="repAvgStars"></span><span class="rep-card-label">Avg Rating</span></div>
+        <div class="rep-card"><span class="rep-card-value" id="repTotalReviews">&mdash;</span><span class="rep-card-label">Total Reviews</span></div>
+        <div class="rep-card"><span class="rep-card-value" id="repAutoReplied">&mdash;</span><span class="rep-card-label">Auto-Replied</span></div>
+        <div class="rep-card"><span class="rep-card-value" id="repRequestsSent">&mdash;</span><span class="rep-card-label">Requests Sent</span></div>
+      </div>
+      <div class="rep-feed-wrap">
+        <div class="rep-feed-title">Recent Reviews &mdash; Last 5</div>
+        <div id="repReviewsFeed"><div class="rep-empty">Loading reviews&hellip;</div></div>
+      </div>
+    </div>
+
+    <div class="dash-footer">PercheAI &nbsp;&middot;&nbsp; (614) 323-3534 &nbsp;&middot;&nbsp; perchesolutions@gmail.com</div>
   </div>
 </div>
 
 <script>
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzopFWLp41faKJReIXOzywZEINUnC6HduV_zC7UVgeAqV3uiy0MeULBYwrkZgIcIe5zyw/exec';
 
-// Fallback static data while live data loads
 var CLIENT_DATA = {
   'demo@perchesolutions.com': {
-    bizName:'Summit Air Demo',plan:'Growth',
-    calls:247,jobs:61,emergency:14,revenue:'$21,350',
-    hours:'42 hrs',afterHours:23,invoices:'61/61',
-    weeks:[54,71,62,60],pcts:['55%','72%','63%','61%'],
+    bizName:'Summit Air Demo', plan:'Growth',
+    calls:247, jobs:61, emergency:14, revenue:'$21,350',
+    hours:'42 hrs', afterHours:23, invoices:'61/61',
+    weeks:[54,71,62,60], pcts:['55%','72%','63%','61%'],
     opt:'Updated emergency escalation script — capture rate improved from 71% to 94%.',
     next:'Adding seasonal tune-up reminders for maintenance agreement customers.'
   }
@@ -261,13 +300,7 @@ function fetchLiveData(email, callback) {
   var url = SCRIPT_URL + '?email=' + encodeURIComponent(email);
   fetch(url)
     .then(function(r){ return r.json(); })
-    .then(function(data){
-      if(data.status === 'success') {
-        callback(null, data);
-      } else {
-        callback('No live data', null);
-      }
-    })
+    .then(function(data){ data.status === 'success' ? callback(null, data) : callback('No data', null); })
     .catch(function(e){ callback(e, null); });
 }
 
@@ -278,39 +311,36 @@ function getMonth(){
 
 function show(id){
   document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
-  var el = document.getElementById(id);
+  var el=document.getElementById(id);
   if(el) el.classList.add('active');
 }
 
 function populateFromData(d) {
-  document.getElementById('navName').textContent=d.bizName;
-  document.getElementById('bizName').textContent=d.bizName;
-  document.getElementById('dashPeriod').textContent=getMonth()+' · '+(d.plan||'Starter')+' Plan';
-  document.getElementById('kpiCalls').textContent=d.calls;
-  document.getElementById('kpiJobs').textContent=d.jobs;
-  document.getElementById('kpiEmergency').textContent=d.emergency;
-  document.getElementById('kpiRevenue').textContent=d.revenue;
-  document.getElementById('roiHours').textContent=d.hours;
-  document.getElementById('roiAfterHours').textContent=d.afterHours;
-  document.getElementById('roiInvoices').textContent=d.invoices;
-  document.getElementById('reportMonth').textContent=getMonth()+' — Performance Report';
+  document.getElementById('navName').textContent = d.bizName;
+  document.getElementById('bizName').textContent = d.bizName;
+  document.getElementById('dashPeriod').textContent = getMonth() + ' · ' + (d.plan||'Starter') + ' Plan';
+  document.getElementById('kpiCalls').textContent = d.calls;
+  document.getElementById('kpiJobs').textContent = d.jobs;
+  document.getElementById('kpiEmergency').textContent = d.emergency;
+  document.getElementById('kpiRevenue').textContent = d.revenue;
+  document.getElementById('roiHours').textContent = d.hours;
+  document.getElementById('roiAfterHours').textContent = d.afterHours;
+  document.getElementById('roiInvoices').textContent = d.invoices;
+  document.getElementById('reportMonth').textContent = getMonth() + ' — Performance Report';
   document.getElementById('w1v').textContent=d.weeks[0]; document.getElementById('w1b').style.height=d.pcts[0];
   document.getElementById('w2v').textContent=d.weeks[1]; document.getElementById('w2b').style.height=d.pcts[1];
   document.getElementById('w3v').textContent=d.weeks[2]; document.getElementById('w3b').style.height=d.pcts[2];
   document.getElementById('w4v').textContent=d.weeks[3]; document.getElementById('w4b').style.height=d.pcts[3];
-  document.getElementById('reportBody').innerHTML='Your AI system handled <strong>'+d.calls+' inbound calls</strong> this month with a 100% answer rate. Of those, <strong>'+d.jobs+' jobs were booked automatically</strong>. <strong>'+d.emergency+' emergency calls</strong> were flagged. <strong>'+d.afterHours+' after-hours jobs</strong> captured. Revenue attributed to AI: <strong>'+d.revenue+'</strong>.';
-  document.getElementById('reportOpt').innerHTML='<strong>This month we optimized:</strong> '+(d.opt||'System running smoothly.')+'<br><br><strong>Next month:</strong> '+(d.next||'Continued optimization.');
-    if(d.reputation) populateReputation(d.reputation);
+  document.getElementById('reportBody').innerHTML = 'Your AI system handled <strong>'+d.calls+' inbound calls</strong> this month with a 100% answer rate. Of those, <strong>'+d.jobs+' jobs were booked automatically</strong>. <strong>'+d.emergency+' emergency calls</strong> were flagged and escalated. <strong>'+d.afterHours+' after-hours jobs</strong> captured. Revenue attributed to AI: <strong>'+d.revenue+'</strong>.';
+  document.getElementById('reportOpt').innerHTML = '<strong>This month we optimized:</strong> '+(d.opt||'System running smoothly.')+'<br><br><strong>Next month:</strong> '+(d.next||'Continued optimization.');
+  if(d.reputation) populateReputation(d.reputation);
 }
 
-function populate(email){
-  // Show static data immediately
+function populate(email) {
   var fallback = CLIENT_DATA[email] || CLIENT_DATA['demo@perchesolutions.com'];
   populateFromData(fallback);
-
-  // Then fetch live data from Google Sheet
   fetchLiveData(email, function(err, liveData) {
-    if (err || !liveData) return; // keep showing static data
+    if (err || !liveData) return;
     var kpis = liveData.kpis;
     var weeks = liveData.weeks || [0,0,0,0];
     var maxWeek = Math.max.apply(null, weeks) || 1;
@@ -318,66 +348,45 @@ function populate(email){
     var d = {
       bizName: liveData.bizName || fallback.bizName,
       plan: fallback.plan,
-      calls: kpis.totalCalls,
-      jobs: kpis.jobsBooked,
-      emergency: kpis.emergencyJobs,
-      revenue: kpis.revenue,
-      hours: kpis.dispatcherHours,
-      afterHours: kpis.afterHoursCalls,
-      invoices: kpis.invoicesSent,
-      weeks: weeks,
-      pcts: pcts,
-      opt: fallback.opt,
-      next: fallback.next,
-        reputation: liveData.reputation || null
+      calls: kpis.totalCalls, jobs: kpis.jobsBooked,
+      emergency: kpis.emergencyJobs, revenue: kpis.revenue,
+      hours: kpis.dispatcherHours, afterHours: kpis.afterHoursCalls,
+      invoices: kpis.invoicesSent, weeks: weeks, pcts: pcts,
+      opt: fallback.opt, next: fallback.next,
+      reputation: liveData.reputation || null
     };
     populateFromData(d);
-
-    // Update recent calls table if data exists
     if (liveData.recentCalls && liveData.recentCalls.length > 0) {
       var tbody = document.getElementById('callsTable');
       if (tbody) {
         tbody.innerHTML = liveData.recentCalls.map(function(c){
           var outcomeTag = (c.outcome||'').indexOf('Booked') > -1
             ? '<span class="tag tag-green">Booked</span>'
-            : (c.emergency === 'YES'
+            : c.emergency === 'YES'
               ? '<span class="tag tag-amber">Emergency</span>'
-              : '<span class="tag tag-red">Not Booked</span>');
-          var typeTag = c.afterHours === 'YES' ? '<span class="tag tag-blue">After Hours</span>' : '—';
-          return '<tr><td>'+c.date+', '+c.time+'</td><td>—</td><td>'+outcomeTag+'</td><td>'+typeTag+'</td><td>—</td></tr>';
+              : '<span class="tag tag-red">Not Booked</span>';
+          var typeTag = c.afterHours === 'YES' ? '<span class="tag tag-blue">After Hours</span>' : '&mdash;';
+          return '<tr><td>'+c.date+', '+c.time+'</td><td>&mdash;</td><td>'+outcomeTag+'</td><td>'+typeTag+'</td><td>&mdash;</td></tr>';
         }).join('');
       }
     }
   });
 }
 
-function logout(){
-  window.netlifyIdentity.logout();
-}
+function logout(){ window.netlifyIdentity.logout(); }
 
-// Always show login screen by default immediately
-// This prevents the black screen — JS will update it if user is already logged in
 show('loginScreen');
 
-// Set up Netlify Identity events
 window.netlifyIdentity.on('login', function(user){
   window.netlifyIdentity.close();
   populate(user.email);
   show('dashScreen');
   if(window.location.hash) window.history.replaceState(null,'',window.location.pathname);
 });
-
-window.netlifyIdentity.on('logout', function(){
-  show('loginScreen');
-});
-
+window.netlifyIdentity.on('logout', function(){ show('loginScreen'); });
 window.netlifyIdentity.on('init', function(user){
-  if(user){
-    populate(user.email);
-    show('dashScreen');
-  } else {
-    show('loginScreen');
-  }
+  if(user){ populate(user.email); show('dashScreen'); }
+  else { show('loginScreen'); }
 });
 </script>
 </body>
