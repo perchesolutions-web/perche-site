@@ -176,13 +176,14 @@
 
   /* ── HERO TICKER ── */
   .hero-ticker-wrap {
-    position: relative; width: 100vw; left: 50%; right: 50%;
-    margin-left: -50vw; margin-right: -50vw;
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
     overflow: hidden;
     padding: 2rem 0;
     border-top: 1px solid var(--border);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
   }
   .hero-ticker {
     display: flex; align-items: center;
@@ -559,7 +560,7 @@
     .hero-sub { font-size: 0.95rem; margin: 0 auto; }
     .hero-ctas { flex-direction: column; align-items: center; }
     .hero-ctas a { width: 100%; max-width: 320px; justify-content: center; text-align: center; white-space: normal; line-height: 1.35; padding: 0.85rem 1.25rem; }
-    .hero-ticker-wrap { padding: 1.5rem 0; }
+    .hero-ticker-wrap { padding: 1.5rem 0; margin-left: calc(50% - 50vw); }
     .ticker-num { font-size: 1.25rem; }
     .ticker-label { font-size: 0.65rem; }
     .ticker-stat { padding: 0 1.5rem; }
