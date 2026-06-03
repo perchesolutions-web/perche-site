@@ -430,6 +430,37 @@
   .form-submit { background: var(--orange); color: #fff; border: none; padding: 0.875rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: background 0.2s; font-family: inherit; width: 100%; }
   .form-submit:hover { background: var(--orange2); }
 
+  /* ── FREE TRIAL BANNER ── */
+  .trial-banner {
+    background: linear-gradient(135deg, rgba(220,38,38,0.12) 0%, rgba(248,113,113,0.06) 100%);
+    border: 1px solid rgba(220,38,38,0.3);
+    border-radius: 18px;
+    padding: 2.5rem 2rem;
+    max-width: 780px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .trial-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(220,38,38,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .trial-spots {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(220,38,38,0.15); border: 1px solid rgba(220,38,38,0.4);
+    border-radius: 999px; padding: 0.25rem 0.75rem;
+    font-size: 0.72rem; font-weight: 700; color: var(--accent2);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.9rem;
+  }
+  .trial-spots-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s infinite; }
+  .trial-banner h3 { font-size: 1.55rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .trial-banner p { font-size: 0.9rem; color: var(--muted); max-width: 520px; margin: 0 auto 1.35rem; line-height: 1.65; }
+  .trial-fine { font-size: 0.72rem; color: var(--muted2); margin-top: 0.75rem; }
+
   /* ── FOOTER ── */
   footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.75rem 5% 1.75rem; }
   .footer-inner { max-width: 1080px; margin: 0 auto; }
@@ -569,7 +600,7 @@
     PerchéAI answers every call with a live AI, books the job directly on your calendar, and automatically handles your Google review replies &mdash; so you win more jobs without hiring more staff.
   </p>
   <div class="hero-ctas">
-    <a href="#contact" class="btn-primary">Book a Free Demo</a>
+    <a href="https://buy.stripe.com/4gMaEWdo45gF2EF0ZRfMA07" target="_blank" class="btn-primary">Start Free 30-Day Trial &mdash; 10 Spots Only</a>
     <a href="tel:+12166160378" class="btn-secondary">Call Our AI Now &mdash; (216) 616-0378</a>
   </div>
   <div class="hero-stats">
@@ -966,6 +997,18 @@
     <h2 class="section-h2">Pick the Plan That Fits Your Business</h2>
     <p class="section-sub">No long contracts. No setup surprises. Most clients recover the monthly cost from 1&ndash;3 extra booked jobs in the first week.</p>
 
+    <!-- FREE TRIAL OFFER -->
+    <div class="trial-banner fade-up">
+      <div class="trial-spots">
+        <span class="trial-spots-dot"></span>
+        Limited &mdash; Only 10 spots available
+      </div>
+      <h3>Try the AI Call Assistant Free for 30 Days</h3>
+      <p>Get our full AI Call Assistant &mdash; answers every call, filters spam, collects customer info, handles all 8 scenarios, and books jobs directly to your calendar &mdash; completely free for 30 days. No credit card needed to start.</p>
+      <a href="https://buy.stripe.com/4gMaEWdo45gF2EF0ZRfMA07" target="_blank" class="btn-primary" style="font-size:1rem;padding:0.85rem 2rem;">Claim Your Free 30-Day Trial</a>
+      <div class="trial-fine">AI Call Assistant only &middot; 30 days free &middot; 10 spots total &middot; Cancel anytime</div>
+    </div>
+
     <div class="pricing-grid">
       <div class="pricing-card fade-up">
         <div class="pricing-name">Starter</div>
@@ -1023,7 +1066,7 @@
       </div>
     </div>
 
-    <p class="pricing-note">All plans include a 30-day free trial. Cancel anytime. Live in 5&ndash;7 days.</p>
+    <p class="pricing-note">All paid plans go live in 5&ndash;7 days. Cancel anytime. Or <a href="https://buy.stripe.com/4gMaEWdo45gF2EF0ZRfMA07" target="_blank" style="color:var(--accent2);text-decoration:underline;">claim your free 30-day trial</a> (10 spots, AI Call Assistant only).</p>
 
     <div style="margin-top:2.75rem;padding:1.75rem;background:var(--card);border:1px solid var(--border);border-radius:14px;max-width:660px;margin-left:auto;margin-right:auto;text-align:left;">
       <div style="font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;">Our Guarantee</div>
