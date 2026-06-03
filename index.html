@@ -253,6 +253,26 @@
   .cost-step.bad .cost-step-label { color: var(--red); }
   .cost-step.bad .cost-step-icon { background: rgba(239,68,68,0.1); color: var(--red); }
   .cost-step.lost { border-color: rgba(239,68,68,0.45); background: rgba(239,68,68,0.04); }
+
+  /* Cost-flow animations */
+  @keyframes cost-pulse-bad {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); border-color: rgba(239,68,68,0.25); }
+    50% { box-shadow: 0 0 16px 4px rgba(239,68,68,0.18); border-color: rgba(239,68,68,0.55); }
+  }
+  @keyframes cost-pulse-lost {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); border-color: rgba(239,68,68,0.45); }
+    50% { box-shadow: 0 0 22px 6px rgba(239,68,68,0.28); border-color: rgba(239,68,68,0.8); }
+  }
+  @keyframes arrow-slide {
+    0%, 100% { transform: translateX(0); opacity: 0.5; }
+    50% { transform: translateX(6px); opacity: 1; }
+  }
+  .cost-step { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .cost-step:not(.bad):not(.lost):hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+  .cost-step.bad.visible { animation: cost-pulse-bad 2.4s ease-in-out infinite; animation-delay: 0.6s; }
+  .cost-step.lost.visible { animation: cost-pulse-lost 2s ease-in-out infinite; animation-delay: 0.6s; }
+  .cost-arrow.anim-arrow.visible { animation: arrow-slide 1.4s ease-in-out infinite; }
+
   .cost-arrow {
     display: flex; align-items: center;
     font-size: 1.1rem; color: var(--muted2);
@@ -553,6 +573,7 @@
 
     .cost-flow { flex-direction: column; align-items: center; gap: 0.5rem; }
     .cost-arrow { transform: rotate(90deg); padding: 0.15rem 0; }
+    .cost-arrow.anim-arrow.visible { animation: none; transform: rotate(90deg); opacity: 0.8; }
     .cost-step { min-width: 200px; max-width: 280px; width: 100%; }
     .cost-math { grid-template-columns: 1fr; }
     .cost-card { text-align: center; }
@@ -693,25 +714,25 @@
     <p class="section-sub">Most home service businesses lose 30&ndash;50% of potential revenue every week. You never see it because it never shows up. It just never comes in.</p>
 
     <div class="cost-flow">
-      <div class="cost-step">
+      <div class="cost-step fade-up d1">
         <div class="cost-step-icon">01</div>
         <div class="cost-step-label">Customer Calls</div>
         <div class="cost-step-sub">Needs a job done today</div>
       </div>
-      <div class="cost-arrow">&rarr;</div>
-      <div class="cost-step bad">
+      <div class="cost-arrow anim-arrow fade-up d2">&rarr;</div>
+      <div class="cost-step bad fade-up d2">
         <div class="cost-step-icon">02</div>
         <div class="cost-step-label">No Answer</div>
         <div class="cost-step-sub">Voicemail or rings out</div>
       </div>
-      <div class="cost-arrow">&rarr;</div>
-      <div class="cost-step bad">
+      <div class="cost-arrow anim-arrow fade-up d3">&rarr;</div>
+      <div class="cost-step bad fade-up d3">
         <div class="cost-step-icon">03</div>
         <div class="cost-step-label">Calls Competitor</div>
         <div class="cost-step-sub">Someone else picks up</div>
       </div>
-      <div class="cost-arrow">&rarr;</div>
-      <div class="cost-step lost">
+      <div class="cost-arrow anim-arrow fade-up" style="transition-delay:0.4s">&rarr;</div>
+      <div class="cost-step lost fade-up" style="transition-delay:0.4s">
         <div class="cost-step-icon">04</div>
         <div class="cost-step-label">Job Lost Forever</div>
         <div class="cost-step-sub">Revenue gone</div>
