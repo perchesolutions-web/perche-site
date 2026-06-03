@@ -501,23 +501,43 @@
       padding-top: calc(64px + 48px);
       padding-bottom: 60px;
       min-height: auto;
+      text-align: center;
     }
     .hero-h1 { font-size: clamp(2rem, 8vw, 2.8rem); }
     .rotate-wrap { height: 1.25em; }
-    .hero-sub { font-size: 0.95rem; }
+    .hero-sub { font-size: 0.95rem; margin: 0 auto; }
     .hero-ctas { flex-direction: column; align-items: center; }
-    .hero-ctas a { width: 100%; max-width: 320px; justify-content: center; }
-    .hero-stats { gap: 1.25rem; }
+    .hero-ctas a { width: 100%; max-width: 320px; justify-content: center; text-align: center; white-space: normal; line-height: 1.35; padding: 0.85rem 1.25rem; }
+    .hero-stats {
+      gap: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 320px;
+      margin: 0 auto;
+      padding-top: 1.5rem;
+      text-align: center;
+    }
+    .hero-stats > div { text-align: center; }
     .hero-stat-num { font-size: 1.3rem; }
 
     section { padding: 64px 4%; }
+
+    /* Center section headings and eyebrows on mobile */
+    .eyebrow { text-align: center; }
+    .section-h2 { text-align: center; }
+    .section-sub { text-align: center; margin-left: auto; margin-right: auto; }
 
     .cost-flow { flex-direction: column; align-items: center; gap: 0.5rem; }
     .cost-arrow { transform: rotate(90deg); padding: 0.15rem 0; }
     .cost-step { min-width: 200px; max-width: 280px; width: 100%; }
     .cost-math { grid-template-columns: 1fr; }
+    .cost-card { text-align: center; }
+    .cost-card-num { font-size: 2.4rem; }
 
     .steps { grid-template-columns: 1fr; gap: 1rem; }
+    .step { text-align: center; }
+    .step-num { text-align: center; }
+    .step-icon { margin: 0 auto 0.75rem; }
 
     .product-grid, .product-grid.flip { grid-template-columns: 1fr; direction: ltr; gap: 2rem; }
 
@@ -546,11 +566,16 @@
     #final-cta { padding: 80px 4%; }
     .final-cta-btns { flex-direction: column; align-items: center; }
     .final-cta-btns a { width: 100%; max-width: 320px; justify-content: center; }
+
+    /* Trial banner button wrap fix */
+    .trial-banner { text-align: center; }
+    .trial-banner .btn-primary { white-space: normal; line-height: 1.35; padding: 0.85rem 1.5rem; }
   }
 
   @media (max-width: 380px) {
     .hero-h1 { font-size: 1.85rem; }
     .proof-stats { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr 1fr; max-width: 280px; }
   }
 </style>
 </head>
@@ -1237,23 +1262,16 @@
           <a href="#reviews">Review Replier</a>
         </div>
         <div class="footer-col">
-          <h5>Industries</h5>
-          <a href="#contact">HVAC</a>
-          <a href="#contact">Plumbing</a>
-          <a href="#contact">Roofing</a>
-          <a href="#contact">Electrical</a>
+          <h5>Resources</h5>
+          <a href="/onboarding.html">Onboarding</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
         </div>
         <div class="footer-col">
           <h5>Company</h5>
           <a href="#pricing">Pricing</a>
           <a href="#contact">Free Trial</a>
           <a href="mailto:perchesolutions@gmail.com">Contact</a>
-        </div>
-        <div class="footer-col">
-          <h5>Resources</h5>
-          <a href="/onboarding.html">Onboarding</a>
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/terms.html">Terms of Service</a>
         </div>
       </div>
     </div>
