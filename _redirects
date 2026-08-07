@@ -1,0 +1,17 @@
+# Legal pages now live in the app (single source of truth)
+/privacy.html   https://perche-revenue-solutions.vercel.app/privacy   301
+/privacy        https://perche-revenue-solutions.vercel.app/privacy   301
+/terms.html     https://perche-revenue-solutions.vercel.app/terms     301
+/terms          https://perche-revenue-solutions.vercel.app/terms     301
+
+# Old AI-call-assistant product pages, retired - send visitors somewhere useful
+/dashboard.html    https://perche-revenue-solutions.vercel.app/login   301
+/dashboard         https://perche-revenue-solutions.vercel.app/login   301
+/identity.html     https://perche-revenue-solutions.vercel.app/login   301
+/onboarding.html   /   301
+/onboarding        /   301
+/waitlist.html     /   301
+/waitlist          /   301
+/thankyou.html     /thanks   301
+/Inex.html         /   301
+/perche-ai.html    /   301
