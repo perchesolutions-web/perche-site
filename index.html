@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Perch&eacute;">
 <meta property="og:title" content="Perch&eacute; | Revenue Solutions for Field Service Businesses">
-<meta property="og:description" content="You already earned this revenue. Perch&eacute; makes sure you actually collect it - automatic revenue-leak detection for HVAC and field service businesses.">
+<meta property="og:description" content="Stop losing revenue you already earned - automatic revenue-leak detection for HVAC and field service businesses.">
 <meta property="og:url" content="https://perchesolutions.com/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Perch&eacute; | Revenue Solutions">
@@ -66,7 +66,8 @@ header.site-nav{position:sticky;top:0;z-index:50;background:rgba(8,8,16,0.88);ba
 .hero{padding:64px 0 56px;}
 .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;}
 .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-light);background:var(--accent-bg);padding:5px 12px;border-radius:999px;margin-bottom:18px;}
-h1.hero-title{font-size:42px;line-height:1.14;letter-spacing:-0.02em;margin-bottom:18px;color:var(--text);}
+h1.hero-title{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-0.03em;margin-bottom:18px;color:var(--text);}
+.hero-title .accent{background:linear-gradient(135deg,var(--accent-light),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .hero-sub{font-size:16.5px;color:var(--muted);line-height:1.6;margin-bottom:28px;max-width:520px;}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
 .hero-fine{font-size:12.5px;color:var(--muted2);}
@@ -88,7 +89,8 @@ h1.hero-title{font-size:42px;line-height:1.14;letter-spacing:-0.02em;margin-bott
 
 /* sections */
 section{padding:56px 0;}
-.section-title{font-size:26px;letter-spacing:-0.01em;margin-bottom:8px;color:var(--text);}
+.section-title{font-size:29px;font-weight:800;letter-spacing:-0.015em;margin-bottom:10px;color:var(--text);}
+.section-eyebrow{display:block;font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-light);margin-bottom:10px;}
 .section-sub{font-size:14.5px;color:var(--muted);margin-bottom:36px;max-width:640px;}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);}
 .card-hover{transition:box-shadow .15s ease,border-color .15s ease,background .15s ease;}
@@ -163,7 +165,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   .field-row{grid-template-columns:1fr;}
   .nav-links{display:none;}
   .hamburger{display:flex;}
-  h1.hero-title{font-size:32px;}
+  h1.hero-title{font-size:34px;}
 }
 </style>
 </head>
@@ -198,8 +200,8 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   <div class="hero-grid">
     <div>
       <span class="eyebrow">For HVAC &amp; field service businesses</span>
-      <h1 class="hero-title">You already earned this revenue. Perch&eacute; makes sure you actually collect it.</h1>
-      <p class="hero-sub">Perch&eacute; connects to Jobber or Housecall Pro - or just a spreadsheet if that's what you use - and automatically flags the cold estimates, unpaid invoices, and lapsed customers you don't have time to chase down manually.</p>
+      <h1 class="hero-title">Stop losing <span class="accent">revenue</span> you already earned.</h1>
+      <p class="hero-sub">Perch&eacute; connects to Jobber or Housecall Pro - or just a spreadsheet - and automatically flags the cold estimates, unpaid invoices, and lapsed customers costing you money every month.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="https://perche-revenue-solutions.vercel.app/signup" style="padding:13px 24px;font-size:14.5px;">Start 14-day free trial</a>
         <a class="btn btn-ghost" href="#how-it-works" style="padding:13px 24px;font-size:14.5px;">See how it works</a>
@@ -242,6 +244,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 </div>
 
 <section class="wrap">
+  <span class="section-eyebrow">The problem</span>
   <h2 class="section-title">Three ways revenue quietly slips away</h2>
   <p class="section-sub">None of it shows up as a loss on a P&amp;L. It just never comes in - because nobody had time to go looking for it. Perch&eacute; watches for all three, every night.</p>
   <div class="grid-3">
@@ -261,6 +264,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 </section>
 
 <section class="wrap" id="how-it-works">
+  <span class="section-eyebrow">The process</span>
   <h2 class="section-title">How it works</h2>
   <p class="section-sub">No new workflow to learn - Perch&eacute; runs alongside the software you already use.</p>
   <div class="grid-3">
@@ -283,6 +287,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 </section>
 
 <section class="wrap">
+  <span class="section-eyebrow">Trust &amp; security</span>
   <h2 class="section-title">Built to be trusted with your data</h2>
   <p class="section-sub">Perch&eacute; only reads what it needs to find revenue - it never touches your CRM, and nothing goes to a customer without your say-so.</p>
   <div class="why-strip">
@@ -306,6 +311,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 </section>
 
 <section class="wrap" id="pricing">
+  <span class="section-eyebrow">Pricing</span>
   <h2 class="section-title">Simple pricing</h2>
   <p class="section-sub">Start with the core product, or go hands-off with automatic follow-ups, SMS, Slack, and deeper reporting.</p>
 
@@ -356,6 +362,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 </section>
 
 <section class="wrap" id="faq">
+  <span class="section-eyebrow">FAQ</span>
   <h2 class="section-title">Common questions</h2>
   <p class="section-sub">Can't find what you need? Email <a href="mailto:perchesolutions@gmail.com" style="color:var(--accent-light);">perchesolutions@gmail.com</a>.</p>
   <div id="faqList">
