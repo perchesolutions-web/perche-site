@@ -18,129 +18,140 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <style>
 :root{
-  --ink:#171B24; --ink-soft:#6B7080; --bg:#F3F4F7; --border:#E7E8ED; --white:#FFFFFF;
-  --red:#C1432E; --red-bg:#FBEAE7;
-  --amber:#B8791E; --amber-bg:#FCF2E2;
-  --blue:#2C5DBA; --blue-bg:#E9EFFB;
-  --green:#22824A; --green-bg:#E8F5EC;
-  --brand:#3454D1; --brand-dark:#24399E; --brand-light:#6C87E8; --brand-bg:#EEF1FD; --brand-glow:rgba(52,84,209,0.28);
-  --shadow:0 1px 2px rgba(23,27,36,0.04),0 6px 16px rgba(23,27,36,0.06);
-  --shadow-lg:0 10px 28px rgba(23,27,36,0.14);
+  --bg:#080810; --bg-soft:#0d0d1a; --card:#131320; --card-hover:#171728;
+  --border:rgba(255,255,255,0.09); --border-hover:rgba(255,255,255,0.2);
+  --text:#f1f5f9; --muted:#98a2b3; --muted2:#6b7385;
+  --accent:#f97316; --accent-dark:#ea580c; --accent-light:#fb923c; --accent-bg:rgba(249,115,22,0.14); --accent-glow:rgba(249,115,22,0.35);
+  --red:#ef4444; --red-bg:rgba(239,68,68,0.14);
+  --amber:#f59e0b; --amber-bg:rgba(245,158,11,0.14);
+  --green:#10d999; --green-bg:rgba(16,217,153,0.14);
+  --shadow:0 1px 2px rgba(0,0,0,0.3),0 6px 20px rgba(0,0,0,0.35);
+  --shadow-lg:0 14px 34px rgba(0,0,0,0.5);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;}
-a{color:inherit;}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:radial-gradient(1100px 560px at 82% -8%,rgba(249,115,22,0.14),transparent 60%),radial-gradient(900px 500px at -10% 15%,rgba(239,68,68,0.08),transparent 55%),var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:inherit;transition:color .15s ease;}
+section[id],div[id]{scroll-margin-top:76px;}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
 img{max-width:100%;display:block;}
 
 /* nav */
-header.site-nav{position:sticky;top:0;z-index:50;background:rgba(243,244,247,0.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+header.site-nav{position:sticky;top:0;z-index:50;background:rgba(8,8,16,0.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
 .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1160px;margin:0 auto;}
-.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);}
-.brand img{width:26px;height:26px;object-fit:contain;}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--text);}
+.brand img{width:26px;height:26px;object-fit:contain;filter:invert(1) brightness(1.6);}
 .brand-name{font-weight:800;font-size:18px;letter-spacing:-0.3px;}
-.nav-links{display:flex;align-items:center;gap:24px;font-size:14px;}
-.nav-links a{text-decoration:none;color:var(--ink-soft);font-weight:500;}
-.nav-links a:hover{color:var(--ink);}
-.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:8px;cursor:pointer;border:none;}
-.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-dark));color:#fff;box-shadow:0 2px 10px var(--brand-glow);}
-.btn-primary:hover{box-shadow:0 4px 16px var(--brand-glow);}
-.btn-ghost{border:1px solid var(--border);color:var(--ink);background:var(--white);}
+.brand-name span{color:var(--accent-light);}
+.nav-links{display:flex;align-items:center;gap:16px;font-size:14px;flex-wrap:wrap;row-gap:8px;justify-content:flex-end;}
+.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;}
+.nav-links a:hover{color:var(--text);}
+.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:8px;cursor:pointer;border:none;transition:box-shadow .15s ease,transform .12s ease,border-color .15s ease,color .15s ease;}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:linear-gradient(135deg,var(--accent-light),var(--accent-dark));color:#fff;box-shadow:0 2px 14px var(--accent-glow);}
+.btn-primary:hover{box-shadow:0 4px 20px var(--accent-glow);}
+.btn-ghost{border:1px solid var(--border-hover);color:var(--text);background:rgba(255,255,255,0.03);}
+.btn-ghost:hover{border-color:var(--accent-light);color:var(--accent-light);}
 .hamburger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:8px;}
-.hamburger span{width:20px;height:2px;background:var(--ink);display:block;border-radius:2px;}
+.hamburger span{width:20px;height:2px;background:var(--text);display:block;border-radius:2px;}
 .mobile-menu{display:none;flex-direction:column;gap:2px;padding:0 24px 16px;}
 .mobile-menu.open{display:flex;}
-.mobile-menu a{padding:10px 0;text-decoration:none;color:var(--ink-soft);font-weight:600;font-size:14.5px;border-top:1px solid var(--border);}
+.mobile-menu a{padding:10px 0;text-decoration:none;color:var(--muted);font-weight:600;font-size:14.5px;border-top:1px solid var(--border);}
 
 /* hero */
 .hero{padding:64px 0 56px;}
 .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;}
-.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--brand);background:var(--brand-bg);padding:5px 12px;border-radius:999px;margin-bottom:18px;}
-h1.hero-title{font-size:42px;line-height:1.14;letter-spacing:-0.02em;margin-bottom:18px;}
-.hero-sub{font-size:16.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:28px;max-width:520px;}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-light);background:var(--accent-bg);padding:5px 12px;border-radius:999px;margin-bottom:18px;}
+h1.hero-title{font-size:42px;line-height:1.14;letter-spacing:-0.02em;margin-bottom:18px;color:var(--text);}
+.hero-sub{font-size:16.5px;color:var(--muted);line-height:1.6;margin-bottom:28px;max-width:520px;}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
-.hero-fine{font-size:12.5px;color:var(--ink-soft);}
+.hero-fine{font-size:12.5px;color:var(--muted2);}
 
 /* mock flag card for hero visual */
-.mock-card{background:var(--white);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);padding:22px;}
+.mock-card-wrap{position:relative;}
+.mock-card-wrap::before{content:"";position:absolute;inset:-30px;background:radial-gradient(closest-side,rgba(249,115,22,0.25),transparent 70%);filter:blur(10px);z-index:0;}
+.mock-card{position:relative;z-index:1;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);padding:22px;}
 .mock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.mock-head-title{font-weight:700;font-size:13.5px;}
-.mock-head-sub{font-size:11.5px;color:var(--ink-soft);}
+.mock-head-title{font-weight:700;font-size:13.5px;color:var(--text);}
+.mock-head-sub{font-size:11.5px;color:var(--muted2);}
 .mock-flag{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-top:1px solid var(--border);}
 .mock-flag:first-of-type{border-top:none;}
 .mock-badge{flex-shrink:0;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;margin-top:1px;}
 .mock-flag-body{flex:1;}
-.mock-flag-title{font-size:13px;font-weight:600;margin-bottom:2px;}
-.mock-flag-sub{font-size:12px;color:var(--ink-soft);}
+.mock-flag-title{font-size:13px;font-weight:600;margin-bottom:2px;color:var(--text);}
+.mock-flag-sub{font-size:12px;color:var(--muted);}
 .mock-flag-value{font-size:13px;font-weight:700;white-space:nowrap;}
 
 /* sections */
 section{padding:56px 0;}
-.section-title{font-size:26px;letter-spacing:-0.01em;margin-bottom:8px;}
-.section-sub{font-size:14.5px;color:var(--ink-soft);margin-bottom:36px;max-width:640px;}
-.card{background:var(--white);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);}
-.card-hover{transition:box-shadow .15s ease,border-color .15s ease;}
-.card-hover:hover{box-shadow:var(--shadow-lg);border-color:var(--brand-light);}
+.section-title{font-size:26px;letter-spacing:-0.01em;margin-bottom:8px;color:var(--text);}
+.section-sub{font-size:14.5px;color:var(--muted);margin-bottom:36px;max-width:640px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);}
+.card-hover{transition:box-shadow .15s ease,border-color .15s ease,background .15s ease;}
+.card-hover:hover{box-shadow:var(--shadow-lg);border-color:var(--border-hover);background:var(--card-hover);}
 
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
 
 .step-card{padding:26px;}
-.step-num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand-light),var(--brand-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:16px;box-shadow:0 2px 8px var(--brand-glow);}
-.step-title{font-weight:700;font-size:15.5px;margin-bottom:8px;}
-.step-body{color:var(--ink-soft);font-size:13.5px;line-height:1.6;}
+.step-num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent-light),var(--accent-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:16px;box-shadow:0 2px 10px var(--accent-glow);}
+.step-title{font-weight:700;font-size:15.5px;margin-bottom:8px;color:var(--text);}
+.step-body{color:var(--muted);font-size:13.5px;line-height:1.6;}
 
 .cat-card{padding:26px;}
 .cat-tag{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:999px;margin-bottom:13px;}
-.cat-body{color:var(--ink-soft);font-size:13.5px;line-height:1.6;}
+.cat-body{color:var(--muted);font-size:13.5px;line-height:1.6;}
 
 .why-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
 .why-item{padding:20px;}
-.why-title{font-weight:700;font-size:14px;margin-bottom:6px;}
-.why-body{color:var(--ink-soft);font-size:12.5px;line-height:1.55;}
+.why-title{font-weight:700;font-size:14px;margin-bottom:6px;color:var(--text);}
+.why-body{color:var(--muted);font-size:12.5px;line-height:1.55;}
 
-.trial-banner{background:var(--brand-bg);border:1px solid var(--brand-light);border-radius:14px;padding:18px 22px;margin-bottom:32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;}
-.trial-banner-text{font-size:14px;color:var(--brand-dark);font-weight:600;}
+.trial-banner{background:var(--accent-bg);border:1px solid rgba(249,115,22,0.35);border-radius:14px;padding:18px 22px;margin-bottom:32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;}
+.trial-banner-text{font-size:14px;color:var(--accent-light);font-weight:700;}
 
 .pricing-card{position:relative;padding:30px;}
-.pricing-badge{position:absolute;top:-12px;left:26px;background:linear-gradient(135deg,var(--brand-light),var(--brand-dark));color:#fff;font-size:10.5px;font-weight:700;letter-spacing:0.4px;padding:4px 10px;border-radius:999px;box-shadow:0 2px 8px var(--brand-glow);}
-.pricing-name{font-weight:700;font-size:16px;margin-bottom:4px;}
-.pricing-price{font-size:32px;font-weight:800;margin-bottom:6px;}
-.pricing-price span{font-size:14px;font-weight:500;color:var(--ink-soft);}
-.pricing-blurb{color:var(--ink-soft);font-size:13px;margin-bottom:22px;}
+.pricing-badge{position:absolute;top:-12px;left:26px;background:linear-gradient(135deg,var(--accent-light),var(--red));color:#fff;font-size:10.5px;font-weight:700;letter-spacing:0.4px;padding:4px 10px;border-radius:999px;box-shadow:0 2px 10px var(--accent-glow);}
+.pricing-name{font-weight:700;font-size:16px;margin-bottom:4px;color:var(--text);}
+.pricing-price{font-size:32px;font-weight:800;margin-bottom:6px;color:var(--text);}
+.pricing-price span{font-size:14px;font-weight:500;color:var(--muted);}
+.pricing-blurb{color:var(--muted);font-size:13px;margin-bottom:22px;}
 .pricing-list{list-style:none;margin-bottom:24px;}
-.pricing-list li{display:flex;gap:8px;font-size:13px;color:var(--ink-soft);padding:7px 0;border-top:1px solid var(--border);}
+.pricing-list li{display:flex;gap:8px;font-size:13px;color:var(--muted);padding:7px 0;border-top:1px solid var(--border);}
 .pricing-list li:first-child{border-top:none;}
 .pricing-list li .check{color:var(--green);flex-shrink:0;}
 
 .faq-item{border-bottom:1px solid var(--border);}
 .faq-item:first-child{border-top:1px solid var(--border);}
-.faq-q{width:100%;text-align:left;background:none;border:none;padding:18px 4px;font-size:14.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;}
-.faq-plus{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--brand-bg);color:var(--brand);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:transform .15s ease;}
+.faq-q{width:100%;text-align:left;background:none;border:none;padding:18px 4px;font-size:14.5px;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;}
+.faq-plus{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--accent-bg);color:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:transform .15s ease;}
 .faq-item.open .faq-plus{transform:rotate(45deg);}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .2s ease;}
 .faq-item.open .faq-a{max-height:400px;}
-.faq-a-inner{padding:0 4px 18px;font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
+.faq-a-inner{padding:0 4px 18px;font-size:13.5px;color:var(--muted);line-height:1.6;}
 
 .contact-card{padding:32px;max-width:640px;margin:0 auto;text-align:center;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .field{margin-bottom:12px;text-align:left;}
-.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px;color:var(--ink-soft);}
-.field input,.field textarea,.field select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;font-family:inherit;background:var(--white);}
+.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px;color:var(--muted);}
+.field input,.field textarea,.field select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;font-family:inherit;background:var(--bg-soft);color:var(--text);}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--accent-light);}
 .field textarea{resize:vertical;min-height:80px;}
+.hp-field{position:absolute;left:-5000px;width:1px;height:1px;overflow:hidden;}
 
 footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;margin-bottom:32px;}
 .footer-brand{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
-.footer-brand img{width:24px;height:24px;object-fit:contain;}
-.footer-tagline{color:var(--ink-soft);font-size:13px;line-height:1.6;max-width:260px;}
-.footer-col-title{font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;}
-.footer-col a{display:block;text-decoration:none;color:var(--ink-soft);font-size:13.5px;margin-bottom:9px;}
-.footer-col a:hover{color:var(--ink);}
-.footer-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--ink-soft);}
+.footer-brand img{width:24px;height:24px;object-fit:contain;filter:invert(1) brightness(1.6);}
+.footer-tagline{color:var(--muted);font-size:13px;line-height:1.6;max-width:260px;}
+.footer-col-title{font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted2);margin-bottom:12px;}
+.footer-col a{display:block;text-decoration:none;color:var(--muted);font-size:13.5px;margin-bottom:9px;}
+.footer-col a:hover{color:var(--text);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--muted2);}
+.footer-bottom a:hover{color:var(--text);}
 
 @media (max-width:820px){
   .hero-grid{grid-template-columns:1fr;}
@@ -156,18 +167,19 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 </style>
 </head>
 <body>
+<div style="height:3px;background:linear-gradient(90deg,var(--red),var(--accent),var(--accent-light));"></div>
 
 <header class="site-nav">
   <div class="nav-row">
     <a href="/" class="brand">
-      <img src="/assets/logo.png" alt="Perch&eacute;">
-      <span class="brand-name">Perch&eacute;</span>
+      <img src="/assets/logo.png" alt="Perch&eacute;" width="26" height="18">
+      <span class="brand-name">Perch<span>&eacute;</span></span>
     </a>
     <nav class="nav-links">
       <a href="#how-it-works">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
-      <a href="https://perche-revenue-solutions.vercel.app/login">Log in</a>
+      <a class="btn btn-ghost" href="https://perche-revenue-solutions.vercel.app/login">Log in to your dashboard</a>
       <a class="btn btn-primary" href="https://perche-revenue-solutions.vercel.app/signup">Start free trial</a>
     </nav>
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -176,7 +188,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
     <a href="#how-it-works">How it works</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="https://perche-revenue-solutions.vercel.app/login">Log in</a>
+    <a href="https://perche-revenue-solutions.vercel.app/login">Log in to your dashboard</a>
     <a href="https://perche-revenue-solutions.vercel.app/signup">Start free trial</a>
   </div>
 </header>
@@ -191,9 +203,9 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
         <a class="btn btn-primary" href="https://perche-revenue-solutions.vercel.app/signup" style="padding:13px 24px;font-size:14.5px;">Start 14-day free trial</a>
         <a class="btn btn-ghost" href="#how-it-works" style="padding:13px 24px;font-size:14.5px;">See how it works</a>
       </div>
-      <div class="hero-fine">No charge until your trial ends &middot; Cancel any time</div>
+      <div class="hero-fine">No charge until your trial ends &middot; Cancel any time &middot; Already a customer? <a href="https://perche-revenue-solutions.vercel.app/login" style="color:var(--accent-light);">Log in here</a><br><a href="https://calendly.com/perchesolutions/free-worldflow-audit" onclick="Calendly.initPopupWidget({url:'https://calendly.com/perchesolutions/free-worldflow-audit'});return false;" style="color:var(--muted);text-decoration:underline;">Prefer to talk first? Book a free 15-min call &rarr;</a></div>
     </div>
-    <div class="mock-card" aria-hidden="true">
+    <div class="mock-card-wrap"><div class="mock-card" aria-hidden="true">
       <div class="mock-head">
         <div>
           <div class="mock-head-title">Today's flags</div>
@@ -217,14 +229,14 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
         <div class="mock-flag-value" style="color:var(--red);">$610</div>
       </div>
       <div class="mock-flag">
-        <span class="mock-badge" style="color:var(--blue);background:var(--blue-bg);">Lapsed customer</span>
+        <span class="mock-badge" style="color:var(--green);background:var(--green-bg);">Lapsed customer</span>
         <div class="mock-flag-body">
           <div class="mock-flag-title">14 months since last visit</div>
           <div class="mock-flag-sub">Due for annual maintenance</div>
         </div>
-        <div class="mock-flag-value" style="color:var(--blue);">$220</div>
+        <div class="mock-flag-value" style="color:var(--green);">$220</div>
       </div>
-    </div>
+    </div></div>
   </div>
 </div>
 
@@ -241,7 +253,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
       <div class="cat-body">Work you already did, sitting uncollected. A reminder is often all it takes.</div>
     </div>
     <div class="card card-hover cat-card">
-      <span class="cat-tag" style="color:var(--blue);background:var(--blue-bg);">Lapsed customers</span>
+      <span class="cat-tag" style="color:var(--green);background:var(--green-bg);">Lapsed customers</span>
       <div class="cat-body">Past customers overdue for their next maintenance visit - low-effort, high-margin revenue.</div>
     </div>
   </div>
@@ -298,7 +310,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 
   <div class="trial-banner">
     <div class="trial-banner-text">Every plan includes a 14-day free trial.</div>
-    <div style="font-size:13px;color:var(--brand-dark);">You'll add a card to start, but you won't be charged until the trial ends - cancel any time before then.</div>
+    <div style="font-size:13px;color:var(--muted);">You'll add a card to start, but you won't be charged until the trial ends - cancel any time before then.</div>
   </div>
 
   <div class="grid-2">
@@ -316,7 +328,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
         <li><span class="check">&#10003;</span>Weekly digest email</li>
       </ul>
     </div>
-    <div class="card card-hover pricing-card" style="border:2px solid var(--brand);box-shadow:0 12px 28px var(--brand-glow);">
+    <div class="card card-hover pricing-card" style="border:2px solid var(--accent);box-shadow:0 14px 32px var(--accent-glow);">
       <span class="pricing-badge">MOST POPULAR</span>
       <div class="pricing-name">Professional</div>
       <div class="pricing-price">$599<span>/mo</span></div>
@@ -344,7 +356,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 
 <section class="wrap" id="faq">
   <h2 class="section-title">Common questions</h2>
-  <p class="section-sub">Can't find what you need? Email <a href="mailto:perchesolutions@gmail.com" style="color:var(--brand);">perchesolutions@gmail.com</a>.</p>
+  <p class="section-sub">Can't find what you need? Email <a href="mailto:perchesolutions@gmail.com" style="color:var(--accent-light);">perchesolutions@gmail.com</a>.</p>
   <div id="faqList">
     <div class="faq-item">
       <button class="faq-q">What does Perch&eacute; actually do?<span class="faq-plus">+</span></button>
@@ -384,10 +396,10 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 <section class="wrap">
   <div class="card contact-card">
     <h2 class="section-title" style="margin-bottom:6px;">Have a question before you start?</h2>
-    <p class="section-sub" style="margin:0 auto 24px;">Send us a note and we'll get back to you - Perch&eacute; is a small, hands-on team, so you'll hear from a real person. Or just email <a href="mailto:perchesolutions@gmail.com" style="color:var(--brand);">perchesolutions@gmail.com</a> directly.</p>
+    <p class="section-sub" style="margin:0 auto 24px;">Send us a note and we'll get back to you - Perch&eacute; is a small, hands-on team, so you'll hear from a real person. Or just email <a href="mailto:perchesolutions@gmail.com" style="color:var(--accent-light);">perchesolutions@gmail.com</a> directly.</p>
     <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks">
       <input type="hidden" name="form-name" value="contact">
-      <p style="position:absolute;left:-9999px;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <p class="hp-field"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="field-row">
         <div class="field"><label for="cf-name">Your name</label><input id="cf-name" name="name" type="text" required></div>
         <div class="field"><label for="cf-email">Business email</label><input id="cf-email" name="email" type="email" required></div>
@@ -396,6 +408,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
       <div class="field"><label for="cf-message">What's your question?</label><textarea id="cf-message" name="message" required></textarea></div>
       <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;">Send</button>
     </form>
+    <div style="margin-top:16px;font-size:12.5px;color:var(--muted2);">or <a href="https://calendly.com/perchesolutions/free-worldflow-audit" onclick="Calendly.initPopupWidget({url:'https://calendly.com/perchesolutions/free-worldflow-audit'});return false;" style="color:var(--accent-light);font-weight:600;">book a free 15-minute call</a> instead</div>
   </div>
 </section>
 
@@ -404,8 +417,8 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img src="/assets/logo.png" alt="Perch&eacute;">
-          <span class="brand-name">Perch&eacute;</span>
+          <img src="/assets/logo.png" alt="Perch&eacute;" width="24" height="17">
+          <span class="brand-name">Perch<span>&eacute;</span></span>
         </div>
         <div class="footer-tagline">Revenue recovery for HVAC and field service businesses. Connect Jobber, Housecall Pro, or a spreadsheet - Perch&eacute; flags the money you're leaving on the table.</div>
       </div>
@@ -449,5 +462,6 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
   });
 });
 </script>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
