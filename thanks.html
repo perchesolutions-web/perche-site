@@ -5,17 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thanks - Perch&eacute;</title>
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#080810">
 <link rel="icon" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#F3F4F7;color:#171B24;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;margin:0;}
-.card{background:#fff;border:1px solid #E7E8ED;border-radius:16px;padding:44px 36px;max-width:420px;box-shadow:0 10px 28px rgba(23,27,36,0.14);}
-h1{font-size:22px;margin:0 0 10px;}
-p{color:#6B7080;font-size:14.5px;line-height:1.6;margin:0 0 24px;}
-a{display:inline-block;background:linear-gradient(135deg,#3454D1,#24399E);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:8px;}
+:root{
+  --bg:#080810; --card:#131320; --border:rgba(255,255,255,0.09);
+  --text:#f1f5f9; --muted:#98a2b3;
+  --accent-light:#fb923c; --accent-dark:#ea580c; --accent-glow:rgba(249,115,22,0.35);
+}
+*{box-sizing:border-box;}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:radial-gradient(1100px 560px at 82% -8%,rgba(249,115,22,0.14),transparent 60%),radial-gradient(900px 500px at -10% 15%,rgba(239,68,68,0.08),transparent 55%),var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;margin:0;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:44px 36px;max-width:420px;box-shadow:0 14px 34px rgba(0,0,0,0.5);}
+.check{width:44px;height:44px;border-radius:50%;background:rgba(16,217,153,0.14);color:#10d999;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 16px;}
+h1{font-size:22px;margin:0 0 10px;color:var(--text);}
+p{color:var(--muted);font-size:14.5px;line-height:1.6;margin:0 0 24px;}
+a{display:inline-block;background:linear-gradient(135deg,var(--accent-light),var(--accent-dark));color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:8px;box-shadow:0 2px 14px var(--accent-glow);}
 </style>
 </head>
 <body>
 <div class="card">
+  <div class="check">&#10003;</div>
   <h1>Message sent</h1>
   <p>Thanks for reaching out - we'll get back to you within a few hours.</p>
   <a href="/">Back to home</a>
