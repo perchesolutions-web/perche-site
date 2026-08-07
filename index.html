@@ -40,6 +40,10 @@ section[id],div[id]{scroll-margin-top:76px;}
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
 img{max-width:100%;display:block;}
 
+.utility-bar{text-align:center;padding:9px 16px;font-size:12.5px;color:var(--muted);background:var(--accent-bg);border-bottom:1px solid rgba(249,115,22,0.25);}
+.utility-bar a{color:var(--accent-light);font-weight:700;text-decoration:none;margin-left:4px;}
+.utility-bar a:hover{text-decoration:underline;}
+
 /* nav */
 header.site-nav{position:sticky;top:0;z-index:50;background:rgba(8,8,16,0.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
 .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1160px;margin:0 auto;}
@@ -56,16 +60,26 @@ header.site-nav{position:sticky;top:0;z-index:50;background:rgba(8,8,16,0.88);ba
 .btn-primary:hover{box-shadow:0 4px 20px var(--accent-glow);}
 .btn-ghost{border:1px solid var(--border-hover);color:var(--text);background:rgba(255,255,255,0.03);}
 .btn-ghost:hover{border-color:var(--accent-light);color:var(--accent-light);}
+.btn-login{border:1.5px solid rgba(249,115,22,0.45);color:var(--accent-light);background:var(--accent-bg);}
+.btn-login:hover{border-color:var(--accent-light);background:rgba(249,115,22,0.22);}
 .hamburger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:8px;}
 .hamburger span{width:20px;height:2px;background:var(--text);display:block;border-radius:2px;}
 .mobile-menu{display:none;flex-direction:column;gap:2px;padding:0 24px 16px;}
 .mobile-menu.open{display:flex;}
 .mobile-menu a{padding:10px 0;text-decoration:none;color:var(--muted);font-weight:600;font-size:14.5px;border-top:1px solid var(--border);}
 
+/* ticker */
+.ticker-wrap{overflow:hidden;background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:15px 0;-webkit-mask-image:linear-gradient(90deg,transparent,black 6%,black 94%,transparent);mask-image:linear-gradient(90deg,transparent,black 6%,black 94%,transparent);}
+.ticker-track{display:flex;width:max-content;gap:44px;animation:ticker-scroll 32s linear infinite;}
+.ticker-track:hover{animation-play-state:paused;}
+@keyframes ticker-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ticker-group{display:flex;gap:44px;flex-shrink:0;}
+.ticker-item{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;}
+.ticker-item .dot{color:var(--accent-light);}
+
 /* hero */
-.hero{padding:64px 0 56px;}
+.hero{padding:52px 0 40px;}
 .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;}
-.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent-light);background:var(--accent-bg);padding:5px 12px;border-radius:999px;margin-bottom:18px;}
 h1.hero-title{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-0.03em;margin-bottom:18px;color:var(--text);}
 .hero-title .accent{background:linear-gradient(135deg,var(--accent-light),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .hero-sub{font-size:16.5px;color:var(--muted);line-height:1.6;margin-bottom:28px;max-width:520px;}
@@ -88,9 +102,9 @@ h1.hero-title{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-0.
 .mock-flag-value{font-size:13px;font-weight:700;white-space:nowrap;}
 
 /* sections */
-section{padding:56px 0;}
+section{padding:88px 0;}
+.band{background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .section-title{font-size:29px;font-weight:800;letter-spacing:-0.015em;margin-bottom:10px;color:var(--text);}
-.section-eyebrow{display:block;font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-light);margin-bottom:10px;}
 .section-sub{font-size:14.5px;color:var(--muted);margin-bottom:36px;max-width:640px;}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);}
 .card-hover{transition:box-shadow .15s ease,border-color .15s ease,background .15s ease;}
@@ -157,7 +171,9 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 .footer-bottom a:hover{color:var(--text);}
 
 @media (max-width:820px){
-  .hero-grid{grid-template-columns:1fr;}
+  section{padding:60px 0;}
+  .hero{padding:36px 0 32px;}
+  .hero-grid{grid-template-columns:1fr;gap:36px;}
   .grid-3{grid-template-columns:1fr;}
   .grid-2{grid-template-columns:1fr;}
   .why-strip{grid-template-columns:repeat(2,1fr);}
@@ -165,12 +181,36 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   .field-row{grid-template-columns:1fr;}
   .nav-links{display:none;}
   .hamburger{display:flex;}
-  h1.hero-title{font-size:34px;}
+  h1.hero-title{font-size:36px;}
+  .section-title{font-size:25px;}
+}
+
+@media (max-width:520px){
+  .wrap{padding:0 18px;}
+  .nav-row{padding:12px 18px;}
+  .utility-bar{font-size:11.5px;padding:8px 14px;}
+  section{padding:48px 0;}
+  .hero{padding:28px 0 28px;}
+  h1.hero-title{font-size:30px;}
+  .hero-sub{font-size:15px;}
+  .section-title{font-size:22px;}
+  .section-sub{margin-bottom:24px;}
+  .why-strip{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;gap:24px;}
+  .hero-ctas{flex-direction:column;align-items:stretch;}
+  .hero-ctas .btn{text-align:center;}
+  .pricing-card{padding:22px;}
+  .step-card,.why-item,.cat-card{padding:20px;}
+  .contact-card{padding:24px;}
+  .ticker-item{font-size:12px;}
+  .mock-card{padding:18px;}
+  .mock-flag{flex-wrap:wrap;}
 }
 </style>
 </head>
 <body>
 <div style="height:3px;background:linear-gradient(90deg,var(--red),var(--accent),var(--accent-light));"></div>
+<div class="utility-bar">Already a Perch&eacute; customer?<a href="https://perche-revenue-solutions.vercel.app/login">Log in to your dashboard &rarr;</a></div>
 
 <header class="site-nav">
   <div class="nav-row">
@@ -182,7 +222,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
       <a href="#how-it-works">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
-      <a class="btn btn-ghost" href="https://perche-revenue-solutions.vercel.app/login">Log in to your dashboard</a>
+      <a class="btn btn-login" href="https://perche-revenue-solutions.vercel.app/login">Log in</a>
       <a class="btn btn-primary" href="https://perche-revenue-solutions.vercel.app/signup">Start free trial</a>
     </nav>
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -199,8 +239,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 <div class="wrap hero">
   <div class="hero-grid">
     <div>
-      <span class="eyebrow">For HVAC &amp; field service businesses</span>
-      <h1 class="hero-title">Stop losing <span class="accent">revenue</span> you already earned.</h1>
+      <h1 class="hero-title">Stop losing <span class="accent">revenue</span> you already earned</h1>
       <p class="hero-sub">Perch&eacute; connects to Jobber or Housecall Pro - or just a spreadsheet - and automatically flags the cold estimates, unpaid invoices, and lapsed customers costing you money every month.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="https://perche-revenue-solutions.vercel.app/signup" style="padding:13px 24px;font-size:14.5px;">Start 14-day free trial</a>
@@ -243,8 +282,33 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   </div>
 </div>
 
-<section class="wrap">
-  <span class="section-eyebrow">The problem</span>
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker-group">
+    <span class="ticker-item"><span class="dot">&#10022;</span>Read-only integration</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>14-day free trial</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Cold estimates &middot; unpaid invoices &middot; lapsed customers</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Works with Jobber, Housecall Pro, or a spreadsheet</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Encrypted at rest</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Cancel any time</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>One-click follow-ups</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Real ROI tracking</span>
+    </div>
+    <div class="ticker-group">
+    <span class="ticker-item"><span class="dot">&#10022;</span>Read-only integration</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>14-day free trial</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Cold estimates &middot; unpaid invoices &middot; lapsed customers</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Works with Jobber, Housecall Pro, or a spreadsheet</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Encrypted at rest</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Cancel any time</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>One-click follow-ups</span>
+    <span class="ticker-item"><span class="dot">&#10022;</span>Real ROI tracking</span>
+    </div>
+  </div>
+</div>
+
+<section class="band">
+  <div class="wrap">
   <h2 class="section-title">Three ways revenue quietly slips away</h2>
   <p class="section-sub">None of it shows up as a loss on a P&amp;L. It just never comes in - because nobody had time to go looking for it. Perch&eacute; watches for all three, every night.</p>
   <div class="grid-3">
@@ -261,10 +325,10 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
       <div class="cat-body">Past customers overdue for their next maintenance visit - low-effort, high-margin revenue.</div>
     </div>
   </div>
+  </div>
 </section>
 
 <section class="wrap" id="how-it-works">
-  <span class="section-eyebrow">The process</span>
   <h2 class="section-title">How it works</h2>
   <p class="section-sub">No new workflow to learn - Perch&eacute; runs alongside the software you already use.</p>
   <div class="grid-3">
@@ -286,8 +350,8 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   </div>
 </section>
 
-<section class="wrap">
-  <span class="section-eyebrow">Trust &amp; security</span>
+<section class="band">
+  <div class="wrap">
   <h2 class="section-title">Built to be trusted with your data</h2>
   <p class="section-sub">Perch&eacute; only reads what it needs to find revenue - it never touches your CRM, and nothing goes to a customer without your say-so.</p>
   <div class="why-strip">
@@ -308,10 +372,10 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
       <div class="why-body">See exactly how much you've recovered against what you're paying for the subscription - not just a raw flagged total.</div>
     </div>
   </div>
+  </div>
 </section>
 
 <section class="wrap" id="pricing">
-  <span class="section-eyebrow">Pricing</span>
   <h2 class="section-title">Simple pricing</h2>
   <p class="section-sub">Start with the core product, or go hands-off with automatic follow-ups, SMS, Slack, and deeper reporting.</p>
 
@@ -361,8 +425,8 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   </div>
 </section>
 
-<section class="wrap" id="faq">
-  <span class="section-eyebrow">FAQ</span>
+<section class="band" id="faq">
+  <div class="wrap">
   <h2 class="section-title">Common questions</h2>
   <p class="section-sub">Can't find what you need? Email <a href="mailto:perchesolutions@gmail.com" style="color:var(--accent-light);">perchesolutions@gmail.com</a>.</p>
   <div id="faqList">
@@ -398,6 +462,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
       <button class="faq-q">How do I cancel, and what happens to my account?<span class="faq-plus">+</span></button>
       <div class="faq-a"><div class="faq-a-inner">Cancel any time from Billing - you keep access through the end of the period you already paid for. If you want your account and data permanently removed, Settings has a separate "Delete account" option that does that immediately, and you can export all your data as a ZIP any time before or after.</div></div>
     </div>
+  </div>
   </div>
 </section>
 
