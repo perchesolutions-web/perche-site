@@ -81,6 +81,7 @@ header.site-nav{position:sticky;top:0;z-index:50;background:rgba(8,8,16,0.88);ba
 .ticker-group{display:flex;gap:44px;flex-shrink:0;}
 .ticker-item{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;}
 .ticker-item .dot{color:var(--accent-light);}
+.ticker-wrap-dup{display:none;}
 
 /* hero */
 .hero{padding:52px 0 40px;}
@@ -191,9 +192,12 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   .hero{padding:56px 0 52px;}
   .ticker-wrap{margin-bottom:32px;}
   .hero-grid{grid-template-columns:1fr;gap:40px;}
-  /* Push the "Today's flags" mock card below the first screen on phones,
-     so the initial view is just the headline/CTA - not a peek at the card. */
-  .mock-card-wrap{margin-top:28px;}
+  /* Ticker moved to sit between the fine-print and the mock card on mobile
+     (order: heading/CTAs -> ticker -> Today's-flags peek). Desktop keeps the
+     ticker in its original place below the whole hero, untouched. */
+  .ticker-wrap-dup{display:block;margin:-16px -24px 0;}
+  .hero + .ticker-wrap{display:none;}
+  .mock-card-wrap{margin-top:0;}
   .grid-3{grid-template-columns:1fr;gap:18px;}
   .grid-2{grid-template-columns:1fr;gap:18px;}
   .why-strip{grid-template-columns:repeat(2,1fr);gap:18px;}
@@ -254,6 +258,7 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
 
 @media (max-width:520px){
   .wrap{padding-left:20px;padding-right:20px;}
+  .ticker-wrap-dup{margin:-16px -20px 0;}
   .nav-row{padding:14px 20px;}
   .utility-bar{font-size:11.5px;padding:10px 16px;line-height:1.5;}
   section{padding:56px 0;}
@@ -445,6 +450,30 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
         <a class="btn btn-ghost" href="#how-it-works" style="padding:13px 24px;font-size:14.5px;">See how it works</a>
       </div>
       <div class="hero-fine">No charge until your trial ends &middot; Cancel any time &middot; Already a customer? <a href="https://perche-revenue-solutions.vercel.app/login" style="color:var(--accent-light);">Log in here</a><br><a href="https://calendly.com/perchesolutions/free-worldflow-audit" target="_blank" rel="noopener" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/perchesolutions/free-worldflow-audit'});return false;}" style="color:var(--muted);text-decoration:underline;">Prefer to talk first? Book a free 15-min call &rarr;</a></div>
+    </div>
+    <div class="ticker-wrap ticker-wrap-dup" aria-hidden="true">
+      <div class="ticker-track">
+        <div class="ticker-group">
+        <span class="ticker-item"><span class="dot">&#10022;</span>Read-only integration</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>14-day free trial</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Cold estimates &middot; unpaid invoices &middot; lapsed customers</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Works with Jobber, Housecall Pro, or a spreadsheet</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Encrypted at rest</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Cancel any time</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>One-click follow-ups</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Real ROI tracking</span>
+        </div>
+        <div class="ticker-group">
+        <span class="ticker-item"><span class="dot">&#10022;</span>Read-only integration</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>14-day free trial</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Cold estimates &middot; unpaid invoices &middot; lapsed customers</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Works with Jobber, Housecall Pro, or a spreadsheet</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Encrypted at rest</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Cancel any time</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>One-click follow-ups</span>
+        <span class="ticker-item"><span class="dot">&#10022;</span>Real ROI tracking</span>
+        </div>
+      </div>
     </div>
     <div class="mock-card-wrap"><div class="mock-card" aria-hidden="true">
       <div class="mock-head">
