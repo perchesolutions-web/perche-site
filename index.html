@@ -202,6 +202,51 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   .hero-sub{margin-bottom:32px;}
   .section-title{font-size:25px;}
   .section-sub{margin-bottom:32px;}
+
+  /* Comparison table -> stacked cards on mobile so nothing gets cut off
+     with no way to tell it scrolls. Desktop keeps the table layout. */
+  .compare-wrap{overflow-x:visible;-webkit-overflow-scrolling:auto;}
+  .compare-table{min-width:0;width:100%;border-collapse:separate;border-spacing:0 12px;}
+  .compare-table thead{display:none;}
+  .compare-table tbody tr{
+    display:block;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 18px 6px;
+  }
+  .compare-table tbody th{
+    display:block;
+    white-space:normal;
+    font-size:15px;
+    padding:0 0 12px;
+    margin-bottom:10px;
+    border-bottom:1px solid var(--border);
+  }
+  .compare-table tbody td{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:16px;
+    padding:9px 0;
+    border-bottom:1px solid var(--border);
+    font-size:13px;
+  }
+  .compare-table tbody tr td:last-child{border-bottom:none;}
+  .compare-table tbody td::before{
+    content:attr(data-label);
+    flex:0 0 auto;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    font-weight:700;
+    color:var(--muted2);
+    max-width:38%;
+  }
+  .compare-table tbody td.compare-col-perche{
+    color:var(--accent-light);
+    font-weight:600;
+  }
 }
 
 @media (max-width:520px){
@@ -540,33 +585,33 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
     <tbody>
       <tr>
         <th scope="row">Cold estimates flagged</th>
-        <td>Only if someone remembers to check back</td>
-        <td>Not typically built in</td>
-        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> Every night, automatically</td>
+        <td data-label="Tracking it yourself">Only if someone remembers to check back</td>
+        <td data-label="Your FSM's built-in reports">Not typically built in</td>
+        <td class="compare-col-perche" data-label="Perch&eacute;"><span class="compare-yes">&#10003;</span> Every night, automatically</td>
       </tr>
       <tr>
         <th scope="row">Unpaid invoices flagged</th>
-        <td>Manual review of open invoices</td>
-        <td>Basic aging report, no follow-up</td>
-        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> Automatic + ready-to-send reminder</td>
+        <td data-label="Tracking it yourself">Manual review of open invoices</td>
+        <td data-label="Your FSM's built-in reports">Basic aging report, no follow-up</td>
+        <td class="compare-col-perche" data-label="Perch&eacute;"><span class="compare-yes">&#10003;</span> Automatic + ready-to-send reminder</td>
       </tr>
       <tr>
         <th scope="row">Lapsed maintenance customers flagged</th>
-        <td>Rarely tracked at all</td>
-        <td>Not typically built in</td>
-        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> Automatic, on thresholds you set</td>
+        <td data-label="Tracking it yourself">Rarely tracked at all</td>
+        <td data-label="Your FSM's built-in reports">Not typically built in</td>
+        <td class="compare-col-perche" data-label="Perch&eacute;"><span class="compare-yes">&#10003;</span> Automatic, on thresholds you set</td>
       </tr>
       <tr>
         <th scope="row">Follow-up message</th>
-        <td>You write it from scratch</td>
-        <td><span class="compare-no">N/A</span></td>
-        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> Ready to send in one click - email or text</td>
+        <td data-label="Tracking it yourself">You write it from scratch</td>
+        <td data-label="Your FSM's built-in reports"><span class="compare-no">N/A</span></td>
+        <td class="compare-col-perche" data-label="Perch&eacute;"><span class="compare-yes">&#10003;</span> Ready to send in one click - email or text</td>
       </tr>
       <tr>
         <th scope="row">Time required per week</th>
-        <td>Hours, if it happens at all</td>
-        <td>Minutes to pull a report, hours to act on it</td>
-        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> A few minutes</td>
+        <td data-label="Tracking it yourself">Hours, if it happens at all</td>
+        <td data-label="Your FSM's built-in reports">Minutes to pull a report, hours to act on it</td>
+        <td class="compare-col-perche" data-label="Perch&eacute;"><span class="compare-yes">&#10003;</span> A few minutes</td>
       </tr>
     </tbody>
   </table>
