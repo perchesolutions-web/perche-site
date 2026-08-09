@@ -13,9 +13,14 @@
 <meta property="og:title" content="Perch&eacute; | Revenue Solutions for Field Service Businesses">
 <meta property="og:description" content="Stop losing revenue you already earned - automatic revenue-leak detection for HVAC and field service businesses.">
 <meta property="og:url" content="https://perchesolutions.com/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://perchesolutions.com/assets/dashboard-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="558">
+<meta property="og:image:alt" content="The Perch&eacute; dashboard showing recoverable revenue, cold estimates, unpaid invoices, and lapsed customers flagged automatically.">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Perch&eacute; | Revenue Solutions">
 <meta name="twitter:description" content="Automatic revenue-leak detection for HVAC and field service businesses - cold estimates, unpaid invoices, and lapsed customers, flagged before you lose them.">
+<meta name="twitter:image" content="https://perchesolutions.com/assets/dashboard-preview.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -127,6 +132,17 @@ section{padding:88px 0;}
 .why-title{font-weight:700;font-size:14px;margin-bottom:6px;color:var(--text);}
 .why-body{color:var(--muted);font-size:12.5px;line-height:1.55;}
 
+.compare-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.compare-table{width:100%;border-collapse:collapse;min-width:600px;}
+.compare-table th,.compare-table td{padding:14px 18px;text-align:left;font-size:13px;border-bottom:1px solid var(--border);vertical-align:top;}
+.compare-table thead th{font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted2);font-weight:700;border-bottom:1px solid var(--border-hover);}
+.compare-table tbody th{color:var(--text);font-weight:600;font-size:13px;white-space:nowrap;}
+.compare-table td{color:var(--muted);line-height:1.5;}
+.compare-col-perche{background:var(--accent-bg);}
+.compare-table thead th.compare-col-perche{color:var(--accent-light);border-radius:10px 10px 0 0;}
+.compare-yes{color:var(--green);font-weight:700;}
+.compare-no{color:var(--muted2);}
+
 .trial-banner{background:var(--accent-bg);border:1px solid rgba(249,115,22,0.35);border-radius:14px;padding:18px 22px;margin-bottom:32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;}
 .trial-banner-text{font-size:14px;color:var(--accent-light);font-weight:700;}
 
@@ -219,6 +235,125 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   .why-strip,.grid-3{margin-top:4px;}
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Perché",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Perché connects to Jobber, Housecall Pro, or a spreadsheet and automatically flags cold estimates, unpaid invoices, and lapsed customers for HVAC and field service businesses.",
+  "url": "https://perchesolutions.com/",
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Starter",
+      "price": "299",
+      "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "299",
+        "priceCurrency": "USD",
+        "unitText": "MONTH"
+      }
+    },
+    {
+      "@type": "Offer",
+      "name": "Professional",
+      "price": "599",
+      "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "599",
+        "priceCurrency": "USD",
+        "unitText": "MONTH"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does Perché actually do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It connects to your field service software (or a spreadsheet you upload) and scans your estimates, invoices, and customer history. When it finds a cold estimate, an overdue invoice, or a customer who's lapsed on maintenance, it raises a flag with a ready-to-send follow-up - you decide whether to send it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What software does it connect to?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jobber and Housecall Pro today, with ServiceTitan support in progress. If you don't use a field service platform, you can upload a spreadsheet instead - we'll walk you through matching your columns to what we need."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does connecting my FSM let Perché change anything on my side?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The connection is read-only - we pull estimates, invoices, and customer records to analyze, but we never create, edit, or delete anything in Jobber or Housecall Pro."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will Perché email or text my customers without me knowing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On the Starter plan, every message requires your click - nothing goes out automatically. On Professional, you can opt in to automatic first-touch follow-up emails; that's off by default, and SMS always requires a manual click regardless of plan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data secure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Field-service connection tokens are encrypted at rest, all traffic runs over HTTPS, and passwords are hashed - we never store them in plain text. We don't sell your data or your customers' data to anyone."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer a free trial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes - a 14-day free trial on either plan. You'll add a card to start (so there's no gap if you decide to keep going), but you won't be charged a cent until the trial ends, and you can cancel any time before then from Billing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between Starter and Professional?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Starter covers the core product: connect your FSM (or a spreadsheet), get flagged on cold estimates/unpaid invoices/lapsed customers, and follow up by email. Professional adds automatic escalating follow-ups, SMS, Slack alerts, deeper reporting, and the ability to collect payment directly from a follow-up via Stripe Connect."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I cancel, and what happens to my account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cancel any time from Billing - you keep access through the end of the period you already paid for. If you want your account and data permanently removed, Settings has a separate \"Delete account\" option that does that immediately, and you can export all your data as a ZIP any time before or after."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Perché AI Solutions LLC",
+  "url": "https://perchesolutions.com/",
+  "logo": "https://perchesolutions.com/assets/logo.png",
+  "email": "perchesolutions@gmail.com"
+}
+</script>
 </head>
 <body>
 <div style="height:3px;background:linear-gradient(90deg,var(--red),var(--accent),var(--accent-light));"></div>
@@ -383,6 +518,57 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
       <div class="why-title">Real ROI tracking</div>
       <div class="why-body">See exactly how much you've recovered against what you're paying for the subscription - not just a raw flagged total.</div>
     </div>
+  </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+  <h2 class="section-title">Perch&eacute; vs. doing it yourself</h2>
+  <p class="section-sub">Most HVAC businesses already have this data sitting in Jobber, Housecall Pro, or a spreadsheet - it's just not being watched every day.</p>
+  <div class="compare-wrap">
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Tracking it yourself</th>
+        <th>Your FSM's built-in reports</th>
+        <th class="compare-col-perche">Perch&eacute;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Cold estimates flagged</th>
+        <td>Only if someone remembers to check back</td>
+        <td>Not typically built in</td>
+        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> Every night, automatically</td>
+      </tr>
+      <tr>
+        <th scope="row">Unpaid invoices flagged</th>
+        <td>Manual review of open invoices</td>
+        <td>Basic aging report, no follow-up</td>
+        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> Automatic + ready-to-send reminder</td>
+      </tr>
+      <tr>
+        <th scope="row">Lapsed maintenance customers flagged</th>
+        <td>Rarely tracked at all</td>
+        <td>Not typically built in</td>
+        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> Automatic, on thresholds you set</td>
+      </tr>
+      <tr>
+        <th scope="row">Follow-up message</th>
+        <td>You write it from scratch</td>
+        <td><span class="compare-no">N/A</span></td>
+        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> Ready to send in one click - email or text</td>
+      </tr>
+      <tr>
+        <th scope="row">Time required per week</th>
+        <td>Hours, if it happens at all</td>
+        <td>Minutes to pull a report, hours to act on it</td>
+        <td class="compare-col-perche"><span class="compare-yes">&#10003;</span> A few minutes</td>
+      </tr>
+    </tbody>
+  </table>
   </div>
   </div>
 </section>
