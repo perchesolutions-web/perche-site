@@ -263,8 +263,11 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   .section-sub{margin-bottom:30px;line-height:1.65;}
   .why-strip{grid-template-columns:1fr;gap:16px;}
   .grid-3{gap:16px;}
-  .footer-grid{grid-template-columns:1fr;gap:32px;}
-  .footer-grid > div{padding-bottom:4px;}
+  .footer-grid{grid-template-columns:repeat(3,1fr);gap:24px 12px;}
+  .footer-grid > div:first-child{grid-column:1 / -1;padding-bottom:8px;margin-bottom:4px;border-bottom:1px solid var(--border);}
+  .footer-tagline{max-width:none;}
+  .footer-col-title{font-size:10.5px;margin-bottom:10px;}
+  .footer-col a{font-size:12.5px;margin-bottom:10px;line-height:1.4;}
   .hero-ctas{flex-direction:column;align-items:stretch;}
   .hero-ctas .btn{text-align:center;padding:14px 24px;}
   .pricing-card{padding:26px 22px;}
