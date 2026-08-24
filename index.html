@@ -421,6 +421,22 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
   "email": "perchesolutions@gmail.com"
 }
 </script>
+
+<!--
+  PostHog - marketing site analytics. Same project as the product app
+  (perche-revenue-solutions.vercel.app), so a visitor who reads this
+  page and later signs up shows up as one continuous journey instead
+  of two disconnected data sets. Autocapture is on here (unlike the
+  app, where it's off) because this page has no business/customer
+  data to accidentally pick up - it's safe to see every click.
+-->
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSurveyState onSessionInit debug getPageViewId createPersonProfile requestNotificationPermission".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_ur5pFYA2Sbxv8At9WiNU4T8UHc6gENjMybRBuoipv7VY', {
+    api_host: 'https://us.i.posthog.com',
+    person_profiles: 'always'
+  })
+</script>
 </head>
 <body>
 <div style="height:3px;background:linear-gradient(90deg,var(--red),var(--accent),var(--accent-light));"></div>
