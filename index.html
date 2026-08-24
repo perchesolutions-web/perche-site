@@ -437,6 +437,37 @@ footer{border-top:1px solid var(--border);padding:40px 0 32px;}
     person_profiles: 'always'
   })
 </script>
+
+<!--
+  Cross-domain identity: perchesolutions.com and the app
+  (perche-revenue-solutions.vercel.app) are separate domains, not
+  subdomains of one site, so PostHog's automatic first-party cookie
+  sharing doesn't reach across them on its own. This decorates any
+  outbound link to the app with this visitor's PostHog id right before
+  it's clicked, so the app can bootstrap with the same identity instead
+  of starting a brand new anonymous person. See initAnalytics() in
+  frontend/src/analytics.js for the app-side half of this.
+-->
+<script>
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href*="perche-revenue-solutions.vercel.app"]');
+    if (!link) return;
+    try {
+      var distinctId = posthog.get_distinct_id();
+      var sessionId = posthog.get_session_id();
+      if (!distinctId) return;
+      var url = new URL(link.href);
+      var params = new URLSearchParams();
+      params.set('distinct_id', distinctId);
+      if (sessionId) params.set('session_id', sessionId);
+      url.hash = params.toString();
+      link.href = url.toString();
+    } catch (err) {
+      // Analytics never blocks navigation - if anything above throws,
+      // the link just goes to its original, undecorated href.
+    }
+  }, true);
+</script>
 </head>
 <body>
 <div style="height:3px;background:linear-gradient(90deg,var(--red),var(--accent),var(--accent-light));"></div>
