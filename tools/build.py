@@ -47,7 +47,7 @@ def between(s, start, end):
 hero_and_ticker = between(orig, '<div class="wrap hero">', '<section class="band">')
 hero_and_ticker = hero_and_ticker.replace(
     '<h1 class="hero-title">Stop losing <span class="accent">revenue</span> you already earned</h1>',
-    '<div class="eyebrow">REVENUE INTELLIGENCE FOR HOME SERVICES</div>\n      <h1 class="hero-title">Find the <span class="accent">revenue</span> your home service business is missing</h1>')
+    '<h1 class="hero-title">Find the <span class="accent">revenue</span> your home service business is missing</h1>')
 hero_and_ticker = re.sub(r'<p class="hero-sub">.*?</p>',
     '<p class="hero-sub">Perch&eacute; reads the software you already use and shows you the quotes, invoices, customers, leads and reviews that are quietly costing you money &mdash; with the follow-up already written.</p>',
     hero_and_ticker, count=1, flags=re.S)
