@@ -66,7 +66,7 @@ def head(title, desc, path, extra_head="", schema=""):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=7">
+<link rel="stylesheet" href="/assets/site.css?v=8">
 {schema}
 {extra_head}
 {POSTHOG}
@@ -191,7 +191,6 @@ def page_hero(eyebrow, title, sub, ctas=None, crumbs=None):
             f'<a href="{h}">{t}</a>' if h else f"<span>{t}</span>" for t, h in crumbs) + "</nav>"
     c = f'<div class="hero-ctas">{ctas}</div>' if ctas else ""
     return f"""<section class="page-hero"><div class="wrap">{cr}
-<div class="eyebrow">{eyebrow}</div>
 <h1 class="page-title">{title}</h1>
 <p class="page-sub">{sub}</p>{c}</div></section>
 """
@@ -209,7 +208,7 @@ def section(title=None, sub=None, body="", band=False, id_=None, center=False):
 def cards(items, cols=3):
     out = []
     for it in items:
-        icon = f'<div class="card-icon">{it[3]}</div>' if len(it) > 3 and it[3] else ""
+        icon = ""
         link = f'<a class="card-link" href="{it[2]}">Learn more &rarr;</a>' if len(it) > 2 and it[2] else ""
         out.append(f'<div class="card feature-card card-hover">{icon}<h3 class="feature-title">{it[0]}</h3><p class="feature-body">{it[1]}</p>{link}</div>')
     return f'<div class="grid grid-{cols}">' + "".join(out) + "</div>"
