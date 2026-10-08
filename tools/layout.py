@@ -1,3 +1,4 @@
+import re
 """Shared layout for the Perche marketing site (header, footer, blocks)."""
 import html, re
 
@@ -40,8 +41,33 @@ def e(s):
     return s  # content is authored as HTML-safe
 
 
+def seo_schema(path, title):
+    import json
+    org = {"@context": "https://schema.org", "@type": "Organization", "@id": SITE + "/#org",
+           "name": "Perché", "alternateName": ["Perche", "Perche Solutions", "Perché AI Solutions"],
+           "url": SITE + "/", "logo": SITE + "/assets/logo-v2.png",
+           "description": "Perché is revenue intelligence software for home service businesses. It finds cold estimates, unpaid invoices, lapsed customers, ignored leads and unanswered reviews.",
+           "email": "perchesolutions@gmail.com"}
+    out = ['<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False) + "</script>"]
+    if path == "/":
+        site = {"@context": "https://schema.org", "@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/",
+                "name": "Perché", "alternateName": ["Perche", "Perche Solutions"], "publisher": {"@id": SITE + "/#org"}}
+        out.append('<script type="application/ld+json">' + json.dumps(site, ensure_ascii=False) + "</script>")
+    else:
+        parts = [x for x in path.strip("/").split("/") if x]
+        items = [{"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"}]
+        acc = ""
+        for i, part in enumerate(parts, 2):
+            acc += "/" + part
+            name = re.sub("<[^>]+>", "", title).split(" | ")[0] if i == len(parts) + 1 else part.replace("-", " ").title()
+            items.append({"@type": "ListItem", "position": i, "name": name, "item": SITE + acc + "/"})
+        out.append('<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}, ensure_ascii=False) + "</script>")
+    return "\n".join(out)
+
+
 def head(title, desc, path, extra_head="", schema=""):
     url = SITE + path
+    schema = seo_schema(path, title) + "\n" + schema
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,6 +76,8 @@ def head(title, desc, path, extra_head="", schema=""):
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{url}">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="author" content="Perch&eacute; Solutions">
 <link rel="icon" href="/assets/logo-v2.png">
 <meta name="theme-color" content="#080810">
 <meta property="og:type" content="website">
@@ -58,6 +86,8 @@ def head(title, desc, path, extra_head="", schema=""):
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{url}">
 <meta property="og:image" content="{SITE}/assets/dashboard-preview.jpg">
+<meta property="og:image:alt" content="Perch&eacute; dashboard showing revenue identified, expected and recovered">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
@@ -66,7 +96,7 @@ def head(title, desc, path, extra_head="", schema=""):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=9">
+<link rel="stylesheet" href="/assets/site.css?v=10">
 {schema}
 {extra_head}
 {POSTHOG}

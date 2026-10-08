@@ -34,7 +34,7 @@ pr = page_hero("PRICING", "Simple pricing, <span class=\"accent\">no surprises</
 pr += '<section class="wrap" id="pricing" style="padding-top:24px;">' + re.sub(r'<h2 class="section-title">.*?</p>', '', pricing_inner, count=1, flags=re.S) + "</section>"
 pr += section("Pricing questions", None, faq(faq_items), band=True)
 pr += cta_band()
-pages.append(dict(path="/pricing/", title="Pricing | Perch&eacute;", desc="Perch&eacute; Starter is $299/month and Professional is $599/month. Both include a 14-day free trial with no card required to sign up.", body=pr, schema=faq_schema(faq_items)))
+pages.append(dict(path="/pricing/", title="Perch&eacute; Pricing | Revenue Intelligence for Home Services", desc="Perch&eacute; Starter is $299/month and Professional is $599/month. Both include a 14-day free trial with no card required to sign up.", body=pr, schema=faq_schema(faq_items)))
 
 for p in pages:
     write(p["path"], full(p))
@@ -82,7 +82,7 @@ home_body = (
 # anchor links inside original sections
 home_body = home_body.replace('href="#pricing"', 'href="/pricing/"')
 schema = "".join(re.findall(r'<script type="application/ld\+json">.*?</script>', orig, re.S))
-home_html = (head("Perch&eacute; | Revenue Intelligence for Home Service Businesses",
+home_html = (head("Perch&eacute; (Perche) | Revenue Intelligence Software for Home Service Businesses",
                   "Perch&eacute; finds the revenue your home service business is missing &mdash; cold estimates, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.",
                   "/", schema=schema) + nav() + "<main>" + home_body + "</main>" + footer())
 open(os.path.join(ROOT, "index.html"), "w").write(home_html)
@@ -90,6 +90,6 @@ open(os.path.join(ROOT, "index.html"), "w").write(home_html)
 # ---------- sitemap ----------
 urls = ["/"] + [p["path"] for p in pages]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
-    f"  <url><loc>{SITE}{u}</loc></url>\n" for u in urls) + "</urlset>\n"
+    f"  <url><loc>{SITE}{u}</loc><lastmod>{__import__('datetime').date.today().isoformat()}</lastmod></url>\n" for u in urls) + "</urlset>\n"
 open(os.path.join(ROOT, "sitemap.xml"), "w").write(sm)
 print(len(pages) + 1, "pages built")

@@ -14,7 +14,7 @@ def solution_page(slug, eyebrow, h1, sub, problem, how_detect, what_you_get, ste
     rel = cards([(t, d, h) for t, d, h in related], 3)
     body += section("Related", None, rel)
     body += cta_band()
-    return dict(path=path, title=__import__("re").sub(r"<[^>]+>", "", h1) + " | Perch&eacute;", desc=sub[:155], body=body, schema=faq_schema(faqs))
+    return dict(path=path, title=__import__("re").sub(r"<[^>]+>", "", h1) + " | Perch&eacute; Revenue Intelligence", desc=sub[:155], body=body, schema=faq_schema(faqs))
 
 RELATED_ALL = {t: (t, d, h) for t, h, d in __import__("layout").NAV[1][1]}
 
