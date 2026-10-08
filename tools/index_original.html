@@ -3,26 +3,305 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perch&eacute; | Revenue Intelligence for Home Service Businesses</title>
-<meta name="description" content="Perch&eacute; finds the revenue your home service business is missing &mdash; cold estimates, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.">
+<title>Perch&eacute; | Stop Losing Revenue You Already Earned</title>
+<meta name="description" content="Perch&eacute; flags cold estimates, unpaid invoices, and lapsed customers for HVAC and field service businesses - so you stop losing revenue you already earned.">
 <link rel="canonical" href="https://perchesolutions.com/">
 <link rel="icon" href="/assets/logo-v2.png">
 <meta name="theme-color" content="#080810">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Perch&eacute;">
-<meta property="og:title" content="Perch&eacute; | Revenue Intelligence for Home Service Businesses">
-<meta property="og:description" content="Perch&eacute; finds the revenue your home service business is missing &mdash; cold estimates, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.">
+<meta property="og:title" content="Perch&eacute; | Revenue Solutions for Field Service Businesses">
+<meta property="og:description" content="Stop losing revenue you already earned - automatic revenue-leak detection for HVAC and field service businesses.">
 <meta property="og:url" content="https://perchesolutions.com/">
 <meta property="og:image" content="https://perchesolutions.com/assets/dashboard-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="558">
+<meta property="og:image:alt" content="The Perch&eacute; dashboard showing recoverable revenue, cold estimates, unpaid invoices, and lapsed customers flagged automatically.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Perch&eacute; | Revenue Intelligence for Home Service Businesses">
-<meta name="twitter:description" content="Perch&eacute; finds the revenue your home service business is missing &mdash; cold estimates, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.">
+<meta name="twitter:title" content="Perch&eacute; | Revenue Solutions">
+<meta name="twitter:description" content="Automatic revenue-leak detection for HVAC and field service businesses - cold estimates, unpaid invoices, and lapsed customers, flagged before you lose them.">
 <meta name="twitter:image" content="https://perchesolutions.com/assets/dashboard-preview.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=3">
+<style>
+:root{
+  --bg:#080810; --bg-soft:#0d0d1a; --card:#131320; --card-hover:#171728;
+  --border:rgba(255,255,255,0.09); --border-hover:rgba(255,255,255,0.2);
+  --text:#ffffff; --muted:#c7cdda; --muted2:#9aa2b3;
+  --accent:#f97316; --accent-dark:#ea580c; --accent-light:#fb923c; --accent-bg:rgba(249,115,22,0.14); --accent-glow:rgba(249,115,22,0.35);
+  --red:#ef4444; --red-bg:rgba(239,68,68,0.14);
+  --amber:#f59e0b; --amber-bg:rgba(245,158,11,0.14);
+  --green:#10d999; --green-bg:rgba(16,217,153,0.14);
+  --shadow:0 1px 2px rgba(0,0,0,0.3),0 6px 20px rgba(0,0,0,0.35);
+  --shadow-lg:0 14px 34px rgba(0,0,0,0.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;color-scheme:dark;}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:radial-gradient(1100px 560px at 82% -8%,rgba(249,115,22,0.14),transparent 60%),radial-gradient(900px 500px at -10% 15%,rgba(239,68,68,0.08),transparent 55%),var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{color:inherit;transition:color .15s ease;}
+section[id],div[id]{scroll-margin-top:76px;}
+.wrap{max-width:1160px;margin:0 auto;padding-left:24px;padding-right:24px;}
+img{max-width:100%;display:block;}
+
+.utility-bar{text-align:center;padding:9px 16px;font-size:12.5px;color:var(--muted);background:var(--accent-bg);border-bottom:1px solid rgba(249,115,22,0.25);}
+.utility-bar a{color:var(--accent-light);font-weight:700;text-decoration:none;margin-left:4px;}
+.utility-bar a:hover{text-decoration:underline;}
+
+/* nav */
+header.site-nav{position:sticky;top:0;z-index:50;background:rgba(8,8,16,0.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1160px;margin:0 auto;}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--text);}
+.brand img{width:26px;height:26px;object-fit:contain;filter:invert(1) brightness(1.6);}
+.brand-name{font-weight:800;font-size:18px;letter-spacing:-0.3px;}
+.brand-name span{color:var(--accent-light);}
+.nav-links{display:flex;align-items:center;gap:16px;font-size:14px;flex-wrap:wrap;row-gap:8px;justify-content:flex-end;}
+.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;}
+.nav-links a:hover{color:var(--text);}
+.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:8px;cursor:pointer;border:none;transition:box-shadow .15s ease,transform .12s ease,border-color .15s ease,color .15s ease;}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:linear-gradient(135deg,var(--accent-light),var(--accent-dark));color:#fff;box-shadow:0 2px 14px var(--accent-glow);}
+.btn-primary:hover{box-shadow:0 4px 20px var(--accent-glow);}
+.btn-ghost{border:1px solid var(--border-hover);color:var(--text);background:rgba(255,255,255,0.03);}
+.btn-ghost:hover{border-color:var(--accent-light);color:var(--accent-light);}
+.btn-login{border:1.5px solid rgba(249,115,22,0.45);color:var(--accent-light);background:var(--accent-bg);}
+.btn-login:hover{border-color:var(--accent-light);background:rgba(249,115,22,0.22);}
+.hamburger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:8px;}
+.hamburger span{width:20px;height:2px;background:var(--text);display:block;border-radius:2px;}
+.mobile-menu{display:none;flex-direction:column;gap:2px;padding:0 24px 16px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{padding:10px 0;text-decoration:none;color:var(--muted);font-weight:600;font-size:14.5px;border-top:1px solid var(--border);}
+
+/* ticker */
+.ticker-wrap{overflow:hidden;background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:15px 0;-webkit-mask-image:linear-gradient(90deg,transparent,black 6%,black 94%,transparent);mask-image:linear-gradient(90deg,transparent,black 6%,black 94%,transparent);}
+.ticker-track{display:flex;width:max-content;gap:44px;animation:ticker-scroll 32s linear infinite;}
+.ticker-track:hover{animation-play-state:paused;}
+@keyframes ticker-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ticker-group{display:flex;gap:44px;flex-shrink:0;}
+.ticker-item{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;}
+.ticker-item .dot{color:var(--accent-light);}
+.ticker-wrap-dup{display:none;}
+
+/* hero */
+.hero{padding:52px 0 40px;}
+.hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;}
+h1.hero-title{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-0.03em;margin-bottom:18px;color:var(--text);}
+.hero-title .accent{background:linear-gradient(135deg,var(--accent-light),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero-sub{font-size:16.5px;color:var(--muted);line-height:1.6;margin-bottom:28px;max-width:520px;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+.hero-fine{font-size:12.5px;color:var(--muted2);}
+
+/* mock flag card for hero visual */
+.mock-card-wrap{position:relative;}
+.mock-card-wrap::before{content:"";position:absolute;inset:-30px;background:radial-gradient(closest-side,rgba(249,115,22,0.25),transparent 70%);filter:blur(10px);z-index:0;}
+.mock-card{position:relative;z-index:1;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);padding:22px;}
+.mock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.mock-head-title{font-weight:700;font-size:13.5px;color:var(--text);}
+.mock-head-sub{font-size:11.5px;color:var(--muted2);}
+.mock-flag{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-top:1px solid var(--border);}
+.mock-flag:first-of-type{border-top:none;}
+.mock-badge{flex-shrink:0;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;margin-top:1px;}
+.mock-flag-body{flex:1;}
+.mock-flag-title{font-size:13px;font-weight:600;margin-bottom:2px;color:var(--text);}
+.mock-flag-sub{font-size:12px;color:var(--muted);}
+.mock-flag-value{font-size:13px;font-weight:700;white-space:nowrap;}
+
+/* sections */
+section{padding:88px 0;}
+.band{background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.section-title{font-size:29px;font-weight:800;letter-spacing:-0.015em;margin-bottom:10px;color:var(--text);}
+.section-sub{font-size:14.5px;color:var(--muted);margin-bottom:36px;max-width:640px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);}
+.card-hover{transition:box-shadow .15s ease,border-color .15s ease,background .15s ease;}
+.card-hover:hover{box-shadow:var(--shadow-lg);border-color:var(--border-hover);background:var(--card-hover);}
+
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+
+.step-card{padding:26px;}
+.step-num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent-light),var(--accent-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:16px;box-shadow:0 2px 10px var(--accent-glow);}
+.step-title{font-weight:700;font-size:15.5px;margin-bottom:8px;color:var(--text);}
+.step-body{color:var(--muted);font-size:13.5px;line-height:1.6;}
+
+.cat-card{padding:26px;}
+.cat-tag{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:999px;margin-bottom:13px;}
+.cat-body{color:var(--muted);font-size:13.5px;line-height:1.6;}
+
+.why-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.why-item{padding:20px;}
+.why-title{font-weight:700;font-size:14px;margin-bottom:6px;color:var(--text);}
+.why-body{color:var(--muted);font-size:12.5px;line-height:1.55;}
+
+.compare-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.compare-table{width:100%;border-collapse:collapse;min-width:600px;}
+.compare-table th,.compare-table td{padding:14px 18px;text-align:left;font-size:13px;border-bottom:1px solid var(--border);vertical-align:top;}
+.compare-table thead th{font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted2);font-weight:700;border-bottom:1px solid var(--border-hover);}
+.compare-table tbody th{color:var(--text);font-weight:600;font-size:13px;white-space:nowrap;}
+.compare-table td{color:var(--muted);line-height:1.5;}
+.compare-col-perche{background:var(--accent-bg);}
+.compare-table thead th.compare-col-perche{color:var(--accent-light);border-radius:10px 10px 0 0;}
+.compare-yes{color:var(--green);font-weight:700;}
+.compare-no{color:var(--muted2);}
+
+.trial-banner{background:var(--accent-bg);border:1px solid rgba(249,115,22,0.35);border-radius:14px;padding:18px 22px;margin-bottom:32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;}
+.trial-banner-text{font-size:14px;color:var(--accent-light);font-weight:700;}
+
+.pricing-card{position:relative;padding:30px;}
+.pricing-badge{position:absolute;top:-12px;left:26px;background:linear-gradient(135deg,var(--accent-light),var(--red));color:#fff;font-size:10.5px;font-weight:700;letter-spacing:0.4px;padding:4px 10px;border-radius:999px;box-shadow:0 2px 10px var(--accent-glow);}
+.pricing-name{font-weight:700;font-size:16px;margin-bottom:4px;color:var(--text);}
+.pricing-price{font-size:32px;font-weight:800;margin-bottom:6px;color:var(--text);}
+.pricing-price span{font-size:14px;font-weight:500;color:var(--muted);}
+.pricing-blurb{color:var(--muted);font-size:13px;margin-bottom:22px;}
+.pricing-list{list-style:none;margin-bottom:24px;}
+.pricing-list li{display:flex;gap:8px;font-size:13px;color:var(--muted);padding:7px 0;border-top:1px solid var(--border);}
+.pricing-list li:first-child{border-top:none;}
+.pricing-list li .check{color:var(--green);flex-shrink:0;}
+
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-item:first-child{border-top:1px solid var(--border);}
+.faq-q{width:100%;text-align:left;background:none;border:none;padding:18px 4px;font-size:14.5px;font-weight:700;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;}
+.faq-plus{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--accent-bg);color:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:transform .15s ease;}
+.faq-item.open .faq-plus{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .2s ease;}
+.faq-item.open .faq-a{max-height:400px;}
+.faq-a-inner{padding:0 4px 18px;font-size:13.5px;color:var(--muted);line-height:1.6;}
+
+.contact-card{padding:32px;max-width:640px;margin:0 auto;text-align:center;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.field{margin-bottom:12px;text-align:left;}
+.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px;color:var(--muted);}
+.field input,.field textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;font-family:inherit;background:var(--bg-soft);color:var(--text);}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--accent-light);}
+.field textarea{resize:vertical;min-height:80px;}
+.hp-field{position:absolute;left:-5000px;width:1px;height:1px;overflow:hidden;}
+
+footer{border-top:1px solid var(--border);padding:40px 0 32px;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;margin-bottom:32px;}
+.footer-brand{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.footer-brand img{width:24px;height:24px;object-fit:contain;filter:invert(1) brightness(1.6);}
+.footer-tagline{color:var(--muted);font-size:13px;line-height:1.6;max-width:260px;}
+.footer-col-title{font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted2);margin-bottom:12px;}
+.footer-col a{display:block;text-decoration:none;color:var(--muted);font-size:13.5px;margin-bottom:9px;}
+.footer-col a:hover{color:var(--text);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--muted2);}
+.footer-bottom a:hover{color:var(--text);}
+
+@media (max-width:820px){
+  section{padding:64px 0;}
+  .hero{padding:56px 0 52px;}
+  .ticker-wrap{margin-bottom:32px;}
+  .hero-grid{grid-template-columns:1fr;gap:40px;}
+  /* Ticker moved to sit between the fine-print and the mock card on mobile
+     (order: heading/CTAs -> ticker -> Today's-flags peek). Desktop keeps the
+     ticker in its original place below the whole hero, untouched. */
+  .ticker-wrap-dup{display:block;margin:-16px -24px 0;}
+  .hero + .ticker-wrap{display:none;}
+  .mock-card-wrap{margin-top:0;}
+  .grid-3{grid-template-columns:1fr;gap:18px;}
+  .grid-2{grid-template-columns:1fr;gap:18px;}
+  .why-strip{grid-template-columns:repeat(2,1fr);gap:18px;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .field-row{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  /* Slightly bigger on mobile so the line-art reads clearly at a glance
+     instead of looking like a rendering error at a tiny size. */
+  .brand img{width:32px;height:32px;}
+  .brand-name{font-size:19px;}
+  h1.hero-title{font-size:36px;margin-bottom:20px;text-align:center;}
+  .hero-sub{margin-bottom:32px;}
+  .section-title{font-size:25px;text-align:center;}
+  .section-sub{margin-bottom:32px;text-align:center;}
+
+  /* Comparison table -> stacked cards on mobile so nothing gets cut off
+     with no way to tell it scrolls. Desktop keeps the table layout. */
+  .compare-wrap{overflow-x:visible;-webkit-overflow-scrolling:auto;}
+  .compare-table{min-width:0;width:100%;border-collapse:separate;border-spacing:0 12px;}
+  .compare-table thead{display:none;}
+  .compare-table tbody tr{
+    display:block;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 18px 6px;
+  }
+  .compare-table tbody th{
+    display:block;
+    white-space:normal;
+    font-size:15px;
+    padding:0 0 12px;
+    margin-bottom:10px;
+    border-bottom:1px solid var(--border);
+  }
+  .compare-table tbody td{
+    display:block;
+    padding:11px 0;
+    border-bottom:1px solid var(--border);
+    font-size:14px;
+    line-height:1.5;
+    text-align:left;
+  }
+  .compare-table tbody tr td:last-child{border-bottom:none;}
+  .compare-table tbody td::before{
+    content:attr(data-label);
+    display:block;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    font-weight:700;
+    color:var(--muted2);
+    margin-bottom:5px;
+  }
+  .compare-table tbody td.compare-col-perche{
+    color:var(--accent-light);
+    font-weight:600;
+    border-radius:10px;
+    padding:12px 14px;
+    margin:6px 0 0;
+  }
+  .compare-table tbody td.compare-col-perche::before{
+    color:var(--accent-light);
+    opacity:0.8;
+  }
+}
+
+@media (max-width:520px){
+  .wrap{padding-left:20px;padding-right:20px;}
+  .ticker-wrap-dup{margin:-16px -20px 0;}
+  .nav-row{padding:14px 20px;}
+  .utility-bar{font-size:11.5px;padding:10px 16px;line-height:1.5;}
+  section{padding:56px 0;}
+  .hero{padding:40px 0 44px;}
+  h1.hero-title{font-size:31px;line-height:1.15;margin-bottom:20px;}
+  .hero-sub{font-size:15.5px;line-height:1.65;margin-bottom:72px;}
+  .hero-ctas{margin-bottom:28px;}
+  .hero-fine{line-height:1.9;}
+  .section-title{font-size:23px;margin-bottom:12px;}
+  .section-sub{margin-bottom:30px;line-height:1.65;}
+  .why-strip{grid-template-columns:1fr;gap:16px;}
+  .grid-3{gap:16px;}
+  .footer-grid{grid-template-columns:repeat(3,1fr);gap:24px 12px;}
+  .footer-grid > div:first-child{grid-column:1 / -1;padding-bottom:8px;margin-bottom:4px;border-bottom:1px solid var(--border);}
+  .footer-tagline{max-width:none;}
+  .footer-col-title{font-size:10.5px;margin-bottom:10px;}
+  .footer-col a{font-size:12.5px;margin-bottom:10px;line-height:1.4;}
+  .hero-ctas{flex-direction:column;align-items:stretch;}
+  .hero-ctas .btn{text-align:center;padding:14px 24px;}
+  .pricing-card{padding:26px 22px;}
+  .pricing-list li{padding:9px 0;line-height:1.5;}
+  .step-card,.why-item,.cat-card{padding:24px;}
+  .step-body,.why-body,.cat-body{line-height:1.65;}
+  .contact-card{padding:28px 22px;}
+  .field-row{gap:14px;}
+  .field{margin-bottom:14px;}
+  .ticker-item{font-size:12px;}
+  .ticker-wrap{padding:16px 0;margin-bottom:28px;}
+  .mock-card{padding:20px;}
+  .mock-flag{flex-wrap:wrap;padding:15px 0;}
+  .why-strip,.grid-3{margin-top:4px;}
+}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -59,7 +338,8 @@
     }
   ]
 }
-</script><script type="application/ld+json">
+</script>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -130,7 +410,8 @@
     }
   ]
 }
-</script><script type="application/ld+json">
+</script>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -190,40 +471,40 @@
 </head>
 <body>
 <div style="height:3px;background:linear-gradient(90deg,var(--red),var(--accent),var(--accent-light));"></div>
+<div class="utility-bar">Already a Perch&eacute; customer?<a href="https://perche-revenue-solutions.vercel.app/login">Log in to your dashboard &rarr;</a></div>
+
 <header class="site-nav">
   <div class="nav-row">
     <a href="/" class="brand">
       <img src="/assets/logo-v2.png" alt="Perch&eacute;" width="26" height="26">
       <span class="brand-name">Perch<span>&eacute;</span></span>
     </a>
-    <nav class="nav-desktop" aria-label="Main">
-      <div class="has-menu"><button class="menu-btn" aria-haspopup="true" aria-expanded="false">Who We Serve<span class="caret">&#9662;</span></button><div class="menu-panel"><div class="menu-panel-inner"><a class="menu-link" href="/who-we-serve/hvac-contractors/"><span class="menu-link-title">HVAC Contractors</span><span class="menu-link-desc">Maintenance plans, cold quotes and seasonal swings.</span></a><a class="menu-link" href="/who-we-serve/plumbing-electrical/"><span class="menu-link-title">Plumbing & Electrical</span><span class="menu-link-desc">Repeat work, estimates and invoices that slip.</span></a><a class="menu-link" href="/who-we-serve/owner-operators/"><span class="menu-link-title">Owner-Operators</span><span class="menu-link-desc">Solo and small crews with no time to chase.</span></a><a class="menu-link" href="/who-we-serve/growing-teams/"><span class="menu-link-title">Growing Teams</span><span class="menu-link-desc">Multiple techs, one clear view of missed revenue.</span></a></div></div></div><div class="has-menu"><button class="menu-btn" aria-haspopup="true" aria-expanded="false">What We Solve<span class="caret">&#9662;</span></button><div class="menu-panel"><div class="menu-panel-inner"><a class="menu-link" href="/solutions/cold-estimates/"><span class="menu-link-title">Cold Estimates</span><span class="menu-link-desc">Quotes that went quiet, ranked by what they're worth.</span></a><a class="menu-link" href="/solutions/unpaid-invoices/"><span class="menu-link-title">Unpaid Invoices</span><span class="menu-link-desc">Work you did that hasn't been paid for.</span></a><a class="menu-link" href="/solutions/lapsed-customers/"><span class="menu-link-title">Lapsed Customers</span><span class="menu-link-desc">Customers overdue for their next visit.</span></a><a class="menu-link" href="/solutions/cold-leads/"><span class="menu-link-title">Cold Leads</span><span class="menu-link-desc">Inquiries nobody answered fast enough.</span></a><a class="menu-link" href="/solutions/reputation/"><span class="menu-link-title">Reputation</span><span class="menu-link-desc">Reviews that need a reply, and happy customers to ask.</span></a><a class="menu-link" href="/solutions/maintenance-plans/"><span class="menu-link-title">Maintenance Plans</span><span class="menu-link-desc">Plans to renew and customers who never got offered one.</span></a></div></div></div><div class="has-menu"><button class="menu-btn" aria-haspopup="true" aria-expanded="false">Resources<span class="caret">&#9662;</span></button><div class="menu-panel"><div class="menu-panel-inner"><a class="menu-link" href="/resources/"><span class="menu-link-title">Guides & Playbooks</span><span class="menu-link-desc">Practical how-tos for recovering revenue.</span></a><a class="menu-link" href="/resources/revenue-leak-calculator/"><span class="menu-link-title">Revenue Leak Calculator</span><span class="menu-link-desc">Estimate what's slipping, with your own numbers.</span></a><a class="menu-link" href="/resources/integrations/"><span class="menu-link-title">Integrations</span><span class="menu-link-desc">What connects today, and what's coming.</span></a><a class="menu-link" href="/resources/how-it-works/"><span class="menu-link-title">How It Works</span><span class="menu-link-desc">From connecting your data to a recovered dollar.</span></a><a class="menu-link" href="https://perche-revenue-solutions.vercel.app/help"><span class="menu-link-title">Help Center</span><span class="menu-link-desc">Answers for current customers.</span></a></div></div></div><div class="has-menu"><button class="menu-btn" aria-haspopup="true" aria-expanded="false">About<span class="caret">&#9662;</span></button><div class="menu-panel"><div class="menu-panel-inner"><a class="menu-link" href="/about/who-we-are/"><span class="menu-link-title">Who We Are</span><span class="menu-link-desc">Why Perch&eacute; exists.</span></a><a class="menu-link" href="/about/our-approach/"><span class="menu-link-title">Our Approach</span><span class="menu-link-desc">Explainable, read-only, conservative.</span></a><a class="menu-link" href="/about/trust-and-security/"><span class="menu-link-title">Trust & Security</span><span class="menu-link-desc">How we handle your data.</span></a><a class="menu-link" href="/contact/"><span class="menu-link-title">Get in Touch</span><span class="menu-link-desc">Talk to a real person.</span></a></div></div></div>
-      <a class="nav-plain" href="/pricing/">Pricing</a>
+    <nav class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-login" href="https://perche-revenue-solutions.vercel.app/login">Log in</a>
+      <a class="btn btn-primary" href="https://perche-revenue-solutions.vercel.app/signup">Start free trial</a>
     </nav>
-    <div class="nav-cta">
-      <a class="btn btn-login" href="https://perche-revenue-solutions.vercel.app/login">Sign In</a>
-      <a class="btn btn-primary" href="/contact/">Get in Touch</a>
-    </div>
-    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
-    <div class="mm-group"><button class="mm-toggle" aria-expanded="false">Who We Serve<span class="caret">&#9662;</span></button><div class="mm-links"><a href="/who-we-serve/hvac-contractors/">HVAC Contractors</a><a href="/who-we-serve/plumbing-electrical/">Plumbing & Electrical</a><a href="/who-we-serve/owner-operators/">Owner-Operators</a><a href="/who-we-serve/growing-teams/">Growing Teams</a></div></div><div class="mm-group"><button class="mm-toggle" aria-expanded="false">What We Solve<span class="caret">&#9662;</span></button><div class="mm-links"><a href="/solutions/cold-estimates/">Cold Estimates</a><a href="/solutions/unpaid-invoices/">Unpaid Invoices</a><a href="/solutions/lapsed-customers/">Lapsed Customers</a><a href="/solutions/cold-leads/">Cold Leads</a><a href="/solutions/reputation/">Reputation</a><a href="/solutions/maintenance-plans/">Maintenance Plans</a></div></div><div class="mm-group"><button class="mm-toggle" aria-expanded="false">Resources<span class="caret">&#9662;</span></button><div class="mm-links"><a href="/resources/">Guides & Playbooks</a><a href="/resources/revenue-leak-calculator/">Revenue Leak Calculator</a><a href="/resources/integrations/">Integrations</a><a href="/resources/how-it-works/">How It Works</a><a href="https://perche-revenue-solutions.vercel.app/help">Help Center</a></div></div><div class="mm-group"><button class="mm-toggle" aria-expanded="false">About<span class="caret">&#9662;</span></button><div class="mm-links"><a href="/about/who-we-are/">Who We Are</a><a href="/about/our-approach/">Our Approach</a><a href="/about/trust-and-security/">Trust & Security</a><a href="/contact/">Get in Touch</a></div></div>
-    <a class="mm-plain" href="/pricing/">Pricing</a>
-    <div class="mm-cta">
-      <a class="btn btn-login" href="https://perche-revenue-solutions.vercel.app/login">Sign In</a>
-      <a class="btn btn-primary" href="/contact/">Get in Touch</a>
-    </div>
+    <a href="#how-it-works">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://perche-revenue-solutions.vercel.app/login">Log in to your dashboard</a>
+    <a href="https://perche-revenue-solutions.vercel.app/signup">Start free trial</a>
   </div>
 </header>
-<main><div class="wrap hero">
+
+<div class="wrap hero">
   <div class="hero-grid">
     <div>
-      <div class="eyebrow">REVENUE INTELLIGENCE FOR HOME SERVICES</div>
-      <h1 class="hero-title">Find the <span class="accent">revenue</span> your home service business is missing</h1>
-      <p class="hero-sub">Perch&eacute; reads the software you already use and shows you the quotes, invoices, customers, leads and reviews that are quietly costing you money &mdash; with the follow-up already written.</p>
+      <h1 class="hero-title">Stop losing <span class="accent">revenue</span> you already earned</h1>
+      <p class="hero-sub">Perch&eacute; connects to Jobber, Housecall Pro, Service Fusion, or Workiz - or just a spreadsheet - and automatically flags the cold estimates, unpaid invoices, and lapsed customers costing you money every month.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="https://perche-revenue-solutions.vercel.app/signup" style="padding:13px 24px;font-size:14.5px;">Start 14-day free trial</a>
-        <a class="btn btn-ghost" href="/resources/how-it-works/" style="padding:13px 24px;font-size:14.5px;">See how it works</a>
+        <a class="btn btn-ghost" href="#how-it-works" style="padding:13px 24px;font-size:14.5px;">See how it works</a>
       </div>
       <div class="hero-fine">No charge until your trial ends &middot; Cancel any time &middot; Already a customer? <a href="https://perche-revenue-solutions.vercel.app/login" style="color:var(--accent-light);">Log in here</a><br><a href="https://calendly.com/perchesolutions/free-worldflow-audit" target="_blank" rel="noopener" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/perchesolutions/free-worldflow-audit'});return false;}" style="color:var(--muted);text-decoration:underline;">Prefer to talk first? Book a free 15-min call &rarr;</a></div>
     </div>
@@ -311,10 +592,9 @@
   </div>
 </div>
 
-<section class="" id="solve"><div class="wrap"><h2 class="section-title">What we solve</h2><p class="section-sub">Perch&eacute; looks across your quotes, invoices, customers, leads and reviews and shows you where the money is slipping.</p><div class="grid grid-3"><div class="card feature-card card-hover"><h3 class="feature-title">Cold Estimates</h3><p class="feature-body">Quotes that went quiet, ranked by what they're worth.</p><a class="card-link" href="/solutions/cold-estimates/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">Unpaid Invoices</h3><p class="feature-body">Work you did that hasn't been paid for.</p><a class="card-link" href="/solutions/unpaid-invoices/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">Lapsed Customers</h3><p class="feature-body">Customers overdue for their next visit.</p><a class="card-link" href="/solutions/lapsed-customers/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">Cold Leads</h3><p class="feature-body">Inquiries nobody answered fast enough.</p><a class="card-link" href="/solutions/cold-leads/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">Reputation</h3><p class="feature-body">Reviews that need a reply, and happy customers to ask.</p><a class="card-link" href="/solutions/reputation/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">Maintenance Plans</h3><p class="feature-body">Plans to renew and customers who never got offered one.</p><a class="card-link" href="/solutions/maintenance-plans/">Learn more &rarr;</a></div></div></div></section>
-<section class="band" id="leaks">
+<section class="band">
   <div class="wrap">
-  <h2 class="section-title">Five ways revenue quietly slips away</h2>
+  <h2 class="section-title">Three ways revenue quietly slips away</h2>
   <p class="section-sub">None of it shows up as a loss on a P&amp;L. It just never comes in - because nobody had time to go looking for it. Perch&eacute; watches for all three, every night.</p>
   <div class="grid-3">
     <div class="card card-hover cat-card">
@@ -331,7 +611,9 @@
     </div>
   </div>
   </div>
-</section><section class="wrap" id="how-it-works">
+</section>
+
+<section class="wrap" id="how-it-works">
   <h2 class="section-title">How it works</h2>
   <p class="section-sub">No new workflow to learn - Perch&eacute; runs alongside the software you already use.</p>
   <div class="grid-3">
@@ -351,9 +633,9 @@
       <div class="step-body">Each flag comes with a ready-to-send message - email or text - so turning a flag into a booked job or a paid invoice takes seconds, not a spreadsheet.</div>
     </div>
   </div>
-</section><section class="band" id="serve"><div class="wrap"><h2 class="section-title">Who we serve</h2><p class="section-sub">Built first for HVAC, useful for any trade that quotes, invoices and has repeat customers.</p><div class="grid grid-4"><div class="card feature-card card-hover"><h3 class="feature-title">HVAC Contractors</h3><p class="feature-body">Maintenance plans, cold quotes and seasonal swings.</p><a class="card-link" href="/who-we-serve/hvac-contractors/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">Plumbing & Electrical</h3><p class="feature-body">Repeat work, estimates and invoices that slip.</p><a class="card-link" href="/who-we-serve/plumbing-electrical/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">Owner-Operators</h3><p class="feature-body">Solo and small crews with no time to chase.</p><a class="card-link" href="/who-we-serve/owner-operators/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">Growing Teams</h3><p class="feature-body">Multiple techs, one clear view of missed revenue.</p><a class="card-link" href="/who-we-serve/growing-teams/">Learn more &rarr;</a></div></div></div></section>
-<section class=""><div class="wrap"><h2 class="section-title">Works with the tools you already use</h2><p class="section-sub">Connect your field service software, upload a spreadsheet, or send data through the inbound API.</p><div class="chip-row"><span class="chip">Jobber</span><span class="chip">Housecall Pro</span><span class="chip">Service Fusion</span><span class="chip">Workiz</span><span class="chip">Spreadsheets &amp; CSV</span><span class="chip">Inbound API (Zapier, Make, GoHighLevel)</span><span class="chip">Meta lead ads</span><span class="chip">Google Business Profile</span><span class="chip">Stripe</span><span class="chip">Slack</span></div><p class="kicker" style="margin-top:16px;">Some connections are still pending platform approval. <a href="/resources/integrations/" style="color:var(--accent-light);">See exactly what is live today &rarr;</a></p></div></section>
-<section class="band" id="trust">
+</section>
+
+<section class="band">
   <div class="wrap">
   <h2 class="section-title">Built to be trusted with your data</h2>
   <p class="section-sub">Perch&eacute; only reads what it needs to find revenue - it never touches your CRM, and nothing goes to a customer without your say-so.</p>
@@ -376,7 +658,9 @@
     </div>
   </div>
   </div>
-</section><section class="band">
+</section>
+
+<section class="band">
   <div class="wrap">
   <h2 class="section-title">Perch&eacute; vs. doing it yourself</h2>
   <p class="section-sub">Most HVAC businesses already have this data sitting in Jobber, Housecall Pro, Service Fusion, Workiz, or a spreadsheet - it's just not being watched every day.</p>
@@ -425,7 +709,9 @@
   </table>
   </div>
   </div>
-</section><section class="wrap" id="pricing">
+</section>
+
+<section class="wrap" id="pricing">
   <h2 class="section-title">Simple pricing</h2>
   <p class="section-sub">Start with the core product, or go hands-off with automatic follow-ups, SMS, Slack, and deeper reporting.</p>
 
@@ -473,7 +759,8 @@
       </ul>
     </div>
   </div>
-</section><section class="band"><div class="wrap"><h2 class="section-title">Guides & playbooks</h2><p class="section-sub">Practical, no-fluff how-tos. See all in <a href="/resources/" style="color:var(--accent-light);">Resources</a>.</p><div class="grid grid-3"><div class="card feature-card card-hover"><h3 class="feature-title">How to follow up on a cold estimate</h3><p class="feature-body">A practical cadence, with scripts you can copy.</p><a class="card-link" href="/resources/follow-up-on-cold-estimates/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">An invoice collection checklist</h3><p class="feature-body">From friendly reminder to firm phone call.</p><a class="card-link" href="/resources/invoice-collection-checklist/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><h3 class="feature-title">The maintenance plan playbook</h3><p class="feature-body">Pricing, pitching and renewing plans customers keep.</p><a class="card-link" href="/resources/maintenance-plan-playbook/">Learn more &rarr;</a></div></div></div></section>
+</section>
+
 <section class="band" id="faq">
   <div class="wrap">
   <h2 class="section-title">Common questions</h2>
@@ -513,10 +800,28 @@
     </div>
   </div>
   </div>
-</section><section><div class="wrap"><div class="cta-band">
-<div><h2 class="cta-title">Ready to see what you're missing?</h2><p class="cta-sub">Start a 14-day free trial &mdash; no card required &mdash; or book a free 15-minute call.</p></div>
-<div class="cta-actions"><a class="btn btn-primary" href="https://perche-revenue-solutions.vercel.app/signup" style="padding:13px 24px;font-size:14.5px;">Start 14-day free trial</a><a class="btn btn-ghost" href="/contact/" style="padding:13px 24px;font-size:14.5px;">Get in Touch</a></div></div></div></section>
-</main><footer>
+</section>
+
+<section class="wrap">
+  <div class="card contact-card">
+    <h2 class="section-title" style="margin-bottom:6px;">Have a question before you start?</h2>
+    <p class="section-sub" style="margin:0 auto 24px;">Send us a note and we'll get back to you - Perch&eacute; is a small, hands-on team, so you'll hear from a real person. Or just email <a href="mailto:perchesolutions@gmail.com" style="color:var(--accent-light);">perchesolutions@gmail.com</a> directly.</p>
+    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks">
+      <input type="hidden" name="form-name" value="contact">
+      <p class="hp-field"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="field-row">
+        <div class="field"><label for="cf-name">Your name</label><input id="cf-name" name="name" type="text" required></div>
+        <div class="field"><label for="cf-email">Business email</label><input id="cf-email" name="email" type="email" required></div>
+      </div>
+      <div class="field"><label for="cf-business">Business name</label><input id="cf-business" name="business" type="text"></div>
+      <div class="field"><label for="cf-message">What's your question?</label><textarea id="cf-message" name="message" required></textarea></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;">Send</button>
+    </form>
+    <div style="margin-top:16px;font-size:12.5px;color:var(--muted2);">or <a href="https://calendly.com/perchesolutions/free-worldflow-audit" target="_blank" rel="noopener" onclick="if(window.Calendly){Calendly.initPopupWidget({url:'https://calendly.com/perchesolutions/free-worldflow-audit'});return false;}" style="color:var(--accent-light);font-weight:600;">book a free 15-minute call</a> instead</div>
+  </div>
+</section>
+
+<footer>
   <div class="wrap">
     <div class="footer-grid">
       <div>
@@ -524,37 +829,47 @@
           <img src="/assets/logo-v2.png" alt="Perch&eacute;" width="24" height="24">
           <span class="brand-name">Perch<span>&eacute;</span></span>
         </div>
-        <div class="footer-tagline">Revenue intelligence for home service businesses. Perch&eacute; finds the money you've already earned or almost earned &mdash; cold quotes, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.</div>
-        <div class="footer-addr">Perch&eacute; AI Solutions LLC<br>1100 S Miami Ave, Miami, FL 33130<br><a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a></div>
+        <div class="footer-tagline">Revenue recovery for HVAC and field service businesses. Connect Jobber, Housecall Pro, Service Fusion, Workiz, or a spreadsheet - Perch&eacute; flags the money you're leaving on the table.</div>
       </div>
-      <div class="footer-col"><div class="footer-col-title">Who We Serve</div><a href="/who-we-serve/hvac-contractors/">HVAC Contractors</a><a href="/who-we-serve/plumbing-electrical/">Plumbing & Electrical</a><a href="/who-we-serve/owner-operators/">Owner-Operators</a><a href="/who-we-serve/growing-teams/">Growing Teams</a></div>
-      <div class="footer-col"><div class="footer-col-title">What We Solve</div><a href="/solutions/cold-estimates/">Cold Estimates</a><a href="/solutions/unpaid-invoices/">Unpaid Invoices</a><a href="/solutions/lapsed-customers/">Lapsed Customers</a><a href="/solutions/cold-leads/">Cold Leads</a><a href="/solutions/reputation/">Reputation</a><a href="/solutions/maintenance-plans/">Maintenance Plans</a></div>
-      <div class="footer-col"><div class="footer-col-title">Resources</div><a href="/resources/">Guides & Playbooks</a><a href="/resources/revenue-leak-calculator/">Revenue Leak Calculator</a><a href="/resources/integrations/">Integrations</a><a href="/resources/how-it-works/">How It Works</a><a href="https://perche-revenue-solutions.vercel.app/help">Help Center</a><a href="https://perche-revenue-solutions.vercel.app/privacy">Privacy Policy</a><a href="https://perche-revenue-solutions.vercel.app/terms">Terms of Service</a></div>
-      <div class="footer-col"><div class="footer-col-title">Company</div><a href="/about/who-we-are/">Who We Are</a><a href="/about/our-approach/">Our Approach</a><a href="/about/trust-and-security/">Trust & Security</a><a href="/contact/">Get in Touch</a><a href="/pricing/">Pricing</a><a href="https://perche-revenue-solutions.vercel.app/login">Sign In</a><a href="https://perche-revenue-solutions.vercel.app/signup">Start free trial</a></div>
+      <div class="footer-col">
+        <div class="footer-col-title">Product</div>
+        <a href="#how-it-works">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Resources</div>
+        <a href="https://perche-revenue-solutions.vercel.app/help">Help &amp; FAQ</a>
+        <a href="https://perche-revenue-solutions.vercel.app/privacy">Privacy Policy</a>
+        <a href="https://perche-revenue-solutions.vercel.app/terms">Terms of Service</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="https://perche-revenue-solutions.vercel.app/login">Client login</a>
+        <a href="https://perche-revenue-solutions.vercel.app/signup">Start free trial</a>
+        <a href="mailto:perchesolutions@gmail.com">Contact</a>
+      </div>
     </div>
     <div class="footer-bottom">
       <div>&copy; 2026 Perch&eacute; AI Solutions LLC</div>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="display:flex;gap:16px;">
         <a href="https://perche-revenue-solutions.vercel.app/privacy">Privacy</a>
         <a href="https://perche-revenue-solutions.vercel.app/terms">Terms</a>
-        <a href="https://perche-revenue-solutions.vercel.app/security">Security</a>
-        <a href="https://perche-revenue-solutions.vercel.app/subprocessors">Subprocessors</a>
+        <a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a>
       </div>
     </div>
   </div>
 </footer>
+
 <script>
-(function(){
-  var hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
-  hb.addEventListener('click',function(){var o=mm.classList.toggle('open');hb.setAttribute('aria-expanded',o);document.body.classList.toggle('menu-open',o);});
-  document.querySelectorAll('.mm-toggle').forEach(function(b){b.addEventListener('click',function(){var g=b.parentElement;var o=g.classList.toggle('open');b.setAttribute('aria-expanded',o);});});
-  document.querySelectorAll('.menu-btn').forEach(function(b){
-    b.addEventListener('click',function(ev){ev.stopPropagation();var p=b.parentElement;var was=p.classList.contains('open');document.querySelectorAll('.has-menu.open').forEach(function(x){x.classList.remove('open');x.firstChild.setAttribute('aria-expanded','false');});if(!was){p.classList.add('open');b.setAttribute('aria-expanded','true');}});
+document.getElementById('hamburger').addEventListener('click', function(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    btn.parentElement.classList.toggle('open');
   });
-  document.addEventListener('click',function(){document.querySelectorAll('.has-menu.open').forEach(function(x){x.classList.remove('open');});});
-  document.addEventListener('keydown',function(ev){if(ev.key==='Escape'){document.querySelectorAll('.has-menu.open').forEach(function(x){x.classList.remove('open');});}});
-  document.querySelectorAll('.faq-q').forEach(function(btn){btn.addEventListener('click',function(){btn.parentElement.classList.toggle('open');});});
-})();
+});
 </script>
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>

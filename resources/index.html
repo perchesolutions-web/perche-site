@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources | Perch&eacute;</title>
+<meta name="description" content="Guides, scripts and tools for home service owners recovering revenue from cold estimates, unpaid invoices and lapsed customers.">
+<link rel="canonical" href="https://perchesolutions.com/resources/">
+<link rel="icon" href="/assets/logo-v2.png">
+<meta name="theme-color" content="#080810">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Perch&eacute;">
+<meta property="og:title" content="Resources | Perch&eacute;">
+<meta property="og:description" content="Guides, scripts and tools for home service owners recovering revenue from cold estimates, unpaid invoices and lapsed customers.">
+<meta property="og:url" content="https://perchesolutions.com/resources/">
+<meta property="og:image" content="https://perchesolutions.com/assets/dashboard-preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Resources | Perch&eacute;">
+<meta name="twitter:description" content="Guides, scripts and tools for home service owners recovering revenue from cold estimates, unpaid invoices and lapsed customers.">
+<meta name="twitter:image" content="https://perchesolutions.com/assets/dashboard-preview.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=3">
+
+
+<!--
+  PostHog - marketing site analytics. Same project as the product app
+  (perche-revenue-solutions.vercel.app), so a visitor who reads this
+  page and later signs up shows up as one continuous journey instead
+  of two disconnected data sets. Autocapture is on here (unlike the
+  app, where it's off) because this page has no business/customer
+  data to accidentally pick up - it's safe to see every click.
+-->
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSurveyState onSessionInit debug getPageViewId createPersonProfile requestNotificationPermission".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_ur5pFYA2Sbxv8At9WiNU4T8UHc6gENjMybRBuoipv7VY', {
+    api_host: 'https://us.i.posthog.com',
+    person_profiles: 'always'
+  })
+</script>
+
+<!--
+  Cross-domain identity: perchesolutions.com and the app
+  (perche-revenue-solutions.vercel.app) are separate domains, not
+  subdomains of one site, so PostHog's automatic first-party cookie
+  sharing doesn't reach across them on its own. This decorates any
+  outbound link to the app with this visitor's PostHog id right before
+  it's clicked, so the app can bootstrap with the same identity instead
+  of starting a brand new anonymous person. See initAnalytics() in
+  frontend/src/analytics.js for the app-side half of this.
+-->
+<script>
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href*="perche-revenue-solutions.vercel.app"]');
+    if (!link) return;
+    try {
+      var distinctId = posthog.get_distinct_id();
+      var sessionId = posthog.get_session_id();
+      if (!distinctId) return;
+      var url = new URL(link.href);
+      var params = new URLSearchParams();
+      params.set('distinct_id', distinctId);
+      if (sessionId) params.set('session_id', sessionId);
+      url.hash = params.toString();
+      link.href = url.toString();
+    } catch (err) {
+      // Analytics never blocks navigation - if anything above throws,
+      // the link just goes to its original, undecorated href.
+    }
+  }, true);
+</script>
+</head>
+<body>
+<div style="height:3px;background:linear-gradient(90deg,var(--red),var(--accent),var(--accent-light));"></div>
+<header class="site-nav">
+  <div class="nav-row">
+    <a href="/" class="brand">
+      <img src="/assets/logo-v2.png" alt="Perch&eacute;" width="26" height="26">
+      <span class="brand-name">Perch<span>&eacute;</span></span>
+    </a>
+    <nav class="nav-desktop" aria-label="Main">
+      <div class="has-menu"><button class="menu-btn" aria-haspopup="true" aria-expanded="false">Who We Serve<span class="caret">&#9662;</span></button><div class="menu-panel"><div class="menu-panel-inner"><a class="menu-link" href="/who-we-serve/hvac-contractors/"><span class="menu-link-title">HVAC Contractors</span><span class="menu-link-desc">Maintenance plans, cold quotes and seasonal swings.</span></a><a class="menu-link" href="/who-we-serve/plumbing-electrical/"><span class="menu-link-title">Plumbing & Electrical</span><span class="menu-link-desc">Repeat work, estimates and invoices that slip.</span></a><a class="menu-link" href="/who-we-serve/owner-operators/"><span class="menu-link-title">Owner-Operators</span><span class="menu-link-desc">Solo and small crews with no time to chase.</span></a><a class="menu-link" href="/who-we-serve/growing-teams/"><span class="menu-link-title">Growing Teams</span><span class="menu-link-desc">Multiple techs, one clear view of missed revenue.</span></a></div></div></div><div class="has-menu"><button class="menu-btn" aria-haspopup="true" aria-expanded="false">What We Solve<span class="caret">&#9662;</span></button><div class="menu-panel"><div class="menu-panel-inner"><a class="menu-link" href="/solutions/cold-estimates/"><span class="menu-link-title">Cold Estimates</span><span class="menu-link-desc">Quotes that went quiet, ranked by what they're worth.</span></a><a class="menu-link" href="/solutions/unpaid-invoices/"><span class="menu-link-title">Unpaid Invoices</span><span class="menu-link-desc">Work you did that hasn't been paid for.</span></a><a class="menu-link" href="/solutions/lapsed-customers/"><span class="menu-link-title">Lapsed Customers</span><span class="menu-link-desc">Customers overdue for their next visit.</span></a><a class="menu-link" href="/solutions/cold-leads/"><span class="menu-link-title">Cold Leads</span><span class="menu-link-desc">Inquiries nobody answered fast enough.</span></a><a class="menu-link" href="/solutions/reputation/"><span class="menu-link-title">Reputation</span><span class="menu-link-desc">Reviews that need a reply, and happy customers to ask.</span></a><a class="menu-link" href="/solutions/maintenance-plans/"><span class="menu-link-title">Maintenance Plans</span><span class="menu-link-desc">Plans to renew and customers who never got offered one.</span></a></div></div></div><div class="has-menu"><button class="menu-btn" aria-haspopup="true" aria-expanded="false">Resources<span class="caret">&#9662;</span></button><div class="menu-panel"><div class="menu-panel-inner"><a class="menu-link" href="/resources/"><span class="menu-link-title">Guides & Playbooks</span><span class="menu-link-desc">Practical how-tos for recovering revenue.</span></a><a class="menu-link" href="/resources/revenue-leak-calculator/"><span class="menu-link-title">Revenue Leak Calculator</span><span class="menu-link-desc">Estimate what's slipping, with your own numbers.</span></a><a class="menu-link" href="/resources/integrations/"><span class="menu-link-title">Integrations</span><span class="menu-link-desc">What connects today, and what's coming.</span></a><a class="menu-link" href="/resources/how-it-works/"><span class="menu-link-title">How It Works</span><span class="menu-link-desc">From connecting your data to a recovered dollar.</span></a><a class="menu-link" href="https://perche-revenue-solutions.vercel.app/help"><span class="menu-link-title">Help Center</span><span class="menu-link-desc">Answers for current customers.</span></a></div></div></div><div class="has-menu"><button class="menu-btn" aria-haspopup="true" aria-expanded="false">About<span class="caret">&#9662;</span></button><div class="menu-panel"><div class="menu-panel-inner"><a class="menu-link" href="/about/who-we-are/"><span class="menu-link-title">Who We Are</span><span class="menu-link-desc">Why Perch&eacute; exists.</span></a><a class="menu-link" href="/about/our-approach/"><span class="menu-link-title">Our Approach</span><span class="menu-link-desc">Explainable, read-only, conservative.</span></a><a class="menu-link" href="/about/trust-and-security/"><span class="menu-link-title">Trust & Security</span><span class="menu-link-desc">How we handle your data.</span></a><a class="menu-link" href="/contact/"><span class="menu-link-title">Get in Touch</span><span class="menu-link-desc">Talk to a real person.</span></a></div></div></div>
+      <a class="nav-plain" href="/pricing/">Pricing</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-login" href="https://perche-revenue-solutions.vercel.app/login">Sign In</a>
+      <a class="btn btn-primary" href="/contact/">Get in Touch</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mm-group"><button class="mm-toggle" aria-expanded="false">Who We Serve<span class="caret">&#9662;</span></button><div class="mm-links"><a href="/who-we-serve/hvac-contractors/">HVAC Contractors</a><a href="/who-we-serve/plumbing-electrical/">Plumbing & Electrical</a><a href="/who-we-serve/owner-operators/">Owner-Operators</a><a href="/who-we-serve/growing-teams/">Growing Teams</a></div></div><div class="mm-group"><button class="mm-toggle" aria-expanded="false">What We Solve<span class="caret">&#9662;</span></button><div class="mm-links"><a href="/solutions/cold-estimates/">Cold Estimates</a><a href="/solutions/unpaid-invoices/">Unpaid Invoices</a><a href="/solutions/lapsed-customers/">Lapsed Customers</a><a href="/solutions/cold-leads/">Cold Leads</a><a href="/solutions/reputation/">Reputation</a><a href="/solutions/maintenance-plans/">Maintenance Plans</a></div></div><div class="mm-group"><button class="mm-toggle" aria-expanded="false">Resources<span class="caret">&#9662;</span></button><div class="mm-links"><a href="/resources/">Guides & Playbooks</a><a href="/resources/revenue-leak-calculator/">Revenue Leak Calculator</a><a href="/resources/integrations/">Integrations</a><a href="/resources/how-it-works/">How It Works</a><a href="https://perche-revenue-solutions.vercel.app/help">Help Center</a></div></div><div class="mm-group"><button class="mm-toggle" aria-expanded="false">About<span class="caret">&#9662;</span></button><div class="mm-links"><a href="/about/who-we-are/">Who We Are</a><a href="/about/our-approach/">Our Approach</a><a href="/about/trust-and-security/">Trust & Security</a><a href="/contact/">Get in Touch</a></div></div>
+    <a class="mm-plain" href="/pricing/">Pricing</a>
+    <div class="mm-cta">
+      <a class="btn btn-login" href="https://perche-revenue-solutions.vercel.app/login">Sign In</a>
+      <a class="btn btn-primary" href="/contact/">Get in Touch</a>
+    </div>
+  </div>
+</header>
+<main><section class="page-hero"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span>/</span> <span>Resources</span></nav>
+<div class="eyebrow">RESOURCES</div>
+<h1 class="page-title">Practical guides for <span class="accent">recovering revenue</span></h1>
+<p class="page-sub">Playbooks, scripts and tools for home service owners. No fluff, no made-up statistics.</p></div></section>
+<section class=""><div class="wrap"><h2 class="section-title">Guides & playbooks</h2><div class="grid grid-2"><a class="card guide-card card-hover" href="/resources/follow-up-on-cold-estimates/"><div class="guide-tag">Guide</div><h3 class="feature-title">How to follow up on a cold estimate</h3><p class="feature-body">A practical cadence, with scripts you can copy.</p><div class="guide-meta">Read the guide &rarr;</div></a><a class="card guide-card card-hover" href="/resources/invoice-collection-checklist/"><div class="guide-tag">Guide</div><h3 class="feature-title">An invoice collection checklist</h3><p class="feature-body">From friendly reminder to firm phone call.</p><div class="guide-meta">Read the guide &rarr;</div></a><a class="card guide-card card-hover" href="/resources/maintenance-plan-playbook/"><div class="guide-tag">Guide</div><h3 class="feature-title">The maintenance plan playbook</h3><p class="feature-body">Pricing, pitching and renewing plans customers keep.</p><div class="guide-meta">Read the guide &rarr;</div></a><a class="card guide-card card-hover" href="/resources/responding-to-reviews/"><div class="guide-tag">Guide</div><h3 class="feature-title">Responding to reviews</h3><p class="feature-body">What to say to five stars, three stars and one star.</p><div class="guide-meta">Read the guide &rarr;</div></a></div></div></section>
+<section class="band"><div class="wrap"><h2 class="section-title">Tools & reference</h2><div class="grid grid-3"><div class="card feature-card card-hover"><div class="card-icon">&#129518;</div><h3 class="feature-title">Revenue Leak Calculator</h3><p class="feature-body">Plug in your own numbers to estimate what quiet quotes and late invoices may be costing you.</p><a class="card-link" href="/resources/revenue-leak-calculator/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><div class="card-icon">&#128279;</div><h3 class="feature-title">Integrations</h3><p class="feature-body">What connects today, what's waiting on approval, and how to bring in anything else.</p><a class="card-link" href="/resources/integrations/">Learn more &rarr;</a></div><div class="card feature-card card-hover"><div class="card-icon">&#9881;</div><h3 class="feature-title">How Perch&eacute; works</h3><p class="feature-body">The path from connecting your data to a recovered dollar, step by step.</p><a class="card-link" href="/resources/how-it-works/">Learn more &rarr;</a></div></div></div></section>
+<section><div class="wrap"><div class="cta-band">
+<div><h2 class="cta-title">See what your own numbers say</h2><p class="cta-sub">Start a 14-day free trial &mdash; no card required &mdash; or talk to a real person first.</p></div>
+<div class="cta-actions"><a class="btn btn-primary" href="https://perche-revenue-solutions.vercel.app/signup" style="padding:13px 24px;font-size:14.5px;">Start 14-day free trial</a><a class="btn btn-ghost" href="/contact/" style="padding:13px 24px;font-size:14.5px;">Get in Touch</a></div></div></div></section>
+</main><footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="/assets/logo-v2.png" alt="Perch&eacute;" width="24" height="24">
+          <span class="brand-name">Perch<span>&eacute;</span></span>
+        </div>
+        <div class="footer-tagline">Revenue intelligence for home service businesses. Perch&eacute; finds the money you've already earned or almost earned &mdash; cold quotes, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.</div>
+        <div class="footer-addr">Perch&eacute; AI Solutions LLC<br>1100 S Miami Ave, Miami, FL 33130<br><a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a></div>
+      </div>
+      <div class="footer-col"><div class="footer-col-title">Who We Serve</div><a href="/who-we-serve/hvac-contractors/">HVAC Contractors</a><a href="/who-we-serve/plumbing-electrical/">Plumbing & Electrical</a><a href="/who-we-serve/owner-operators/">Owner-Operators</a><a href="/who-we-serve/growing-teams/">Growing Teams</a></div>
+      <div class="footer-col"><div class="footer-col-title">What We Solve</div><a href="/solutions/cold-estimates/">Cold Estimates</a><a href="/solutions/unpaid-invoices/">Unpaid Invoices</a><a href="/solutions/lapsed-customers/">Lapsed Customers</a><a href="/solutions/cold-leads/">Cold Leads</a><a href="/solutions/reputation/">Reputation</a><a href="/solutions/maintenance-plans/">Maintenance Plans</a></div>
+      <div class="footer-col"><div class="footer-col-title">Resources</div><a href="/resources/">Guides & Playbooks</a><a href="/resources/revenue-leak-calculator/">Revenue Leak Calculator</a><a href="/resources/integrations/">Integrations</a><a href="/resources/how-it-works/">How It Works</a><a href="https://perche-revenue-solutions.vercel.app/help">Help Center</a><a href="https://perche-revenue-solutions.vercel.app/privacy">Privacy Policy</a><a href="https://perche-revenue-solutions.vercel.app/terms">Terms of Service</a></div>
+      <div class="footer-col"><div class="footer-col-title">Company</div><a href="/about/who-we-are/">Who We Are</a><a href="/about/our-approach/">Our Approach</a><a href="/about/trust-and-security/">Trust & Security</a><a href="/contact/">Get in Touch</a><a href="/pricing/">Pricing</a><a href="https://perche-revenue-solutions.vercel.app/login">Sign In</a><a href="https://perche-revenue-solutions.vercel.app/signup">Start free trial</a></div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Perch&eacute; AI Solutions LLC</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="https://perche-revenue-solutions.vercel.app/privacy">Privacy</a>
+        <a href="https://perche-revenue-solutions.vercel.app/terms">Terms</a>
+        <a href="https://perche-revenue-solutions.vercel.app/security">Security</a>
+        <a href="https://perche-revenue-solutions.vercel.app/subprocessors">Subprocessors</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+  hb.addEventListener('click',function(){var o=mm.classList.toggle('open');hb.setAttribute('aria-expanded',o);document.body.classList.toggle('menu-open',o);});
+  document.querySelectorAll('.mm-toggle').forEach(function(b){b.addEventListener('click',function(){var g=b.parentElement;var o=g.classList.toggle('open');b.setAttribute('aria-expanded',o);});});
+  document.querySelectorAll('.menu-btn').forEach(function(b){
+    b.addEventListener('click',function(ev){ev.stopPropagation();var p=b.parentElement;var was=p.classList.contains('open');document.querySelectorAll('.has-menu.open').forEach(function(x){x.classList.remove('open');x.firstChild.setAttribute('aria-expanded','false');});if(!was){p.classList.add('open');b.setAttribute('aria-expanded','true');}});
+  });
+  document.addEventListener('click',function(){document.querySelectorAll('.has-menu.open').forEach(function(x){x.classList.remove('open');});});
+  document.addEventListener('keydown',function(ev){if(ev.key==='Escape'){document.querySelectorAll('.has-menu.open').forEach(function(x){x.classList.remove('open');});}});
+  document.querySelectorAll('.faq-q').forEach(function(btn){btn.addEventListener('click',function(){btn.parentElement.classList.toggle('open');});});
+})();
+</script>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</body>
+</html>

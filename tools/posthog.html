@@ -1,0 +1,46 @@
+<!--
+  PostHog - marketing site analytics. Same project as the product app
+  (perche-revenue-solutions.vercel.app), so a visitor who reads this
+  page and later signs up shows up as one continuous journey instead
+  of two disconnected data sets. Autocapture is on here (unlike the
+  app, where it's off) because this page has no business/customer
+  data to accidentally pick up - it's safe to see every click.
+-->
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSurveyState onSessionInit debug getPageViewId createPersonProfile requestNotificationPermission".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_ur5pFYA2Sbxv8At9WiNU4T8UHc6gENjMybRBuoipv7VY', {
+    api_host: 'https://us.i.posthog.com',
+    person_profiles: 'always'
+  })
+</script>
+
+<!--
+  Cross-domain identity: perchesolutions.com and the app
+  (perche-revenue-solutions.vercel.app) are separate domains, not
+  subdomains of one site, so PostHog's automatic first-party cookie
+  sharing doesn't reach across them on its own. This decorates any
+  outbound link to the app with this visitor's PostHog id right before
+  it's clicked, so the app can bootstrap with the same identity instead
+  of starting a brand new anonymous person. See initAnalytics() in
+  frontend/src/analytics.js for the app-side half of this.
+-->
+<script>
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href*="perche-revenue-solutions.vercel.app"]');
+    if (!link) return;
+    try {
+      var distinctId = posthog.get_distinct_id();
+      var sessionId = posthog.get_session_id();
+      if (!distinctId) return;
+      var url = new URL(link.href);
+      var params = new URLSearchParams();
+      params.set('distinct_id', distinctId);
+      if (sessionId) params.set('session_id', sessionId);
+      url.hash = params.toString();
+      link.href = url.toString();
+    } catch (err) {
+      // Analytics never blocks navigation - if anything above throws,
+      // the link just goes to its original, undecorated href.
+    }
+  }, true);
+</script>
