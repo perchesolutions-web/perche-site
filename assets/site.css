@@ -415,3 +415,7 @@ section.center .section-title,section.center .section-sub{text-align:center;marg
   .cta-actions{flex-direction:column;}
   .mm-cta{flex-direction:column;}
 }
+
+/* v3 fix: .hero shorthand padding was zeroing .wrap's side padding */
+.wrap.hero{padding-left:24px;padding-right:24px;}
+@media (max-width:520px){.wrap.hero{padding-left:20px;padding-right:20px;}}
