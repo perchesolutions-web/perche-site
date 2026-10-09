@@ -61,7 +61,7 @@ how_cards = steps([
 ])
 
 hero = """<section class="home-hero"><div class="wrap">
-<h1 class="home-title">Find the <span class="accent">revenue</span> your home service business is missing</h1>
+<h1 class="home-title">Find the <span class="accent">revenue</span> your business is missing</h1>
 <p class="home-sub">Perch&eacute; reads the software you already use and shows you the quotes, invoices, customers and leads that are quietly costing you money &mdash; with the follow-up already written.</p>
 <div class="home-ctas">""" + TRIAL + call_btn() + """</div>
 <div class="home-fine">No card required &middot; Read-only access &middot; Cancel any time</div>
@@ -84,7 +84,7 @@ home_body = '<div class="home">' + (
 home_body = home_body.replace('href="#pricing"', 'href="/pricing/"')
 schema = "".join(re.findall(r'<script type="application/ld\+json">.*?</script>', orig, re.S))
 home_html = (head("Perch&eacute; (Perche) | Revenue Intelligence Software for Home Service Businesses",
-                  "Perch&eacute; finds the revenue your home service business is missing &mdash; cold estimates, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.",
+                  "Perch&eacute; finds the revenue your business is missing &mdash; cold estimates, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.",
                   "/", schema=schema) + nav() + "<main>" + home_body + "</main>" + footer())
 open(os.path.join(ROOT, "index.html"), "w").write(home_html)
 
