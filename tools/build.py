@@ -44,42 +44,43 @@ def between(s, start, end):
     i = s.index(start); j = s.index(end, i)
     return s[i:j]
 
-hero_and_ticker = between(orig, '<div class="wrap hero">', '<section class="band">')
-hero_and_ticker = hero_and_ticker.replace(
-    '<h1 class="hero-title">Stop losing <span class="accent">revenue</span> you already earned</h1>',
-    '<h1 class="hero-title">Find the <span class="accent">revenue</span> your home service business is missing</h1>')
-hero_and_ticker = re.sub(r'<p class="hero-sub">.*?</p>',
-    '<p class="hero-sub">Perch&eacute; reads the software you already use and shows you the quotes, invoices, customers, leads and reviews that are quietly costing you money &mdash; with the follow-up already written.</p>',
-    hero_and_ticker, count=1, flags=re.S)
-hero_and_ticker = hero_and_ticker.replace('<a class="btn btn-ghost" href="#how-it-works"', '<a class="btn btn-ghost" href="/resources/how-it-works/"')
-rest_start = orig.index('<section class="band">')
-leaks = between(orig, '<section class="band">', '<section class="wrap" id="how-it-works">')
-howit = between(orig, '<section class="wrap" id="how-it-works">', '<section class="band">\n  <div class="wrap">\n  <h2 class="section-title">Built to be trusted') if False else None
-sections = re.findall(r'<section.*?</section>', orig[rest_start:], re.S)
-# sections: 0 leaks band, 1 how-it-works, 2 trust, 3 compare, 4 pricing, 5 faq, 6 contact
+sections = re.findall(r'<section.*?</section>', orig[orig.index('<section class="band">'):], re.S)
 leaks_s, how_s, trust_s, compare_s, pricing_s, faq_s = sections[:6]
-leaks_s = leaks_s.replace("Three ways revenue quietly slips away", "Five ways revenue quietly slips away") if "Three ways" in leaks_s else leaks_s
 
-solve_cards = cards([(t, d, h, None) for t, h, d in NAV[1][1]], 3)
-serve_cards = cards([(t, d, h, None) for t, h, d in NAV[0][1]], 4)
-integ_chips = '<div class="chip-row">' + "".join(f'<span class="chip">{n}</span>' for n in ["Jobber", "Housecall Pro", "Service Fusion", "Workiz", "Spreadsheets &amp; CSV", "Inbound API (Zapier, Make, GoHighLevel)", "Meta lead ads", "Google Business Profile", "Stripe", "Slack"]) + '</div><p class="kicker" style="margin-top:16px;">Some connections are still pending platform approval. <a href="/resources/integrations/" style="color:var(--accent-light);">See exactly what is live today &rarr;</a></p>'
-res_cards = cards([(t, d, h, None) for t, d, h in pages_resources.GUIDE_INDEX[:3]] , 3)
+what_cards = cards([
+    ("Quotes that went quiet", "Estimates that were sent and never answered, ranked by dollars and how cold they are, each with a follow-up ready to send.", "/solutions/cold-estimates/"),
+    ("Invoices nobody paid", "Everything past due in one list, with the right nudge for each customer.", "/solutions/unpaid-invoices/"),
+    ("Customers who drifted", "Past customers due for service, with a friendly check-in ready to go.", "/solutions/lapsed-customers/"),
+    ("Leads and reviews", "Inquiries nobody answered and reviews nobody replied to, in one place.", "/solutions/cold-leads/"),
+], 4)
 
-home_body = (
-    hero_and_ticker +
-    section("What we solve", "Perch&eacute; looks across your quotes, invoices, customers, leads and reviews and shows you where the money is slipping.", solve_cards, id_="solve") +
-    leaks_s.replace('<section class="band">', '<section class="band" id="leaks">', 1) +
-    how_s +
-    section("Who we serve", "Built first for HVAC, useful for any trade that quotes, invoices and has repeat customers.", serve_cards, band=True, id_="serve") +
-    section("Works with the tools you already use", "Connect your field service software, upload a spreadsheet, or send data through the inbound API.", integ_chips) +
-    trust_s.replace('<section class="band">', '<section class="band" id="trust">', 1) +
-    compare_s +
+how_cards = steps([
+    ("Connect", "Link Jobber, Housecall Pro, Service Fusion or Workiz, or upload a spreadsheet. Access is read-only."),
+    ("See what's slipping", "Perch&eacute; flags the quotes, invoices, customers and leads that need attention, in plain English."),
+    ("Follow up in a click", "Review the message, press send, and track what comes back."),
+])
+
+hero = """<section class="home-hero"><div class="wrap">
+<h1 class="home-title">Find the <span class="accent">revenue</span> your home service business is missing</h1>
+<p class="home-sub">Perch&eacute; reads the software you already use and shows you the quotes, invoices, customers and leads that are quietly costing you money &mdash; with the follow-up already written.</p>
+<div class="home-ctas">""" + TRIAL + call_btn() + """</div>
+<div class="home-fine">No card required &middot; Read-only access &middot; Cancel any time</div>
+<div class="home-integrates"><span class="home-integrates-label">Works with</span><span>Jobber</span><span>Housecall Pro</span><span>Service Fusion</span><span>Workiz</span><span>Spreadsheets</span></div>
+<div class="home-visual">""" + mock_flags([
+    ("Cold estimate", "amber", "amber-bg", "Sent 11 days ago, no response", "Furnace replacement quote", "$4,200"),
+    ("Unpaid invoice", "red", "red-bg", "27 days past due", "AC tune-up + repair", "$610"),
+    ("Lapsed customer", "green", "green-bg", "14 months since last visit", "Due for annual maintenance", "$220"),
+]) + """</div></div></section>
+"""
+
+home_body = '<div class="home">' + (
+    hero +
+    section("What Perch&eacute; does", "One place that shows where your money is slipping away, and what to do about it.", what_cards, center=True, id_="solve") +
+    section("How it works", "Set up in minutes. No new habits to learn.", how_cards, band=True, center=True, id_="how-it-works") +
     pricing_s +
-    section("Guides & playbooks", "Practical, no-fluff how-tos. See all in <a href=\"/resources/\" style=\"color:var(--accent-light);\">Resources</a>.", res_cards, band=True) +
     faq_s +
     cta_band("Ready to see what you're missing?", "Start a 14-day free trial &mdash; no card required &mdash; or book a free 15-minute call.")
-)
-# anchor links inside original sections
+) + "</div>"
 home_body = home_body.replace('href="#pricing"', 'href="/pricing/"')
 schema = "".join(re.findall(r'<script type="application/ld\+json">.*?</script>', orig, re.S))
 home_html = (head("Perch&eacute; (Perche) | Revenue Intelligence Software for Home Service Businesses",
