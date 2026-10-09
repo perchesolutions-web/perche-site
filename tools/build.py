@@ -15,8 +15,8 @@ def write(path, html):
 def full(p):
     return head(p["title"], p["desc"], p["path"], schema=p.get("schema", "")) + nav() + "<main>" + p["body"] + "</main>" + footer()
 
-import pages_solutions, pages_segments, pages_resources, pages_about
-pages = pages_solutions.PAGES + pages_segments.PAGES + pages_resources.PAGES + pages_about.PAGES
+import pages_solutions, pages_segments, pages_resources, pages_about, pages_seo
+pages = pages_solutions.PAGES + pages_segments.PAGES + pages_resources.PAGES + pages_about.PAGES + pages_seo.PAGES
 
 # ---------- pricing ----------
 m = re.search(r'<section class="wrap" id="pricing">(.*?)</section>', orig, re.S)

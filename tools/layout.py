@@ -23,6 +23,7 @@ NAV = [
     ]),
     ("Resources", [
         ("Guides & Playbooks", "/resources/", "Practical how-tos for recovering revenue."),
+        ("Revenue Intelligence 101", "/revenue-intelligence-for-home-services/", "What it is and what it should cover."),
         ("Revenue Leak Calculator", "/resources/revenue-leak-calculator/", "Estimate what's slipping, with your own numbers."),
         ("Integrations", "/resources/integrations/", "What connects today, and what's coming."),
         ("How It Works", "/resources/how-it-works/", "From connecting your data to a recovered dollar."),
@@ -96,7 +97,7 @@ def head(title, desc, path, extra_head="", schema=""):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=11">
+<link rel="stylesheet" href="/assets/site.css?v=12">
 {schema}
 {extra_head}
 {POSTHOG}
@@ -153,7 +154,7 @@ def footer():
             f'<a href="{h}">{t}</a>' for t, h in items) + "</div>"
     who = [(t, h) for t, h, d in NAV[0][1]]
     solve = [(t, h) for t, h, d in NAV[1][1]]
-    res = [(t, h) for t, h, d in NAV[2][1]] + [("Privacy Policy", APP + "/privacy"), ("Terms of Service", APP + "/terms")]
+    res = [(t, h) for t, h, d in NAV[2][1]] + [("Buyer's Guide", "/resources/revenue-intelligence-software-buyers-guide/"), ("HVAC Customer Retention", "/resources/hvac-customer-retention/"), ("Perch&eacute; vs. Arch", "/alternatives/arch/"), ("Privacy Policy", APP + "/privacy"), ("Terms of Service", APP + "/terms")]
     about = [(t, h) for t, h, d in NAV[3][1]] + [("Pricing", "/pricing/"), ("Sign In", APP + "/login"), ("Start free trial", APP + "/signup")]
     return f"""<footer>
   <div class="wrap">
