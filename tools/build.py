@@ -61,7 +61,7 @@ how_cards = steps([
 ])
 
 hero = """<section class="home-hero"><div class="wrap">
-<h1 class="home-title">Find the <span class="accent">revenue</span> your business is missing</h1>
+<h1 class="home-title">Find the <span class="accent">Revenue</span> Your Business Is Missing</h1>
 <p class="home-sub">Perch&eacute; reads the software you already use and shows you the quotes, invoices, customers and leads that are quietly costing you money &mdash; with the follow-up already written.</p>
 <div class="home-ctas">""" + TRIAL + call_btn() + """</div>
 <div class="home-fine">No card required &middot; Read-only access &middot; Cancel any time</div>
