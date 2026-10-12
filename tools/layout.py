@@ -6,6 +6,21 @@ APP = "https://perche-revenue-solutions.vercel.app"
 CAL = "https://calendly.com/perchesolutions/free-worldflow-audit"
 SITE = "https://perchesolutions.com"
 
+# ---- Site-wide configuration (edit here) -------------------------------
+# App links: the build rewrites every https://perche-revenue-solutions.vercel.app
+# link to APP at output time, so switching to app.perchesolutions.com is a
+# one-line change once that subdomain is live and verified.
+SUPPORT_EMAIL = "hello@perchesolutions.com"
+PHONE_DISPLAY = ""   # e.g. "(305) 555-0123"  - header phone shows only when set
+PHONE_TEL = ""       # e.g. "+13055550123"
+# Founder block (Who We Are + small version on the home page). Renders only
+# when BOTH name and photo are set; nothing placeholder ever goes live.
+FOUNDER = {"name": "", "title": "Founder, Perch&eacute;", "photo": ""}  # photo: path like /assets/founder.jpg
+FOUNDER_BIO = ("I spent my career in FP&amp;A and revenue analysis, where the first question is always: where is the money going? "
+               "Home service shops lose a lot of it quietly &mdash; quotes nobody followed up on, invoices that aged, customers who drifted &mdash; "
+               "and most don't have an analyst to find it. I built Perch&eacute; to be that analyst for you.")  # DRAFT: owner to edit/approve
+LEGACY_APP = "https://perche-revenue-solutions.vercel.app"
+
 NAV = [
     ("Who We Serve", [
         ("HVAC Contractors", "/who-we-serve/hvac-contractors/", "Maintenance plans, cold quotes and seasonal swings."),
@@ -23,6 +38,7 @@ NAV = [
     ]),
     ("Resources", [
         ("Guides & Playbooks", "/resources/", "Practical how-tos for recovering revenue."),
+        ("Free Revenue Leak Audit", "/audit/", "See your total in minutes. Read-only."),
         ("Revenue Intelligence 101", "/revenue-intelligence-for-home-services/", "What it is and what it should cover."),
         ("Revenue Leak Calculator", "/resources/revenue-leak-calculator/", "Estimate what's slipping, with your own numbers."),
         ("Integrations", "/resources/integrations/", "What connects today, and what's coming."),
@@ -48,7 +64,7 @@ def seo_schema(path, title):
            "name": "Perché", "alternateName": ["Perche", "Perche Solutions", "Perché AI Solutions"],
            "url": SITE + "/", "logo": SITE + "/assets/logo-v2.png",
            "description": "Perché is revenue intelligence software for home service businesses. It finds cold estimates, unpaid invoices, lapsed customers, ignored leads and unanswered reviews.",
-           "email": "perchesolutions@gmail.com"}
+           "email": SUPPORT_EMAIL}
     out = ['<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False) + "</script>"]
     if path == "/":
         site = {"@context": "https://schema.org", "@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/",
@@ -97,7 +113,7 @@ def head(title, desc, path, extra_head="", schema=""):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=12">
+<link rel="stylesheet" href="/assets/site.css?v=13">
 {schema}
 {extra_head}
 {POSTHOG}
@@ -107,6 +123,7 @@ def head(title, desc, path, extra_head="", schema=""):
 
 
 def nav():
+    PHONE_LINK = (f'<a class="nav-phone" href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>' if PHONE_TEL and PHONE_DISPLAY else "")
     desk = []
     for label, items in NAV:
         links = "".join(
@@ -131,6 +148,7 @@ def nav():
       <a class="nav-plain" href="/pricing/">Pricing</a>
     </nav>
     <div class="nav-cta">
+      {PHONE_LINK}
       <a class="btn btn-login" href="{APP}/login">Sign In</a>
       <a class="btn btn-primary" href="/contact/">Get in Touch</a>
     </div>
@@ -140,6 +158,7 @@ def nav():
     {''.join(mob)}
     <a class="mm-plain" href="/pricing/">Pricing</a>
     <div class="mm-cta">
+      {PHONE_LINK}
       <a class="btn btn-login" href="{APP}/login">Sign In</a>
       <a class="btn btn-primary" href="/contact/">Get in Touch</a>
     </div>
@@ -154,7 +173,7 @@ def footer():
             f'<a href="{h}">{t}</a>' for t, h in items) + "</div>"
     who = [(t, h) for t, h, d in NAV[0][1]]
     solve = [(t, h) for t, h, d in NAV[1][1]]
-    res = [(t, h) for t, h, d in NAV[2][1]] + [("Buyer's Guide", "/resources/revenue-intelligence-software-buyers-guide/"), ("HVAC Customer Retention", "/resources/hvac-customer-retention/"), ("Perch&eacute; vs. Arch", "/alternatives/arch/"), ("Privacy Policy", APP + "/privacy"), ("Terms of Service", APP + "/terms")]
+    res = [(t, h) for t, h, d in NAV[2][1]] + [("Text Script Library", "/resources/text-script-library/"), ("Buyer's Guide", "/resources/revenue-intelligence-software-buyers-guide/"), ("HVAC Customer Retention", "/resources/hvac-customer-retention/"), ("Perch&eacute; vs. Arch", "/alternatives/arch/"), ("Privacy Policy", APP + "/privacy"), ("Terms of Service", APP + "/terms")]
     about = [(t, h) for t, h, d in NAV[3][1]] + [("Pricing", "/pricing/"), ("Sign In", APP + "/login"), ("Start free trial", APP + "/signup")]
     return f"""<footer>
   <div class="wrap">
@@ -165,7 +184,7 @@ def footer():
           <span class="brand-name">Perch<span>&eacute;</span></span>
         </div>
         <div class="footer-tagline">Revenue intelligence for home service businesses. Perch&eacute; finds the money you've already earned or almost earned &mdash; cold quotes, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.</div>
-        <div class="footer-addr">Perch&eacute; AI Solutions LLC<br>1100 S Miami Ave, Miami, FL 33130<br><a href="mailto:perchesolutions@gmail.com">perchesolutions@gmail.com</a></div>
+        <div class="footer-addr">Perch&eacute; AI Solutions LLC<br>1100 S Miami Ave, Miami, FL 33130<br><a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a></div>
       </div>
       {col("Who We Serve", who)}
       {col("What We Solve", solve)}
@@ -208,11 +227,11 @@ def btn(label, href, kind="primary", extra=""):
     return f'<a class="btn btn-{kind}" href="{href}" {extra}>{label}</a>'
 
 
-TRIAL = btn("Start 14-day free trial", APP + "/signup", "primary", 'style="padding:13px 24px;font-size:14.5px;"')
+TRIAL = btn("Get My Free Revenue Leak Audit", "/audit/", "primary", 'style="padding:13px 24px;font-size:14.5px;"')
 
 
 def call_btn():
-    return (f'<a class="btn btn-ghost" href="/contact/" style="padding:13px 24px;font-size:14.5px;">Get in Touch</a>')
+    return (f'<a class="btn btn-ghost" href="{CAL}" target="_blank" rel="noopener" onclick="if(window.Calendly){{Calendly.initPopupWidget({{url:\'{CAL}\'}});return false;}}" style="padding:13px 24px;font-size:14.5px;">Book a 15-min call</a>')
 
 
 def page_hero(eyebrow, title, sub, ctas=None, crumbs=None):

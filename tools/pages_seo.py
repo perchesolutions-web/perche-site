@@ -181,3 +181,62 @@ PAGES.append(_page("/alternatives/arch/",
     "Perch&eacute; vs. Arch: Revenue Intelligence for Home Services Compared | Perch&eacute;",
     "Comparing Perch&eacute; and Arch for home service businesses: integrations, features, pricing and which shop each tool fits.",
     b4, faqs3))
+
+
+# ============================================================
+# Free audit landing page
+# ============================================================
+au = page_hero("FREE AUDIT", "The Money Left on the Table <span class=\"accent\">Audit</span>",
+               "Connect read-only and see the total dollars sitting in cold estimates, unpaid invoices and lapsed customers. No card required.",
+               btn("Get My Free Revenue Leak Audit", APP + "/signup", "primary", 'style="padding:13px 24px;font-size:14.5px;"') + call_btn(),
+               [("Home", "/"), ("Free Audit", None)])
+au += section("How it works", "Three steps, about five minutes.", steps([
+    ("Connect read-only", "Link Jobber, Housecall Pro, Service Fusion or Workiz, or upload a spreadsheet. Perch&eacute; can only read; it can't change anything in your software."),
+    ("We scan your data", "Perch&eacute; looks across your estimates, invoices and customers for what has gone quiet or unpaid, using plain rules you can read."),
+    ("Get your one-page summary", "Your dashboard shows every item, and a summary is emailed to you with the totals for each category and the three biggest items to start with."),
+]), center=True)
+au += section("What the audit covers", None, cards([
+    ("Cold estimates", "Quotes sent and still open, with the total dollars and the biggest ones first.", "/solutions/cold-estimates/"),
+    ("Unpaid invoices", "What's past due, how late, and how likely each customer is to pay.", "/solutions/unpaid-invoices/"),
+    ("Lapsed customers", "People who used to book maintenance and haven't been back in a year.", "/solutions/lapsed-customers/"),
+], 3), band=True, center=True)
+au += section("What it doesn't do", None, '<div class="audit-callout">' + prose(
+    "<ul><li>It doesn't send anything to your customers. You decide who gets a message.</li>"
+    "<li>It doesn't write to your field service software. Access is read-only.</li>"
+    "<li>It doesn't ask for a card. You add one only if you choose a plan after your 14-day trial.</li>"
+    "<li>It doesn't promise that every flagged dollar will come back. It shows what's there and what is realistically likely to return.</li></ul>") + "</div>")
+au += cta_band("See what's slipping in your business", "Start your free audit &mdash; or book a 15-minute call and we'll walk through it together.")
+PAGES.append(_page("/audit/", "Free Revenue Leak Audit: The Money Left on the Table Audit | Perch&eacute;",
+    "Connect read-only and see how much money is sitting in cold estimates, unpaid invoices and lapsed customers. No card required.", au))
+
+# ============================================================
+# Text script library
+# ============================================================
+def script(title, when, text):
+    return f'<h3>{title}</h3><p><em>{when}</em></p><blockquote>{text}</blockquote>'
+
+sl = page_hero("SCRIPTS", "Text script library for <span class=\"accent\">HVAC and plumbing</span>",
+               "Short, ready-to-send replies for the objections customers actually raise. Edit the names and details, then send.", None,
+               [("Home", "/"), ("Resources", "/resources/"), ("Text Scripts", None)])
+sl += section(None, None, '<div class="article-meta">Copy, edit, send</div>' + prose(
+    "<p>Texts work best when they are short, specific and easy to answer. Replace the bracketed parts with real details, and send only to customers who have agreed to receive texts from you.</p>",
+    "<h2>When an estimate goes quiet</h2>",
+    script("First check-in", "About a week after sending the quote", "Hi [name], it's [you] at [company]. Just checking the [job] quote reached you and answering any questions. Happy to talk it through whenever suits."),
+    script("Offering help with the usual blockers", "A few days after the first check-in", "Hi [name], following up on the [job] quote. If timing or budget is the question, there are a couple of ways we can adjust it. Want a quick call?"),
+    script("The graceful close", "Last touch", "Hi [name], I don't want to keep bugging you, so this is my last note on the [job] quote. If anything changes, reply here and I'll pick it right back up."),
+    "<h2>Common objections</h2>",
+    script("\"I need to think about it\"", "Reply", "Of course, it's a big decision. Is there anything I can clarify to make it easier? I can also send a one-page summary of the options."),
+    script("\"I got a cheaper quote\"", "Reply", "Thanks for telling me. Would you be open to sharing what the other quote covers? I'd like to make sure we're comparing the same equipment, warranty and installation."),
+    script("\"I need to talk to my spouse\"", "Reply", "Totally understand. I can put together a short summary you can both look at. Would a call with both of you this week help?"),
+    script("\"Not right now\"", "Reply", "No problem. Would it help if I checked back in [month]? I'll note your system's age and what we discussed so we can pick up where we left off."),
+    "<h2>Invoices</h2>",
+    script("Friendly reminder", "Just past due", "Hi [name], a quick reminder that invoice [#] for $[amount] was due on [date]. You can pay here: [link]. Thanks again for choosing [company]."),
+    script("Firmer follow-up", "30+ days past due", "Hi [name], invoice [#] for $[amount] is now [X] days past due. Please pay today at [link] or call me at [number] so we can sort it out."),
+    "<h2>Maintenance plans</h2>",
+    script("Offering a plan after a visit", "Same day or next day", "Thanks for having us out today, [name]. Many of our customers add our annual plan so their system gets a tune-up each year at a set price. Want me to send the details?"),
+    script("Renewal reminder", "30 days before renewal", "Hi [name], your [company] maintenance plan renews on [date]. Reply YES and we'll keep your tune-up booked, or call if you'd like to change anything."),
+    "<p>See the <a href=\"/resources/follow-up-on-cold-estimates/\">cold estimate follow-up guide</a>, the <a href=\"/resources/invoice-collection-checklist/\">invoice collection checklist</a> and the <a href=\"/resources/maintenance-plan-playbook/\">maintenance plan playbook</a> for the thinking behind these.</p>",
+))
+sl += cta_band("Want these sent from the right place at the right time?", "Perch&eacute; flags what needs a message and has one ready for each.")
+PAGES.append(_page("/resources/text-script-library/", "Text Script Library for HVAC and Plumbing Follow-Ups | Perch&eacute;",
+    "Ready-to-send text scripts for quiet estimates, objections, unpaid invoices and maintenance plan renewals.", sl))

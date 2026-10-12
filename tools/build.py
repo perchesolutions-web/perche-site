@@ -8,6 +8,7 @@ orig = open(os.path.join(os.path.dirname(__file__), "index_original.html")).read
 layout.POSTHOG = open(os.path.join(os.path.dirname(__file__), "posthog.html")).read()
 
 def write(path, html):
+    html = html.replace(layout.LEGACY_APP, layout.APP)
     d = os.path.join(ROOT, path.strip("/"))
     os.makedirs(d, exist_ok=True)
     open(os.path.join(d, "index.html"), "w").write(html)
@@ -16,25 +17,27 @@ def full(p):
     return head(p["title"], p["desc"], p["path"], schema=p.get("schema", "")) + nav() + "<main>" + p["body"] + "</main>" + footer()
 
 import pages_solutions, pages_segments, pages_resources, pages_about, pages_seo
+import blocks
 pages = pages_solutions.PAGES + pages_segments.PAGES + pages_resources.PAGES + pages_about.PAGES + pages_seo.PAGES
 
 # ---------- pricing ----------
-m = re.search(r'<section class="wrap" id="pricing">(.*?)</section>', orig, re.S)
-pricing_inner = m.group(1)
 faq_items = [
-    ("Do you offer a free trial?", "Yes &mdash; 14 days on either plan. No card is required to sign up and see your first dashboard; you add one only when you choose a plan, and you won't be charged until the trial ends."),
-    ("What's the difference between Starter and Professional?", "Starter covers the core product: connect your software or a spreadsheet, get flagged on cold estimates, unpaid invoices and lapsed customers, and follow up by email. Professional adds automatic escalating follow-ups, text messages, Slack alerts, deeper reporting, maintenance-plan tracking and optional payment collection via Stripe Connect."),
+    ("Do you offer a free trial?", "Yes &mdash; 14 days on Starter and Professional. No card is required to sign up and see your first dashboard; you add one only when you choose a plan, and you won't be charged until the trial ends."),
+    ("What's the difference between Starter and Professional?", "Starter is the core product: connect your software or a spreadsheet, see flags for cold estimates, unpaid invoices and lapsed customers, work your lead and review inboxes, and follow up by email. Professional adds automatic escalating follow-ups, text messages, Slack alerts, deeper reporting and payment links, plus the First $5K Sprint setup, the text script library, the maintenance plan playbook and the Payback Guarantee."),
+    blocks.GUARANTEE_FAQ,
+    ("What is Done-For-You?", "A higher-touch plan where our team reviews your flags and sends and manages your follow-up outreach. It starts with a call rather than a self-serve signup. <a href=\"/contact/\" style=\"color:var(--accent-light);\">Book a call</a> to talk it through."),
     ("Can I switch plans or cancel?", "Yes. Cancel any time from Billing &mdash; you keep access through the period you've paid for. You can also export your data as a ZIP."),
-    ("Are there setup fees or contracts?", "No setup fees and no long-term contract. Pricing is a flat monthly subscription."),
+    ("Are there setup fees or contracts?", "No setup fees and no long-term contract on Starter or Professional. Pricing is a flat monthly subscription."),
     ("Is there a per-user charge?", "No. You can invite teammates without extra seat fees."),
     ("Do you offer custom or enterprise pricing?", "If you run a larger operation with specific needs, <a href=\"/contact/\" style=\"color:var(--accent-light);\">get in touch</a> and we'll talk it through."),
 ]
 pr = page_hero("PRICING", "Simple pricing, <span class=\"accent\">no surprises</span>",
-               "Two flat monthly plans. Both include a 14-day free trial with no card required to start.", None, [("Home", "/"), ("Pricing", None)])
-pr += '<section class="wrap" id="pricing" style="padding-top:24px;">' + re.sub(r'<h2 class="section-title">.*?</p>', '', pricing_inner, count=1, flags=re.S) + "</section>"
+               "Start self-serve with a 14-day free trial and no card required, or have our team run your follow-ups for you.", None, [("Home", "/"), ("Pricing", None)])
+pr += '<section class="wrap" id="pricing" style="padding-top:24px;"><div class="trial-banner"><div class="trial-banner-text">Starter and Professional include a 14-day free trial.</div><div style="font-size:13px;color:var(--muted);">No card required to sign up &mdash; add one only when you pick a plan, and you won\'t be charged until the trial ends.</div></div>' + blocks.pricing_cards() + "</section>"
+pr += blocks.guarantee_block("#guarantee-terms")
 pr += section("Pricing questions", None, faq(faq_items), band=True)
 pr += cta_band()
-pages.append(dict(path="/pricing/", title="Perch&eacute; Pricing | Revenue Intelligence for Home Services", desc="Perch&eacute; Starter is $299/month and Professional is $599/month. Both include a 14-day free trial with no card required to sign up.", body=pr, schema=faq_schema(faq_items)))
+pages.append(dict(path="/pricing/", title="Perch&eacute; Pricing | Revenue Intelligence for Home Services", desc="Perch&eacute; Starter is $299/month, Professional is $599/month with a payback guarantee, and Done-For-You is $1,500/month. 14-day free trial on self-serve plans.", body=pr, schema=faq_schema(faq_items)))
 
 for p in pages:
     write(p["path"], full(p))
@@ -62,9 +65,9 @@ how_cards = steps([
 
 hero = """<section class="home-hero"><div class="wrap">
 <h1 class="home-title">Find the <span class="accent">Revenue</span> Your Business Is Missing</h1>
-<p class="home-sub">Perch&eacute; reads the software you already use and shows you the quotes, invoices, customers and leads that are quietly costing you money &mdash; with the follow-up already written.</p>
+<p class="home-sub">Connect Jobber or Housecall Pro and see the dollar amount you&rsquo;re leaving on the table in under 5 minutes. Read-only, no card required.</p>
 <div class="home-ctas">""" + TRIAL + call_btn() + """</div>
-<div class="home-fine">No card required &middot; Read-only access &middot; Cancel any time</div>
+<div class="home-fine">Free audit &middot; Read-only access &middot; Cancel any time</div>
 <div class="home-integrates"><span class="home-integrates-label">Works with</span><span>Jobber</span><span>Housecall Pro</span><span>Service Fusion</span><span>Workiz</span><span>Spreadsheets</span></div>
 <div class="home-visual">""" + mock_flags([
     ("Cold estimate", "amber", "amber-bg", "Sent 11 days ago, no response", "Furnace replacement quote", "$4,200"),
@@ -73,20 +76,29 @@ hero = """<section class="home-hero"><div class="wrap">
 ]) + """</div></div></section>
 """
 
+items = re.findall(r'<button class="faq-q">(.*?)<span class="faq-plus">.*?<div class="faq-a-inner">(.*?)</div>', faq_s, re.S)
+items = [(q.strip(), a.strip()) for q, a in items]
+items.insert(2, blocks.GUARANTEE_FAQ)
+home_faq = section("Common questions", "Can't find what you need? Email <a href=\"mailto:" + SUPPORT_EMAIL + "\" style=\"color:var(--accent-light);\">" + SUPPORT_EMAIL + "</a>.", faq(items), center=True, id_="faq")
+blocks_pricing = section("Simple pricing", "Start self-serve with a 14-day free trial, or have us run your follow-ups.", blocks.pricing_cards(), center=True, id_="pricing")
 home_body = '<div class="home">' + (
     hero +
     section("What Perch&eacute; does", "One place that shows where your money is slipping away, and what to do about it.", what_cards, center=True, id_="solve") +
+    blocks.compare_fsm_section() +
+    blocks.flag_logic_section() +
     section("How it works", "Set up in minutes. No new habits to learn.", how_cards, band=True, center=True, id_="how-it-works") +
-    pricing_s +
-    faq_s +
-    cta_band("Ready to see what you're missing?", "Start a 14-day free trial &mdash; no card required &mdash; or book a free 15-minute call.")
+    blocks_pricing +
+    home_faq +
+    blocks.guarantee_block() +
+    blocks.founder_block(small=True) +
+    cta_band("Ready to see what you're missing?", "Get your free Money Left on the Table Audit &mdash; no card required &mdash; or book a free 15-minute call.")
 ) + "</div>"
 home_body = home_body.replace('href="#pricing"', 'href="/pricing/"')
 schema = "".join(re.findall(r'<script type="application/ld\+json">.*?</script>', orig, re.S))
 home_html = (head("Perch&eacute; (Perche) | Revenue Intelligence Software for Home Service Businesses",
                   "Perch&eacute; finds the revenue your business is missing &mdash; cold estimates, unpaid invoices, lapsed customers, ignored leads and unanswered reviews &mdash; and helps you recover it.",
                   "/", schema=schema) + nav() + "<main>" + home_body + "</main>" + footer())
-open(os.path.join(ROOT, "index.html"), "w").write(home_html)
+open(os.path.join(ROOT, "index.html"), "w").write(home_html.replace(layout.LEGACY_APP, layout.APP))
 
 # ---------- sitemap ----------
 urls = ["/"] + [p["path"] for p in pages]

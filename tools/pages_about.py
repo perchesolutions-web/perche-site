@@ -22,6 +22,8 @@ w += section("What we believe", None, cards([
     ("Respect your data and your customers", "Read-only connections. Nothing sent to your customers without your say-so unless you opt in.", None, None),
 ], 3), band=True)
 w += section(None, None, callout("<strong>We're early, and we say so.</strong> You won't find invented customer logos, testimonials or statistics on this site. When customers choose to share their experience, it will appear here with their permission.", "honest"))
+import blocks
+w += blocks.founder_block()
 w += cta_band("Talk to a real person", "Tell us how your business works and we'll tell you honestly whether Perch&eacute; fits.")
 PAGES.append(dict(path="/about/who-we-are/", title="Who We Are | Perch&eacute;", desc="Perch&eacute; is a small team building revenue intelligence for home service businesses, based in Miami, Florida.", body=w, schema=""))
 
@@ -63,7 +65,7 @@ t += section("What we will never do", None, bullets([
     "Write changes into your field service software.",
 ]), band=True)
 t += section("Read the details", None, prose(
-    f"Our full <a href=\"{APP}/security\">security overview</a>, <a href=\"{APP}/subprocessors\">subprocessor list</a>, <a href=\"{APP}/privacy\">privacy policy</a> and <a href=\"{APP}/terms\">terms of service</a> live in the product so there's a single source of truth. Questions or want to report a concern? <a href=\"/contact/\">Get in touch</a> or email <a href=\"mailto:perchesolutions@gmail.com\">perchesolutions@gmail.com</a>."))
+    f"Our full <a href=\"{APP}/security\">security overview</a>, <a href=\"{APP}/subprocessors\">subprocessor list</a>, <a href=\"{APP}/privacy\">privacy policy</a> and <a href=\"{APP}/terms\">terms of service</a> live in the product so there's a single source of truth. Questions or want to report a concern? <a href=\"/contact/\">Get in touch</a> or email <a href=\"mailto:hello@perchesolutions.com\">hello@perchesolutions.com</a>."))
 t += cta_band()
 PAGES.append(dict(path="/about/trust-and-security/", title="Trust & Security | Perch&eacute;", desc="How Perch&eacute; protects your data: encryption, read-only access, two-factor sign-in, tenant isolation and clear limits on what we do.", body=t, schema=""))
 
@@ -71,9 +73,9 @@ PAGES.append(dict(path="/about/trust-and-security/", title="Trust & Security | P
 c = page_hero("GET IN TOUCH", "Talk to a <span class=\"accent\">real person</span>",
               "Questions before you start? Want to see whether Perch&eacute; fits how you run your business? We read everything.", None,
               [("Home", "/"), ("Contact", None)])
-c += section(None, None, '<div class="split"><div>' + cards([
+c += section(None, None, f'<div class="cal-inline"><div class="calendly-inline-widget" data-url="{CAL}?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div></div><p style="text-align:center;font-size:13px;color:var(--muted2);margin:-14px 0 36px;">Prefer to write? Use the form below.</p>' + '<div class="split"><div>' + cards([
     ("Book a free 15-minute call", f"Pick a time that suits you. <br><br><a class=\"btn btn-primary\" href=\"{CAL}\" target=\"_blank\" rel=\"noopener\" onclick=\"if(window.Calendly){{Calendly.initPopupWidget({{url:'{CAL}'}});return false;}}\">Book a call</a>", None, "&#128222;"),
-    ("Email us", "<a href=\"mailto:perchesolutions@gmail.com\" style=\"color:var(--accent-light);\">perchesolutions@gmail.com</a>", None, "&#9993;"),
+    ("Email us", "<a href=\"mailto:hello@perchesolutions.com\" style=\"color:var(--accent-light);\">hello@perchesolutions.com</a>", None, "&#9993;"),
     ("Already a customer?", f"<a href=\"{APP}/help\" style=\"color:var(--accent-light);\">Visit the Help Center</a> or <a href=\"{APP}/login\" style=\"color:var(--accent-light);\">sign in</a> and open a support ticket from your account.", None, "&#128101;"),
 ], 1) + '</div><div><div class="card contact-card" style="text-align:left;max-width:none;">' + """
     <h2 class="section-title" style="font-size:22px;margin-bottom:6px;">Send us a note</h2>
