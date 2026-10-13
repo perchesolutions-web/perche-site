@@ -186,7 +186,8 @@ table = '<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Source</th><th>
     row("Meta lead ads (Facebook &amp; Instagram)", "Lead source", "Import now &middot; live sync pending", "pill-amber", "Upload your lead-ad export today. A direct connection is built and waiting on Meta's app approval."),
     row("Google Business Profile", "Reviews", "Manual now &middot; live sync pending", "pill-amber", "Add or upload reviews today. A direct connection is built and waiting on Google's API access approval."),
     row("Stripe", "Payments", "Live", "pill-green", "Subscription billing, plus optional Stripe Connect so customers can pay you directly from a reminder."),
-    row("Twilio", "Text messages", "Live (Professional)", "pill-green", "Each business gets its own verified number; texts are always sent by your click."),
+    row("Your phone", "Text follow-ups", "Live (Professional)", "pill-green", "One tap opens your own messages app with the text ready; it goes from your number and counts only after you confirm."),
+    row("Twilio", "Dedicated business number", "Set up per business", "pill-gray", "Optional. Each business gets its own carrier-verified number, which takes registration time."),
     row("Slack", "Alerts", "Live (Professional)", "pill-green", "New-flag alerts to a channel you choose."),
 ]) + "</tbody></table></div>"
 integ += section("Where each connection stands", "We list what's genuinely live and what isn't, so you can plan around it.", table)

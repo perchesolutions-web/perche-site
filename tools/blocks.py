@@ -93,7 +93,7 @@ def pricing_cards():
         '<div class="stack">'
         '<div class="stack-item"><h4>Revenue Recovery Engine</h4><p>The product, with everything in Starter plus:</p><ul>' + "".join(f"<li>{x}</li>" for x in [
             "Automatic, escalating follow-up emails (up to 3 touches)",
-            "One-click text message follow-ups",
+            "One-tap text follow-ups from your own phone",
             "Slack alerts and a daily summary email",
             "Expected-recovery estimate and lifetime-value ranking",
             "Trend, benchmark and category reports, with CSV and PDF export",
