@@ -63,18 +63,7 @@ how_cards = steps([
     ("Follow up in a click", "Review the message, press send, and track what comes back."),
 ])
 
-hero = """<section class="home-hero"><div class="wrap">
-<h1 class="home-title">Find the <span class="accent">Revenue</span> Your Business Is Missing</h1>
-<p class="home-sub">Connect Jobber or Housecall Pro and see the dollar amount you&rsquo;re leaving on the table in under 5 minutes. Read-only, no card required.</p>
-<div class="home-ctas">""" + TRIAL + call_btn() + """</div>
-<div class="home-fine">Free audit &middot; Read-only access &middot; Cancel any time</div>
-<div class="home-integrates"><span class="home-integrates-label">Works with</span><span>Jobber</span><span>Housecall Pro</span><span>Service Fusion</span><span>Workiz</span><span>Spreadsheets</span></div>
-<div class="home-visual">""" + mock_flags([
-    ("Cold estimate", "amber", "amber-bg", "Sent 11 days ago, no response", "Furnace replacement quote", "$4,200"),
-    ("Unpaid invoice", "red", "red-bg", "27 days past due", "AC tune-up + repair", "$610"),
-    ("Lapsed customer", "green", "green-bg", "14 months since last visit", "Due for annual maintenance", "$220"),
-]) + """</div></div></section>
-"""
+hero = blocks.home_hero(TRIAL, call_btn())
 
 items = re.findall(r'<button class="faq-q">(.*?)<span class="faq-plus">.*?<div class="faq-a-inner">(.*?)</div>', faq_s, re.S)
 items = [(q.strip(), a.strip()) for q, a in items]
@@ -83,10 +72,10 @@ home_faq = section("Common questions", "Can't find what you need? Email <a href=
 blocks_pricing = section("Simple pricing", "Start self-serve with a 14-day free trial, or have us run your follow-ups.", blocks.pricing_cards(), center=True, id_="pricing")
 home_body = '<div class="home">' + (
     hero +
-    section("What Perch&eacute; does", "One place that shows where your money is slipping away, and what to do about it.", what_cards, center=True, id_="solve") +
+    blocks.home_bento() +
     blocks.compare_fsm_section() +
     blocks.flag_logic_section() +
-    section("How it works", "Set up in minutes. No new habits to learn.", how_cards, band=True, center=True, id_="how-it-works") +
+    blocks.home_how([("Connect", "Link Jobber, Housecall Pro, Service Fusion or Workiz, or upload a spreadsheet. Access is read-only."), ("See what's slipping", "Perch&eacute; flags the quotes, invoices, customers and leads that need attention, in plain English."), ("Follow up in a click", "Review the message, press send, and track what comes back.")]) +
     blocks_pricing +
     home_faq +
     blocks.guarantee_block() +

@@ -114,3 +114,60 @@ def pricing_cards():
             "We send and manage your follow-up outreach",
             "Set up with a call, not a self-serve signup"]) + "</ul></div>")
     return f'<div class="grid grid-3 pricing-grid">{starter}{pro}{dfy}</div>'
+
+
+# ---------------- Home v2 design components ----------------
+def home_hero(trial_btn, call_btn_html):
+    return f"""<section class="hero2"><div class="wrap hero2-grid">
+<div class="hero2-copy">
+<h1 class="hero2-title">Find the <span class="accent">revenue</span> your business is missing</h1>
+<p class="hero2-sub">Connect Jobber or Housecall Pro and see the dollar amount you&rsquo;re leaving on the table in under 5 minutes. Read-only, no card required.</p>
+<div class="hero2-ctas">{trial_btn}{call_btn_html}</div>
+<div class="hero2-trust"><span>Read-only access</span><span>No card required</span><span>Cancel any time</span></div>
+<div class="hero2-works"><span class="hero2-works-label">Works with</span><span>Jobber</span><span>Housecall Pro</span><span>Service Fusion</span><span>Workiz</span><span>Spreadsheets</span></div>
+</div>
+<div class="hero2-visual" aria-hidden="true">
+<div class="audit-card">
+  <div class="audit-top"><span class="audit-label">Revenue leak audit</span><span class="audit-live"><i></i>Example</span></div>
+  <div class="audit-total"><span class="audit-cur">$</span>5,030<span class="audit-cap">sitting in your pipeline right now</span></div>
+  <div class="audit-bar"><span style="width:83.5%;background:var(--amber)"></span><span style="width:12.1%;background:var(--red)"></span><span style="width:4.4%;background:var(--green)"></span></div>
+  <div class="audit-rows">
+    <div class="audit-row"><i style="background:var(--amber)"></i><div><b>Cold estimate</b><small>Furnace replacement &middot; sent 11 days ago</small></div><em>$4,200</em></div>
+    <div class="audit-row"><i style="background:var(--red)"></i><div><b>Unpaid invoice</b><small>AC tune-up + repair &middot; 27 days past due</small></div><em>$610</em></div>
+    <div class="audit-row"><i style="background:var(--green)"></i><div><b>Lapsed customer</b><small>Annual maintenance &middot; 14 months</small></div><em>$220</em></div>
+  </div>
+  <div class="audit-foot">Illustrative example &mdash; not real customer data</div>
+</div>
+<div class="float-card float-a"><span class="float-dot"></span><div><b>Follow-up ready</b><small>Message drafted for the $4,200 quote</small></div></div>
+<div class="float-card float-b"><b>Read-only</b><small>We never change your records</small></div>
+</div></section>"""
+
+
+def home_bento():
+    return """<section id="solve"><div class="wrap">
+<div class="sec-head"><h2 class="section-title">What Perch&eacute; does</h2><p class="section-sub">One place that shows where your money is slipping away, and what to do about it.</p></div>
+<div class="bento">
+<a class="bento-card bento-lg card-hover" href="/solutions/cold-estimates/">
+  <span class="bento-no">01</span>
+  <h3>Quotes that went quiet</h3>
+  <p>Estimates that were sent and never answered, ranked by dollars and how cold they are, each with a follow-up ready to send.</p>
+  <div class="bento-ui" aria-hidden="true">
+    <div class="tl"><span class="tl-dot on"></span><span class="tl-line"></span><span class="tl-dot on"></span><span class="tl-line"></span><span class="tl-dot flag"></span></div>
+    <div class="tl-labels"><span>Quote sent</span><span>Day 7 &middot; no reply</span><span>Day 14 &middot; flagged</span></div>
+    <div class="bento-msg"><b>Suggested follow-up</b>&ldquo;Hi Dana, checking in on the furnace quote &mdash; happy to answer any questions.&rdquo;</div>
+  </div>
+  <span class="card-link">Learn more &rarr;</span>
+</a>
+<a class="bento-card card-hover" href="/solutions/unpaid-invoices/"><span class="bento-no">02</span><h3>Invoices nobody paid</h3><p>Everything past due in one list, with the right nudge for each customer.</p><span class="card-link">Learn more &rarr;</span></a>
+<a class="bento-card card-hover" href="/solutions/lapsed-customers/"><span class="bento-no">03</span><h3>Customers who drifted</h3><p>Past customers due for service, with a friendly check-in ready to go.</p><span class="card-link">Learn more &rarr;</span></a>
+<a class="bento-card bento-wide card-hover" href="/solutions/cold-leads/"><span class="bento-no">04</span><h3>Leads and reviews</h3><p>Inquiries nobody answered and reviews nobody replied to, in one place.</p><span class="card-link">Learn more &rarr;</span></a>
+</div></div></section>
+"""
+
+
+def home_how(steps_list):
+    items = "".join(f'<div class="how-step"><div class="how-no">{i}</div><h3>{t}</h3><p>{b}</p></div>' for i, (t, b) in enumerate(steps_list, 1))
+    return f"""<section class="band" id="how-it-works"><div class="wrap">
+<div class="sec-head"><h2 class="section-title">How it works</h2><p class="section-sub">Set up in minutes. No new habits to learn.</p></div>
+<div class="how-grid">{items}</div></div></section>
+"""
