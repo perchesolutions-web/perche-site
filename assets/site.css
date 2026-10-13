@@ -600,3 +600,6 @@ h1.home-title{font-size:60px;font-weight:700;line-height:1.07;letter-spacing:-0.
 /* type polish */
 [data-theme="light"] .home .section-title{color:var(--text);}
 [data-theme="light"] ::selection{background:rgba(4,120,87,.2);}
+[data-theme="light"] .trial-banner,[data-theme="light"] .callout-info{border-color:rgba(4,120,87,.25);background:var(--accent-bg);}
+[data-theme="light"] .mock-card-wrap::before{background:radial-gradient(closest-side,rgba(16,185,129,.14),transparent);}
+[data-theme="light"] .eyebrow{color:var(--accent);}
