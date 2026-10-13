@@ -754,7 +754,7 @@ h1,h2,.section-title,.hero3-title,.statement-text{font-family:var(--serif);font-
 .hero3-trust .ic{width:15px;height:15px;color:var(--green);stroke-width:2.2;}
 .works3{display:flex;flex-wrap:wrap;gap:10px 34px;align-items:center;justify-content:center;margin-top:76px;padding-top:30px;border-top:1px solid var(--border);font-size:15px;font-weight:600;color:var(--muted);letter-spacing:-0.01em;}
 .works3-l{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);font-weight:600;}
-[data-theme="light"] .hero3{background:radial-gradient(800px 420px at 78% 10%,rgba(15,122,86,.10),transparent 65%),radial-gradient(600px 400px at 0% 100%,rgba(165,96,10,.06),transparent 60%),var(--bg);}
+[data-theme="light"] .hero3{background:radial-gradient(800px 460px at 78% 0%,rgba(15,122,86,.10),transparent 65%),var(--bg);}
 
 /* dashboard mock (browser frame) */
 .hero3-stage{position:relative;padding:10px 0 10px 30px;}
