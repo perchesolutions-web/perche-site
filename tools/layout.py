@@ -112,9 +112,9 @@ def head(title, desc, path, extra_head="", schema=""):
 <meta name="twitter:image" content="{SITE}/assets/dashboard-preview.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=19">
+<link rel="stylesheet" href="/assets/site.css?v=20">
 {schema}
 {extra_head}
 {POSTHOG}

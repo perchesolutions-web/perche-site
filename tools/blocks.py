@@ -171,3 +171,75 @@ def home_how(steps_list):
 <div class="sec-head"><h2 class="section-title">How it works</h2><p class="section-sub">Set up in minutes. No new habits to learn.</p></div>
 <div class="how-grid">{items}</div></div></section>
 """
+
+
+# ================= PREMIUM v3 (overrides earlier definitions) =================
+_IC = {
+ "quote": '<path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/>',
+ "invoice": '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',
+ "people": '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.5a3 3 0 010 5M18 14.5c1.8.8 3 2.5 3 5.5"/>',
+ "inbox": '<path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/>',
+ "check": '<path d="M5 12l4.5 4.5L19 7"/>',
+}
+def _ic(n, cls="ic"):
+    return f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_IC[n]}</svg>'
+
+
+def home_hero(trial_btn, call_btn_html):
+    rows = [("Furnace replacement quote", "Cold estimate &middot; sent 11 days ago", "$4,200", "amber"),
+            ("AC tune-up + repair", "Unpaid invoice &middot; 27 days past due", "$610", "red"),
+            ("Annual maintenance", "Lapsed customer &middot; 14 months", "$220", "green"),
+            ("Water heater install", "Cold estimate &middot; sent 16 days ago", "$2,900", "amber")]
+    rws = "".join(f'<div class="dm-row"><i class="dm-dot dm-{c}"></i><div><b>{t}</b><small>{s}</small></div><em>{v}</em><span class="dm-btn">Follow up</span></div>' for t, s, v, c in rows)
+    return f"""<section class="hero3"><div class="wrap">
+<div class="hero3-copy">
+<h1 class="hero3-title">Find the revenue your business is <em>missing.</em></h1>
+<p class="hero3-sub">Connect Jobber or Housecall Pro and see the dollar amount you&rsquo;re leaving on the table in under 5 minutes. Read-only, no card required.</p>
+<div class="hero3-ctas">{trial_btn}{call_btn_html}</div>
+<div class="hero3-trust"><span>{_ic("check")}Read-only access</span><span>{_ic("check")}No card required</span><span>{_ic("check")}Cancel any time</span></div>
+</div>
+<div class="hero3-stage" aria-hidden="true">
+<div class="dm">
+  <div class="dm-bar"><i></i><i></i><i></i><span>Perch&eacute; &middot; Dashboard</span></div>
+  <div class="dm-body">
+    <div class="dm-head"><div><div class="dm-eyebrow">Revenue identified</div><div class="dm-big">$7,930</div></div>
+      <div class="dm-pills"><div><small>Expected</small><b>$3,410</b></div><div><small>Recovered</small><b>$0</b></div></div></div>
+    <div class="dm-sec">Priority opportunities</div>
+    {rws}
+  </div>
+  <div class="dm-foot">Illustrative example &mdash; not real customer data</div>
+</div>
+</div>
+</div>
+<div class="wrap"><div class="works3"><span class="works3-l">Connects to</span><span>Jobber</span><span>Housecall Pro</span><span>Service Fusion</span><span>Workiz</span><span>Spreadsheet upload</span></div></div>
+</section>"""
+
+
+def home_statement():
+    return """<section class="statement"><div class="wrap">
+<p class="statement-text">The money is rarely lost on the job. It&rsquo;s lost in the follow-up &mdash; the quote that went quiet, the invoice nobody chased, the customer who simply drifted away.</p>
+<p class="statement-sub">Perch&eacute; reads your existing software, finds those moments, ranks them by dollars, and writes the follow-up for you.</p>
+</div></section>"""
+
+
+def home_bento():
+    def card(no, ic, t, p, href, extra="", cls=""):
+        return f'<a class="bento-card {cls}" href="{href}"><div class="bento-top">{_ic(ic, "bento-ic")}<span class="bento-no">{no}</span></div><h3>{t}</h3><p>{p}</p>{extra}<span class="card-link">Learn more <b>&rarr;</b></span></a>'
+    ui = """<div class="bento-ui" aria-hidden="true"><div class="tl"><span class="tl-dot on"></span><span class="tl-line"></span><span class="tl-dot on"></span><span class="tl-line"></span><span class="tl-dot flag"></span></div><div class="tl-labels"><span>Quote sent</span><span>Day 7 &middot; no reply</span><span>Day 14 &middot; flagged</span></div><div class="bento-msg"><b>Suggested follow-up</b>&ldquo;Hi Dana, checking in on the furnace quote &mdash; happy to answer any questions.&rdquo;</div></div>"""
+    return f"""<section id="solve" class="sec-pad"><div class="wrap">
+<div class="sec-head"><h2 class="section-title">Four places revenue <em>quietly</em> slips away</h2><p class="section-sub">One place that shows where your money is stuck, and what to do about it.</p></div>
+<div class="bento">
+{card("01","quote","Quotes that went quiet","Estimates that were sent and never answered, ranked by dollars and how cold they are, each with a follow-up ready to send.","/solutions/cold-estimates/",ui,"bento-lg")}
+{card("02","invoice","Invoices nobody paid","Everything past due in one list, with the right nudge for each customer.","/solutions/unpaid-invoices/")}
+{card("03","people","Customers who drifted","Past customers due for service, with a friendly check-in ready to go.","/solutions/lapsed-customers/")}
+{card("04","inbox","Leads and reviews","Inquiries nobody answered and reviews nobody replied to, in one place.","/solutions/cold-leads/","","bento-wide")}
+</div></div></section>
+"""
+
+
+def home_how(steps_list):
+    items = "".join(f'<div class="how-step"><div class="how-no">0{i}</div><h3>{t}</h3><p>{b}</p></div>' for i, (t, b) in enumerate(steps_list, 1))
+    return f"""<section class="sec-pad" id="how-it-works"><div class="wrap">
+<div class="sec-head"><h2 class="section-title">Set up in minutes. <em>No new habits.</em></h2></div>
+<div class="how-grid">{items}</div></div></section>
+"""
