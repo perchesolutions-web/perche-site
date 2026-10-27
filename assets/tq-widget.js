@@ -11,6 +11,11 @@
   var COMPANY = (CFG.demoCompany && CFG.demoCompany.name) || "Your Fence Co.";
   var MAPBOX_VERSION = "3.28.1";
   var MAP_STYLE = CFG.mapStyle || "mapbox://styles/mapbox/satellite-streets-v12";
+  // How the satellite photos are fetched. "static" (the default) uses Mapbox's Static Tiles API, which
+  // also works on a Mapbox account with no card on file (that account can't use the Raster Tiles API).
+  // "raster" loads the style exactly as Mapbox publishes it.
+  var IMAGERY = CFG.mapImagery === "raster" ? "raster" : "static";
+  var IMAGERY_STYLE = CFG.mapImageryStyle || "mapbox/satellite-v9";
   var TOKEN = typeof CFG.mapboxToken === "string" ? CFG.mapboxToken.trim() : "";
   var LIVE = /^pk\./.test(TOKEN);
   var HOME_ZOOM = CFG.mapHomeZoom || 19.5;
@@ -368,6 +373,56 @@
     return status === 401 || status === 403 || /style|token|unauthori|forbidden|webgl|context/i.test(String(err.message || ""));
   }
 
+  function styleApiUrl(style) {
+    var m = /^mapbox:\/\/styles\/([^/]+)\/([^/?#]+)/.exec(style);
+    return m ? "https://api.mapbox.com/styles/v1/" + m[1] + "/" + m[2] + "?access_token=" + encodeURIComponent(TOKEN) : style;
+  }
+
+  // The map style, with its satellite source switched to Static Tiles when IMAGERY is "static".
+  var styleLoading = null;
+  function loadStyle() {
+    if (IMAGERY === "raster") return Promise.resolve(MAP_STYLE);
+    if (!styleLoading) {
+      styleLoading = fetch(styleApiUrl(MAP_STYLE)).then(function (r) {
+        if (!r.ok) { var err = new Error("style " + r.status); err.status = r.status; throw err; }
+        return r.json();
+      }).then(function (style) {
+        Object.keys(style.sources || {}).forEach(function (k) {
+          var src = style.sources[k];
+          if (src && src.type === "raster" && src.url === "mapbox://mapbox.satellite") {
+            style.sources[k] = {
+              type: "raster",
+              tiles: ["https://api.mapbox.com/styles/v1/" + IMAGERY_STYLE + "/tiles/512/{z}/{x}/{y}@2x?access_token=" + encodeURIComponent(TOKEN)],
+              tileSize: 512,
+              maxzoom: 21,
+              attribution: '<a href="https://www.maxar.com/" target="_blank" rel="noopener">&copy; Maxar</a>'
+            };
+          }
+        });
+        return style;
+      });
+      styleLoading.catch(function () { styleLoading = null; });
+    }
+    // Each map gets its own copy, since the map may change the object it's given.
+    return styleLoading.then(function (style) { return JSON.parse(JSON.stringify(style)); });
+  }
+
+  // Satellite photos refused (no access, or a usage cap) before any photo has loaded: the map would
+  // show street labels on an empty background, so treat it like a failed map.
+  function watchImagery(map, onFail) {
+    var loaded = 0, refused = 0, failed = false;
+    map.on("sourcedata", function (e) {
+      if (e.tile && e.sourceId && map.getSource(e.sourceId) && map.getSource(e.sourceId).type === "raster") loaded++;
+    });
+    map.on("error", function (e) {
+      var status = e && e.error && e.error.status;
+      if (failed || loaded || !e.sourceId || !(status === 401 || status === 403 || status === 429)) return;
+      var src = map.getSource(e.sourceId);
+      if (!src || src.type !== "raster") return;
+      if (++refused >= 3) { failed = true; onFail(); }
+    });
+  }
+
   // Resolves once the map has drawn, rejects if it can't load within 15 seconds.
   function whenMapLoads(map) {
     return new Promise(function (resolve, reject) {
@@ -377,6 +432,7 @@
       map.on("error", function (e) {
         if (!done && isFatalMapError(e)) { done = true; clearTimeout(timer); reject(new Error("map")); }
       });
+      watchImagery(map, function () { if (!done) { done = true; clearTimeout(timer); reject(new Error("imagery")); } });
     });
   }
 
@@ -400,13 +456,13 @@
       pin.setLngLat(center).addTo(map);
     }
 
-    var ready = loadMapbox().then(function () {
+    var ready = Promise.all([loadMapbox(), loadStyle()]).then(function (res) {
       if (dead) throw new Error("closed");
       var gl = window.mapboxgl;
       gl.accessToken = TOKEN;
       map = new gl.Map({
         container: mapEl,
-        style: MAP_STYLE,
+        style: res[1],
         center: opts.center || CFG.mapCenter,
         zoom: opts.center ? HOME_ZOOM : (CFG.mapStartZoom || 11),
         maxZoom: 21.5,
@@ -425,7 +481,9 @@
       map.on("mouseout", function () { handlers.hover(null, null); });
       map.on("move", function () { handlers.redraw(); });
       map.on("resize", function () { handlers.redraw(); });
-      return whenMapLoads(map);
+      var loaded = false;
+      watchImagery(map, function () { if (loaded && !dead && handlers.fail) handlers.fail(); });
+      return whenMapLoads(map).then(function () { loaded = true; });
     });
 
     return {
@@ -467,7 +525,7 @@
       el.innerHTML = shapeMarkup(lead);
     }
 
-    loadMapbox().then(function () {
+    Promise.all([loadMapbox(), loadStyle()]).then(function (res) {
       if (dead) return;
       var gl = window.mapboxgl;
       gl.accessToken = TOKEN;
@@ -475,7 +533,7 @@
       pts.forEach(function (q) { minX = Math.min(minX, q[0]); maxX = Math.max(maxX, q[0]); minY = Math.min(minY, q[1]); maxY = Math.max(maxY, q[1]); });
       map = new gl.Map({
         container: box,
-        style: MAP_STYLE,
+        style: res[1],
         bounds: [[minX, minY], [maxX, maxY]],
         fitBoundsOptions: { padding: 44, maxZoom: 20 },
         interactive: false
@@ -490,6 +548,7 @@
       };
       map.on("move", draw);
       map.on("resize", draw);
+      watchImagery(map, fallback);
       whenMapLoads(map).then(draw, fallback);
     }).catch(fallback);
 
@@ -799,22 +858,24 @@
 
     function setSurface(kind, sopts) {
       if (surface) surface.destroy();
+      var mine = null;
       var handlers = {
         tap: onTap,
         hover: function (world, screen) {
           st.hover = world ? { world: world, screen: screen } : null;
           if (st.active != null) redraw();
         },
-        redraw: redraw
+        redraw: redraw,
+        fail: function () { if (surface === mine) mapFailed(); }
       };
       surface = kind === "map"
         ? MapboxSurface(surfaceHost, handlers, { center: sopts && sopts.center, cooperative: layout === "compact" })
         : SampleSurface(surfaceHost, handlers);
+      mine = surface;
       root.classList.toggle("tq--map", kind === "map");
       st.loading = kind === "map";
       updateWhere();
       if (kind !== "map") return;
-      var mine = surface;
       surface.ready.then(function () {
         if (surface !== mine) return;
         st.loading = false;
@@ -822,13 +883,16 @@
         redraw();
         if (st.step === "draw") toast("Tap each corner of the fence. Tap the first corner again to close it.", 4200);
       }, function () {
-        if (surface !== mine) return;
-        st.loading = false;
-        live = false;
-        setSurface("sample");
-        useExample();
-        toast("The satellite map couldn't load, so this shows the example home.", 4200);
+        if (surface === mine) mapFailed();
       });
+    }
+
+    function mapFailed() {
+      st.loading = false;
+      live = false;
+      setSurface("sample");
+      useExample();
+      toast("The satellite map couldn't load, so this shows the example home.", 4200);
     }
 
     function pickAddress(item) {
