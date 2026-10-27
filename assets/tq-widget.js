@@ -1032,6 +1032,12 @@
         "</div>";
     }
 
+    // Installed price per linear foot for one material at one height, from the price sheet.
+    function rateLabel(m, h) {
+      var r = m.heights[h] || m.heights[m.defaultHeight];
+      return r ? "$" + r[0] + "–$" + r[1] + " per ft installed" : "";
+    }
+
     function bodyQuote() {
       var ft = drawnFt();
       var rows = P.materials.map(function (m) {
@@ -1040,6 +1046,7 @@
           '<button type="button" class="tq-prod-head" data-pick-mat="' + m.id + '" aria-expanded="' + on + '">' +
           fenceArt(m.swatch, colorHex(m, colorFor(m.id)), +h, "tq-art--thumb") +
           '<span class="tq-prod-name"><b>' + esc(m.name) + "</b><span>" + esc(h + " ft · " + m.note) + "</span>" +
+          '<span class="tq-prod-rate">' + rateLabel(m, h) + "</span>" +
           (m.tier ? '<em class="tq-tier' + (m.id === P.defaultMaterial ? " tq-tier--hot" : "") + '">' + esc(m.tier) + "</em>" : "") + "</span>" +
           '<span class="tq-prod-price"><b>' + moneyRange(q.lo, q.hi) + "</b>" + (mo ? "<span>From " + money(mo) + "/mo</span>" : "") + "</span>" +
           "</button>" +
