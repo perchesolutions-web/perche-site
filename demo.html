@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TraceQuote Demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Try the TraceQuote fence quote page as a homeowner, then see the lead a fence company receives.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/tq.css">
+<script>try{var t=localStorage.getItem("tq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<!-- posthog:start (site analytics, same PostHog project as before; removed from the claude.ai preview build) -->
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSurveyState onSessionInit debug getPageViewId createPersonProfile requestNotificationPermission".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_ur5pFYA2Sbxv8At9WiNU4T8UHc6gENjMybRBuoipv7VY', {
+    api_host: 'https://us.i.posthog.com',
+    person_profiles: 'always'
+  })
+</script>
+<!-- posthog:end -->
+</head>
+<body>
+
+<div class="topline"></div>
+
+<header class="demo-bar">
+  <div class="wrap demo-bar-inner">
+    <a class="brand" href="./" aria-label="TraceQuote home">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M8 23V10h16v13" fill="none" stroke="var(--accent-ink)" stroke-width="2.2" stroke-linejoin="round"/><g fill="var(--accent-ink)"><rect x="6.5" y="21.5" width="3" height="3" rx=".6"/><rect x="6.5" y="8.5" width="3" height="3" rx=".6"/><rect x="14.5" y="8.5" width="3" height="3" rx=".6"/><rect x="22.5" y="8.5" width="3" height="3" rx=".6"/><rect x="22.5" y="21.5" width="3" height="3" rx=".6"/></g></svg>
+      <span>TraceQuote</span>
+    </a>
+    <span class="demo-chip">Demo</span>
+    <nav class="demo-switch" aria-label="Demo view">
+      <a href="#homeowner" data-view-link="homeowner">Homeowner view</a>
+      <a href="#contractor" data-view-link="contractor">Contractor view</a>
+    </nav>
+    <div class="push">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch between light and dark">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      </button>
+      <a class="btn btn-primary btn-sm" data-book href="https://calendly.com/perchesolutions/free-worldflow-audit">Book a call</a>
+    </div>
+  </div>
+</header>
+
+<main class="demo-main">
+  <div class="wrap">
+
+    <section data-view="homeowner" aria-labelledby="home-title">
+      <div class="demo-intro">
+        <div>
+          <h1 id="home-title">Price a fence <em>like a homeowner</em></h1>
+          <p data-tq-intro>This is the quote page a fence company's website visitors would use. Trace a fence, choose a style, and see the price. Then open the contractor view to see the lead it creates.</p>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="#contractor">Contractor view</a>
+      </div>
+      <div id="demo-quote" role="region" aria-label="Fence quote demo"></div>
+    </section>
+
+    <section data-view="contractor" aria-labelledby="pro-title" hidden>
+      <div class="demo-intro">
+        <div>
+          <h1 id="pro-title">What <em>the contractor</em> gets</h1>
+          <p>Every quote lands here and on the owner's phone: the layout, the footage, the price the homeowner saw, and the follow-up that runs on its own.</p>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="#homeowner">Homeowner view</a>
+      </div>
+      <div id="demo-contractor"></div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-base">
+      <span>TraceQuote is a product of Perché AI Solutions LLC. Sample company, people, and prices.</span>
+      <span><a href="./">Back to the TraceQuote site</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/tq-config.js"></script>
+<script src="assets/tq-widget.js"></script>
+<script src="assets/tq-contractor.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(function () {
+  "use strict";
+  window.TraceQuote.mount(document.getElementById("demo-quote"), { layout: "full", contractorHref: "#contractor" });
+  var intro = document.querySelector("[data-tq-intro]");
+  if (intro && window.TraceQuote.live) intro.textContent = "This is the quote page a fence company's website visitors would use. Search any address, trace the fence on satellite imagery, choose a style, and see the price. Then open the contractor view to see the lead it creates.";
+  window.TraceQuoteContractor.mount(document.getElementById("demo-contractor"));
+
+  var views = document.querySelectorAll("[data-view]");
+  var links = document.querySelectorAll("[data-view-link]");
+  function show() {
+    var name = (location.hash || "#homeowner").slice(1);
+    if (name !== "homeowner" && name !== "contractor") name = "homeowner";
+    views.forEach(function (v) { v.hidden = v.getAttribute("data-view") !== name; });
+    links.forEach(function (a) {
+      if (a.getAttribute("data-view-link") === name) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", show);
+  show();
+})();
+</script>
+</body>
+</html>

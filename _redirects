@@ -12,6 +12,32 @@
 /onboarding        /   301
 /waitlist.html     /   301
 /waitlist          /   301
-/thankyou.html     /thanks   301
+/thankyou.html     /   301
 /Inex.html         /   301
 /perche-ai.html    /   301
+
+# Oct 2026: TraceQuote replaced the revenue-intelligence pages (the old site is kept on the
+# perche-revenue-site branch). Links to those pages go to the home page; anything else gets 404.html.
+# 302 (temporary) keeps a rollback clean; change these to 301 once the switch is final.
+/about                                      /   302
+/about/*                                    /   302
+/alternatives                               /   302
+/alternatives/*                             /   302
+/audit                                      /   302
+/audit/*                                    /   302
+/contact                                    /   302
+/contact/*                                  /   302
+/pricing                                    /   302
+/pricing/*                                  /   302
+/resources                                  /   302
+/resources/*                                /   302
+/revenue-intelligence-for-home-services     /   302
+/revenue-intelligence-for-home-services/*   /   302
+/solutions                                  /   302
+/solutions/*                                /   302
+/tools                                      /   302
+/tools/*                                    /   302
+/who-we-serve                               /   302
+/who-we-serve/*                             /   302
+/thanks                                     /   302
+/thanks.html                                /   302
