@@ -12,6 +12,12 @@
 /onboarding        /   301
 /waitlist.html     /   301
 /waitlist          /   301
-/thankyou.html     /thanks   301
+/thankyou.html     /   301
 /Inex.html         /   301
 /perche-ai.html    /   301
+
+# Oct 2026: TraceQuote replaced the revenue-intelligence pages (they are kept on the
+# perche-revenue-site branch). Any other old link goes to the home page.
+# This rule only applies when no file matches, so real pages are still served.
+# 302 (temporary) keeps a rollback clean; change it to 301 once the switch is final.
+/*    /    302
