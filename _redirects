@@ -1,5 +1,9 @@
 # Legal pages (/privacy, /terms) are served from this site again as of Oct 2026.
 
+# The client page generator and client settings live in the repo but aren't web pages.
+/tools/*     /404.html   404!
+/clients/*   /404.html   404!
+
 # Old AI-call-assistant product pages, retired - send visitors somewhere useful
 /dashboard.html    https://perche-revenue-solutions.vercel.app/login   301
 /dashboard         https://perche-revenue-solutions.vercel.app/login   301
