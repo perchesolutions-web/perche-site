@@ -21,6 +21,9 @@
   var IMAGERY_STYLE = CFG.mapImageryStyle || "mapbox/satellite-v9";
   var TOKEN = typeof CFG.mapboxToken === "string" ? CFG.mapboxToken.trim() : "";
   var LIVE = /^pk\./.test(TOKEN);
+  // Lead emails open the fence picture outside this site, where a token limited to the site's URL is refused.
+  // An optional second public token with no URL limit (leadImageToken) keeps those pictures working.
+  var IMAGE_TOKEN = typeof CFG.leadImageToken === "string" && /^pk\./.test(CFG.leadImageToken.trim()) ? CFG.leadImageToken.trim() : TOKEN;
   var HOME_ZOOM = CFG.mapHomeZoom || 19.5;
   var MIN_DRAW_ZOOM = CFG.minDrawZoom || 17;
   var SVGNS = "http://www.w3.org/2000/svg";
@@ -100,7 +103,7 @@
     });
     if (!overlays.length) return "";
     return "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v12/static/" + overlays.join(",") +
-      "/auto/640x420@2x?padding=60&access_token=" + encodeURIComponent(TOKEN);
+      "/auto/640x420@2x?padding=60&access_token=" + encodeURIComponent(IMAGE_TOKEN);
   }
 
   /* ---------- pricing ---------- */
