@@ -30,6 +30,12 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
+  // Usage events for the site's analytics (PostHog), if it's on the page. Only step-level facts are sent:
+  // never the homeowner's address, name, email or phone.
+  function track(event, props) {
+    try { if (window.posthog && typeof window.posthog.capture === "function") window.posthog.capture(event, props || {}); } catch (e) {}
+  }
+
   function money(n) { return "$" + Math.round(n).toLocaleString("en-US"); }
   function moneyRange(lo, hi) { return lo === hi ? money(lo) : money(lo) + "–" + money(hi); }
   function ftLabel(n) { return Math.round(n).toLocaleString("en-US") + " ft"; }
@@ -692,6 +698,8 @@
     };
 
     root.classList.add("tq", "tq--" + layout);
+    // Analytics doesn't record clicks or text inside the tool (addresses and contact details live here).
+    root.classList.add("ph-no-capture");
     root.innerHTML =
       '<div class="tq-stage">' +
       '<div class="tq-surface"></div>' +
@@ -850,6 +858,7 @@
     }
 
     function useExample() {
+      track("tq_example_used", { layout: layout });
       st.address = null;
       if (!surface || surface.kind !== "sample") setSurface("sample");
       loadLayout(LAYOUTS.backyard);
@@ -896,6 +905,7 @@
     }
 
     function pickAddress(item) {
+      track("tq_address_picked", { layout: layout });
       st.address = item;
       st.addrDraft = item.label;
       st.runs = []; st.gates = []; st.active = null; st.history = [];
@@ -1309,7 +1319,7 @@
       var act = t.getAttribute("data-act");
       if (t.hasAttribute("data-tool")) { st.tool = t.getAttribute("data-tool"); render(); redraw(); return; }
       if (t.hasAttribute("data-gate")) { st.gateType = t.getAttribute("data-gate"); render(); return; }
-      if (t.hasAttribute("data-pick-mat")) { st.material = t.getAttribute("data-pick-mat"); render(); return; }
+      if (t.hasAttribute("data-pick-mat")) { st.material = t.getAttribute("data-pick-mat"); track("tq_material_picked", { material: st.material }); render(); return; }
       if (t.hasAttribute("data-height")) { st.heightBy[st.material] = t.getAttribute("data-height"); render(); return; }
       if (t.hasAttribute("data-color")) { st.colorBy[st.material] = t.getAttribute("data-color"); render(); return; }
       if (t.hasAttribute("data-timing")) { readContact(); st.timing = st.timing === t.getAttribute("data-timing") ? "" : t.getAttribute("data-timing"); render(); return; }
@@ -1322,8 +1332,12 @@
       else if (act === "use-sample") useExample();
       else if (act === "change-address") go("address");
       else if (act === "edit-drawing") go("draw");
-      else if (act === "next") { if (st.active != null) newLine(); go("quote"); }
-      else if (act === "detail") { st.intent = t.getAttribute("data-intent") || "quote"; go("details"); }
+      else if (act === "next") {
+        if (st.active != null) newLine();
+        go("quote");
+        track("tq_quote_viewed", { layout: layout, live: live, feet: Math.round(drawnFt()), gates: st.gates.length });
+      }
+      else if (act === "detail") { st.intent = t.getAttribute("data-intent") || "quote"; track("tq_details_opened", { intent: st.intent }); go("details"); }
       else if (act === "back") { readContact(); go("quote"); }
       else if (act === "finance") toast("On a live site, this opens the contractor's financing application.");
       else if (act === "submit") {
@@ -1331,6 +1345,7 @@
         if (!validateContact()) { render(); var bad = root.querySelector('[aria-invalid="true"]'); if (bad) bad.focus(); return; }
         st.submitted = true;
         st.lead = buildLead();
+        track("tq_details_submitted", { intent: st.intent, material: st.material, feet: Math.round(drawnFt()), live: live });
         if (st.intent === "measure") bookVisit();
         publishLead();
         render();

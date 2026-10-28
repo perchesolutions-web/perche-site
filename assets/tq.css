@@ -606,6 +606,7 @@ p { text-wrap: pretty; }
 .demo-main .wrap { padding-block: 28px 72px; }
 .demo-intro { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 22px; }
 .demo-intro h1 { font-size: clamp(34px, 4.6vw, 54px); line-height: 1.02; letter-spacing: -0.025em; }
+.demo-eyebrow { margin: 0 0 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
 .demo-intro p { margin: 10px 0 0; color: var(--muted); max-width: 42em; font-size: 17px; }
 @media (max-width: 640px) {
   .demo-bar .push .btn { padding: 9px 14px; font-size: 13px; }
