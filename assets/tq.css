@@ -687,3 +687,38 @@ p { text-wrap: pretty; }
 @media (max-width: 480px) {
   .tq-pick { grid-template-columns: 56px minmax(0, 1fr); }
 }
+
+/* ---------- client quote pages (q/<client>/) ---------- */
+.cq-bar { background: var(--card); border-bottom: 1px solid var(--line); }
+.cq-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; }
+.cq-name { display: inline-flex; align-items: center; gap: 10px; min-width: 0; font-weight: 800; font-size: 18px; letter-spacing: -0.01em; text-decoration: none; }
+.cq-name img { display: block; height: 36px; width: auto; max-width: 180px; object-fit: contain; }
+.cq-call { font-weight: 700; font-size: 14.5px; white-space: nowrap; text-decoration: none; color: var(--accent-text); }
+.cq-call:hover { text-decoration: underline; }
+.cq-sample { margin: 0; padding: 8px 16px; background: var(--warn-soft); color: var(--warn); font-size: 13px; text-align: center; }
+.cq-main .wrap { padding-block: 26px 36px; }
+.cq-intro { margin-bottom: 18px; }
+.cq-intro h1 { font-size: clamp(32px, 4.4vw, 48px); line-height: 1.04; letter-spacing: -0.02em; }
+.cq-intro p { margin: 8px 0 0; max-width: 40em; color: var(--muted); font-size: 16.5px; }
+.cq-foot { border-top: 1px solid var(--line); font-size: 13px; color: var(--faint); }
+.cq-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-block: 18px 26px; }
+.cq-foot nav { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.cq-foot a { color: inherit; }
+/* Embedded on a client's website: just the quote tool and a one-line footer. */
+.cq-embed body { background: transparent; }
+.cq-embed body::before { display: none; }
+.cq-embed .cq-bar, .cq-embed .cq-intro, .cq-embed .cq-sample { display: none; }
+.cq-embed .cq-main .wrap { max-width: none; padding: 0; }
+.cq-embed .cq-foot { border-top: 0; }
+.cq-embed .cq-foot .wrap { max-width: none; padding: 10px 2px 2px; }
+
+/* ---------- legal pages ---------- */
+.legal { max-width: 760px; margin: 0 auto; padding: 32px 16px 72px; }
+.legal-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 30px; }
+.legal h1 { font-size: clamp(34px, 5vw, 48px); line-height: 1.05; letter-spacing: -0.02em; }
+.legal .legal-date { margin: 10px 0 26px; color: var(--faint); font-size: 14px; }
+.legal h2 { font-family: var(--sans); font-size: 17px; font-weight: 700; margin: 28px 0 8px; }
+.legal p, .legal li { color: var(--muted); font-size: 15.5px; line-height: 1.65; }
+.legal ul { padding-left: 1.2em; }
+.legal li + li { margin-top: 4px; }
+.legal a { color: var(--accent-text); }

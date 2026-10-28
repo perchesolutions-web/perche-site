@@ -1,0 +1,13 @@
+{
+  "id": "sample",
+  "sample": true,
+  "company": {
+    "name": "Sample Fence Co.",
+    "phone": "(305) 555-0142",
+    "email": "hello@perchesolutions.com",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [-80.1918, 25.7617],
+  "financing": { "show": true, "url": "" }
+}

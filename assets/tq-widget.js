@@ -8,7 +8,10 @@
 
   var CFG = window.TQ_CONFIG || {};
   var P = CFG.pricing;
-  var COMPANY = (CFG.demoCompany && CFG.demoCompany.name) || "Your Fence Co.";
+  // The fence company shown to homeowners: a real client on client pages, the sample company in the demo.
+  var CO = CFG.company || CFG.demoCompany || {};
+  var COMPANY = CO.name || "Your Fence Co.";
+  var COMPANY_PHONE = CO.phone || "";
   var MAPBOX_VERSION = "3.28.1";
   var MAP_STYLE = CFG.mapStyle || "mapbox://styles/mapbox/satellite-streets-v12";
   // How the satellite photos are fetched. "static" (the default) uses Mapbox's Static Tiles API, which
@@ -18,6 +21,9 @@
   var IMAGERY_STYLE = CFG.mapImageryStyle || "mapbox/satellite-v9";
   var TOKEN = typeof CFG.mapboxToken === "string" ? CFG.mapboxToken.trim() : "";
   var LIVE = /^pk\./.test(TOKEN);
+  // Lead emails open the fence picture outside this site, where a token limited to the site's URL is refused.
+  // An optional second public token with no URL limit (leadImageToken) keeps those pictures working.
+  var IMAGE_TOKEN = typeof CFG.leadImageToken === "string" && /^pk\./.test(CFG.leadImageToken.trim()) ? CFG.leadImageToken.trim() : TOKEN;
   var HOME_ZOOM = CFG.mapHomeZoom || 19.5;
   var MIN_DRAW_ZOOM = CFG.minDrawZoom || 17;
   var SVGNS = "http://www.w3.org/2000/svg";
@@ -60,6 +66,44 @@
     if (w) parts.push(plural(w, "walk gate", "walk gates"));
     if (d) parts.push(plural(d, "drive gate", "drive gates"));
     return parts.join(", ");
+  }
+
+  /* ---------- lead delivery helpers ---------- */
+
+  // Google's polyline format (precision 5), which Mapbox static images take for paths. Points are [lng, lat].
+  function encodePolyline(points) {
+    var out = "", pLat = 0, pLng = 0;
+    function enc(v) {
+      v = v < 0 ? ~(v << 1) : v << 1;
+      var s = "";
+      while (v >= 0x20) { s += String.fromCharCode((0x20 | (v & 0x1f)) + 63); v >>= 5; }
+      return s + String.fromCharCode(v + 63);
+    }
+    points.forEach(function (pt) {
+      var lat = Math.round(pt[1] * 1e5), lng = Math.round(pt[0] * 1e5);
+      out += enc(lat - pLat) + enc(lng - pLng);
+      pLat = lat; pLng = lng;
+    });
+    return out;
+  }
+
+  // A satellite picture of the traced fence for the contractor's notification (Mapbox Static Images API).
+  function leadMapImageUrl(runs, gates) {
+    if (!LIVE) return "";
+    var overlays = [];
+    runs.forEach(function (run) {
+      if (run.length > 1) overlays.push("path-5+ffd23f-1(" + encodeURIComponent(encodePolyline(run)) + ")");
+    });
+    (gates || []).forEach(function (g) {
+      var run = runs[g.run];
+      if (!run || !run[g.seg + 1]) return;
+      var a = run[g.seg], b = run[g.seg + 1];
+      var pt = [a[0] + (b[0] - a[0]) * g.t, a[1] + (b[1] - a[1]) * g.t];
+      overlays.push("pin-s+e8590c(" + pt[0].toFixed(6) + "," + pt[1].toFixed(6) + ")");
+    });
+    if (!overlays.length) return "";
+    return "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v12/static/" + overlays.join(",") +
+      "/auto/640x420@2x?padding=60&access_token=" + encodeURIComponent(IMAGE_TOKEN);
   }
 
   /* ---------- pricing ---------- */
@@ -686,6 +730,9 @@
     var id = "tq" + (++uid);
     var layout = opts.layout === "full" ? "full" : "compact";
     var live = LIVE;
+    // Client pages send real leads; the public demo never sends anything.
+    var client = opts.mode === "client";
+    var LEAD = CFG.lead || {};
 
     var st = {
       runs: [], gates: [], active: null, history: [], hover: null,
@@ -694,7 +741,8 @@
       contact: { first: "", last: "", email: "", phone: "", consent: false }, timing: "", submitted: false, intent: "quote",
       address: null, addrDraft: "", loading: false,
       step: live ? "address" : "draw",
-      visitDay: 0, visitTime: "Morning", visitRequested: false, lead: null, errors: {}
+      visitDay: 0, visitTime: "Morning", visitRequested: false, lead: null, errors: {},
+      sending: false, sendError: ""
     };
 
     root.classList.add("tq", "tq--" + layout);
@@ -1037,10 +1085,15 @@
           ' value="' + esc(c[key]) + '"' + (e[key] ? ' aria-invalid="true"' : "") + ">" +
           (e[key] ? '<span class="tq-err">' + e[key] + "</span>" : "") + "</div>";
       }
-      return '<p class="tq-lede">' + (measure ? "Book your free on-site measure" : "Get your detailed quote") + "</p>" +
-        '<p class="tq-help">' + (measure
+      var help = client
+        ? (measure
+          ? "Pick a time that works and " + esc(COMPANY) + " will confirm it with you."
+          : "Send your details and " + esc(COMPANY) + " will follow up with your itemized quote and answer any questions.")
+        : (measure
           ? "Pick a time and " + esc(COMPANY) + " will text you to confirm."
-          : "We'll email you an itemized quote for this fence. " + esc(COMPANY) + " can follow up with any questions.") + "</p>" +
+          : "We'll email you an itemized quote for this fence. " + esc(COMPANY) + " can follow up with any questions.");
+      return '<p class="tq-lede">' + (measure ? "Book your free on-site measure" : "Get your detailed quote") + "</p>" +
+        '<p class="tq-help">' + help + "</p>" +
         selectedSummary() +
         '<div class="tq-fields">' +
         field("first", "First name", "text", "given-name") +
@@ -1051,8 +1104,24 @@
         (measure ? '<div class="tq-opt"><span class="tq-label">When should we come out?</span>' + visitChips() + "</div>" : "") +
         (timing ? '<div class="tq-opt"><span class="tq-label">When do you want it installed?</span><div class="tq-days" role="group" aria-label="Install timing">' + timing + "</div></div>" : "") +
         '<label class="tq-check"><input type="checkbox" id="' + id + '-consent"' + (c.consent ? " checked" : "") + ">" +
-        "<span>Text me about my quote. Msg &amp; data rates may apply. Reply STOP to opt out.</span></label>" +
-        '<p class="tq-fine">Demo: nothing you type here leaves this page.</p>';
+        "<span>" + (client ? consentHtml() : "Text me about my quote. Msg &amp; data rates may apply. Reply STOP to opt out.") + "</span></label>" +
+        (st.sendError ? '<p class="tq-err tq-send-err" role="alert">' + esc(st.sendError) + "</p>" : "") +
+        (client
+          ? '<p class="tq-fine">Your details go to ' + esc(COMPANY) + " for this quote." +
+            (LEAD.privacyUrl ? ' <a href="' + esc(LEAD.privacyUrl) + '" target="_blank" rel="noopener">Privacy policy</a>' : "") + "</p>"
+          : '<p class="tq-fine">Demo: nothing you type here leaves this page.</p>');
+    }
+
+    // The texting consent shown on client pages, kept word for word with each lead.
+    function consentText() {
+      return "Text me about my quote. " + COMPANY + " may send texts about this quote and my measure, including reminders. " +
+        "Msg frequency varies. Msg & data rates may apply. Reply STOP to opt out, HELP for help. Consent isn't required to get a quote.";
+    }
+    function consentHtml() {
+      var links = [];
+      if (LEAD.smsTermsUrl) links.push('<a href="' + esc(LEAD.smsTermsUrl) + '" target="_blank" rel="noopener">Texting terms</a>');
+      if (LEAD.privacyUrl) links.push('<a href="' + esc(LEAD.privacyUrl) + '" target="_blank" rel="noopener">Privacy policy</a>');
+      return esc(consentText()) + (links.length ? " " + links.join(" · ") : "");
     }
 
     function bodyDone() {
@@ -1061,13 +1130,21 @@
         ? "<b>Thanks, " + esc(st.contact.first) + ". Your free measure is requested.</b> "
         : "<b>Your detailed quote is on its way, " + esc(st.contact.first) + ".</b> ";
       var visit = st.visitRequested
-        ? '<div class="tq-done tq-done--quiet"><b>Free measure: ' + esc(dayLabel(days[st.visitDay])) + ", " + st.visitTime.toLowerCase() + ".</b> " + esc(COMPANY) + " would text you to confirm.</div>"
+        ? '<div class="tq-done tq-done--quiet"><b>Free measure: ' + esc(dayLabel(days[st.visitDay])) + ", " + st.visitTime.toLowerCase() + ".</b> " + esc(COMPANY) +
+          (client ? " will confirm it with you." : " would text you to confirm.") + "</div>"
         : '<div class="tq-visit"><p class="tq-label">Want us to measure? It\'s free.</p>' + visitChips() + "</div>";
-      return '<div class="tq-done" role="status">' + head + "It goes to " + esc(st.contact.email) + " and " + esc(formatPhone(st.contact.phone)) + ". In this demo, nothing is sent.</div>" +
+      var reach = client
+        ? esc(COMPANY) + " has your request and will reach you at " + esc(formatPhone(st.contact.phone)) + " or " + esc(st.contact.email) + "."
+        : "It goes to " + esc(st.contact.email) + " and " + esc(formatPhone(st.contact.phone)) + ". In this demo, nothing is sent.";
+      if (client) head = st.intent === "measure"
+        ? "<b>Thanks, " + esc(st.contact.first) + ". Your free measure request is in.</b> "
+        : "<b>Thanks, " + esc(st.contact.first) + ". Your quote request is in.</b> ";
+      return '<div class="tq-done" role="status">' + head + reach + "</div>" +
         selectedSummary() +
         '<details class="tq-more" open><summary>Your itemized quote</summary><ul class="tq-lines">' + priceLines(st.material, q) + "</ul></details>" +
+        (st.sendError ? '<p class="tq-err tq-send-err" role="alert">' + esc(st.sendError) + "</p>" : "") +
         visit +
-        '<a class="tq-link" href="' + esc(opts.contractorHref || "demo.html#contractor") + '">See what the contractor gets →</a>';
+        (client ? "" : '<a class="tq-link" href="' + esc(opts.contractorHref || "demo.html#contractor") + '">See what the contractor gets →</a>');
     }
 
     function priceLines(mid, q) {
@@ -1101,7 +1178,8 @@
         (colors ? '<div class="tq-opt"><span class="tq-label">Color</span><div class="tq-colors" role="group" aria-label="Color">' + colors + "</div></div>" : "") +
         (facts ? '<dl class="tq-facts">' + facts + "</dl>" : "") +
         (lo ? '<div class="tq-finance"><div class="tq-finance-text"><b>' + money(lo) + "–" + money(hi) + "/mo</b><span>" + F.months + " months at " + F.apr + "% APR. " + esc(F.note || "") + "</span></div>" +
-          '<button type="button" class="tq-mini" data-act="finance">Check my rate</button></div>' : "") +
+          (!client ? '<button type="button" class="tq-mini" data-act="finance">Check my rate</button>'
+            : F.url ? '<a class="tq-mini" href="' + esc(F.url) + '" target="_blank" rel="noopener">Check my rate</a>' : "") + "</div>" : "") +
         '<details class="tq-more"><summary>How this price adds up</summary><ul class="tq-lines">' + priceLines(m.id, q) + "</ul></details>" +
         "</div>";
     }
@@ -1147,13 +1225,15 @@
         html = '<button type="button" class="tq-btn tq-btn--ghost" data-act="detail" data-intent="measure">Book a free measure</button>' +
           '<button type="button" class="tq-btn" data-act="detail" data-intent="quote">Get my detailed quote</button>';
       } else if (s === "details") {
+        var busy = st.sending ? " disabled aria-busy=\"true\"" : "";
         html = !st.submitted
-          ? '<button type="button" class="tq-btn tq-btn--ghost" data-act="back">Back</button>' +
-            '<button type="button" class="tq-btn" data-act="submit">' + (st.intent === "measure" ? "Request my free measure" : "Send my detailed quote") + "</button>"
-          : '<button type="button" class="tq-btn tq-btn--ghost" data-act="restart">Start over</button>' +
+          ? '<button type="button" class="tq-btn tq-btn--ghost" data-act="back"' + busy + ">Back</button>" +
+            '<button type="button" class="tq-btn" data-act="submit"' + busy + ">" +
+            (st.sending ? "Sending…" : st.intent === "measure" ? "Request my free measure" : client ? "Send my quote request" : "Send my detailed quote") + "</button>"
+          : '<button type="button" class="tq-btn tq-btn--ghost" data-act="restart"' + busy + ">Start over</button>" +
             (st.visitRequested
-              ? '<a class="tq-btn" href="' + esc(opts.contractorHref || "demo.html#contractor") + '" data-act="contractor">See what the contractor gets</a>'
-              : '<button type="button" class="tq-btn" data-act="visit">Book my free measure</button>');
+              ? (client ? "" : '<a class="tq-btn" href="' + esc(opts.contractorHref || "demo.html#contractor") + '" data-act="contractor">See what the contractor gets</a>')
+              : '<button type="button" class="tq-btn" data-act="visit"' + busy + ">" + (st.sending ? "Sending…" : "Book my free measure") + "</button>");
       }
       a.innerHTML = html;
       a.hidden = !html;
@@ -1273,6 +1353,7 @@
       var q = quoteFor(st.material);
       return {
         id: "live-" + Date.now(),
+        leadId: "TQ-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase(),
         live: true,
         createdAt: Date.now(),
         name: (st.contact.first.trim() + " " + st.contact.last.trim()).trim(),
@@ -1303,6 +1384,52 @@
     function publishLead() {
       saveLead(st.lead);
       if (opts.onLead) opts.onLead(st.lead);
+    }
+
+    // Client pages: send the lead to the client's Netlify form. Field names must match the hidden form on the page.
+    function leadFields(update) {
+      var L = st.lead, q = quoteFor(st.material), round6 = function (v) { return Math.round(v * 1e6) / 1e6; };
+      var mapMode = L.mode === "map";
+      var ref = "";
+      try { ref = document.referrer ? new URL(document.referrer).origin : ""; } catch (e) {}
+      return {
+        "form-name": LEAD.formName,
+        "bot-field": "",
+        client: LEAD.clientId || "",
+        lead_id: L.leadId,
+        update: update || "New request",
+        wants: L.wants,
+        name: L.name,
+        phone: L.phone,
+        email: L.email,
+        address: mapMode ? L.address : "Not given (priced on the example yard)",
+        fence: ftLabel(q.fenceFt) + " of " + styleLabel(st.material, q.height) + (L.color ? ", " + L.color.toLowerCase() : ""),
+        gates: st.gates.length ? gateSummary(st.gates) : "None",
+        old_fence_removal: st.removal ? "Yes" : "No",
+        price_shown: moneyRange(q.lo, q.hi),
+        monthly_shown: L.monthly ? "From " + money(L.monthly) + "/mo" : "",
+        install_timing: L.timing || "Not given",
+        measure_visit: L.visit || "",
+        text_consent: L.consent ? "Yes" : "No",
+        consent_text: L.consent ? consentText() : "",
+        map_image: mapMode ? leadMapImageUrl(st.runs, st.gates) : "",
+        // A maps link built from the address text: Mapbox's temporary geocoding doesn't allow storing its coordinates.
+        directions: mapMode && L.address ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(L.address) : "",
+        drawing: JSON.stringify({ mode: L.mode, runs: st.runs.map(function (r) { return r.map(function (pt) { return [round6(pt[0]), round6(pt[1])]; }); }), gates: st.gates }),
+        page: location.origin + location.pathname,
+        embedded_on: ref && ref !== location.origin ? ref : "",
+        submitted_at: new Date().toISOString()
+      };
+    }
+    function sendLead(update) {
+      if (!LEAD.formName) return Promise.reject(new Error("no form"));
+      var body = new URLSearchParams(leadFields(update)).toString();
+      return fetch(LEAD.endpoint || "/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body })
+        .then(function (r) { if (!r.ok) throw new Error("status " + r.status); });
+    }
+    function sendErrorText() {
+      return "We couldn't send your request. Check your connection and try again" +
+        (COMPANY_PHONE ? ", or call " + COMPANY + " at " + COMPANY_PHONE : "") + ".";
     }
     function bookVisit() {
       st.visitRequested = true;
@@ -1338,25 +1465,60 @@
         track("tq_quote_viewed", { layout: layout, live: live, feet: Math.round(drawnFt()), gates: st.gates.length });
       }
       else if (act === "detail") { st.intent = t.getAttribute("data-intent") || "quote"; track("tq_details_opened", { intent: st.intent }); go("details"); }
-      else if (act === "back") { readContact(); go("quote"); }
+      else if (act === "back") { readContact(); st.sendError = ""; go("quote"); }
       else if (act === "finance") toast("On a live site, this opens the contractor's financing application.");
       else if (act === "submit") {
+        if (st.sending) return;
         readContact();
         if (!validateContact()) { render(); var bad = root.querySelector('[aria-invalid="true"]'); if (bad) bad.focus(); return; }
-        st.submitted = true;
         st.lead = buildLead();
-        track("tq_details_submitted", { intent: st.intent, material: st.material, feet: Math.round(drawnFt()), live: live });
         if (st.intent === "measure") bookVisit();
-        publishLead();
+        var finish = function () {
+          st.submitted = true;
+          st.sending = false;
+          st.sendError = "";
+          track("tq_details_submitted", { intent: st.intent, material: st.material, feet: Math.round(drawnFt()), live: live, client: client ? (LEAD.clientId || "") : "" });
+          publishLead();
+          render();
+          bringIntoView(root.querySelector(".tq-panel"));
+        };
+        if (!client) { finish(); return; }
+        st.sending = true; st.sendError = "";
         render();
-        bringIntoView(root.querySelector(".tq-panel"));
+        sendLead("New request").then(finish, function () {
+          st.sending = false;
+          st.visitRequested = false;
+          st.sendError = sendErrorText();
+          track("tq_send_failed", { client: LEAD.clientId || "" });
+          render();
+          var err = root.querySelector(".tq-send-err"); if (err) bringIntoView(err);
+        });
       } else if (act === "visit") {
+        if (st.sending) return;
+        if (!client) {
+          bookVisit();
+          if (st.lead) publishLead();
+          render();
+          return;
+        }
         bookVisit();
-        if (st.lead) publishLead();
+        st.sending = true; st.sendError = "";
         render();
+        sendLead("Measure time added").then(function () {
+          st.sending = false;
+          publishLead();
+          render();
+        }, function () {
+          st.sending = false;
+          st.visitRequested = false;
+          if (st.lead) { st.lead.visit = null; st.lead.status = "new"; }
+          st.sendError = sendErrorText();
+          render();
+        });
       } else if (act === "restart") {
         st.contact = { first: "", last: "", email: "", phone: "", consent: false };
         st.timing = ""; st.submitted = false; st.intent = "quote"; st.visitRequested = false; st.lead = null; st.tool = "draw";
+        st.sending = false; st.sendError = "";
         if (surface.kind === "map") { clearAll(); go("address"); }
         else { loadLayout(LAYOUTS.backyard); go(live ? "address" : "draw"); }
       }
