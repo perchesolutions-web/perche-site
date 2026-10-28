@@ -15,7 +15,7 @@ window.TQ_CONFIG = {
   // Live satellite map and address search.
   // Paste your Mapbox "Default public token" (it starts with "pk.").
   // Leave it empty and the quote tool runs on the illustrated example home instead.
-  mapboxToken: "",
+  mapboxToken: "pk.eyJ1IjoidHJhY2VxdW90ZSIsImEiOiJjbXZyMHFwcHAwNHRkMnhvbXpkbGF3OXJ3In0.om9dUItfwJjtENv5CG7OMA",
   mapStyle: "mapbox://styles/mapbox/satellite-streets-v12",
   mapCenter: [-80.1918, 25.7617], // address search favors results near here (Miami)
   searchCountry: "us",
