@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Demo Link Builder · TraceQuote</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="/assets/tq.css">
+<script>try{var t=localStorage.getItem("tq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>
+  .lb { max-width: 760px; margin: 0 auto; padding: 28px 16px 72px; }
+  .lb-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
+  .lb-note { font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+  .lb h1 { font-size: clamp(34px, 5vw, 48px); line-height: 1.04; letter-spacing: -0.02em; }
+  .lb-lede { color: var(--muted); font-size: 16.5px; line-height: 1.6; margin: 12px 0 26px; max-width: 40em; }
+  .lb-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 22px; }
+  .lb-card + .lb-card { margin-top: 16px; }
+  .lb-card h2 { font-family: var(--sans); font-size: 15px; font-weight: 700; margin: 0 0 14px; }
+  .lb-hint { display: block; margin-top: 5px; font-size: 12.5px; color: var(--faint); }
+  .lb-out { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .lb-out .tq-input { flex: 1 1 320px; font-family: var(--mono); font-size: 13.5px; }
+  .lb-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .lb textarea.tq-input { min-height: 168px; resize: vertical; line-height: 1.55; font-size: 15px; }
+  .lb-status { min-height: 1.4em; margin: 10px 0 0; font-size: 13px; color: var(--good); }
+  .lb-track { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .lb-track code { font-family: var(--mono); font-size: 12.5px; background: var(--bg-alt); padding: 1px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+  .lb [disabled] { opacity: 0.45; pointer-events: none; }
+  @media (max-width: 560px) { .tq-fields { grid-template-columns: minmax(0, 1fr); } .lb-card { padding: 18px; } }
+</style>
+</head>
+<body>
+<div class="topline"></div>
+<main class="lb">
+  <div class="lb-top">
+    <a class="brand" href="/" aria-label="TraceQuote home">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M8 23V10h16v13" fill="none" stroke="var(--accent-ink)" stroke-width="2.2" stroke-linejoin="round"/><g fill="var(--accent-ink)"><rect x="6.5" y="21.5" width="3" height="3" rx=".6"/><rect x="6.5" y="8.5" width="3" height="3" rx=".6"/><rect x="14.5" y="8.5" width="3" height="3" rx=".6"/><rect x="22.5" y="8.5" width="3" height="3" rx=".6"/><rect x="22.5" y="21.5" width="3" height="3" rx=".6"/></g></svg>
+      <span>TraceQuote</span>
+    </a>
+    <span class="lb-note">Unlisted page</span>
+  </div>
+
+  <h1>Demo link <em>builder</em></h1>
+  <p class="lb-lede">Make a demo link with a fence company's name on it. Their name shows across the quote page and the contractor view, and address search starts in their city.</p>
+
+  <form class="lb-card" id="lb-form" novalidate>
+    <h2>The company</h2>
+    <div class="tq-fields">
+      <div class="tq-field tq-field--wide">
+        <label class="tq-label" for="lb-company">Company name</label>
+        <input class="tq-input" id="lb-company" name="c" maxlength="60" autocomplete="off" placeholder="Acme Fence Co." required>
+      </div>
+      <div class="tq-field">
+        <label class="tq-label" for="lb-first">Owner's first name <small>(optional)</small></label>
+        <input class="tq-input" id="lb-first" name="n" maxlength="30" autocomplete="off" placeholder="Mike">
+      </div>
+      <div class="tq-field">
+        <label class="tq-label" for="lb-site">Website <small>(optional)</small></label>
+        <input class="tq-input" id="lb-site" name="w" maxlength="100" autocomplete="off" inputmode="url" placeholder="acmefence.com">
+      </div>
+      <div class="tq-field tq-field--wide">
+        <label class="tq-label" for="lb-place">City and state <small>(optional)</small></label>
+        <input class="tq-input" id="lb-place" name="l" maxlength="60" autocomplete="off" placeholder="Coral Gables, FL">
+        <span class="lb-hint">Address search favors results near here.</span>
+      </div>
+    </div>
+  </form>
+
+  <section class="lb-card" aria-labelledby="lb-link-title">
+    <h2 id="lb-link-title">Their link</h2>
+    <div class="lb-out">
+      <input class="tq-input" id="lb-link" readonly aria-label="Demo link" placeholder="Type a company name above">
+    </div>
+    <div class="lb-actions">
+      <button class="btn btn-primary btn-sm" type="button" id="lb-copy-link" disabled>Copy link</button>
+      <a class="btn btn-ghost btn-sm" id="lb-open" target="_blank" rel="noopener" disabled aria-disabled="true">Open preview</a>
+    </div>
+    <p class="lb-status" id="lb-status" role="status"></p>
+  </section>
+
+  <section class="lb-card" aria-labelledby="lb-msg-title">
+    <h2 id="lb-msg-title">Message draft <small style="font-weight:500;color:var(--faint)">edit before sending</small></h2>
+    <textarea class="tq-input" id="lb-message" aria-label="Message draft" placeholder="Fill in the company name to get a draft."></textarea>
+    <div class="lb-actions">
+      <button class="btn btn-ghost btn-sm" type="button" id="lb-copy-msg" disabled>Copy message</button>
+    </div>
+  </section>
+
+  <section class="lb-card" aria-labelledby="lb-track-title">
+    <h2 id="lb-track-title">Seeing who opened it</h2>
+    <p class="lb-track">Visits from the link are tagged in PostHog with <code id="lb-slug">prospect = …</code>. Look for these events: <code>tq_preview_opened</code>, <code>tq_address_picked</code>, <code>tq_quote_viewed</code>, <code>tq_details_submitted</code> and <code>tq_contractor_view_opened</code>. Your own test clicks count too, so open the preview once and note the time.</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var base = location.origin + "/demo";
+  var msgEdited = false;
+
+  function clean(v, max) { return String(v || "").replace(/\s+/g, " ").trim().slice(0, max); }
+  function slugOf(name) {
+    return name.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 50) || "prospect";
+  }
+  function siteOf(v) {
+    var s = clean(v, 100).toLowerCase().replace(/^[a-z]+:\/\//, "").replace(/^www\./, "").split(/[\/?#:]/)[0];
+    return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(s) ? s : "";
+  }
+
+  function draft(company, first, link) {
+    return "Hi " + (first || "there") + ",\n\n" +
+      "I put together a preview of an instant quote page for " + company + ": " + link + "\n\n" +
+      "Homeowners search their address, trace the fence on a satellite map, and see your price range before you drive out. " +
+      "You get their name, number and a measured layout of the job.\n\n" +
+      "Worth a 15-minute look this week?";
+  }
+
+  function update() {
+    var company = clean($("lb-company").value, 60);
+    var first = clean($("lb-first").value, 30);
+    var site = siteOf($("lb-site").value);
+    var place = clean($("lb-place").value, 60);
+    var on = !!company;
+    var link = "";
+    if (on) {
+      var q = new URLSearchParams();
+      q.set("c", company);
+      if (first) q.set("n", first);
+      if (site) q.set("w", site);
+      if (place) q.set("l", place);
+      link = base + "?" + q.toString();
+    }
+    $("lb-link").value = link;
+    $("lb-slug").textContent = "prospect = " + (on ? slugOf(company) : "…");
+    ["lb-copy-link", "lb-copy-msg"].forEach(function (id) { $(id).disabled = !on; });
+    var open = $("lb-open");
+    if (on) { open.href = link; open.removeAttribute("disabled"); open.removeAttribute("aria-disabled"); }
+    else { open.removeAttribute("href"); open.setAttribute("disabled", ""); open.setAttribute("aria-disabled", "true"); }
+    if (!msgEdited) $("lb-message").value = on ? draft(company, first, link) : "";
+    $("lb-status").textContent = "";
+  }
+
+  function copy(text, label) {
+    var done = function () { $("lb-status").textContent = label + " copied."; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallback(text); done(); });
+    } else { fallback(text); done(); }
+  }
+  function fallback(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  $("lb-form").addEventListener("input", update);
+  $("lb-form").addEventListener("submit", function (e) { e.preventDefault(); });
+  $("lb-message").addEventListener("input", function () { msgEdited = $("lb-message").value.trim() !== ""; });
+  $("lb-copy-link").addEventListener("click", function () { copy($("lb-link").value, "Link"); });
+  $("lb-copy-msg").addEventListener("click", function () { copy($("lb-message").value, "Message"); });
+  update();
+})();
+</script>
+</body>
+</html>
