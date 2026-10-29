@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Set Up Your Quote Page · TraceQuote</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="/assets/tq.css">
+<script>try{var t=localStorage.getItem("tq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<style>
+  .su { max-width: 800px; margin: 0 auto; padding: 28px 16px 72px; }
+  .su-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
+  .su h1 { font-size: clamp(34px, 5vw, 48px); line-height: 1.04; letter-spacing: -0.02em; margin: 0; }
+  .su-lede { color: var(--muted); font-size: 16.5px; line-height: 1.6; margin: 12px 0 26px; max-width: 42em; }
+  .su-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 22px; margin: 0 0 16px; }
+  .su-card h2 { font-family: var(--sans); font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+  .su-card > p.su-sub { margin: 0 0 16px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+  .su-hint { display: block; margin-top: 5px; font-size: 12.5px; color: var(--faint); }
+  .su .tq-err { display: block; }
+  .su-rows .tq-err, .su-extra .tq-err { margin: -2px 0 2px 3.9em; }
+  .su-extra .tq-err { grid-column: 2; margin-left: 0; }
+  .su-mat { border-top: 1px solid var(--line); padding: 14px 0 4px; }
+  .su-mat:first-of-type { border-top: 0; padding-top: 4px; }
+  .su-offer { font-size: 15px; color: var(--ink); }
+  .su-offer small { color: var(--faint); font-size: 13px; margin-left: 4px; }
+  .su-rows { display: grid; gap: 8px; margin: 10px 0 0 26px; }
+  .su-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-size: 14px; color: var(--muted); }
+  .su-h { min-width: 3.4em; font-weight: 600; color: var(--ink); }
+  .su-money { position: relative; display: inline-flex; align-items: center; }
+  .su-money > span { position: absolute; left: 10px; color: var(--faint); font-size: 15px; pointer-events: none; }
+  .su-money .tq-input { width: 6.6em; padding-left: 22px; font-variant-numeric: tabular-nums; }
+  .su-money--wide .tq-input { width: 8.4em; }
+  .su-example { margin: 8px 0 0 26px; font-size: 13px; color: var(--faint); min-height: 1.2em; }
+  .su-mat.is-off .su-rows, .su-mat.is-off .su-example { opacity: 0.4; }
+  .su-extras { display: grid; gap: 12px; }
+  .su-extra { display: grid; grid-template-columns: minmax(150px, 14em) minmax(0, 1fr); align-items: center; gap: 6px 12px; font-size: 14px; color: var(--muted); }
+  .su-extra > .su-label { font-weight: 600; color: var(--ink); }
+  .su-extra > .su-label small { display: block; font-weight: 400; color: var(--faint); font-size: 12.5px; }
+  .su-choice { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14.5px; }
+  .su-choice label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+  .su-choice input { accent-color: var(--accent); }
+  .su select.tq-input { appearance: auto; }
+  .su textarea.tq-input { min-height: 110px; resize: vertical; line-height: 1.5; }
+  .su-submit { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
+  .su-status { margin: 0; font-size: 14px; color: var(--danger); }
+  .su-hidden { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .su-foot { margin-top: 28px; font-size: 13px; color: var(--faint); display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .su-foot a { color: var(--faint); }
+  @media (max-width: 560px) {
+    .su .tq-fields { grid-template-columns: minmax(0, 1fr); }
+    .su-card { padding: 18px; }
+    .su-rows, .su-example { margin-left: 0; }
+    .su-extra { grid-template-columns: minmax(0, 1fr); }
+    .su-extra .tq-err { grid-column: 1; }
+    .su-money .tq-input { width: 5.3em; }
+    .su-money--wide .tq-input { width: 6.6em; }
+    .su-h { min-width: 2.8em; }
+    .su-rows .tq-err { margin-left: 3.3em; }
+  }
+</style>
+</head>
+<body>
+<div class="topline"></div>
+<main class="su">
+  <div class="su-top">
+    <a class="brand" href="/" aria-label="TraceQuote home">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M8 23V10h16v13" fill="none" stroke="var(--accent-ink)" stroke-width="2.2" stroke-linejoin="round"/><g fill="var(--accent-ink)"><rect x="6.5" y="21.5" width="3" height="3" rx=".6"/><rect x="6.5" y="8.5" width="3" height="3" rx=".6"/><rect x="14.5" y="8.5" width="3" height="3" rx=".6"/><rect x="22.5" y="8.5" width="3" height="3" rx=".6"/><rect x="22.5" y="21.5" width="3" height="3" rx=".6"/></g></svg>
+      <span>TraceQuote</span>
+    </a>
+  </div>
+
+  <h1>Set up your <em>quote page</em></h1>
+  <p class="su-lede">Tell us your prices and where new leads should go. We'll build your quote page from this and send you a preview link to check before it goes live. It takes about ten minutes; have your price sheet handy.</p>
+
+  <form id="su-form" name="client-setup" method="POST" action="/setup-thanks" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <p class="su-hidden"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <input type="hidden" name="subject" value="New client setup">
+    <textarea class="su-hidden" name="client_json" tabindex="-1" aria-hidden="true"></textarea>
+
+    <section class="su-card" aria-labelledby="su-co">
+      <h2 id="su-co">Your company</h2>
+      <p class="su-sub">This shows on your quote page, and decides where new requests are sent.</p>
+      <div class="tq-fields">
+        <div class="tq-field tq-field--wide">
+          <label class="tq-label" for="su-company">Company name</label>
+          <input class="tq-input" id="su-company" name="company" maxlength="80" autocomplete="organization" required>
+        </div>
+        <div class="tq-field">
+          <label class="tq-label" for="su-phone">Phone homeowners should call</label>
+          <input class="tq-input" id="su-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(305) 555-0123" required>
+        </div>
+        <div class="tq-field">
+          <label class="tq-label" for="su-email">Email for new requests</label>
+          <input class="tq-input" id="su-email" name="lead_email" type="email" autocomplete="email" required>
+        </div>
+        <div class="tq-field tq-field--wide">
+          <label class="tq-label" for="su-more">More emails for requests <small>(optional)</small></label>
+          <input class="tq-input" id="su-more" name="more_emails" maxlength="300" placeholder="sales@yourcompany.com, office@yourcompany.com">
+          <span class="su-hint">Separate them with commas. Everyone listed gets each request.</span>
+        </div>
+        <div class="tq-field">
+          <label class="tq-label" for="su-site">Website <small>(optional)</small></label>
+          <input class="tq-input" id="su-site" name="website" maxlength="120" inputmode="url" placeholder="yourcompany.com">
+        </div>
+        <div class="tq-field">
+          <label class="tq-label" for="su-area">Main city or ZIP you serve</label>
+          <input class="tq-input" id="su-area" name="service_area" maxlength="80" placeholder="Coral Gables, FL" required>
+          <span class="su-hint">Address search favors homes near here.</span>
+        </div>
+        <div class="tq-field tq-field--wide">
+          <label class="tq-label" for="su-logo">Logo <small>(optional: PNG, JPG, SVG or WebP, up to 5 MB)</small></label>
+          <input class="tq-input" id="su-logo" name="logo" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp">
+        </div>
+      </div>
+    </section>
+
+    <section class="su-card" aria-labelledby="su-prices">
+      <h2 id="su-prices">Your fence prices</h2>
+      <p class="su-sub">Installed price per foot, materials and labor included. Give a low and a high number so homeowners see an honest range. Leave a height empty if you don't install it, and uncheck anything you don't offer.</p>
+
+      <div class="su-mat" data-mat="chain">
+        <label class="tq-check su-offer"><input type="checkbox" name="offer_chain" value="yes" checked><span><b>Chain link</b><small>Galvanized steel</small></span></label>
+        <div class="su-rows">
+          <div class="su-row"><span class="su-h">4 ft</span><label class="su-money"><span>$</span><input class="tq-input" name="chain_4_lo" inputmode="decimal" placeholder="12" aria-label="Chain link, 4 ft: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="chain_4_hi" inputmode="decimal" placeholder="18" aria-label="Chain link, 4 ft: high price per foot"></label><span>per ft</span></div>
+          <div class="su-row"><span class="su-h">6 ft</span><label class="su-money"><span>$</span><input class="tq-input" name="chain_6_lo" inputmode="decimal" placeholder="16" aria-label="Chain link, 6 ft: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="chain_6_hi" inputmode="decimal" placeholder="24" aria-label="Chain link, 6 ft: high price per foot"></label><span>per ft</span></div>
+        </div>
+        <p class="su-example" data-example="chain" aria-live="polite"></p>
+      </div>
+
+      <div class="su-mat" data-mat="wood">
+        <label class="tq-check su-offer"><input type="checkbox" name="offer_wood" value="yes" checked><span><b>Wood privacy</b><small>Pressure-treated pine</small></span></label>
+        <div class="su-rows">
+          <div class="su-row"><span class="su-h">6 ft</span><label class="su-money"><span>$</span><input class="tq-input" name="wood_6_lo" inputmode="decimal" placeholder="24" aria-label="Wood privacy, 6 ft: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="wood_6_hi" inputmode="decimal" placeholder="34" aria-label="Wood privacy, 6 ft: high price per foot"></label><span>per ft</span></div>
+          <div class="su-row"><span class="su-h">8 ft</span><label class="su-money"><span>$</span><input class="tq-input" name="wood_8_lo" inputmode="decimal" placeholder="32" aria-label="Wood privacy, 8 ft: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="wood_8_hi" inputmode="decimal" placeholder="44" aria-label="Wood privacy, 8 ft: high price per foot"></label><span>per ft</span></div>
+        </div>
+        <p class="su-example" data-example="wood" aria-live="polite"></p>
+      </div>
+
+      <div class="su-mat" data-mat="vinyl">
+        <label class="tq-check su-offer"><input type="checkbox" name="offer_vinyl" value="yes" checked><span><b>Vinyl privacy</b><small>PVC panels</small></span></label>
+        <div class="su-rows">
+          <div class="su-row"><span class="su-h">4 ft</span><label class="su-money"><span>$</span><input class="tq-input" name="vinyl_4_lo" inputmode="decimal" placeholder="24" aria-label="Vinyl privacy, 4 ft: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="vinyl_4_hi" inputmode="decimal" placeholder="32" aria-label="Vinyl privacy, 4 ft: high price per foot"></label><span>per ft</span></div>
+          <div class="su-row"><span class="su-h">6 ft</span><label class="su-money"><span>$</span><input class="tq-input" name="vinyl_6_lo" inputmode="decimal" placeholder="34" aria-label="Vinyl privacy, 6 ft: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="vinyl_6_hi" inputmode="decimal" placeholder="46" aria-label="Vinyl privacy, 6 ft: high price per foot"></label><span>per ft</span></div>
+        </div>
+        <p class="su-example" data-example="vinyl" aria-live="polite"></p>
+      </div>
+
+      <div class="su-mat" data-mat="aluminum">
+        <label class="tq-check su-offer"><input type="checkbox" name="offer_aluminum" value="yes" checked><span><b>Aluminum</b><small>Ornamental pickets</small></span></label>
+        <div class="su-rows">
+          <div class="su-row"><span class="su-h">4 ft</span><label class="su-money"><span>$</span><input class="tq-input" name="aluminum_4_lo" inputmode="decimal" placeholder="30" aria-label="Aluminum, 4 ft: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="aluminum_4_hi" inputmode="decimal" placeholder="40" aria-label="Aluminum, 4 ft: high price per foot"></label><span>per ft</span></div>
+          <div class="su-row"><span class="su-h">5 ft</span><label class="su-money"><span>$</span><input class="tq-input" name="aluminum_5_lo" inputmode="decimal" placeholder="34" aria-label="Aluminum, 5 ft: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="aluminum_5_hi" inputmode="decimal" placeholder="46" aria-label="Aluminum, 5 ft: high price per foot"></label><span>per ft</span></div>
+        </div>
+        <p class="su-example" data-example="aluminum" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="su-card" aria-labelledby="su-extras">
+      <h2 id="su-extras">Gates, removal and minimum</h2>
+      <p class="su-sub">Installed prices. If you leave a gate or removal price empty, we'll ask you for it before your page goes live.</p>
+      <div class="su-extras">
+        <div class="su-extra"><span class="su-label">Walk gate<small>About 4 ft wide, each</small></span>
+          <div class="su-row"><label class="su-money su-money--wide"><span>$</span><input class="tq-input" name="walk_gate_lo" inputmode="decimal" placeholder="450" aria-label="Walk gate: low price"></label><span>to</span><label class="su-money su-money--wide"><span>$</span><input class="tq-input" name="walk_gate_hi" inputmode="decimal" placeholder="750" aria-label="Walk gate: high price"></label></div></div>
+        <div class="su-extra"><span class="su-label">Drive gate<small>About 12 ft wide, each</small></span>
+          <div class="su-row"><label class="su-money su-money--wide"><span>$</span><input class="tq-input" name="drive_gate_lo" inputmode="decimal" placeholder="1400" aria-label="Drive gate: low price"></label><span>to</span><label class="su-money su-money--wide"><span>$</span><input class="tq-input" name="drive_gate_hi" inputmode="decimal" placeholder="2600" aria-label="Drive gate: high price"></label></div></div>
+        <div class="su-extra"><span class="su-label">Old fence removal<small>Per foot, including haul-away</small></span>
+          <div class="su-row"><label class="su-money"><span>$</span><input class="tq-input" name="removal_lo" inputmode="decimal" placeholder="2" aria-label="Old fence removal: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="removal_hi" inputmode="decimal" placeholder="4" aria-label="Old fence removal: high price per foot"></label><span>per ft</span></div></div>
+        <div class="su-extra"><span class="su-label">Minimum job<small>The smallest job you'll quote</small></span>
+          <div class="su-row"><label class="su-money su-money--wide"><span>$</span><input class="tq-input" id="su-min" name="minimum_job" inputmode="decimal" placeholder="1500" aria-label="Minimum job price" required></label></div></div>
+      </div>
+    </section>
+
+    <section class="su-card" aria-labelledby="su-fin">
+      <h2 id="su-fin">Financing</h2>
+      <p class="su-sub">If you offer financing, each price shows an estimated monthly payment next to it.</p>
+      <div class="su-choice" role="radiogroup" aria-label="Do you offer financing?">
+        <label><input type="radio" name="financing" value="yes"> We offer financing</label>
+        <label><input type="radio" name="financing" value="no" checked> No financing</label>
+      </div>
+      <div class="tq-fields" data-fin hidden style="margin-top:14px">
+        <div class="tq-field tq-field--wide">
+          <label class="tq-label" for="su-fin-url">Link to your financing application <small>(optional)</small></label>
+          <input class="tq-input" id="su-fin-url" name="financing_url" maxlength="300" inputmode="url" placeholder="https://">
+        </div>
+        <div class="tq-field">
+          <label class="tq-label" for="su-fin-apr">Typical APR <small>(%, optional)</small></label>
+          <input class="tq-input" id="su-fin-apr" name="financing_apr" inputmode="decimal" placeholder="9.99">
+        </div>
+        <div class="tq-field">
+          <label class="tq-label" for="su-fin-months">Typical term <small>(months, optional)</small></label>
+          <input class="tq-input" id="su-fin-months" name="financing_months" inputmode="numeric" placeholder="120">
+        </div>
+      </div>
+    </section>
+
+    <section class="su-card" aria-labelledby="su-web">
+      <h2 id="su-web">Your website</h2>
+      <p class="su-sub">So we can tell you exactly how to add the quote tool to it.</p>
+      <div class="tq-fields">
+        <div class="tq-field">
+          <label class="tq-label" for="su-platform">Built with</label>
+          <select class="tq-input" id="su-platform" name="site_platform">
+            <option value="">Choose one</option>
+            <option>WordPress</option><option>Wix</option><option>Squarespace</option><option>GoDaddy</option>
+            <option>Shopify</option><option>Webflow</option><option>Other</option><option>Not sure</option><option>We don't have a website</option>
+          </select>
+        </div>
+        <div class="tq-field">
+          <label class="tq-label" for="su-manager">Who makes changes to it</label>
+          <select class="tq-input" id="su-manager" name="site_managed_by">
+            <option value="">Choose one</option>
+            <option>We do</option><option>Our web designer</option><option>Not sure</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="su-card" aria-labelledby="su-notes">
+      <h2 id="su-notes">Anything else</h2>
+      <label class="tq-label" for="su-notes-text">Notes <small>(optional)</small></label>
+      <textarea class="tq-input" id="su-notes-text" name="notes" maxlength="2000" placeholder="Other fence styles or heights you install, areas you don't serve, anything homeowners should know"></textarea>
+      <label class="tq-check" style="margin-top:16px"><input type="checkbox" id="su-ok" name="prices_ok" value="yes" required><span>These prices can be shown on our quote page as estimates. We set the final price after measuring on site.</span></label>
+      <div class="su-submit">
+        <button class="btn btn-primary" type="submit" id="su-send">Send my setup</button>
+        <p class="su-status" id="su-status" role="alert"></p>
+      </div>
+    </section>
+  </form>
+
+  <p class="su-foot"><span>TraceQuote is a product of Perché AI Solutions LLC.</span><a href="/privacy">Privacy policy</a><a href="/terms">Terms of use</a></p>
+</main>
+
+<script src="/assets/tq-config.js"></script>
+<script>
+(function () {
+  "use strict";
+  var CFG = window.TQ_CONFIG || {};
+  var form = document.getElementById("su-form");
+  var status = document.getElementById("su-status");
+  var MATS = (CFG.pricing && CFG.pricing.materials) || [];
+
+  function field(name) { return form.elements[name]; }
+  function val(name) { var f = field(name); return f && typeof f.value === "string" ? f.value.trim() : ""; }
+  function num(name) {
+    var s = val(name).replace(/[$,\s]/g, "");
+    if (!s) return null;
+    var n = Number(s);
+    return isFinite(n) ? n : NaN;
+  }
+  function money(n) { return "$" + Math.round(n).toLocaleString("en-US"); }
+  function slug(s) {
+    return s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/&/g, " and ")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40).replace(/-+$/, "") || "client";
+  }
+  function site(v) {
+    var s = String(v || "").trim().toLowerCase().replace(/^[a-z]+:\/\//, "").replace(/^www\./, "").split(/[\/?#]/)[0];
+    return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(s) ? s : "";
+  }
+  function pair(lo, hi) { return lo != null && hi != null && !isNaN(lo) && !isNaN(hi) ? [Math.min(lo, hi), Math.max(lo, hi)] : null; }
+
+  /* ----- error messages next to fields ----- */
+  function clearErrors() {
+    Array.prototype.forEach.call(form.querySelectorAll(".tq-err[data-su]"), function (e) { e.remove(); });
+    Array.prototype.forEach.call(form.querySelectorAll('[aria-invalid="true"]'), function (e) { e.removeAttribute("aria-invalid"); });
+    status.textContent = "";
+  }
+  // The message goes right under the field: inside its .tq-field box, or below its price row or checkbox.
+  function fail(el, msg, errs) {
+    if (!el || errs.indexOf(el) >= 0) return;
+    el.setAttribute("aria-invalid", "true");
+    var s = document.createElement("span");
+    s.className = "tq-err";
+    s.setAttribute("data-su", "");
+    s.textContent = msg;
+    var box = el.type !== "checkbox" && el.closest(".tq-field");
+    if (box) {
+      if (!box.querySelector(".tq-err[data-su]")) box.appendChild(s);
+    } else {
+      var after = el.closest(".su-row, .tq-check, .su-choice") || el;
+      var next = after.nextElementSibling;
+      if (!(next && next.matches(".tq-err[data-su]"))) after.insertAdjacentElement("afterend", s);
+    }
+    errs.push(el);
+  }
+
+  /* ----- what a homeowner would see, so typos stand out ----- */
+  function example(m) {
+    var el = form.querySelector('[data-example="' + m.id + '"]');
+    if (!el) return;
+    if (!field("offer_" + m.id).checked) { el.textContent = ""; return; }
+    var hs = Object.keys(m.heights), h = null, per = null;
+    [m.defaultHeight].concat(hs).some(function (x) { var p = pair(num(m.id + "_" + x + "_lo"), num(m.id + "_" + x + "_hi")); if (p) { h = x; per = p; return true; } return false; });
+    if (!per) { el.textContent = ""; return; }
+    var gate = pair(num("walk_gate_lo"), num("walk_gate_hi")) || CFG.pricing.gates.walk.price;
+    var ft = 150 - CFG.pricing.gates.walk.width, min = num("minimum_job") || 0;
+    var lo = Math.max(ft * per[0] + gate[0], min), hi = Math.max(ft * per[1] + gate[1], min);
+    el.textContent = "Homeowners would see about " + money(lo) + "–" + money(hi) + " for 150 ft of " + h + " ft " + m.name.toLowerCase() + " with one walk gate.";
+  }
+  function refresh() {
+    MATS.forEach(function (m) {
+      var box = form.querySelector('[data-mat="' + m.id + '"]');
+      if (box) box.classList.toggle("is-off", !field("offer_" + m.id).checked);
+      example(m);
+    });
+    form.querySelector("[data-fin]").hidden = !(field("financing").value === "yes");
+  }
+
+  /* ----- checks before sending ----- */
+  function validate() {
+    var errs = [], el;
+    clearErrors();
+    if (!val("company")) fail(field("company"), "Enter your company name.", errs);
+    var digits = val("phone").replace(/\D/g, "");
+    if (digits.length === 11 && digits[0] === "1") digits = digits.slice(1);
+    if (digits.length !== 10) fail(field("phone"), "Enter a 10-digit phone number.", errs);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("lead_email"))) fail(field("lead_email"), "Enter an email like name@yourcompany.com.", errs);
+    var bad = val("more_emails").split(/[,;\s]+/).filter(function (x) { return x && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x); });
+    if (bad.length) fail(field("more_emails"), "Check this email: " + bad[0], errs);
+    if (!val("service_area")) fail(field("service_area"), "Enter the main city or ZIP you serve.", errs);
+    var logo = field("logo").files && field("logo").files[0];
+    if (logo && logo.size > 5 * 1024 * 1024) fail(field("logo"), "That file is over 5 MB. Choose a smaller one.", errs);
+
+    var offered = 0;
+    MATS.forEach(function (m) {
+      if (!field("offer_" + m.id).checked) return;
+      offered++;
+      var any = false, touched = false;
+      Object.keys(m.heights).forEach(function (h) {
+        var loEl = field(m.id + "_" + h + "_lo"), hiEl = field(m.id + "_" + h + "_hi");
+        var lo = num(m.id + "_" + h + "_lo"), hi = num(m.id + "_" + h + "_hi");
+        if (lo == null && hi == null) return;
+        touched = true;
+        if (lo == null || hi == null) { fail(lo == null ? loEl : hiEl, "Enter both a low and a high price, or leave both empty.", errs); return; }
+        if (isNaN(lo) || isNaN(hi) || lo <= 0 || hi <= 0) { fail(isNaN(lo) || lo <= 0 ? loEl : hiEl, "Enter a price per foot, like 34.", errs); return; }
+        if (lo > hi) { fail(loEl, "The low price is higher than the high price.", errs); return; }
+        if (hi > 300) { fail(hiEl, "Enter the price per foot, not the job total.", errs); return; }
+        any = true;
+      });
+      // "At least one height" only when every row is empty; a half-filled row already has its own message.
+      if (!any && !touched) fail(field(m.id + "_" + Object.keys(m.heights)[0] + "_lo"), "Enter a price for at least one height, or uncheck " + m.name.toLowerCase() + ".", errs);
+    });
+    if (!offered) fail(field("offer_" + MATS[0].id), "Check at least one fence type you install.", errs);
+
+    [["walk_gate", 20000], ["drive_gate", 40000], ["removal", 100]].forEach(function (x) {
+      var lo = num(x[0] + "_lo"), hi = num(x[0] + "_hi");
+      if (lo == null && hi == null) return;
+      if (lo == null || hi == null) { fail(field(x[0] + (lo == null ? "_lo" : "_hi")), "Enter both a low and a high price, or leave both empty.", errs); return; }
+      if (isNaN(lo) || isNaN(hi) || lo < 0 || hi < 0 || Math.max(lo, hi) > x[1]) { fail(field(x[0] + "_lo"), "Check this price.", errs); return; }
+      if (lo > hi) fail(field(x[0] + "_lo"), "The low price is higher than the high price.", errs);
+    });
+    var min = num("minimum_job");
+    if (min == null || isNaN(min) || min < 0 || min > 100000) fail(field("minimum_job"), "Enter your minimum job price, like 1500. Enter 0 if you don't have one.", errs);
+    if (!field("prices_ok").checked) fail(field("prices_ok"), "Check this box to send your setup.", errs);
+    return errs;
+  }
+
+  /* ----- the settings file for tools/new-client.mjs ----- */
+  function clientJson() {
+    var P = JSON.parse(JSON.stringify(CFG.pricing)), review = [];
+    P.materials = P.materials.filter(function (m) { return field("offer_" + m.id).checked; }).map(function (m) {
+      var heights = {};
+      Object.keys(m.heights).forEach(function (h) {
+        var p = pair(num(m.id + "_" + h + "_lo"), num(m.id + "_" + h + "_hi"));
+        if (p) heights[h] = p;
+      });
+      m.heights = heights;
+      if (!heights[m.defaultHeight]) m.defaultHeight = Object.keys(heights)[0];
+      return m;
+    });
+    if (!P.materials.some(function (m) { return m.id === P.defaultMaterial; })) P.defaultMaterial = P.materials[0].id;
+    [["walk", "walk_gate", "Walk gate"], ["drive", "drive_gate", "Drive gate"]].forEach(function (g) {
+      var p = pair(num(g[1] + "_lo"), num(g[1] + "_hi"));
+      if (p) P.gates[g[0]].price = p; else review.push(g[2] + " price left empty: the sample price is in for now. Ask them.");
+    });
+    var r = pair(num("removal_lo"), num("removal_hi"));
+    if (r) P.removalPerFt = r; else review.push("Removal price left empty: the sample price is in for now. Ask them.");
+    P.minimumJob = num("minimum_job") || 0;
+
+    var name = val("company"), id = slug(name), fin = field("financing").value === "yes";
+    var financing = { show: fin, url: fin ? val("financing_url") : "" };
+    if (fin) {
+      var apr = num("financing_apr"), months = num("financing_months");
+      if (apr != null && !isNaN(apr) && apr >= 0 && apr < 40) financing.apr = apr; else review.push("Financing APR not given: the example APR is in for now.");
+      if (months != null && !isNaN(months) && months >= 6 && months <= 240) financing.months = Math.round(months); else review.push("Financing term not given: the example term is in for now.");
+    }
+    var logo = field("logo").files && field("logo").files[0];
+    if (logo) review.push("Logo uploaded (" + logo.name + "): save it as q/" + id + "/logo" + (logo.name.match(/\.(png|jpe?g|svg|webp)$/i) || [".png"])[0].toLowerCase() + " and set company.logo.");
+    review.push("Add mapCenter [longitude, latitude] for " + val("service_area") + ".");
+    var emails = [val("lead_email")].concat(val("more_emails").split(/[,;\s]+/).filter(Boolean));
+    review.push("In Netlify, email new requests on form lead-" + id + " to: " + emails.join(", ") + ".");
+
+    return {
+      id: id,
+      company: { name: name, phone: val("phone"), email: val("lead_email"), website: site(val("website")), logo: "" },
+      serviceArea: val("service_area"),
+      leadEmails: emails,
+      financing: financing,
+      pricing: P,
+      website: { platform: val("site_platform"), managedBy: val("site_managed_by") },
+      notes: val("notes"),
+      _review: review
+    };
+  }
+
+  function clearFor(el) {
+    if (!el || !el.closest) return;
+    var scope = el.closest(".su-row") || (el.type === "checkbox" && el.closest(".su-mat")) || null;
+    var targets = scope ? scope.querySelectorAll('[aria-invalid="true"]') : [el];
+    Array.prototype.forEach.call(targets, function (x) {
+      if (x.getAttribute("aria-invalid") !== "true") return;
+      x.removeAttribute("aria-invalid");
+      var box = x.type !== "checkbox" && x.closest(".tq-field");
+      var msg = box ? box.querySelector(".tq-err[data-su]") : null;
+      if (!msg) { var a = x.closest(".su-row, .tq-check, .su-choice") || x, n = a.nextElementSibling; if (n && n.matches(".tq-err[data-su]")) msg = n; }
+      if (msg) msg.remove();
+    });
+    if (el.type === "checkbox" && el.closest(".su-mat") && !el.checked) {
+      Array.prototype.forEach.call(el.closest(".su-mat").querySelectorAll(".tq-err[data-su]"), function (m) { m.remove(); });
+    }
+    if (!form.querySelector('[aria-invalid="true"]')) status.textContent = "";
+  }
+  form.addEventListener("input", function (e) { clearFor(e.target); refresh(); });
+  form.addEventListener("change", function (e) { clearFor(e.target); refresh(); });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var errs = validate();
+    if (errs.length) {
+      status.textContent = errs.length === 1 ? "One thing to fix above." : errs.length + " things to fix above.";
+      errs[0].focus();
+      return;
+    }
+    var json = clientJson();
+    field("client_json").value = JSON.stringify(json, null, 2);
+    field("subject").value = "New client setup: " + json.company.name;
+    var btn = document.getElementById("su-send");
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+    HTMLFormElement.prototype.submit.call(form);
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>

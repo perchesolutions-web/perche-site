@@ -93,6 +93,14 @@
     <h2 id="lb-track-title">Seeing who opened it</h2>
     <p class="lb-track">Visits from the link are tagged in PostHog with <code id="lb-slug">prospect = …</code>. Look for these events: <code>tq_preview_opened</code>, <code>tq_address_picked</code>, <code>tq_quote_viewed</code>, <code>tq_details_submitted</code> and <code>tq_contractor_view_opened</code>. Your own test clicks count too, so open the preview once and note the time.</p>
   </section>
+
+  <section class="lb-card" aria-labelledby="lb-setup-title">
+    <h2 id="lb-setup-title">After they sign</h2>
+    <p class="lb-track">Send them the setup form at <code id="lb-setup-link">perchesolutions.com/setup</code>. They enter their prices, lead emails and logo there, and the email you get includes their settings file, ready to build their quote page.</p>
+    <div class="lb-actions">
+      <button class="btn btn-ghost btn-sm" type="button" id="lb-copy-setup">Copy setup link</button>
+    </div>
+  </section>
 </main>
 
 <script>
@@ -164,6 +172,8 @@
   $("lb-message").addEventListener("input", function () { msgEdited = $("lb-message").value.trim() !== ""; });
   $("lb-copy-link").addEventListener("click", function () { copy($("lb-link").value, "Link"); });
   $("lb-copy-msg").addEventListener("click", function () { copy($("lb-message").value, "Message"); });
+  $("lb-setup-link").textContent = location.host + "/setup";
+  $("lb-copy-setup").addEventListener("click", function () { copy(location.origin + "/setup", "Setup link"); });
   update();
 })();
 </script>
