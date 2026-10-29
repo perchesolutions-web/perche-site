@@ -10,7 +10,7 @@ window.TQ_CONFIG = {
   contactEmail: "hello@perchesolutions.com",
 
   // "Book a call" buttons on the site open this Calendly page.
-  bookingUrl: "https://calendly.com/perchesolutions/free-worldflow-audit",
+  bookingUrl: "https://calendly.com/perchesolutions/tracequote-demo",
 
   // Live satellite map and address search.
   // Paste your Mapbox "Default public token" (it starts with "pk.").
