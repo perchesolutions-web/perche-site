@@ -13,6 +13,15 @@
   var COMPANY = CO.name || "Your Fence Co.";
   var COMPANY_PHONE = CO.phone || "";
   var MAPBOX_VERSION = "3.28.1";
+  // Fingerprints of the map library files for MAPBOX_VERSION (from the npm package; jsDelivr serves the same bytes).
+  // The browser refuses the files if the CDN ever sends anything different, and the widget falls back as it does
+  // when the map can't load. A new MAPBOX_VERSION needs new fingerprints here and the new version in _headers.
+  var MAPBOX_SRI = {
+    "3.28.1": {
+      js: "sha384-VOlmgh0/P4/iMFp93KgZ/dslg/arHDGRH9AOmgy3r7hhSMWFPq6kJQuP1eV0Yf8v",
+      css: "sha384-XUbQaovfoSbaMso2Q1a1bLMGwU+1h7twi9V0vkuM6eOCZd0i52f6iAuxtHaP1nDO"
+    }
+  };
   var MAP_STYLE = CFG.mapStyle || "mapbox://styles/mapbox/satellite-streets-v12";
   // How the satellite photos are fetched. "static" (the default) uses Mapbox's Static Tiles API, which
   // also works on a Mapbox account with no card on file (that account can't use the Raster Tiles API).
@@ -404,10 +413,14 @@
     if (mapboxLoading) return mapboxLoading;
     mapboxLoading = new Promise(function (resolve, reject) {
       var base = "https://cdn.jsdelivr.net/npm/mapbox-gl@" + MAPBOX_VERSION + "/dist/";
+      var sri = MAPBOX_SRI[MAPBOX_VERSION];
       var css = document.createElement("link");
-      css.rel = "stylesheet"; css.href = base + "mapbox-gl.css";
+      css.rel = "stylesheet";
+      if (sri) { css.integrity = sri.css; css.crossOrigin = "anonymous"; }
+      css.href = base + "mapbox-gl.css";
       document.head.appendChild(css);
       var js = document.createElement("script");
+      if (sri) { js.integrity = sri.js; js.crossOrigin = "anonymous"; }
       js.src = base + "mapbox-gl.js";
       js.onload = function () { if (window.mapboxgl) resolve(); else reject(new Error("map script")); };
       js.onerror = function () { mapboxLoading = null; reject(new Error("map script")); };
