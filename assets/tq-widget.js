@@ -1488,6 +1488,19 @@
       if (opts.onLead) opts.onLead(st.lead);
     }
 
+    // Netlify uses a submitted "subject" field as the subject line of the lead email, so the contractor
+    // can tell requests apart from the inbox.
+    function leadSubject(update, L, q) {
+      var where = String(L.address || "").split(",").slice(0, 2).join(",").trim();
+      var who = (L.name || "Homeowner") + (where ? ", " + where : "");
+      var s = update === "Measure time added"
+        ? "Measure time added: " + who + (L.visit ? " — " + L.visit : "")
+        : L.wants === "Free measure"
+          ? "Free measure request: " + who + (L.visit ? " — " + L.visit : "")
+          : "Quote request: " + who + " — " + ftLabel(q.fenceFt) + " of " + styleLabel(st.material, q.height) + ", " + moneyRange(q.lo, q.hi);
+      return s.length > 160 ? s.slice(0, 157) + "…" : s;
+    }
+
     // Client pages: send the lead to the client's Netlify form. Field names must match the hidden form on the page.
     function leadFields(update) {
       var L = st.lead, q = quoteFor(st.material), round6 = function (v) { return Math.round(v * 1e6) / 1e6; };
@@ -1500,6 +1513,7 @@
         client: LEAD.clientId || "",
         lead_id: L.leadId,
         update: update || "New request",
+        subject: leadSubject(update || "New request", L, q),
         wants: L.wants,
         name: L.name,
         phone: L.phone,
