@@ -22,7 +22,7 @@ const TPL = join(ROOT, "tools", "templates");
 // Every field the quote tool sends (see leadFields in assets/tq-widget.js). Netlify only keeps fields
 // that exist in the page's form, so this list and the tool must match.
 export const LEAD_FIELDS = [
-  "bot-field", "client", "lead_id", "update", "wants", "name", "phone", "email", "address", "fence", "gates",
+  "bot-field", "client", "lead_id", "update", "subject", "wants", "name", "phone", "email", "address", "fence", "gates",
   "old_fence_removal", "price_shown", "monthly_shown", "install_timing", "measure_visit", "text_consent",
   "consent_text", "map_image", "directions", "drawing", "page", "embedded_on", "submitted_at"
 ];
@@ -119,6 +119,10 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const c = load(resolve(path));
   const out = build(c);
   console.log("Built " + out.replace(ROOT + "/", "") + "/ (form lead-" + c.id + ")");
+  // Settings from the /setup form list what still needs a person (blank prices, logo file, map center).
+  const todo = (Array.isArray(c._review) ? c._review : []).filter((t) => !(c.mapCenter && /^Add mapCenter/.test(t)));
+  if (!c.mapCenter && !todo.some((t) => /^Add mapCenter/.test(t))) todo.push("Add mapCenter [longitude, latitude] for the client's area.");
+  if (todo.length) console.log("Still to do:\n" + todo.map((t) => "  - " + t).join("\n"));
   console.log("Quote page: https://perchesolutions.com/q/" + c.id + "/");
   console.log('Embed: <div id="tracequote"></div><script src="https://perchesolutions.com/embed.js" data-client="' + c.id + '" async></script>');
 }
