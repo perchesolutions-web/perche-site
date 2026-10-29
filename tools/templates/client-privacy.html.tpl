@@ -21,7 +21,7 @@
   <h1>Privacy policy</h1>
   <p class="legal-date">For the {{NAME}} instant quote page. Last updated {{UPDATED}}.</p>
 
-  <p>{{NAME}} ("we") uses this page to give homeowners instant fence estimates. The page is run for us by TraceQuote, a product of Perché AI Solutions LLC. This policy explains what the page collects and what we do with it.</p>
+  <p>{{NAME}} (“we”) uses this page to give homeowners instant fence estimates. The page is run for us by TraceQuote, a product of Perché AI Solutions LLC. This policy explains what the page collects and what we do with it.</p>
 
   <h2>What we collect</h2>
   <ul>
@@ -39,7 +39,7 @@
   </ul>
 
   <h2>Who we share it with</h2>
-  <p>Only the service providers that run this page for us: Perché AI Solutions LLC (TraceQuote), Netlify (hosting and form storage), Mapbox (maps and address search), PostHog (page usage), and the messaging service we use for texts and email. We don't sell your personal information. Mobile numbers and texting consent are not shared with third parties or affiliates for their marketing.</p>
+  <p>Only the service providers that run this page for us: Perché AI Solutions LLC (TraceQuote), Netlify (hosting and form storage), Mapbox (maps and address search), PostHog (page usage), and the messaging service we use for texts and email. We don’t sell your personal information. Mobile numbers and texting consent are not shared with third parties or affiliates for their marketing.</p>
 
   <h2>How long we keep it</h2>
   <p>We keep quote requests as long as we need them to serve you and keep business records, then delete them.</p>
