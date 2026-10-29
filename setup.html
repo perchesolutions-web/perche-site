@@ -74,7 +74,7 @@
   </div>
 
   <h1>Set up your quote page</h1>
-  <p class="su-lede">Tell us your prices and where new leads should go. We'll build your quote page from this and send you a preview link to check before it goes live. It takes about ten minutes; have your price sheet handy.</p>
+  <p class="su-lede">Tell us your prices and where new leads should go. We’ll build your quote page from this and send you a preview link to check before it goes live. It takes about ten minutes; have your price sheet handy.</p>
 
   <form id="su-form" name="client-setup" method="POST" action="/setup-thanks" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field" novalidate>
     <p class="su-hidden"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
@@ -120,7 +120,7 @@
 
     <section class="su-card" aria-labelledby="su-prices">
       <h2 id="su-prices">Your fence prices</h2>
-      <p class="su-sub">Installed price per foot, materials and labor included. Give a low and a high number so homeowners see an honest range. Leave a height empty if you don't install it, and uncheck anything you don't offer.</p>
+      <p class="su-sub">Installed price per foot, materials and labor included. Give a low and a high number so homeowners see an honest range. Leave a height empty if you don’t install it, and uncheck anything you don’t offer.</p>
 
       <div class="su-mat" data-mat="chain">
         <label class="tq-check su-offer"><input type="checkbox" name="offer_chain" value="yes" checked><span><b>Chain link</b><small>Galvanized steel</small></span></label>
@@ -161,7 +161,7 @@
 
     <section class="su-card" aria-labelledby="su-extras">
       <h2 id="su-extras">Gates, removal and minimum</h2>
-      <p class="su-sub">Installed prices. If you leave a gate or removal price empty, we'll ask you for it before your page goes live.</p>
+      <p class="su-sub">Installed prices. If you leave a gate or removal price empty, we’ll ask you for it before your page goes live.</p>
       <div class="su-extras">
         <div class="su-extra"><span class="su-label">Walk gate<small>About 4 ft wide, each</small></span>
           <div class="su-row"><label class="su-money su-money--wide"><span>$</span><input class="tq-input" name="walk_gate_lo" inputmode="decimal" placeholder="450" aria-label="Walk gate: low price"></label><span>to</span><label class="su-money su-money--wide"><span>$</span><input class="tq-input" name="walk_gate_hi" inputmode="decimal" placeholder="750" aria-label="Walk gate: high price"></label></div></div>
@@ -169,7 +169,7 @@
           <div class="su-row"><label class="su-money su-money--wide"><span>$</span><input class="tq-input" name="drive_gate_lo" inputmode="decimal" placeholder="1400" aria-label="Drive gate: low price"></label><span>to</span><label class="su-money su-money--wide"><span>$</span><input class="tq-input" name="drive_gate_hi" inputmode="decimal" placeholder="2600" aria-label="Drive gate: high price"></label></div></div>
         <div class="su-extra"><span class="su-label">Old fence removal<small>Per foot, including haul-away</small></span>
           <div class="su-row"><label class="su-money"><span>$</span><input class="tq-input" name="removal_lo" inputmode="decimal" placeholder="2" aria-label="Old fence removal: low price per foot"></label><span>to</span><label class="su-money"><span>$</span><input class="tq-input" name="removal_hi" inputmode="decimal" placeholder="4" aria-label="Old fence removal: high price per foot"></label><span>per ft</span></div></div>
-        <div class="su-extra"><span class="su-label">Minimum job<small>The smallest job you'll quote</small></span>
+        <div class="su-extra"><span class="su-label">Minimum job<small>The smallest job you’ll quote</small></span>
           <div class="su-row"><label class="su-money su-money--wide"><span>$</span><input class="tq-input" id="su-min" name="minimum_job" inputmode="decimal" placeholder="1500" aria-label="Minimum job price" required></label></div></div>
       </div>
     </section>
@@ -206,7 +206,7 @@
           <select class="tq-input" id="su-platform" name="site_platform">
             <option value="">Choose one</option>
             <option>WordPress</option><option>Wix</option><option>Squarespace</option><option>GoDaddy</option>
-            <option>Shopify</option><option>Webflow</option><option>Other</option><option>Not sure</option><option>We don't have a website</option>
+            <option>Shopify</option><option>Webflow</option><option>Other</option><option>Not sure</option><option>We don’t have a website</option>
           </select>
         </div>
         <div class="tq-field">
@@ -353,7 +353,7 @@
       if (lo > hi) fail(field(x[0] + "_lo"), "The low price is higher than the high price.", errs);
     });
     var min = num("minimum_job");
-    if (min == null || isNaN(min) || min < 0 || min > 100000) fail(field("minimum_job"), "Enter your minimum job price, like 1500. Enter 0 if you don't have one.", errs);
+    if (min == null || isNaN(min) || min < 0 || min > 100000) fail(field("minimum_job"), "Enter your minimum job price, like 1500. Enter 0 if you don\u2019t have one.", errs);
     if (!field("prices_ok").checked) fail(field("prices_ok"), "Check this box to send your setup.", errs);
     return errs;
   }
