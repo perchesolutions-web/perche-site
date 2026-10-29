@@ -36,7 +36,9 @@ export function previewText(p) {
   const where = p.site || "your website";
   return {
     title: p.name + " \u00b7 Instant quote preview",
-    shareTitle: p.name + ": your instant quote page",
+    // Anyone can type a link with any company's name, so the preview says it's a preview made for them,
+    // never that it's the company's own page.
+    shareTitle: "Instant quote page preview for " + p.name,
     description: (p.first ? p.first + ", here\u2019s" : "Here\u2019s") + " the quote page homeowners would use on " + where +
       ". Search an address, trace the fence, and see the price."
   };
