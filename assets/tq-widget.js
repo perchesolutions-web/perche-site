@@ -742,7 +742,9 @@
       address: null, addrDraft: "", loading: false,
       step: live ? "address" : "draw",
       visitDay: 0, visitTime: "Morning", visitRequested: false, lead: null, errors: {},
-      sending: false, sendError: ""
+      sending: false, sendError: "",
+      // Client pages only: when the map can't be used, the homeowner types the address and a rough length.
+      entry: "map", manual: { address: "", ft: "", walk: 0, drive: 0 }
     };
 
     root.classList.add("tq", "tq--" + layout);
@@ -751,6 +753,7 @@
     root.innerHTML =
       '<div class="tq-stage">' +
       '<div class="tq-surface"></div>' +
+      '<div class="tq-manual-stage" data-ref="manualStage" hidden></div>' +
       '<div class="tq-hud"><span class="tq-hud-chip" data-ref="where"></span><span class="tq-hud-total" data-ref="total" aria-live="polite"></span></div>' +
       '<div class="tq-toast" data-ref="toast" role="status" hidden></div>' +
       "</div>" +
@@ -767,11 +770,25 @@
 
     function steps() { return live ? ["address", "draw", "quote", "details"] : ["draw", "quote", "details"]; }
     var STEP_NAMES = { address: "Address", draw: "Draw", quote: "Quote", details: "Details" };
+    function stepName(s) { return s === "draw" && isManual() ? "Length" : STEP_NAMES[s]; }
 
+    function isManual() { return st.entry === "manual"; }
+    function manualFt() {
+      var n = parseFloat(String(st.manual.ft).replace(/[,\s]/g, "").replace(/ft\.?$|feet$/i, ""));
+      return isFinite(n) && n > 0 ? Math.round(n) : 0;
+    }
+    // Typed-in gates have a type but no place on a drawn line.
+    function gatesNow() {
+      if (!isManual()) return st.gates;
+      var out = [], i;
+      for (i = 0; i < st.manual.walk; i++) out.push({ type: "walk" });
+      for (i = 0; i < st.manual.drive; i++) out.push({ type: "drive" });
+      return out;
+    }
     function heightFor(mid) { var m = materialById(mid); return heightOrDefault(m, st.heightBy[mid]); }
     function colorFor(mid) { var m = materialById(mid); return st.colorBy[mid] || (m.colors && m.colors.length ? m.colors[0].name : ""); }
-    function drawnFt() { return surface ? totalLength(st.runs, surface.dist) : 0; }
-    function quoteFor(mid) { return priceFor(drawnFt(), st.gates, { material: mid, height: heightFor(mid), removal: st.removal }); }
+    function drawnFt() { return isManual() ? manualFt() : surface ? totalLength(st.runs, surface.dist) : 0; }
+    function quoteFor(mid) { return priceFor(drawnFt(), gatesNow(), { material: mid, height: heightFor(mid), removal: st.removal }); }
     function postCount() {
       var n = 0;
       st.runs.forEach(function (run) {
@@ -792,7 +809,7 @@
     }
     function updateWhere() {
       if (!surface) return;
-      ref("where").textContent = st.loading ? "Loading satellite view…" : surface.kind === "map" ? "Satellite view" : "Example home";
+      ref("where").textContent = isManual() ? "Your measurement" : st.loading ? "Loading satellite view…" : surface.kind === "map" ? "Satellite view" : "Example home";
     }
 
     /* ----- drawing ----- */
@@ -803,7 +820,7 @@
       surface.overlay.innerHTML = overlayMarkup(st, view);
       var total = drawnFt();
       ref("total").innerHTML = total > 0 ? "<b>" + Math.round(total).toLocaleString("en-US") + "</b> ft" : "";
-      ref("total").hidden = total <= 0;
+      ref("total").hidden = total <= 0 || isManual();
       if (st.step === "draw") updateDrawMeter();
     }
 
@@ -948,8 +965,60 @@
       st.loading = false;
       live = false;
       setSurface("sample");
+      if (client) {
+        st.runs = []; st.gates = []; st.active = null; st.history = [];
+        enterManual("map_failed");
+        toast("The satellite map isn't loading right now. Enter your address and a rough fence length instead.", 5200);
+        return;
+      }
       useExample();
       toast("The satellite map couldn't load, so this shows the example home.", 4200);
+    }
+
+    /* ----- typed-in length (client pages, when the map can't be used) ----- */
+
+    function enterManual(reason) {
+      track("tq_manual_opened", { reason: reason });
+      if (!st.manual.address.trim()) st.manual.address = st.address ? st.address.label : String(st.addrDraft || "").trim();
+      st.entry = "manual";
+      st.tool = "draw";
+      updateWhere();
+      go("draw");
+      if (reason === "no_map") return;
+      var f = document.getElementById(id + (st.manual.address ? "-mft" : "-maddr"));
+      if (f) f.focus({ preventScroll: true });
+    }
+    function exitManual() {
+      st.entry = "map";
+      st.errors = {};
+      updateWhere();
+      go("address");
+    }
+    function readManual() {
+      var a = document.getElementById(id + "-maddr"), f = document.getElementById(id + "-mft");
+      if (a) st.manual.address = a.value;
+      if (f) st.manual.ft = f.value;
+    }
+    function validateManual() {
+      var e = {}, ft = manualFt(), gateFt = 0;
+      gatesNow().forEach(function (g) { gateFt += P.gates[g.type].width; });
+      if (st.manual.address.trim().length < 5) e.maddr = "Enter the street address where the fence goes.";
+      if (!ft) e.mft = "Enter the length in feet, like 180.";
+      else if (ft < 10) e.mft = "Enter at least 10 ft.";
+      else if (ft > 5000) e.mft = "For more than 5,000 ft, call " + COMPANY + (COMPANY_PHONE ? " at " + COMPANY_PHONE : "") + ".";
+      else if (ft <= gateFt) e.mft = "That's shorter than the gates you picked. Include the gates in the length.";
+      st.errors = e;
+      return !Object.keys(e).length;
+    }
+    function paintManualStage() {
+      var el = ref("manualStage");
+      el.hidden = !isManual();
+      root.classList.toggle("tq--manual", isManual());
+      if (!isManual()) { el.innerHTML = ""; return; }
+      var m = materialById(st.material), h = heightFor(st.material), ft = manualFt(), g = gateSummary(gatesNow());
+      el.innerHTML = '<div class="tq-manual-card">' + fenceArt(m.swatch, colorHex(m, colorFor(st.material)), +h, "tq-art--manual") +
+        '<p class="tq-manual-ft">' + (ft >= 10 ? "<b>" + ftLabel(ft) + "</b>" + (g ? '<span> · ' + esc(g) + "</span>" : "") : "Enter your fence length") + "</p>" +
+        '<p class="tq-manual-note">Your estimate. ' + esc(COMPANY) + " confirms the exact length on site.</p></div>";
     }
 
     function pickAddress(item) {
@@ -977,7 +1046,7 @@
       if (step !== "draw") st.hover = null;
       render();
       redraw();
-      if (prev !== step) bringIntoView(root.querySelector(step === "draw" ? ".tq-stage" : ".tq-panel"));
+      if (prev !== step) bringIntoView(root.querySelector(step === "draw" && !isManual() ? ".tq-stage" : ".tq-panel"));
     }
     // On phones the map sits above the panel; keep whatever the homeowner needs next on screen.
     function bringIntoView(el) {
@@ -995,7 +1064,7 @@
       var list = steps(), idx = stepIndex();
       ref("steps").innerHTML = list.map(function (s, i) {
         var cls = i < idx ? "is-done" : i === idx ? "is-current" : "";
-        return '<li class="' + cls + '"' + (i === idx ? ' aria-current="step"' : "") + '><span class="tq-step-num">' + (i + 1) + '</span><span class="tq-step-name">' + STEP_NAMES[s] + "</span></li>";
+        return '<li class="' + cls + '"' + (i === idx ? ' aria-current="step"' : "") + '><span class="tq-step-num">' + (i + 1) + '</span><span class="tq-step-name">' + stepName(s) + "</span></li>";
       }).join("");
     }
 
@@ -1021,10 +1090,38 @@
         '<ul id="' + id + '-sugg" class="tq-sugg" role="listbox" aria-label="Matching addresses"></ul>' +
         "</div>" +
         '<p class="tq-help">Pick your address and the map zooms in to your home on satellite imagery.</p>' +
-        '<button type="button" class="tq-link" data-act="use-sample">Try it on the example home instead</button>';
+        (client
+          ? '<button type="button" class="tq-link" data-act="manual" data-reason="link">Can\'t find your address? Enter it yourself</button>'
+          : '<button type="button" class="tq-link" data-act="use-sample">Try it on the example home instead</button>');
+    }
+
+    function bodyManual() {
+      var M = st.manual, e = st.errors, G = P.gates;
+      function chips(kind, max) {
+        var out = "";
+        for (var i = 0; i <= max; i++) {
+          out += '<button type="button" class="tq-chip-btn" id="' + id + "-mg-" + kind + "-" + i + '" data-mgate="' + kind + '" data-n="' + i + '" aria-pressed="' + (M[kind] === i) + '">' + i + "</button>";
+        }
+        return out;
+      }
+      function err(key) { return e[key] ? '<span class="tq-err" id="' + id + "-" + key + '-err">' + esc(e[key]) + "</span>" : ""; }
+      function bad(key) { return e[key] ? ' aria-invalid="true" aria-describedby="' + id + "-" + key + '-err"' : ""; }
+      return '<p class="tq-lede">Tell us about your fence</p>' +
+        '<p class="tq-help">Enter the address and a rough length. ' + esc(COMPANY) + " measures on site before giving the final price.</p>" +
+        '<div class="tq-fields">' +
+        '<div class="tq-field tq-field--wide"><label class="tq-label" for="' + id + '-maddr">Home address</label>' +
+        '<input id="' + id + '-maddr" class="tq-input" type="text" autocomplete="street-address" value="' + esc(M.address) + '"' + bad("maddr") + ">" + err("maddr") + "</div>" +
+        '<div class="tq-field tq-field--wide"><label class="tq-label" for="' + id + '-mft">Fence length <small>(feet, gates included)</small></label>' +
+        '<input id="' + id + '-mft" class="tq-input" type="text" inputmode="numeric" autocomplete="off" placeholder="For example, 180" value="' + esc(M.ft) + '"' + bad("mft") + ">" + err("mft") +
+        '<span class="tq-hint">Not sure? Pace it off: one long stride is about 3 ft. A rough number is fine.</span></div>' +
+        "</div>" +
+        '<div class="tq-opt"><span class="tq-label">' + esc(G.walk.label) + 's</span><div class="tq-days" role="group" aria-label="' + esc(G.walk.label) + 's">' + chips("walk", 3) + "</div></div>" +
+        '<div class="tq-opt"><span class="tq-label">' + esc(G.drive.label) + 's</span><div class="tq-days" role="group" aria-label="' + esc(G.drive.label) + 's">' + chips("drive", 2) + "</div></div>" +
+        (live ? '<button type="button" class="tq-link" data-act="change-address">Find my yard on the map instead</button>' : "");
     }
 
     function bodyDraw() {
+      if (isManual()) return bodyManual();
       var gateTypes = Object.keys(P.gates).map(function (k) {
         var G = P.gates[k];
         return '<button type="button" class="tq-chip-btn" data-gate="' + k + '" aria-pressed="' + (st.gateType === k) + '">' + esc(G.label) + " · " + G.width + " ft</button>";
@@ -1052,14 +1149,15 @@
         "</div></div>" +
         (st.tool === "gate" ? '<div class="tq-gates" role="group" aria-label="Gate type">' + gateTypes + "</div>" : "") +
         help +
-        '<p class="tq-meter" data-ref="meter"></p>';
+        '<p class="tq-meter" data-ref="meter"></p>' +
+        (client && onMap ? '<button type="button" class="tq-link" data-act="manual" data-reason="cant_see">Can\'t see your yard? Enter the length instead</button>' : "");
     }
 
     function selectedSummary() {
       var m = materialById(st.material), q = quoteFor(st.material), h = heightFor(st.material), color = colorFor(st.material);
       return '<div class="tq-pick">' + fenceArt(m.swatch, colorHex(m, color), +h, "tq-art--thumb") +
         '<span class="tq-prod-name"><b>' + esc(h + " ft " + m.name.toLowerCase()) + "</b><span>" +
-        esc(color + " · " + ftLabel(q.fenceFt) + (st.gates.length ? " · " + gateSummary(st.gates) : "")) + "</span></span>" +
+        esc(color + " · " + ftLabel(q.fenceFt) + (gatesNow().length ? " · " + gateSummary(gatesNow()) : "")) + "</span></span>" +
         '<span class="tq-prod-price"><b>' + moneyRange(q.lo, q.hi) + "</b></span></div>";
     }
 
@@ -1151,7 +1249,7 @@
       var lines = [];
       lines.push("<li><span>" + ftLabel(q.fenceFt) + " of " + esc(styleLabel(mid, heightFor(mid))) + " at $" + q.per[0] + "–$" + q.per[1] + "/ft</span><b>" + moneyRange(q.fence[0], q.fence[1]) + "</b></li>");
       var counts = {};
-      st.gates.forEach(function (g) { counts[g.type] = (counts[g.type] || 0) + 1; });
+      gatesNow().forEach(function (g) { counts[g.type] = (counts[g.type] || 0) + 1; });
       Object.keys(counts).forEach(function (k) {
         var G = P.gates[k];
         lines.push("<li><span>" + plural(counts[k], G.label.toLowerCase(), G.label.toLowerCase() + "s") + "</span><b>" + moneyRange(G.price[0] * counts[k], G.price[1] * counts[k]) + "</b></li>");
@@ -1207,15 +1305,18 @@
       }).join("");
       return '<div class="tq-quote-head">' +
         '<p class="tq-eyebrow">Your fence quote</p>' +
-        '<p class="tq-quote-where">' + esc(st.address ? st.address.label : "Example home") + "</p>" +
-        '<p class="tq-sum">' + ftLabel(ft) + " traced" + (st.gates.length ? " · " + gateSummary(st.gates) : "") + " · about " + postCount() + " posts " +
-        '<button type="button" class="tq-link tq-link--inline" data-act="edit-drawing">Edit drawing</button></p>' +
+        '<p class="tq-quote-where">' + esc(isManual() ? st.manual.address.trim() : st.address ? st.address.label : "Example home") + "</p>" +
+        (isManual()
+          ? '<p class="tq-sum">' + ftLabel(ft) + ", your estimate" + (gatesNow().length ? " · " + gateSummary(gatesNow()) : "") + " " +
+            '<button type="button" class="tq-link tq-link--inline" data-act="edit-drawing">Edit length</button></p>'
+          : '<p class="tq-sum">' + ftLabel(ft) + " traced" + (st.gates.length ? " · " + gateSummary(st.gates) : "") + " · about " + postCount() + " posts " +
+            '<button type="button" class="tq-link tq-link--inline" data-act="edit-drawing">Edit drawing</button></p>') +
         "</div>" +
         '<label class="tq-check"><input type="checkbox" id="' + id + '-removal"' + (st.removal ? " checked" : "") + ">" +
         "<span>Take out my old fence <small>+$" + P.removalPerFt[0] + "–$" + P.removalPerFt[1] + " per ft</small></span></label>" +
         '<p class="tq-label tq-label--flush">Choose a fence</p>' +
         '<ul class="tq-prods">' + rows + "</ul>" +
-        '<p class="tq-fine">Prices come from a satellite measurement. ' + esc(COMPANY) + " confirms the final price after measuring on site.</p>";
+        '<p class="tq-fine">' + (isManual() ? "Prices use the length you entered. " : "Prices come from a satellite measurement. ") + esc(COMPANY) + " confirms the final price after measuring on site.</p>";
     }
 
     function renderActions() {
@@ -1255,7 +1356,8 @@
       body.setAttribute("data-step", s);
       body.innerHTML = s === "address" ? bodyAddress() : s === "draw" ? bodyDraw() : s === "quote" ? bodyQuote() : bodyDetails();
       renderActions();
-      root.classList.toggle("is-drawing", s === "draw");
+      root.classList.toggle("is-drawing", s === "draw" && !isManual());
+      paintManualStage();
       if (s === "draw") updateDrawMeter();
       if (s === "address") wireAddress();
       var refocus = focusSel ? root.querySelector(focusSel) : focusId ? document.getElementById(focusId) : null;
@@ -1290,7 +1392,7 @@
           }).catch(function () {
             if (mine !== seq) return;
             results = [];
-            message("Address search isn't responding. Try the example home below.");
+            message(client ? "Address search isn't responding. Enter your address yourself below." : "Address search isn't responding. Try the example home below.");
           });
         }, 250);
       });
@@ -1364,11 +1466,11 @@
         consent: st.contact.consent,
         timing: st.timing,
         wants: st.intent === "measure" ? "Free measure" : "Detailed quote",
-        address: st.address ? st.address.label : "Example home (demo)",
-        center: st.address ? st.address.center : null,
-        mode: surface.kind,
-        runs: copy(st.runs),
-        gates: copy(st.gates),
+        address: isManual() ? st.manual.address.trim() : st.address ? st.address.label : "Example home (demo)",
+        center: !isManual() && st.address ? st.address.center : null,
+        mode: isManual() ? "manual" : surface.kind,
+        runs: isManual() ? [] : copy(st.runs),
+        gates: copy(gatesNow()),
         drawnFt: Math.round(drawnFt()),
         material: st.material,
         height: q.height,
@@ -1389,7 +1491,7 @@
     // Client pages: send the lead to the client's Netlify form. Field names must match the hidden form on the page.
     function leadFields(update) {
       var L = st.lead, q = quoteFor(st.material), round6 = function (v) { return Math.round(v * 1e6) / 1e6; };
-      var mapMode = L.mode === "map";
+      var mapMode = L.mode === "map", typed = L.mode === "manual";
       var ref = "";
       try { ref = document.referrer ? new URL(document.referrer).origin : ""; } catch (e) {}
       return {
@@ -1402,9 +1504,10 @@
         name: L.name,
         phone: L.phone,
         email: L.email,
-        address: mapMode ? L.address : "Not given (priced on the example yard)",
-        fence: ftLabel(q.fenceFt) + " of " + styleLabel(st.material, q.height) + (L.color ? ", " + L.color.toLowerCase() : ""),
-        gates: st.gates.length ? gateSummary(st.gates) : "None",
+        address: mapMode || typed ? L.address : "Not given (priced on the example yard)",
+        fence: ftLabel(q.fenceFt) + " of " + styleLabel(st.material, q.height) + (L.color ? ", " + L.color.toLowerCase() : "") +
+          (typed ? " (length typed in by the homeowner, not traced)" : ""),
+        gates: gatesNow().length ? gateSummary(gatesNow()) : "None",
         old_fence_removal: st.removal ? "Yes" : "No",
         price_shown: moneyRange(q.lo, q.hi),
         monthly_shown: L.monthly ? "From " + money(L.monthly) + "/mo" : "",
@@ -1414,8 +1517,10 @@
         consent_text: L.consent ? consentText() : "",
         map_image: mapMode ? leadMapImageUrl(st.runs, st.gates) : "",
         // A maps link built from the address text: Mapbox's temporary geocoding doesn't allow storing its coordinates.
-        directions: mapMode && L.address ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(L.address) : "",
-        drawing: JSON.stringify({ mode: L.mode, runs: st.runs.map(function (r) { return r.map(function (pt) { return [round6(pt[0]), round6(pt[1])]; }); }), gates: st.gates }),
+        directions: (mapMode || typed) && L.address ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(L.address) : "",
+        drawing: JSON.stringify(typed
+          ? { mode: "manual", feet: L.drawnFt, gates: L.gates }
+          : { mode: L.mode, runs: st.runs.map(function (r) { return r.map(function (pt) { return [round6(pt[0]), round6(pt[1])]; }); }), gates: st.gates }),
         page: location.origin + location.pathname,
         embedded_on: ref && ref !== location.origin ? ref : "",
         submitted_at: new Date().toISOString()
@@ -1452,17 +1557,22 @@
       if (t.hasAttribute("data-timing")) { readContact(); st.timing = st.timing === t.getAttribute("data-timing") ? "" : t.getAttribute("data-timing"); render(); return; }
       if (t.hasAttribute("data-day")) { readContact(); st.visitDay = +t.getAttribute("data-day"); render(); return; }
       if (t.hasAttribute("data-time")) { readContact(); st.visitTime = t.getAttribute("data-time"); render(); return; }
+      if (t.hasAttribute("data-mgate")) { readManual(); st.manual[t.getAttribute("data-mgate")] = +t.getAttribute("data-n"); render(); redraw(); return; }
       if (!act) return;
       if (act === "undo") undo();
       else if (act === "newline") newLine();
       else if (act === "clear") clearAll();
       else if (act === "use-sample") useExample();
-      else if (act === "change-address") go("address");
+      else if (act === "manual") enterManual(t.getAttribute("data-reason") || "link");
+      else if (act === "change-address") { if (isManual()) exitManual(); else go("address"); }
       else if (act === "edit-drawing") go("draw");
       else if (act === "next") {
-        if (st.active != null) newLine();
+        if (isManual()) {
+          readManual();
+          if (!validateManual()) { render(); var badM = root.querySelector('[aria-invalid="true"]'); if (badM) badM.focus(); return; }
+        } else if (st.active != null) newLine();
         go("quote");
-        track("tq_quote_viewed", { layout: layout, live: live, feet: Math.round(drawnFt()), gates: st.gates.length });
+        track("tq_quote_viewed", { layout: layout, live: live, entry: st.entry, feet: Math.round(drawnFt()), gates: gatesNow().length });
       }
       else if (act === "detail") { st.intent = t.getAttribute("data-intent") || "quote"; track("tq_details_opened", { intent: st.intent }); go("details"); }
       else if (act === "back") { readContact(); st.sendError = ""; go("quote"); }
@@ -1477,7 +1587,7 @@
           st.submitted = true;
           st.sending = false;
           st.sendError = "";
-          track("tq_details_submitted", { intent: st.intent, material: st.material, feet: Math.round(drawnFt()), live: live, client: client ? (LEAD.clientId || "") : "" });
+          track("tq_details_submitted", { intent: st.intent, material: st.material, feet: Math.round(drawnFt()), live: live, entry: st.entry, client: client ? (LEAD.clientId || "") : "" });
           publishLead();
           render();
           bringIntoView(root.querySelector(".tq-panel"));
@@ -1519,7 +1629,12 @@
         st.contact = { first: "", last: "", email: "", phone: "", consent: false };
         st.timing = ""; st.submitted = false; st.intent = "quote"; st.visitRequested = false; st.lead = null; st.tool = "draw";
         st.sending = false; st.sendError = "";
-        if (surface.kind === "map") { clearAll(); go("address"); }
+        if (isManual()) {
+          st.manual = { address: "", ft: "", walk: 0, drive: 0 };
+          if (live) { st.entry = "map"; updateWhere(); if (surface.kind === "map") clearAll(); else loadLayout(LAYOUTS.backyard); go("address"); }
+          else go("draw");
+        }
+        else if (surface.kind === "map") { clearAll(); go("address"); }
         else { loadLayout(LAYOUTS.backyard); go(live ? "address" : "draw"); }
       }
     });
@@ -1529,12 +1644,36 @@
     });
     root.addEventListener("input", function (e) {
       if (e.target.id && e.target.id.indexOf(id + "-") === 0 && st.step === "details") readContact();
+      if (e.target.id === id + "-maddr") { st.manual.address = e.target.value; clearFieldError(e.target, "maddr"); }
+      if (e.target.id === id + "-mft") { st.manual.ft = e.target.value; clearFieldError(e.target, "mft"); paintManualStage(); }
+    });
+    // Once the homeowner edits a field, its old error message goes away (without redrawing the field they're typing in).
+    function clearFieldError(input, key) {
+      if (!st.errors[key]) return;
+      delete st.errors[key];
+      input.removeAttribute("aria-invalid");
+      input.removeAttribute("aria-describedby");
+      var msg = document.getElementById(id + "-" + key + "-err");
+      if (msg) msg.parentNode.removeChild(msg);
+    }
+    root.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" || !isManual() || st.step !== "draw") return;
+      if (e.target.id !== id + "-maddr" && e.target.id !== id + "-mft") return;
+      e.preventDefault();
+      var next = root.querySelector('[data-act="next"]');
+      if (next) next.click();
     });
 
     /* ----- start: the example home, with the address search first when live ----- */
 
     setSurface("sample");
-    loadLayout(LAYOUTS.backyard);
+    if (client && !live) {
+      st.entry = "manual";
+      updateWhere();
+      track("tq_manual_opened", { reason: "no_map" });
+    } else {
+      loadLayout(LAYOUTS.backyard);
+    }
     render();
     requestAnimationFrame(redraw);
 
