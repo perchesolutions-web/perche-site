@@ -8,7 +8,7 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
 <link rel="stylesheet" href="/assets/tq.css">
 <script>try{var t=localStorage.getItem("tq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <style>
@@ -43,7 +43,7 @@
     <span class="lb-note">Unlisted page</span>
   </div>
 
-  <h1>Demo link <em>builder</em></h1>
+  <h1>Demo link builder</h1>
   <p class="lb-lede">Make a demo link with a fence company's name on it. Their name shows across the quote page and the contractor view, and address search starts in their city.</p>
 
   <form class="lb-card" id="lb-form" novalidate>
@@ -92,6 +92,14 @@
   <section class="lb-card" aria-labelledby="lb-track-title">
     <h2 id="lb-track-title">Seeing who opened it</h2>
     <p class="lb-track">Visits from the link are tagged in PostHog with <code id="lb-slug">prospect = …</code>. Look for these events: <code>tq_preview_opened</code>, <code>tq_address_picked</code>, <code>tq_quote_viewed</code>, <code>tq_details_submitted</code> and <code>tq_contractor_view_opened</code>. Your own test clicks count too, so open the preview once and note the time.</p>
+  </section>
+
+  <section class="lb-card" aria-labelledby="lb-setup-title">
+    <h2 id="lb-setup-title">After they sign</h2>
+    <p class="lb-track">Send them the setup form at <code id="lb-setup-link">perchesolutions.com/setup</code>. They enter their prices, lead emails and logo there, and the email you get includes their settings file, ready to build their quote page.</p>
+    <div class="lb-actions">
+      <button class="btn btn-ghost btn-sm" type="button" id="lb-copy-setup">Copy setup link</button>
+    </div>
   </section>
 </main>
 
@@ -164,6 +172,8 @@
   $("lb-message").addEventListener("input", function () { msgEdited = $("lb-message").value.trim() !== ""; });
   $("lb-copy-link").addEventListener("click", function () { copy($("lb-link").value, "Link"); });
   $("lb-copy-msg").addEventListener("click", function () { copy($("lb-message").value, "Message"); });
+  $("lb-setup-link").textContent = location.host + "/setup";
+  $("lb-copy-setup").addEventListener("click", function () { copy(location.origin + "/setup", "Setup link"); });
   update();
 })();
 </script>
