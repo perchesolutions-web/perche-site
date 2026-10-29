@@ -5,12 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TraceQuote Demo</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Try the TraceQuote fence quote page as a homeowner, then see the lead a fence company receives.">
+<meta name="description" content="Try the TraceQuote fence quote page as a homeowner, then see the request a fence company receives.">
+<meta property="og:title" content="Try a one-minute fence quote page">
+<meta property="og:description" content="Price a fence the way a homeowner would, then see the request the fence company receives.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://perchesolutions.com/demo">
+<meta property="og:site_name" content="TraceQuote">
+<meta property="og:image" content="https://perchesolutions.com/assets/og-tracequote.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A fence traced around a backyard on an aerial view of a home, beside the words One-minute fence quotes on your website.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Try a one-minute fence quote page">
+<meta name="twitter:description" content="Price a fence the way a homeowner would, then see the request the fence company receives.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
 <link rel="stylesheet" href="assets/tq.css">
+<link rel="stylesheet" href="assets/home.css">
 <script>try{var t=localStorage.getItem("tq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <!-- posthog:start (site analytics, same PostHog project as before; removed from the claude.ai preview build) -->
 <script>
@@ -22,7 +35,7 @@
 </script>
 <!-- posthog:end -->
 </head>
-<body>
+<body class="demo">
 
 <div class="topline"></div>
 
@@ -41,7 +54,7 @@
       <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch between light and dark">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
       </button>
-      <a class="btn btn-primary btn-sm" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a call</a>
+      <a class="btn btn-primary btn-sm" data-book="demo-bar" href="https://calendly.com/perchesolutions/tracequote-demo">Book a call</a>
     </div>
   </div>
 </header>
@@ -51,28 +64,51 @@
 
     <section data-view="homeowner" aria-labelledby="home-title">
       <div class="demo-intro">
-        <div>
-          <p class="demo-eyebrow" data-tq-for hidden></p>
-          <h1 id="home-title">Price a fence like a homeowner</h1>
-          <p data-tq-intro>This is the quote page a fence company’s website visitors would use. Trace a fence, choose a style, and see the price. Then open the contractor view to see the lead it creates.</p>
-        </div>
-        <a class="btn btn-ghost btn-sm" href="#contractor">Contractor view</a>
+        <h1 id="home-title">Price a fence like a homeowner</h1>
+        <p data-tq-intro>This is the quote page a fence company’s website visitors would use. Trace a fence, choose a style, and see the price. Then open the contractor view to see the request it creates.</p>
       </div>
-      <div id="demo-quote" role="region" aria-label="Fence quote demo"></div>
+      <div class="h-frame demo-frame">
+        <div class="h-frame-bar">
+          <span class="h-frame-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="h-frame-url" data-tq-url>yourfencecompany.com/instant-quote</span>
+          <span class="demo-frame-tag">Sample prices</span>
+        </div>
+        <div id="demo-quote" role="region" aria-label="Fence quote demo"></div>
+        <p class="h-frame-foot" data-tq-foot>The company and prices are samples, and no request is sent to anyone.</p>
+      </div>
     </section>
 
     <section data-view="contractor" aria-labelledby="pro-title" hidden>
       <div class="demo-intro">
-        <div>
-          <h1 id="pro-title">What the contractor gets</h1>
-          <p>Every request lands in the owner’s inbox the moment it’s sent: the layout, the footage, and the price the homeowner saw.</p>
-        </div>
-        <a class="btn btn-ghost btn-sm" href="#homeowner">Homeowner view</a>
+        <h1 id="pro-title">What the contractor gets</h1>
+        <p>Every request lands in the owner’s inbox the moment it’s sent: the layout, the footage, and the price the homeowner saw.</p>
       </div>
       <div id="demo-contractor"></div>
     </section>
 
   </div>
+
+  <section class="demo-next" aria-labelledby="next-title">
+    <div class="wrap">
+      <div class="demo-next-top">
+        <div>
+          <h2 id="next-title" data-tq-next-title>Want this on your website?</h2>
+          <p>Send us your price sheet. We build the page, test it with real addresses in your area, and put it on your site once you approve it.</p>
+        </div>
+        <div class="demo-next-cta">
+          <a class="btn btn-trace btn-lg" data-book="demo-band" href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute call</a>
+          <a class="btn btn-line-light btn-lg" href="#contractor" data-tq-swap>See the request you’d get</a>
+        </div>
+      </div>
+      <ol class="h-timeline">
+        <li><span class="n">1</span><h3>You send your prices</h3><p>A ten-minute form: fence types and heights, gates, old-fence removal, your minimum job and your logo.</p></li>
+        <li><span class="n">2</span><h3>We build your page</h3><p>Your name, phone and prices on a quote page we test with real addresses in your service area.</p></li>
+        <li><span class="n">3</span><h3>You approve it</h3><p>Click through your preview like a homeowner would. Anything you want changed, we change before launch.</p></li>
+        <li><span class="n">4</span><h3>It goes on your website</h3><p>One embed line, added by us or your web designer. It also works as a link for Google, Facebook and texts.</p></li>
+      </ol>
+      <p class="demo-founding"><b>Founding offer for our first three fence companies:</b> free setup and your first month free, then $199 a month for two months.</p>
+    </div>
+  </section>
 </main>
 
 <footer class="footer">
@@ -92,37 +128,39 @@
 <script>
 (function () {
   "use strict";
+  var CFG = window.TQ_CONFIG || {};
   var live = window.TraceQuote.live;
   var P = window.TQ_PROSPECT; // set by tq-prospect.js when the link names a company
   window.TraceQuote.mount(document.getElementById("demo-quote"), { layout: "full", contractorHref: "#contractor" });
 
-  // Headings get the company name as text only, never as HTML.
-  function heading(el, before, name, after) {
-    if (el) el.textContent = before + name + (after || "");
+  // The company name only ever goes in as text, never as HTML.
+  function setText(sel, text) {
+    var el = document.querySelector(sel);
+    if (el) el.textContent = text;
   }
 
-  var intro = document.querySelector("[data-tq-intro]");
+  setText("[data-tq-url]", (CFG.demoCompany && CFG.demoCompany.site) || "yourfencecompany.com/instant-quote");
   var how = live
     ? "Search any address, trace the fence on satellite imagery, choose a style, and see the price."
     : "Trace a fence, choose a style, and see the price.";
   if (P) {
-    document.title = P.name + " · Instant quote preview";
-    var eyebrow = document.querySelector("[data-tq-for]");
-    if (eyebrow) { eyebrow.textContent = "Preview built for " + P.name; eyebrow.hidden = false; }
-    heading(document.getElementById("home-title"), P.name + "\u2019s ", "instant quote page", "");
-    heading(document.getElementById("pro-title"), "What ", P.name, " gets");
-    if (intro) intro.textContent = (P.first ? P.first + ", this" : "This") + " is a preview of the quote page homeowners would use on " +
-      (P.site || "your website") + ". " + how + " Prices are samples until we load your price sheet. Then open the contractor view to see the lead it creates.";
-    var sample = document.querySelector("[data-tq-sample]");
-    if (sample) sample.textContent = "TraceQuote is a product of Perché AI Solutions LLC. Sample homeowners and prices.";
-  } else if (intro && live) {
-    intro.textContent = "This is the quote page a fence company\u2019s website visitors would use. " + how + " Then open the contractor view to see the lead it creates.";
+    document.title = P.name + " \u00b7 Instant quote preview";
+    setText("#home-title", P.name + "\u2019s instant quote page");
+    setText("#pro-title", "What " + P.name + " gets");
+    setText("[data-tq-intro]", (P.first ? P.first + ", this" : "This") + " is the quote page homeowners would use on " +
+      (P.site || "your website") + ". " + how + " Then see the request it sends you.");
+    setText("[data-tq-foot]", "Prices are samples until we load your price sheet, and no request is sent to anyone.");
+    setText("[data-tq-next-title]", "Want this on " + (P.site || P.name + "\u2019s website") + "?");
+    setText("[data-tq-sample]", "TraceQuote is a product of Perché AI Solutions LLC. Sample homeowners and prices.");
+  } else if (live) {
+    setText("[data-tq-intro]", "This is the quote page a fence company\u2019s website visitors would use. " + how + " Then open the contractor view to see the request it creates.");
   }
 
   window.TraceQuoteContractor.mount(document.getElementById("demo-contractor"));
 
   var views = document.querySelectorAll("[data-view]");
   var links = document.querySelectorAll("[data-view-link]");
+  var swap = document.querySelector("[data-tq-swap]");
   function show() {
     var name = (location.hash || "#homeowner").slice(1);
     if (name !== "homeowner" && name !== "contractor") name = "homeowner";
@@ -131,6 +169,11 @@
       if (a.getAttribute("data-view-link") === name) a.setAttribute("aria-current", "page");
       else a.removeAttribute("aria-current");
     });
+    if (swap) {
+      var pro = name === "contractor";
+      swap.textContent = pro ? "Try it as a homeowner" : "See the request you\u2019d get";
+      swap.setAttribute("href", pro ? "#homeowner" : "#contractor");
+    }
     window.scrollTo(0, 0);
     if (name === "contractor") {
       try { if (window.posthog && typeof window.posthog.capture === "function") window.posthog.capture("tq_contractor_view_opened"); } catch (e) {}

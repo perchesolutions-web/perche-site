@@ -29,6 +29,13 @@
   .lb-track { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
   .lb-track code { font-family: var(--mono); font-size: 12.5px; background: var(--bg-alt); padding: 1px 6px; border-radius: 6px; overflow-wrap: anywhere; }
   .lb [disabled] { opacity: 0.45; pointer-events: none; }
+  .lb-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 14px; }
+  .lb-tabs button { border: 1px solid var(--line-strong); background: transparent; color: var(--muted); font: 600 13.5px var(--sans); padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+  .lb-tabs button[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .lb-sender { margin-bottom: 14px; max-width: 320px; }
+  .lb-subject { margin-bottom: 12px; }
+  .lb-count { font-size: 12.5px; color: var(--faint); margin-left: auto; align-self: center; }
+  .lb-when { margin: 0 0 12px; font-size: 13.5px; color: var(--muted); }
   @media (max-width: 560px) { .tq-fields { grid-template-columns: minmax(0, 1fr); } .lb-card { padding: 18px; } }
 </style>
 </head>
@@ -82,16 +89,38 @@
   </section>
 
   <section class="lb-card" aria-labelledby="lb-msg-title">
-    <h2 id="lb-msg-title">Message draft <small style="font-weight:500;color:var(--faint)">edit before sending</small></h2>
+    <h2 id="lb-msg-title">Messages <small style="font-weight:500;color:var(--faint)">edit before sending</small></h2>
+    <div class="tq-field lb-sender">
+      <label class="tq-label" for="lb-sender">Your name for the sign-off <small>(optional)</small></label>
+      <input class="tq-input" id="lb-sender" maxlength="40" autocomplete="given-name" placeholder="Your first name">
+    </div>
+    <div class="lb-tabs" role="tablist" aria-label="Which message">
+      <button type="button" role="tab" id="lb-tab-text" aria-selected="true" aria-controls="lb-message" data-msg="text">First text</button>
+      <button type="button" role="tab" id="lb-tab-email" aria-selected="false" aria-controls="lb-message" data-msg="email">First email</button>
+      <button type="button" role="tab" id="lb-tab-follow" aria-selected="false" aria-controls="lb-message" data-msg="follow">Follow-up</button>
+      <button type="button" role="tab" id="lb-tab-last" aria-selected="false" aria-controls="lb-message" data-msg="last">Last note</button>
+    </div>
+    <p class="lb-when" id="lb-when"></p>
+    <div class="lb-subject" id="lb-subject-row" hidden>
+      <label class="tq-label" for="lb-subject">Subject</label>
+      <div class="lb-out">
+        <input class="tq-input" id="lb-subject" maxlength="120">
+        <button class="btn btn-ghost btn-sm" type="button" id="lb-copy-subject" disabled>Copy subject</button>
+      </div>
+    </div>
     <textarea class="tq-input" id="lb-message" aria-label="Message draft" placeholder="Fill in the company name to get a draft."></textarea>
     <div class="lb-actions">
       <button class="btn btn-ghost btn-sm" type="button" id="lb-copy-msg" disabled>Copy message</button>
+      <a class="btn btn-ghost btn-sm" id="lb-send" disabled aria-disabled="true">Open in Messages</a>
+      <button class="btn btn-ghost btn-sm" type="button" id="lb-reset" hidden>Undo my edits</button>
+      <span class="lb-count" id="lb-count"></span>
     </div>
   </section>
 
   <section class="lb-card" aria-labelledby="lb-track-title">
     <h2 id="lb-track-title">Seeing who opened it</h2>
-    <p class="lb-track">Visits from the link are tagged in PostHog with <code id="lb-slug">prospect = …</code>. Look for these events: <code>tq_preview_opened</code>, <code>tq_address_picked</code>, <code>tq_quote_viewed</code>, <code>tq_details_submitted</code> and <code>tq_contractor_view_opened</code>. Your own test clicks count too, so open the preview once and note the time.</p>
+    <p class="lb-track">Visits from the link are tagged in PostHog with <code id="lb-slug">prospect = …</code>. Look for these events: <code>tq_preview_opened</code>, <code>tq_address_picked</code>, <code>tq_quote_viewed</code>, <code>tq_details_submitted</code>, <code>tq_contractor_view_opened</code> and <code>tq_book_clicked</code>. Your own test clicks count too, so open the preview once and note the time.</p>
+    <p class="lb-track" style="margin-top:10px">When they book from their page, the call shows in Calendly with <code id="lb-utm">utm_campaign = …</code>. Filter the Meetings page or check the export.</p>
   </section>
 
   <section class="lb-card" aria-labelledby="lb-setup-title">
@@ -103,16 +132,26 @@
   </section>
 </main>
 
+<script src="/assets/tq-config.js"></script>
 <script>
 (function () {
   "use strict";
+  var CFG = window.TQ_CONFIG || {};
   var $ = function (id) { return document.getElementById(id); };
   var base = location.origin + "/demo";
-  var msgEdited = false;
+  var BOOK = CFG.bookingUrl || "https://calendly.com/perchesolutions/tracequote-demo";
+  var current = "text";
+  var edited = {};   // the drafts you changed by hand, per message, kept until you undo them
+  var WHEN = {
+    text: "Day 1, by text. Short, one link.",
+    email: "Day 1, by email, if you have their address.",
+    follow: "Day 3 or 4, if they haven\u2019t replied.",
+    last: "Day 7 or 8. Then stop."
+  };
 
   function clean(v, max) { return String(v || "").replace(/\s+/g, " ").trim().slice(0, max); }
   function slugOf(name) {
-    return name.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "")
+    return name.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 50) || "prospect";
   }
   function siteOf(v) {
@@ -120,37 +159,103 @@
     return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(s) ? s : "";
   }
 
-  function draft(company, first, link) {
-    return "Hi " + (first || "there") + ",\n\n" +
-      "I put together a preview of an instant quote page for " + company + ": " + link + "\n\n" +
-      "Homeowners search their address, trace the fence on a satellite map, and see your price range before you drive out. " +
-      "You get their name, number and a measured layout of the job.\n\n" +
-      "Worth a 15-minute look this week?";
+  // The sequence. Plain words, one ask per message, nothing a fence company owner would have to decode.
+  function drafts(d) {
+    var hi = "Hi " + (d.first || "there") + ",";
+    var where = d.site || "your website";
+    var sign = d.sender ? d.sender + "\nTraceQuote" : "TraceQuote";
+    return {
+      text: { body: hi + " " + (d.sender ? "this is " + d.sender + " with TraceQuote. " : "") +
+        "I made a preview of an instant quote page for " + d.company + ": " + d.link + "\n\n" +
+        "Homeowners trace their fence on a satellite map and see your price range before you drive out. " +
+        "You get their name, number and the footage. Worth a look?" },
+      email: { subject: "A quote page for " + d.company,
+        body: hi + "\n\n" +
+        "I built a preview of an instant quote page for " + d.company + ":\n" + d.link + "\n\n" +
+        "Homeowners search their address, trace the fence on a satellite map, and see your price range for each fence type. " +
+        "You get their name, number, the footage and a picture of the layout before you drive out.\n\n" +
+        "It goes on " + where + " with one line of code, and we set it up and run it for you. " +
+        "Our first three fence companies get setup free and the first month free.\n\n" +
+        "Worth 15 minutes this week? Pick a time here: " + BOOK + "\n\n" + sign },
+      follow: { body: hi + " following up on the quote page preview for " + d.company + ": " + d.link + "\n\n" +
+        "Try it on a recent job and see if the footage matches what you measured. " +
+        "If it\u2019s useful, here\u2019s a 15-minute slot to walk through it: " + BOOK },
+      last: { body: hi + " last note from me on this. If homeowners on " + where + " could see a price before they call, " +
+        "would that bring you more measures or fewer? If you\u2019d like to see it with your own prices, grab 15 minutes here: " + BOOK + "\n\n" +
+        "If not, no problem. Thanks for taking a look." }
+    };
+  }
+
+  var state = { on: false, company: "", first: "", site: "", place: "", link: "", sender: "" };
+
+  function paintMessage() {
+    var all = state.on ? drafts(state) : null;
+    var d = all ? all[current] : null;
+    var mine = edited[current];
+    $("lb-message").value = mine ? mine.body : (d ? d.body : "");
+    var isEmail = current === "email";
+    $("lb-subject-row").hidden = !isEmail;
+    $("lb-subject").value = isEmail ? (mine && mine.subject != null ? mine.subject : (d ? d.subject : "")) : "";
+    $("lb-when").textContent = WHEN[current];
+    $("lb-reset").hidden = !mine;
+    ["lb-copy-msg", "lb-copy-subject"].forEach(function (id) { $(id).disabled = !state.on; });
+    paintSend();
+  }
+
+  function paintSend() {
+    var a = $("lb-send");
+    var body = $("lb-message").value;
+    var isEmail = current === "email";
+    a.textContent = isEmail ? "Open in Mail" : "Open in Messages";
+    if (state.on && body.trim()) {
+      a.href = isEmail
+        ? "mailto:?subject=" + encodeURIComponent($("lb-subject").value) + "&body=" + encodeURIComponent(body)
+        : "sms:?&body=" + encodeURIComponent(body);
+      a.removeAttribute("disabled"); a.removeAttribute("aria-disabled");
+    } else {
+      a.removeAttribute("href"); a.setAttribute("disabled", ""); a.setAttribute("aria-disabled", "true");
+    }
+    $("lb-count").textContent = (!isEmail && body) ? body.length + " characters" : "";
   }
 
   function update() {
-    var company = clean($("lb-company").value, 60);
-    var first = clean($("lb-first").value, 30);
-    var site = siteOf($("lb-site").value);
-    var place = clean($("lb-place").value, 60);
-    var on = !!company;
-    var link = "";
-    if (on) {
+    state.company = clean($("lb-company").value, 60);
+    state.first = clean($("lb-first").value, 30);
+    state.site = siteOf($("lb-site").value);
+    state.place = clean($("lb-place").value, 60);
+    state.sender = clean($("lb-sender").value, 40);
+    state.on = !!state.company;
+    state.link = "";
+    if (state.on) {
       var q = new URLSearchParams();
-      q.set("c", company);
-      if (first) q.set("n", first);
-      if (site) q.set("w", site);
-      if (place) q.set("l", place);
-      link = base + "?" + q.toString();
+      q.set("c", state.company);
+      if (state.first) q.set("n", state.first);
+      if (state.site) q.set("w", state.site);
+      if (state.place) q.set("l", state.place);
+      state.link = base + "?" + q.toString();
     }
-    $("lb-link").value = link;
-    $("lb-slug").textContent = "prospect = " + (on ? slugOf(company) : "…");
-    ["lb-copy-link", "lb-copy-msg"].forEach(function (id) { $(id).disabled = !on; });
+    $("lb-link").value = state.link;
+    var slug = state.on ? slugOf(state.company) : "\u2026";
+    $("lb-slug").textContent = "prospect = " + slug;
+    $("lb-utm").textContent = "utm_campaign = " + slug;
+    $("lb-copy-link").disabled = !state.on;
     var open = $("lb-open");
-    if (on) { open.href = link; open.removeAttribute("disabled"); open.removeAttribute("aria-disabled"); }
+    if (state.on) { open.href = state.link; open.removeAttribute("disabled"); open.removeAttribute("aria-disabled"); }
     else { open.removeAttribute("href"); open.setAttribute("disabled", ""); open.setAttribute("aria-disabled", "true"); }
-    if (!msgEdited) $("lb-message").value = on ? draft(company, first, link) : "";
+    paintMessage();
     $("lb-status").textContent = "";
+  }
+
+  function pick(name) {
+    current = name;
+    document.querySelectorAll("[data-msg]").forEach(function (b) { b.setAttribute("aria-selected", String(b.getAttribute("data-msg") === name)); });
+    paintMessage();
+  }
+
+  function rememberEdit() {
+    edited[current] = { body: $("lb-message").value, subject: current === "email" ? $("lb-subject").value : null };
+    $("lb-reset").hidden = false;
+    paintSend();
   }
 
   function copy(text, label) {
@@ -169,9 +274,20 @@
 
   $("lb-form").addEventListener("input", update);
   $("lb-form").addEventListener("submit", function (e) { e.preventDefault(); });
-  $("lb-message").addEventListener("input", function () { msgEdited = $("lb-message").value.trim() !== ""; });
+  $("lb-sender").addEventListener("input", function () {
+    try { localStorage.setItem("tq-lb-sender", $("lb-sender").value); } catch (e) { /* storage unavailable */ }
+    update();
+  });
+  try { $("lb-sender").value = localStorage.getItem("tq-lb-sender") || ""; } catch (e) { /* storage unavailable */ }
+  document.querySelectorAll("[data-msg]").forEach(function (b) {
+    b.addEventListener("click", function () { pick(b.getAttribute("data-msg")); });
+  });
+  $("lb-message").addEventListener("input", rememberEdit);
+  $("lb-subject").addEventListener("input", rememberEdit);
+  $("lb-reset").addEventListener("click", function () { delete edited[current]; paintMessage(); });
   $("lb-copy-link").addEventListener("click", function () { copy($("lb-link").value, "Link"); });
   $("lb-copy-msg").addEventListener("click", function () { copy($("lb-message").value, "Message"); });
+  $("lb-copy-subject").addEventListener("click", function () { copy($("lb-subject").value, "Subject"); });
   $("lb-setup-link").textContent = location.host + "/setup";
   $("lb-copy-setup").addEventListener("click", function () { copy(location.origin + "/setup", "Setup link"); });
   update();
