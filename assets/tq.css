@@ -379,8 +379,8 @@ p { text-wrap: pretty; }
 }
 /* Client pages: typed-in address and length when the satellite map can't be used */
 .tq-manual-stage {
-  position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center;
-  padding: 52px 24px 24px; background: var(--bg-alt); overflow: hidden;
+  position: absolute; inset: 0; z-index: 2; display: flex; align-items: flex-start; justify-content: center;
+  padding: 64px 24px 24px; background: var(--bg-alt); overflow: hidden;
 }
 .tq-manual-stage[hidden] { display: none; }
 .tq--manual .tq-stage { background: var(--bg-alt); }
