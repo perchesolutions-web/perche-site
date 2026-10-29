@@ -45,7 +45,7 @@
       <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M8 23V10h16v13" fill="none" stroke="var(--accent-ink)" stroke-width="2.2" stroke-linejoin="round"/><g fill="var(--accent-ink)"><rect x="6.5" y="21.5" width="3" height="3" rx=".6"/><rect x="6.5" y="8.5" width="3" height="3" rx=".6"/><rect x="14.5" y="8.5" width="3" height="3" rx=".6"/><rect x="22.5" y="8.5" width="3" height="3" rx=".6"/><rect x="22.5" y="21.5" width="3" height="3" rx=".6"/></g></svg>
       <span>TraceQuote</span>
     </a>
-    <span class="demo-chip">Demo</span>
+    <span class="demo-chip" data-tq-chip>Demo</span>
     <nav class="demo-switch" aria-label="Demo view">
       <a href="#homeowner" data-view-link="homeowner">Homeowner view</a>
       <a href="#contractor" data-view-link="contractor">Contractor view</a>
@@ -145,6 +145,7 @@
     : "Trace a fence, choose a style, and see the price.";
   if (P) {
     document.title = P.name + " \u00b7 Instant quote preview";
+    setText("[data-tq-chip]", "Preview");
     setText("#home-title", P.name + "\u2019s instant quote page");
     setText("#pro-title", "What " + P.name + " gets");
     setText("[data-tq-intro]", (P.first ? P.first + ", this" : "This") + " is the quote page homeowners would use on " +
