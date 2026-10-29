@@ -29,10 +29,36 @@
     });
   }
 
+  // Booking links carry where they were clicked, so Calendly's meeting list and export show which page (and, from a
+  // demo link, which fence company) a call came from. data-book="hero" names the button; no personal details go in.
+  var P = window.TQ_PROSPECT || null;
+  var page = window.location.pathname.replace(/^\/+|\/+$|\.html$/g, "") || "home";
+  function bookingUrl(place) {
+    if (!CFG.bookingUrl) return "";
+    try {
+      var u = new URL(CFG.bookingUrl);
+      u.searchParams.set("utm_source", P ? "demo-link" : "website");
+      u.searchParams.set("utm_medium", page);
+      if (P && P.slug) u.searchParams.set("utm_campaign", P.slug);
+      if (place) u.searchParams.set("utm_content", place);
+      return u.toString();
+    } catch (e) {
+      return CFG.bookingUrl;
+    }
+  }
   document.querySelectorAll("[data-book]").forEach(function (a) {
-    if (CFG.bookingUrl) a.href = CFG.bookingUrl;
+    var place = a.getAttribute("data-book") || "";
+    var href = bookingUrl(place);
+    if (href) a.href = href;
     a.target = "_blank";
     a.rel = "noopener";
+    a.addEventListener("click", function () {
+      try {
+        if (window.posthog && typeof window.posthog.capture === "function") {
+          window.posthog.capture("tq_book_clicked", { placement: place || null, page: page, prospect: P ? P.slug : null });
+        }
+      } catch (e) { /* analytics is optional */ }
+    });
   });
   document.querySelectorAll("[data-email]").forEach(function (el) {
     if (!CFG.contactEmail) return;

@@ -1,5 +1,5 @@
 /*
-  Home page. Uses the tokens in tq.css.
+  Home page (the demo page also uses its browser frame, buttons and timeline). Uses the tokens in tq.css.
   One loud thing: the live quote tool in the hero. Everything else is quiet paper, ink and rules.
   The fence-line yellow only appears where the product would draw a fence.
 */
@@ -204,7 +204,7 @@
 
 /* ---------- footer on this page ---------- */
 .home .footer h4 { text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--ink); }
-.footer-base a { margin-left: 12px; }
+.home .footer-base a { margin-left: 12px; }
 
 /* Dark theme: the frame needs an edge, since its shadow disappears on a dark page. */
 @media (prefers-color-scheme: dark) {
