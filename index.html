@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TraceQuote</title>
+<title>TraceQuote: one-minute fence quotes on your website</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Instant fence quotes on your website. Homeowners trace their fence on a satellite map and see a price range from your price sheet. Set up and run for you.">
-<meta property="og:title" content="TraceQuote">
-<meta property="og:description" content="Instant fence quotes on your website, set up and run for you.">
+<meta name="description" content="Homeowners trace their fence on satellite imagery and see your prices in about a minute. You get the address, footage, fence choice and contact details. Set up and run for fence contractors.">
+<meta property="og:title" content="TraceQuote: one-minute fence quotes on your website">
+<meta property="og:description" content="Homeowners price their fence on your website. You get the job details before you drive out. Set up and run for you.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://perchesolutions.com/">
 <meta property="og:url" content="https://perchesolutions.com/">
@@ -15,8 +15,9 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
 <link rel="stylesheet" href="assets/tq.css">
+<link rel="stylesheet" href="assets/home.css">
 <script>try{var t=localStorage.getItem("tq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <!-- posthog:start (site analytics, same PostHog project as before; removed from the claude.ai preview build) -->
 <script>
@@ -28,7 +29,7 @@
 </script>
 <!-- posthog:end -->
 </head>
-<body>
+<body class="home">
 
 <div class="topline"></div>
 
@@ -40,18 +41,17 @@
     </a>
     <nav class="nav-links" id="site-links" aria-label="Main">
       <a href="#how">How it works</a>
-      <a href="#compare">Why TraceQuote</a>
-      <a href="#math">Pricing math</a>
+      <a href="#inbox">What you get</a>
+      <a href="#setup">Setup</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">Questions</a>
-      <a href="demo.html">Full demo</a>
     </nav>
     <div class="nav-cta">
       <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch between light and dark">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
       </button>
       <a class="btn btn-ghost btn-sm hide-sm" href="demo.html">Try the demo</a>
-      <a class="btn btn-primary btn-sm" data-book href="https://calendly.com/perchesolutions/free-worldflow-audit">Book a call</a>
+      <a class="btn btn-primary btn-sm" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a demo</a>
       <button class="icon-btn menu-btn" type="button" data-menu aria-controls="site-links" aria-expanded="false" aria-label="Menu">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
@@ -61,265 +61,269 @@
 
 <main>
 
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <span class="hero-tag">Instant quotes for fence companies</span>
-        <h1 id="hero-title">Give homeowners a price <em>before</em> you drive out.</h1>
-        <p class="lead">We add an instant quote page to your website. Homeowners search their address, trace the fence on satellite imagery, and see prices for every fence type from your own price sheet. You get their name, number, and a measured layout of the job.</p>
-        <div class="hero-cta">
-          <a class="btn btn-primary" data-book href="https://calendly.com/perchesolutions/free-worldflow-audit">Book a 15-min call</a>
-          <a class="btn btn-ghost" href="demo.html">Open the full demo</a>
+  <section class="h-hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <h1 id="hero-title">One&#8209;minute fence quotes on your website.</h1>
+      <div class="h-hero-row">
+        <p class="h-hero-sub">Homeowners search their address, trace the fence on satellite imagery, and see your price for every fence type you install. You get their name, number, address, footage and fence choice before you drive out.</p>
+        <div class="h-hero-act">
+          <div class="h-hero-cta">
+            <a class="btn btn-primary btn-lg" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
+            <a class="btn btn-ghost btn-lg" href="#try" data-try>Price a fence now</a>
+          </div>
+          <p class="h-hero-note">Set up and run for you: we load your prices, build the page and put it on your website.</p>
         </div>
-        <ul class="checks">
-          <li>We set it up for you</li>
-          <li>Your prices, your logo</li>
-          <li>Works on your current website</li>
+      </div>
+      <div class="h-frame" id="try">
+        <div class="h-frame-bar">
+          <span class="h-frame-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="h-frame-url">yourfencecompany.com/instant-quote</span>
+          <span class="h-frame-live">Live</span>
+        </div>
+        <div id="hero-quote" role="region" aria-label="Fence quote demo"></div>
+        <p class="h-frame-foot" data-tq-foot>Sample company and prices. Nothing you enter is sent anywhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="h-statement" aria-label="Why it matters">
+    <div class="wrap">
+      <p class="h-statement-big">Homeowners want a number before they book a visit. A contact form makes them wait for one.</p>
+      <p class="h-statement-small">TraceQuote gives them a price range in about a minute, on your website and under your name. The measures you book start with a homeowner who has already seen your price.</p>
+    </div>
+  </section>
+
+  <section class="h-sec h-sec--alt" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="h-head">
+        <h2 id="how-title">How homeowners use it</h2>
+        <p>Four steps on your website. No account, no waiting for a callback.</p>
+      </div>
+      <ol class="h-steps">
+        <li>
+          <span class="h-step-n">1</span>
+          <h3>Find the house</h3>
+          <p>They type their address and the satellite view zooms to their roof.</p>
+          <div class="h-fig" aria-hidden="true">
+            <div class="h-fig-box">
+              <span class="h-fig-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>12 Oak La</span>
+              <ul class="h-fig-sugg"><li>12 Oak Lane, Miami, FL 33145</li><li>12 Oak Lane, Homestead, FL 33030</li></ul>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="h-step-n">2</span>
+          <h3>Trace the fence</h3>
+          <p>They tap the corners. The footage adds up as they go, with gates and old-fence removal.</p>
+          <div class="h-fig" aria-hidden="true"><div class="h-fig-map" data-fig="layout"></div></div>
+        </li>
+        <li>
+          <span class="h-step-n">3</span>
+          <h3>Compare your prices</h3>
+          <p>Every fence type you install, priced from your sheet, with heights, colors and a monthly estimate.</p>
+          <div class="h-fig" aria-hidden="true">
+            <div class="h-fig-box" data-fig="sheet">
+              <div class="h-fig-row"><span>Vinyl privacy, 6 ft</span><b>$6,500–$8,950</b></div>
+              <div class="h-fig-row"><span>Wood privacy, 6 ft</span><b>$4,700–$6,850</b></div>
+              <div class="h-fig-row"><span>Aluminum, 4 ft</span><b>$5,750–$7,900</b></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="h-step-n">4</span>
+          <h3>Send you the job</h3>
+          <p>To get the itemized quote or book your free measure, they leave their name, email and mobile number.</p>
+          <div class="h-fig" aria-hidden="true">
+            <div class="h-fig-box">
+              <span class="h-fig-field">Maria Gómez</span>
+              <span class="h-fig-field">maria@example.com</span>
+              <span class="h-fig-btn">Send my quote request</span>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <p class="h-aside">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 15.5V22M8.5 22h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span><b>Yard hidden by trees, or too new for the satellite photo?</b> They type a rough length instead, and the request is marked so you know to measure before quoting.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="h-sec h-inbox" id="inbox" aria-labelledby="inbox-title">
+    <div class="wrap h-inbox-grid">
+      <div>
+        <div class="h-head">
+          <h2 id="inbox-title">What lands in your inbox</h2>
+          <p>Every request reads like a work order, not a “please call me” note. It arrives the moment the homeowner sends it.</p>
+        </div>
+        <ul class="h-points">
+          <li><b>The subject line sorts it for you</b>Who, where, what they picked and the price they saw, before you open it.</li>
+          <li><b>Reply goes to the homeowner</b>Answer from your phone and you’re talking to them, not to a form.</li>
+          <li><b>You see the job before you drive</b>A satellite picture of the fence they traced, plus a link for directions.</li>
         </ul>
       </div>
-      <div class="hero-demo">
-        <div class="window">
-          <div class="window-bar">
-            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span class="window-url">yourfencecompany.com/instant-quote</span>
-            <span class="live-chip">Live demo</span>
-          </div>
-          <div id="hero-quote" role="region" aria-label="Fence quote demo"></div>
-          <div class="window-foot" data-tq-foot>Sample company and prices. Nothing you enter is sent anywhere.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="statement" aria-label="Why it matters">
-    <div class="wrap">
-      <p class="statement-big">Homeowners want a ballpark before they book a visit. A contact form makes them wait for one.</p>
-      <p class="statement-small">TraceQuote answers in about a minute, on your website and under your name. The visits you book start with a homeowner who has already seen your price range.</p>
-    </div>
-  </section>
-
-  <section class="section" id="how" aria-labelledby="how-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="kicker">How it works</p>
-        <h2 id="how-title">From satellite view to a <em>booked</em> visit</h2>
-        <p>Four steps on your website, under your company's name.</p>
-      </div>
-      <ol class="flow">
-        <li class="flow-card">
-          <span class="flow-num">01</span>
-          <h3>Measures the yard</h3>
-          <p>The homeowner taps the corners of the fence on a satellite view of their home. The page adds up the footage and leaves room for gates.</p>
-          <div class="flow-fig flow-fig--map" data-fig="layout" role="img" aria-label="A drawn fence around a backyard, with posts every 8 feet"></div>
-        </li>
-        <li class="flow-card">
-          <span class="flow-num">02</span>
-          <h3>Shows every option</h3>
-          <p>Prices appear right away, with no form first. Each fence type is priced side by side from your sheet, with heights, colors, typical lifespan, and a monthly payment estimate.</p>
-          <div class="flow-fig" data-fig="sheet">
-            <div class="mini-row"><span>Vinyl privacy, 6 ft</span><b>$6,500–$8,950</b></div>
-            <div class="mini-row"><span>Wood privacy, 6 ft</span><b>$4,700–$6,850</b></div>
-            <div class="mini-row"><span>Aluminum, 4 ft</span><b>$5,750–$7,900</b></div>
-          </div>
-        </li>
-        <li class="flow-card">
-          <span class="flow-num">03</span>
-          <h3>Captures the lead</h3>
-          <p>To get the detailed quote or book a measure, homeowners leave their first and last name, email, and mobile number.</p>
-          <div class="flow-fig">
-            <span class="mini-field">Maria Gómez</span>
-            <span class="mini-field">maria@example.com</span>
-            <span class="mini-check">Send my detailed quote</span>
-          </div>
-        </li>
-        <li class="flow-card">
-          <span class="flow-num">04</span>
-          <h3>Books the measure</h3>
-          <p>Homeowners pick a day for your free on-site measure. Texts and emails follow up until they book, reply, or opt out.</p>
-          <div class="flow-fig">
-            <span class="bubble-meta">Text, right away</span>
-            <span class="bubble">Hi Maria, it's Demo Fence Co. Your quote is $6,500–$8,950. Want us to come measure?</span>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="section section--alt" id="compare" aria-labelledby="compare-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="kicker">The difference</p>
-        <h2 id="compare-title">Doesn't my <em>fence software</em> already do this?</h2>
-        <p>Some estimating tools include a homeowner quote page. The difference is who does the work.</p>
-      </div>
-      <div class="compare">
-        <div class="compare-col">
-          <h3>Quote tools you set up yourself</h3>
-          <dl>
-            <div><dt>Setup</dt><dd>You build the price list, style the page, and add it to your site.</dd></div>
-            <div><dt>Price changes</dt><dd>You log in and edit them.</dd></div>
-            <div><dt>Follow-up</dt><dd>Depends on your plan and how you configure it.</dd></div>
-            <div><dt>Reporting</dt><dd>Whatever reports you set up.</dd></div>
-            <div><dt>Your office</dt><dd>Another app to learn.</dd></div>
+      <article class="h-mail" aria-label="Sample quote request email">
+        <div class="h-mail-top"><span>New request, just now</span><span class="h-mail-tag">Sample request</span></div>
+        <p class="h-mail-subject" data-mail-subject>Quote request: Maria Gómez, 12 Oak Lane, Miami — 176 ft of 6 ft vinyl privacy, $6,750–$9,600</p>
+        <p class="h-mail-to">To: estimates@yourfencecompany.com</p>
+        <div class="h-mail-body">
+          <dl class="h-mail-rows">
+            <div><dt>Name</dt><dd>Maria Gómez</dd></div>
+            <div><dt>Phone</dt><dd>(305) 555-0117</dd></div>
+            <div><dt>Address</dt><dd>12 Oak Lane, Miami, FL 33145</dd></div>
+            <div><dt>Fence</dt><dd data-mail-fence>176 ft of 6 ft vinyl privacy, white</dd></div>
+            <div><dt>Gates</dt><dd>1 walk gate</dd></div>
+            <div><dt>Old fence removal</dt><dd>Yes</dd></div>
+            <div><dt>Price shown</dt><dd data-mail-price>$6,750–$9,600</dd></div>
+            <div><dt>Monthly shown</dt><dd data-mail-monthly>From $90/mo</dd></div>
+            <div><dt>Timing</dt><dd>In 1 to 3 months</dd></div>
+            <div><dt>Directions</dt><dd><a href="#inbox" tabindex="-1">Open in Google Maps</a></dd></div>
           </dl>
+          <figure class="h-mail-pic">
+            <div class="h-fig-map" data-fig="layout" role="img" aria-label="The fence the homeowner traced, with posts every 8 feet and one gate"></div>
+            <figcaption>What the satellite picture link shows: the fence as they traced it.</figcaption>
+          </figure>
         </div>
-        <div class="compare-col compare-col--us">
-          <h3>TraceQuote</h3>
-          <dl>
-            <div><dt>Setup</dt><dd>We load your prices, match your brand, and install it.</dd></div>
-            <div><dt>Price changes</dt><dd>Send us the new numbers. We update the page.</dd></div>
-            <div><dt>Follow-up</dt><dd>We write the texts and emails and keep them running.</dd></div>
-            <div><dt>Reporting</dt><dd>A monthly summary of quotes, leads, and booked visits.</dd></div>
-            <div><dt>Your office</dt><dd>Nothing new to learn. Leads arrive by text and email.</dd></div>
-          </dl>
-        </div>
-      </div>
-      <p class="fineprint">This describes self-serve quoting tools in general. Features vary by product and plan.</p>
+      </article>
     </div>
   </section>
 
-  <section class="section" id="math" aria-labelledby="math-title">
+  <section class="h-sec" id="setup" aria-labelledby="setup-title">
     <div class="wrap">
-      <div class="section-head">
-        <p class="kicker">Pricing math</p>
-        <h2 id="math-title">How a quote is <em>calculated</em></h2>
-        <p>The actual math, in plain English. You set every number. The prices below are the samples used in the demo.</p>
+      <div class="h-head">
+        <h2 id="setup-title">Set up for you, in four steps</h2>
+        <p>You don’t learn new software. You send your prices, approve a preview, and the requests start coming in.</p>
       </div>
-      <div class="table-wrap">
-        <table class="math">
-          <thead><tr><th scope="col">Item</th><th scope="col">How it's counted</th><th scope="col">Sample price</th></tr></thead>
-          <tbody id="math-rows">
-            <tr><td>Fence line</td><td>Drawn length minus gate openings, times your price per foot for the material and height the homeowner picks.</td><td>Vinyl privacy, 6 ft: $34–$46 per ft</td></tr>
-            <tr><td>Walk gate</td><td>Flat price per gate. Its 4 ft opening comes off the fence footage.</td><td>$450–$750</td></tr>
-            <tr><td>Drive gate</td><td>Flat price per gate. Its 12 ft opening comes off the fence footage.</td><td>$1,400–$2,600</td></tr>
-            <tr><td>Old fence removal</td><td>Per foot of drawn line, only when the homeowner asks for it.</td><td>$2–$4 per ft</td></tr>
-            <tr><td>Minimum job</td><td>When a quote comes in under your minimum, the page shows the minimum.</td><td>$1,500</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="notes">
-        <p><b>Always a range.</b> The low end uses your lowest prices and the high end your highest, rounded to the nearest $50.</p>
-        <p><b>Never a final bid.</b> Every quote tells the homeowner the final price is confirmed after you measure on site.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt" id="setup" aria-labelledby="setup-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="kicker">Setup</p>
-        <h2 id="setup-title">Set up for you. <em>No new habits.</em></h2>
-      </div>
-      <ol class="steps3">
-        <li><span class="n">01</span><h3>Send your price sheet</h3><p>Materials, heights, gates, minimums, and the areas you serve. A photo of the sheet you use today works.</p></li>
-        <li><span class="n">02</span><h3>We build and install it</h3><p>Your logo and colors on a quote page that lives on your website. We test it with real addresses before it goes live.</p></li>
-        <li><span class="n">03</span><h3>Leads come to you</h3><p>Each lead arrives by text and email with the layout, footage, and price range. Follow-up starts on its own.</p></li>
+      <ol class="h-timeline">
+        <li><span class="n">1</span><h3>You send your prices</h3><p>A ten-minute form: fence types and heights, gates, old-fence removal, your minimum job and your logo.</p></li>
+        <li><span class="n">2</span><h3>We build your page</h3><p>Your name, phone and prices on a quote page we test with real addresses in your service area.</p></li>
+        <li><span class="n">3</span><h3>You approve it</h3><p>Click through your preview like a homeowner would. Anything you want changed, we change before launch.</p></li>
+        <li><span class="n">4</span><h3>It goes on your website</h3><p>One embed line, added by us or your web designer. It also works as a link for Google, Facebook and texts.</p></li>
       </ol>
+      <div class="h-after">
+        <div><b>New prices any time</b><span>Send the new numbers and we update your page.</span></div>
+        <div><b>A monthly summary</b><span>How many quote requests came in, and what homeowners asked for.</span></div>
+      </div>
     </div>
   </section>
 
-  <section class="section" id="pricing" aria-labelledby="pricing-title">
+  <section class="h-sec h-sec--alt" id="compare" aria-labelledby="compare-title">
     <div class="wrap">
-      <div class="section-head">
-        <p class="kicker">Pricing</p>
-        <h2 id="pricing-title">Simple <em>pricing</em></h2>
-        <p>Start with the quote page. Add ads management if you want more homeowners finding it.</p>
+      <div class="h-head">
+        <h2 id="compare-title">A contact form, or TraceQuote</h2>
+        <p>Most fence company websites end in a contact form. Here’s what changes when they end in a price.</p>
       </div>
-      <div class="plans">
-        <article class="plan plan--main" aria-labelledby="plan-1">
-          <p class="plan-tag">Start here</p>
+      <div class="h-cmp" role="table" aria-label="Contact form compared with TraceQuote">
+        <div class="h-cmp-row h-cmp-head" role="row"><span role="columnheader"></span><span role="columnheader">Contact form</span><span role="columnheader">TraceQuote</span></div>
+        <div class="h-cmp-row" role="row"><p class="h-cmp-k" role="rowheader">The homeowner gets</p><p role="cell">A promise that someone will call</p><p role="cell">Their price range, right away</p></div>
+        <div class="h-cmp-row" role="row"><p class="h-cmp-k" role="rowheader">You get</p><p role="cell">A name, a number and a short message</p><p role="cell">Address, footage, fence type, gates, budget and timing</p></div>
+        <div class="h-cmp-row" role="row"><p class="h-cmp-k" role="rowheader">Before you drive out</p><p role="cell">A phone call to ask the basics</p><p role="cell">A satellite picture of the job</p></div>
+        <div class="h-cmp-row" role="row"><p class="h-cmp-k" role="rowheader">Who reaches out</p><p role="cell">People who haven’t seen a price yet</p><p role="cell">People who saw your price range and still asked</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="h-sec" id="pricing" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <div class="h-head">
+        <h2 id="pricing-title">Pricing</h2>
+        <p>Start with the quote page. Add ads when you want more homeowners finding it.</p>
+      </div>
+      <div class="h-plans">
+        <article class="h-plan h-plan--main" aria-labelledby="plan-1">
           <h3 id="plan-1">Quote Page</h3>
-          <p class="plan-price"><b>$299</b><span>/month</span></p>
-          <p class="plan-setup">Plus a one-time $499 setup</p>
-          <p class="plan-desc">For fence companies that already get website visitors and want more of them to book a measure.</p>
+          <p class="h-plan-for">For fence companies that already get website visitors and want more of them to book a measure.</p>
+          <p class="h-price"><b>$299</b><span>a month</span></p>
+          <p class="h-price-note">Plus a one-time $499 setup.</p>
           <ul>
-            <li>Instant quote page on your website, with your prices, logo, and colors</li>
-            <li>Address search and satellite measuring, with gates and old fence removal</li>
-            <li>Every fence type priced side by side, with colors and monthly payment estimates</li>
-            <li>Lead alerts by text and email, with the drawn layout and the option they picked</li>
-            <li>Text and email follow-up that we write and run</li>
+            <li>A quote page on your website with your prices, name and phone</li>
+            <li>Satellite measuring, with a typed-in length for hard-to-see yards</li>
+            <li>Every fence type you install, priced side by side, with heights, colors and monthly estimates</li>
+            <li>Each request emailed to you with the layout, a satellite picture and directions</li>
             <li>Price changes whenever you send them</li>
-            <li>Monthly summary of quotes, leads, and booked visits</li>
+            <li>A monthly summary of quote requests</li>
           </ul>
-          <a class="btn btn-primary" data-book href="https://calendly.com/perchesolutions/free-worldflow-audit">Book a 15-min call</a>
+          <p class="h-founding"><b>Founding offer for our first three fence companies</b>Free setup, your first month free, then $199 a month for two months.</p>
+          <a class="btn btn-primary btn-lg" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
         </article>
-        <article class="plan" aria-labelledby="plan-2">
-          <p class="plan-tag">More traffic</p>
+        <article class="h-plan" aria-labelledby="plan-2">
           <h3 id="plan-2">Quote Page + Ads</h3>
-          <p class="plan-price"><b>$799</b><span>/month</span></p>
-          <p class="plan-setup">Plus setup, and your ad budget paid directly to Google</p>
-          <p class="plan-desc">For companies that want more homeowners finding the quote page in the first place.</p>
+          <p class="h-plan-for">For companies that want more homeowners finding the quote page in the first place.</p>
+          <p class="h-price"><b>$799</b><span>a month</span></p>
+          <p class="h-price-note">Plus setup. Your ad budget is billed to you by Google.</p>
           <ul>
             <li>Everything in Quote Page</li>
-            <li>A Google Ads campaign that sends homeowners to your quote page</li>
-            <li>Ads managed for you, with your budget billed to you by Google</li>
-            <li>Monthly report on ad spend, leads, and cost per lead</li>
+            <li>A Google Ads campaign that sends homeowners in your service area to your quote page</li>
+            <li>Ads set up and managed for you</li>
+            <li>A monthly report on ad spend, quote requests and cost per request</li>
           </ul>
-          <a class="btn btn-ghost" data-book href="https://calendly.com/perchesolutions/free-worldflow-audit">Ask about ads</a>
+          <a class="btn btn-ghost btn-lg" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Ask about ads</a>
         </article>
       </div>
-      <p class="founding"><b>Founding pricing</b> is available for our first three Miami fence companies. Ask about it on the call.</p>
     </div>
   </section>
 
-  <section class="section section--alt" id="faq" aria-labelledby="faq-title">
+  <section class="h-sec h-sec--alt" id="faq" aria-labelledby="faq-title">
     <div class="wrap">
-      <div class="section-head">
-        <p class="kicker">Questions</p>
-        <h2 id="faq-title">Common <em>questions</em></h2>
+      <div class="h-head">
+        <h2 id="faq-title">Questions</h2>
       </div>
-      <div class="faq">
-        <details>
-          <summary>What does TraceQuote actually do?</summary>
-          <p>It adds a quote page to your website. Homeowners search their address, trace the fence on satellite imagery, and see a price range for every fence type you install, built from your prices. They can compare heights and colors, see a monthly payment estimate, and book your free measure. You get their contact details, the layout they drew, and the option they picked. We set up text and email follow-up so the lead hears from you right away.</p>
-        </details>
-        <details>
-          <summary>Do homeowners have to give their info to see a price?</summary>
-          <p>No. They see prices for every fence type right away. To get the itemized quote by email or book your free measure, they enter their first and last name, email, and mobile number. That's when you get the lead.</p>
-        </details>
-        <details>
-          <summary>Will homeowners see my exact prices?</summary>
-          <p>They see a range for their own project, not your price sheet. The page also tells them the final price is confirmed after you measure on site.</p>
-        </details>
-        <details>
-          <summary>How accurate is the satellite measurement?</summary>
-          <p>Close enough for a budget range. Trees, slopes, property lines, and permits can change the real job, which is why every quote is a range and your on-site measure sets the final price.</p>
-        </details>
-        <details>
-          <summary>Do I need new software or a new website?</summary>
-          <p>No. We add the quote page to the site you have, or give you a link you can share on Google, Facebook, and in texts. Leads come to you by text and email.</p>
-        </details>
-        <details>
-          <summary>Who sends the follow-up texts?</summary>
-          <p>We write the messages and set them up under your business name. Homeowners choose whether to get texts when they ask for a quote, and they can reply STOP at any time.</p>
-        </details>
-        <details>
-          <summary>What does it cost?</summary>
-          <p>$299 a month plus a one-time $499 setup. Ads management is $799 a month plus your ad budget. Founding pricing is available for our first three Miami fence companies.</p>
-        </details>
-        <details>
-          <summary>Can I change my prices later?</summary>
-          <p>Yes. Send us the new numbers and we update the page.</p>
-        </details>
-        <details>
-          <summary>Do you work with services besides fencing?</summary>
-          <p>We start with fencing. If you also install pavers, turf, or screen enclosures, mention it on the call.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta" aria-labelledby="cta-title">
-    <div class="wrap">
-      <div class="cta-box">
+      <div class="h-faq">
         <div>
-          <h2 id="cta-title">See it with <em>your prices.</em></h2>
-          <p>Try the live demo, or book a 15-minute call and we'll walk through it with your price sheet.</p>
+          <details>
+            <summary>Do homeowners have to give their contact details to see a price?</summary>
+            <p>No. They see prices for every fence type right away. To get the itemized quote or book your free measure, they enter their name, email and mobile number. That’s when the request comes to you.</p>
+          </details>
+          <details>
+            <summary>Will homeowners see my price sheet?</summary>
+            <p>They see a range for their own project, not your sheet. Every quote says the final price is confirmed after you measure on site.</p>
+          </details>
+          <details>
+            <summary>How is the price worked out?</summary>
+            <p>The traced length, minus gate openings, times your price per foot for the fence type and height they pick. Then your gate prices, old-fence removal if they ask for it, and your minimum job. It’s always a range, rounded to the nearest $50.</p>
+          </details>
+          <details>
+            <summary>How accurate is the satellite measurement?</summary>
+            <p>Close enough for a budget range. Trees, slopes, property lines and permits can change the real job, which is why every quote is a range and your on-site measure sets the final price.</p>
+          </details>
+          <details>
+            <summary>What if the satellite photo doesn’t show the yard?</summary>
+            <p>Homeowners can type their address and a rough length instead. Those requests are marked as typed in, so you know to measure before you quote.</p>
+          </details>
         </div>
-        <div class="cta-actions">
-          <a class="btn btn-light" data-book href="https://calendly.com/perchesolutions/free-worldflow-audit">Book a 15-min call</a>
-          <a class="btn btn-outline-light" href="demo.html">Open the full demo</a>
+        <div>
+          <details>
+            <summary>Do I need new software or a new website?</summary>
+            <p>No. We add the quote page to the website you have, or give you a link you can share on Google, Facebook and in texts. Requests come to your email.</p>
+          </details>
+          <details>
+            <summary>How fast do requests reach me?</summary>
+            <p>By email, the moment the homeowner sends one. The subject line tells you who it is, where the job is and what they picked.</p>
+          </details>
+          <details>
+            <summary>Can I change my prices later?</summary>
+            <p>Yes. Send us the new numbers and we update your page.</p>
+          </details>
+          <details>
+            <summary>What does it cost?</summary>
+            <p>The quote page is $299 a month plus a one-time $499 setup. With Google Ads management it’s $799 a month plus setup, and your ad budget is billed to you by Google. Our first three fence companies get free setup, their first month free, then $199 a month for two months.</p>
+          </details>
+          <details>
+            <summary>Do you work with trades besides fencing?</summary>
+            <p>We start with fencing. If you also install pavers, turf or screen enclosures, mention it on the call.</p>
+          </details>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="h-final" aria-labelledby="final-title">
+    <div class="wrap">
+      <h2 id="final-title">See your company’s quote page before you decide.</h2>
+      <p>Book a 15-minute demo and we’ll walk you through a preview with your company’s name on it. Bring your price sheet.</p>
+      <div class="h-final-cta">
+        <a class="btn btn-trace btn-lg" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
+        <a class="btn btn-line-light btn-lg" href="demo.html">Try the demo</a>
       </div>
     </div>
   </section>
@@ -341,21 +345,21 @@
         <h4>Product</h4>
         <ul>
           <li><a href="#how">How it works</a></li>
-          <li><a href="#math">Pricing math</a></li>
+          <li><a href="#inbox">What you get</a></li>
           <li><a href="#pricing">Pricing</a></li>
-          <li><a href="demo.html">Full demo</a></li>
+          <li><a href="demo.html">Try the demo</a></li>
         </ul>
       </div>
       <div>
         <h4>Talk to us</h4>
         <ul>
-          <li><a data-book href="https://calendly.com/perchesolutions/free-worldflow-audit">Book a 15-min call</a></li>
+          <li><a data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a></li>
           <li><a href="#faq">Questions</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-base">
-      <span>© 2026 Perché AI Solutions LLC · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+      <span>© 2026 Perché AI Solutions LLC. <a href="/privacy">Privacy</a> <a href="/terms">Terms</a></span>
       <span>Prices in the demo are samples, not a quote.</span>
     </div>
   </div>
@@ -367,38 +371,48 @@
 <script>
 (function () {
   "use strict";
-  var TQ = window.TraceQuote, P = window.TQ_CONFIG.pricing;
-  TQ.mount(document.getElementById("hero-quote"), { layout: "compact", contractorHref: "demo.html#contractor" });
+  var TQ = window.TraceQuote;
+  TQ.mount(document.getElementById("hero-quote"), { layout: "full", contractorHref: "demo.html#contractor" });
+
   var foot = document.querySelector("[data-tq-foot]");
   if (foot) foot.textContent = TQ.live
     ? "Search any address. The company and prices are samples, and nothing you enter is sent anywhere."
-    : "Example home with a sample company and prices. On the live site, homeowners search their own address on satellite imagery.";
+    : "An example home with a sample company and prices. On your site, homeowners search their own address on satellite imagery.";
 
-  var fig = document.querySelector('[data-fig="layout"]');
-  if (fig) fig.innerHTML = TQ.snapshotMarkup(TQ.layouts.backyard);
+  // "Price a fence now": bring the tool into view and put the cursor in the address box.
+  var tryBtn = document.querySelector("[data-try]");
+  if (tryBtn) tryBtn.addEventListener("click", function (e) {
+    var frame = document.getElementById("try");
+    if (!frame) return;
+    e.preventDefault();
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    frame.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    var input = frame.querySelector(".tq-input--lg");
+    if (input) input.focus({ preventScroll: true });
+  });
 
-  var mat = TQ.materialById(P.defaultMaterial);
-  var per = mat.heights[mat.defaultHeight];
-  var perLabel = mat.name + ", " + mat.defaultHeight + " ft: $" + per[0] + "–$" + per[1];
-  var rows = [
-    ["Fence line", "Drawn length minus gate openings, times your price per foot for the material and height the homeowner picks.", perLabel + " per ft"],
-    ["Walk gate", "Flat price per gate. Its " + P.gates.walk.width + " ft opening comes off the fence footage.", TQ.moneyRange(P.gates.walk.price[0], P.gates.walk.price[1])],
-    ["Drive gate", "Flat price per gate. Its " + P.gates.drive.width + " ft opening comes off the fence footage.", TQ.moneyRange(P.gates.drive.price[0], P.gates.drive.price[1])],
-    ["Old fence removal", "Per foot of drawn line, only when the homeowner asks for it.", "$" + P.removalPerFt[0] + "–$" + P.removalPerFt[1] + " per ft"],
-    ["Minimum job", "When a quote comes in under your minimum, the page shows the minimum.", TQ.money(P.minimumJob)]
-  ];
-  document.getElementById("math-rows").innerHTML = rows.map(function (r) {
-    return "<tr><td>" + TQ.esc(r[0]) + "</td><td>" + TQ.esc(r[1]) + "</td><td>" + TQ.esc(r[2]) + "</td></tr>";
-  }).join("");
-  // The example yard, priced in three fence types, straight from the price sheet
+  // The example yard: the same drawing the tool starts with, in the steps and the sample email.
+  document.querySelectorAll('[data-fig="layout"]').forEach(function (el) { el.innerHTML = TQ.snapshotMarkup(TQ.layouts.backyard); });
+
+  // The example yard priced in three fence types, straight from the price sheet.
   var sheet = document.querySelector('[data-fig="sheet"]');
   if (sheet) {
     var lay = TQ.layouts.backyard, len = TQ.lengthOf(lay.runs);
     sheet.innerHTML = ["vinyl", "wood", "aluminum"].map(function (mid) {
       var m = TQ.materialById(mid), q = TQ.priceFor(len, lay.gates, { material: mid, height: m.defaultHeight, removal: false });
-      return '<div class="mini-row"><span>' + TQ.esc(m.name + ", " + m.defaultHeight + " ft") + "</span><b>" + TQ.moneyRange(q.lo, q.hi) + "</b></div>";
+      return '<div class="h-fig-row"><span>' + TQ.esc(m.name + ", " + m.defaultHeight + " ft") + "</span><b>" + TQ.moneyRange(q.lo, q.hi) + "</b></div>";
     }).join("");
   }
+
+  // The sample email, priced the way a real request would be: 180 ft traced, one walk gate, old fence out.
+  var vin = TQ.materialById("vinyl"), mq = TQ.priceFor(180, [{ type: "walk" }], { material: vin.id, height: "6", removal: true });
+  var fence = TQ.ftLabel(mq.fenceFt) + " of " + TQ.styleLabel(vin.id, "6");
+  var set = function (sel, text) { var el = document.querySelector(sel); if (el) el.textContent = text; };
+  set("[data-mail-subject]", "Quote request: Maria Gómez, 12 Oak Lane, Miami — " + fence + ", " + TQ.moneyRange(mq.lo, mq.hi));
+  set("[data-mail-fence]", fence + ", white");
+  set("[data-mail-price]", TQ.moneyRange(mq.lo, mq.hi));
+  var mo = TQ.monthlyPayment(mq.lo);
+  set("[data-mail-monthly]", mo ? "From " + TQ.money(mo) + "/mo" : "None");
 })();
 </script>
 </body>

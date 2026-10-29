@@ -1,13 +1,13 @@
-/* Layout: Perché's two-column hero, with the live quote tool where the dashboard used to sit. Cream page, ink-green type, one deep-green accent. */
+/* TraceQuote: cool paper, deep green ink, and the product's own fence-line yellow and gate orange. One type family (Archivo): wide and heavy for display, normal width for reading. */
 :root {
-  --bg: #faf8f4;
-  --bg-alt: #f2eee6;
-  --card: #fffdf9;
-  --ink: #14211b;
-  --muted: #4f5b54;
-  --faint: #6f7a73;
-  --line: rgba(20, 33, 27, 0.11);
-  --line-strong: rgba(20, 33, 27, 0.24);
+  --bg: #f2f4ef;
+  --bg-alt: #e7ebe4;
+  --card: #fcfdfb;
+  --ink: #13231b;
+  --muted: #4a5a51;
+  --faint: #66736b;
+  --line: rgba(19, 35, 27, 0.12);
+  --line-strong: rgba(19, 35, 27, 0.26);
   --accent: #0f5a43;
   --accent-ink: #ffffff;
   --accent-text: #0f5a43;
@@ -25,17 +25,28 @@
   --stage: #6f9450;
   --hud-bg: rgba(20, 33, 27, 0.8);
   --hud-ink: #ffffff;
-  --hud-total-bg: #fffdf9;
-  --hud-total-ink: #14211b;
-  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --hud-total-bg: #fcfdfb;
+  --hud-total-ink: #13231b;
+  --trace: #ffd24a;
+  --trace-ink: #13231b;
+  --flag: #e8611a;
+  --aerial: #10261d;
+  --aerial-2: #173328;
+  --aerial-ink: #e8efe9;
+  --aerial-muted: #a8bbb0;
+  --sans: "Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --serif: var(--sans);
+  --display-stretch: 114%;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0d1412;
-    --bg-alt: #111b18;
-    --card: #15201c;
+    --bg: #0c1511;
+    --bg-alt: #101c16;
+    --card: #14201a;
+    --aerial: #08130e;
+    --aerial-2: #10221a;
+    --flag: #ff8a3d;
     --ink: #edf2ee;
     --muted: #a9b6ae;
     --faint: #8a978f;
@@ -59,9 +70,12 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0d1412;
-  --bg-alt: #111b18;
-  --card: #15201c;
+  --bg: #0c1511;
+  --bg-alt: #101c16;
+  --card: #14201a;
+  --aerial: #08130e;
+  --aerial-2: #10221a;
+  --flag: #ff8a3d;
   --ink: #edf2ee;
   --muted: #a9b6ae;
   --faint: #8a978f;
@@ -105,8 +119,8 @@ body::before {
   background: var(--bg);
 }
 a { color: inherit; }
-h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-wrap: balance; color: var(--ink); }
-h1 em, h2 em, h3 em { font-style: italic; color: var(--accent-text); }
+h1, h2, h3 { font-family: var(--sans); font-weight: 800; font-stretch: var(--display-stretch); letter-spacing: -0.02em; margin: 0; text-wrap: balance; color: var(--ink); }
+h1 em, h2 em, h3 em { font-style: normal; color: inherit; }
 p { text-wrap: pretty; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 [id] { scroll-margin-top: 84px; }
@@ -741,3 +755,10 @@ p { text-wrap: pretty; }
 .legal ul { padding-left: 1.2em; }
 .legal li + li { margin-top: 4px; }
 .legal a { color: var(--accent-text); }
+
+/* Display numbers and titles in the product: wide and heavy, like the headings (the old serif was weight 400). */
+.statement-big, .plan-price b, .tq-manual-ft, .tq-range, .tqc-stat-n, .tqc-sub, .tq-quote-where {
+  font-weight: 750; font-stretch: 112%; letter-spacing: -0.015em;
+}
+.tq-manual-ft b { font-weight: 800; }
+.tq-quote-where { font-size: 21px; line-height: 1.2; }

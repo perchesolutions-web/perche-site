@@ -181,8 +181,8 @@
         (l.status !== "won" ? '<button type="button" class="tq-btn tq-btn--ghost" data-set="won">Mark job won</button>' : "") +
         "</div>" +
         '<section class="tqc-follow" aria-label="Follow-up">' +
-        '<h4 class="tqc-sub">Follow-up for this lead</h4>' +
-        '<p class="tqc-note">Example sequence. It stops when the homeowner books a visit, replies, or texts STOP.</p>' +
+        '<h4 class="tqc-sub">Coming soon: automatic follow-up</h4>' +
+        '<p class="tqc-note">What the follow-up add-on will send for this lead. Today, every request arrives by email and you follow up yourself.</p>' +
         '<ol class="tqc-timeline">' + seq + "</ol></section>";
     }
 

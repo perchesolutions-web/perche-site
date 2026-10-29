@@ -9,7 +9,7 @@
 <link rel="icon" href="{{ICON}}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
 <link rel="stylesheet" href="/assets/tq.css">
 {{POSTHOG}}
 </head>
@@ -27,7 +27,7 @@
   <main class="cq-main">
     <div class="wrap">
       <div class="cq-intro">
-        <h1>Get your fence price <em>in about a minute</em></h1>
+        <h1>Get your fence price in about a minute</h1>
         <p>Search your address, tap where the fence goes on the satellite photo, and compare styles and prices. No sign-up needed to see your price.</p>
       </div>
       <div id="quote" role="region" aria-label="Instant fence quote"></div>

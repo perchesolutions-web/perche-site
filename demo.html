@@ -9,7 +9,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
 <link rel="stylesheet" href="assets/tq.css">
 <script>try{var t=localStorage.getItem("tq-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <!-- posthog:start (site analytics, same PostHog project as before; removed from the claude.ai preview build) -->
@@ -41,7 +41,7 @@
       <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch between light and dark">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
       </button>
-      <a class="btn btn-primary btn-sm" data-book href="https://calendly.com/perchesolutions/free-worldflow-audit">Book a call</a>
+      <a class="btn btn-primary btn-sm" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a call</a>
     </div>
   </div>
 </header>
@@ -53,8 +53,8 @@
       <div class="demo-intro">
         <div>
           <p class="demo-eyebrow" data-tq-for hidden></p>
-          <h1 id="home-title">Price a fence <em>like a homeowner</em></h1>
-          <p data-tq-intro>This is the quote page a fence company's website visitors would use. Trace a fence, choose a style, and see the price. Then open the contractor view to see the lead it creates.</p>
+          <h1 id="home-title">Price a fence like a homeowner</h1>
+          <p data-tq-intro>This is the quote page a fence company’s website visitors would use. Trace a fence, choose a style, and see the price. Then open the contractor view to see the lead it creates.</p>
         </div>
         <a class="btn btn-ghost btn-sm" href="#contractor">Contractor view</a>
       </div>
@@ -64,8 +64,8 @@
     <section data-view="contractor" aria-labelledby="pro-title" hidden>
       <div class="demo-intro">
         <div>
-          <h1 id="pro-title">What <em>the contractor</em> gets</h1>
-          <p>Every quote lands here and on the owner's phone: the layout, the footage, the price the homeowner saw, and the follow-up that runs on its own.</p>
+          <h1 id="pro-title">What the contractor gets</h1>
+          <p>Every request lands in the owner’s inbox the moment it’s sent: the layout, the footage, and the price the homeowner saw.</p>
         </div>
         <a class="btn btn-ghost btn-sm" href="#homeowner">Homeowner view</a>
       </div>
@@ -97,14 +97,8 @@
   window.TraceQuote.mount(document.getElementById("demo-quote"), { layout: "full", contractorHref: "#contractor" });
 
   // Headings get the company name as text only, never as HTML.
-  function heading(el, before, emphasis, after) {
-    if (!el) return;
-    el.textContent = "";
-    el.appendChild(document.createTextNode(before));
-    var em = document.createElement("em");
-    em.textContent = emphasis;
-    el.appendChild(em);
-    if (after) el.appendChild(document.createTextNode(after));
+  function heading(el, before, name, after) {
+    if (el) el.textContent = before + name + (after || "");
   }
 
   var intro = document.querySelector("[data-tq-intro]");
@@ -122,7 +116,7 @@
     var sample = document.querySelector("[data-tq-sample]");
     if (sample) sample.textContent = "TraceQuote is a product of Perché AI Solutions LLC. Sample homeowners and prices.";
   } else if (intro && live) {
-    intro.textContent = "This is the quote page a fence company's website visitors would use. " + how + " Then open the contractor view to see the lead it creates.";
+    intro.textContent = "This is the quote page a fence company\u2019s website visitors would use. " + how + " Then open the contractor view to see the lead it creates.";
   }
 
   window.TraceQuoteContractor.mount(document.getElementById("demo-contractor"));

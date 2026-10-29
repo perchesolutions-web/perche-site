@@ -8,7 +8,7 @@
 <link rel="icon" href="{{ICON}}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
 <link rel="stylesheet" href="/assets/tq.css">
 </head>
 <body>
@@ -21,7 +21,7 @@
   <h1>Texting terms</h1>
   <p class="legal-date">{{NAME}} quote updates. Last updated {{UPDATED}}.</p>
 
-  <h2>What you're signing up for</h2>
+  <h2>What you’re signing up for</h2>
   <p>When you check the texting box on the {{NAME}} instant quote page, you agree to receive text messages from {{NAME}} about your fence quote and on-site measure. That includes your quote details, follow-up questions, measure confirmations, and reminders.</p>
 
   <h2>The details</h2>
