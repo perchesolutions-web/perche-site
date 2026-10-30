@@ -744,6 +744,13 @@ p { text-wrap: pretty; }
 .cq-embed .cq-main .wrap { max-width: none; padding: 0; }
 .cq-embed .cq-foot { border-top: 0; }
 .cq-embed .cq-foot .wrap { max-width: none; padding: 10px 2px 2px; }
+/* In embed.js's pop-up the page fills a dialog, so the tool gets a little room around it. */
+.cq-popup .cq-main .wrap { padding: 16px 16px 0; }
+.cq-popup .cq-foot .wrap { padding: 10px 18px 16px; }
+@media (max-width: 640px) {
+  .cq-popup .cq-main .wrap { padding: 10px 10px 0; }
+  .cq-popup .cq-foot .wrap { padding: 10px 12px 14px; }
+}
 
 /* ---------- legal pages ---------- */
 .legal { max-width: 760px; margin: 0 auto; padding: 32px 16px 72px; }
