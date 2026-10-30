@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Form definitions</title>
+</head>
+<body>
+<!--
+  Not a page anyone needs to visit. Netlify only accepts a form it found in the site's HTML when it deployed,
+  so forms the site sends from JavaScript are declared here. Netlify emails their submissions like any other
+  form's, using the "subject" field as the subject line.
+
+  demo-activity: alerts when a prospect uses the personalized demo you sent them (sent by assets/tq-prospect.js).
+-->
+<form name="demo-activity" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="subject">
+  <input type="text" name="company">
+  <input type="text" name="owner">
+  <input type="text" name="website">
+  <input type="text" name="area">
+  <input type="text" name="signal">
+  <input type="text" name="device">
+  <input type="text" name="link">
+  <input type="text" name="next_step">
+  <input type="text" name="bot-field">
+</form>
+</body>
+</html>
