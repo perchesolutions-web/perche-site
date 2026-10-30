@@ -1,5 +1,5 @@
 /*
-  Home page. Uses the tokens in tq.css.
+  Home page (the demo page also uses its browser frame, buttons and timeline). Uses the tokens in tq.css.
   One loud thing: the live quote tool in the hero. Everything else is quiet paper, ink and rules.
   The fence-line yellow only appears where the product would draw a fence.
 */
@@ -38,22 +38,22 @@
 
 /* ---------- statement ---------- */
 .h-statement { padding-block: clamp(56px, 7vw, 108px); border-top: 1px solid var(--line); }
-.h-statement-big { margin: 0; max-width: 21em; font-size: clamp(28px, 3.5vw, 48px); line-height: 1.1; font-weight: 750; font-stretch: 110%; letter-spacing: -0.025em; text-wrap: balance; }
+.h-statement-big { margin: 0; max-width: 22em; font-size: clamp(28px, 3.5vw, 48px); line-height: 1.1; font-weight: 550; letter-spacing: -0.03em; text-wrap: balance; }
 .h-statement-small { margin: 24px 0 0; max-width: 38em; font-size: 18.5px; color: var(--muted); }
 
 /* ---------- sections ---------- */
 .h-sec { padding-block: clamp(64px, 8vw, 124px); }
 .h-sec--alt { background: var(--bg-alt); }
 .h-head { max-width: 48em; margin-bottom: clamp(32px, 4.5vw, 60px); }
-.h-head h2 { font-size: clamp(34px, 4.3vw, 58px); line-height: 0.98; letter-spacing: -0.035em; font-stretch: 116%; }
+.h-head h2 { font-size: clamp(34px, 4.3vw, 58px); line-height: 1.02; letter-spacing: -0.042em; }
 .h-head p { margin: 18px 0 0; max-width: 38em; font-size: 18.5px; color: var(--muted); }
 
 /* ---------- how homeowners use it (a real sequence) ---------- */
 .h-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
 .h-steps > li { display: flex; flex-direction: column; padding: 22px 24px 4px 0; }
 .h-steps > li + li { padding-left: 24px; border-left: 1px solid var(--line); }
-.h-step-n { font-weight: 800; font-stretch: 120%; font-size: 15px; color: var(--accent-text); font-variant-numeric: tabular-nums; }
-.h-steps h3 { margin: 6px 0 8px; font-size: 22px; line-height: 1.15; letter-spacing: -0.015em; font-stretch: 110%; }
+.h-step-n { font-weight: 700; font-size: 15px; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+.h-steps h3 { margin: 6px 0 8px; font-size: 22px; line-height: 1.2; letter-spacing: -0.015em; }
 .h-steps p { margin: 0; color: var(--muted); font-size: 16px; }
 .h-fig { margin-top: auto; padding-top: 22px; }
 .h-fig-box { border: 1px solid var(--line); border-radius: 12px; background: var(--card); padding: 12px; font-size: 13.5px; }
@@ -130,9 +130,9 @@
 .h-timeline li { position: relative; }
 .h-timeline .n {
   position: relative; z-index: 1; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
-  background: var(--ink); color: var(--bg); font-weight: 800; font-stretch: 120%; font-size: 16px;
+  background: var(--ink); color: var(--bg); font-weight: 700; font-size: 16px;
 }
-.h-timeline h3 { margin: 18px 0 8px; font-size: 21px; line-height: 1.15; letter-spacing: -0.015em; font-stretch: 110%; }
+.h-timeline h3 { margin: 18px 0 8px; font-size: 21px; line-height: 1.2; letter-spacing: -0.015em; }
 .h-timeline p { margin: 0; color: var(--muted); font-size: 16px; }
 .h-after { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: clamp(36px, 4.5vw, 56px); }
 .h-after div { border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; background: var(--card); }
@@ -169,7 +169,7 @@
 .h-plans { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px; align-items: start; }
 .h-plan { border-radius: 18px; border: 1px solid var(--line); background: var(--card); padding: clamp(24px, 3vw, 38px); }
 .h-plan--main { border: 2px solid var(--ink); }
-.h-plan h3 { font-size: 24px; letter-spacing: -0.015em; font-stretch: 112%; }
+.h-plan h3 { font-size: 24px; letter-spacing: -0.02em; }
 .h-plan-for { margin: 6px 0 0; color: var(--muted); font-size: 15.5px; max-width: 30em; }
 .h-price { display: flex; align-items: baseline; gap: 8px; margin: 22px 0 2px; }
 .h-price b { font-size: clamp(54px, 5.6vw, 76px); line-height: 1; font-weight: 800; font-stretch: 120%; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; }
@@ -198,13 +198,13 @@
 
 /* ---------- closing call ---------- */
 .h-final { background: var(--aerial); color: var(--aerial-ink); padding-block: clamp(64px, 8vw, 116px); }
-.h-final h2 { color: var(--aerial-ink); font-size: clamp(36px, 5vw, 70px); line-height: 0.98; letter-spacing: -0.04em; font-stretch: 118%; max-width: 13em; }
+.h-final h2 { color: var(--aerial-ink); font-size: clamp(36px, 5vw, 70px); line-height: 1.02; letter-spacing: -0.045em; max-width: 14em; }
 .h-final p { margin: 22px 0 0; color: var(--aerial-muted); font-size: 18.5px; max-width: 36em; }
 .h-final-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
 /* ---------- footer on this page ---------- */
 .home .footer h4 { text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--ink); }
-.footer-base a { margin-left: 12px; }
+.home .footer-base a { margin-left: 12px; }
 
 /* Dark theme: the frame needs an edge, since its shadow disappears on a dark page. */
 @media (prefers-color-scheme: dark) {

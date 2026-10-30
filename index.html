@@ -12,6 +12,11 @@
 <link rel="canonical" href="https://perchesolutions.com/">
 <meta property="og:url" content="https://perchesolutions.com/">
 <meta property="og:site_name" content="TraceQuote">
+<meta property="og:image" content="https://perchesolutions.com/assets/og-tracequote.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A fence traced around a backyard on an aerial view of a home, beside the words One-minute fence quotes on your website.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +56,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
       </button>
       <a class="btn btn-ghost btn-sm hide-sm" href="demo.html">Try the demo</a>
-      <a class="btn btn-primary btn-sm" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a demo</a>
+      <a class="btn btn-primary btn-sm" data-book="nav" href="https://calendly.com/perchesolutions/tracequote-demo">Book a demo</a>
       <button class="icon-btn menu-btn" type="button" data-menu aria-controls="site-links" aria-expanded="false" aria-label="Menu">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
@@ -68,7 +73,7 @@
         <p class="h-hero-sub">Homeowners search their address, trace the fence on satellite imagery, and see your price for every fence type you install. You get their name, number, address, footage and fence choice before you drive out.</p>
         <div class="h-hero-act">
           <div class="h-hero-cta">
-            <a class="btn btn-primary btn-lg" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
+            <a class="btn btn-primary btn-lg" data-book="hero" href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
             <a class="btn btn-ghost btn-lg" href="#try" data-try>Price a fence now</a>
           </div>
           <p class="h-hero-note">Set up and run for you: we load your prices, build the page and put it on your website.</p>
@@ -81,7 +86,7 @@
           <span class="h-frame-live">Live</span>
         </div>
         <div id="hero-quote" role="region" aria-label="Fence quote demo"></div>
-        <p class="h-frame-foot" data-tq-foot>Sample company and prices. Nothing you enter is sent anywhere.</p>
+        <p class="h-frame-foot" data-tq-foot>Sample company and prices. No request is sent to anyone.</p>
       </div>
     </div>
   </section>
@@ -244,7 +249,7 @@
             <li>A monthly summary of quote requests</li>
           </ul>
           <p class="h-founding"><b>Founding offer for our first three fence companies</b>Free setup, your first month free, then $199 a month for two months.</p>
-          <a class="btn btn-primary btn-lg" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
+          <a class="btn btn-primary btn-lg" data-book="pricing" href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
         </article>
         <article class="h-plan" aria-labelledby="plan-2">
           <h3 id="plan-2">Quote Page + Ads</h3>
@@ -257,7 +262,7 @@
             <li>Ads set up and managed for you</li>
             <li>A monthly report on ad spend, quote requests and cost per request</li>
           </ul>
-          <a class="btn btn-ghost btn-lg" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Ask about ads</a>
+          <a class="btn btn-ghost btn-lg" data-book="ads" href="https://calendly.com/perchesolutions/tracequote-demo">Ask about ads</a>
         </article>
       </div>
     </div>
@@ -322,7 +327,7 @@
       <h2 id="final-title">See your company’s quote page before you decide.</h2>
       <p>Book a 15-minute demo and we’ll walk you through a preview with your company’s name on it. Bring your price sheet.</p>
       <div class="h-final-cta">
-        <a class="btn btn-trace btn-lg" data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
+        <a class="btn btn-trace btn-lg" data-book="final" href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
         <a class="btn btn-line-light btn-lg" href="demo.html">Try the demo</a>
       </div>
     </div>
@@ -353,7 +358,7 @@
       <div>
         <h4>Talk to us</h4>
         <ul>
-          <li><a data-book href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a></li>
+          <li><a data-book="footer" href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a></li>
           <li><a href="#faq">Questions</a></li>
         </ul>
       </div>
@@ -376,7 +381,7 @@
 
   var foot = document.querySelector("[data-tq-foot]");
   if (foot) foot.textContent = TQ.live
-    ? "Search any address. The company and prices are samples, and nothing you enter is sent anywhere."
+    ? "Search any address. The company and prices are samples, and no request is sent to anyone."
     : "An example home with a sample company and prices. On your site, homeowners search their own address on satellite imagery.";
 
   // "Price a fence now": bring the tool into view and put the cursor in the address box.
