@@ -1,10 +1,14 @@
 # Security headers for everything.
+# X-XSS-Protection 0 turns off old browsers' built-in XSS filter, which could itself be abused (the
+# Content-Security-Policy below does that job). Cross-Origin-Opener-Policy stops other sites that open these
+# pages in a window from reaching into them; windows these pages open still work.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
-  X-XSS-Protection: 1; mode=block
+  X-XSS-Protection: 0
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
 
 # Site pages can't be put inside other websites' frames.
 # (Kept off /* on purpose: /* also matches the client pages below, which have to be embeddable.)
