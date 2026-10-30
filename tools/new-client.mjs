@@ -5,12 +5,11 @@
     node tools/new-client.mjs clients/acme-fence.json
 
   Writes q/<id>/index.html (quote page + hidden Netlify form), q/<id>/client.js (settings),
-  q/<id>/privacy.html and q/<id>/sms-terms.html. Commit those files; Netlify picks up the form on deploy.
+  q/<id>/privacy.html, q/<id>/sms-terms.html, and q/<id>/install.html (the code for the client's website,
+  with steps for each website builder). Commit those files; Netlify picks up the form on deploy.
   Leads then appear in Netlify under Forms -> lead-<id>; add an email notification there for the client.
 
-  Embed snippet for the client's website:
-    <div id="tracequote"></div>
-    <script src="https://perchesolutions.com/embed.js" data-client="<id>" async></script>
+  Send the client (or whoever runs their website) https://perchesolutions.com/q/<id>/install.
 */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -53,6 +52,16 @@ function site(url) {
   return /^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(s) ? s : "";
 }
 
+// The website builder the client named on the setup form, as the install page's section name.
+const PLATFORMS = {
+  wordpress: "wordpress", wix: "wix", squarespace: "squarespace", godaddy: "godaddy", shopify: "shopify",
+  webflow: "webflow", "square online": "square", square: "square", "google sites": "google-sites", other: "other"
+};
+function platform(c) {
+  const p = String((c.website && c.website.platform) || "").trim().toLowerCase();
+  return PLATFORMS[p] || "";
+}
+
 function fill(tpl, vars) {
   return tpl.replace(/\{\{([A-Z_]+)\}\}/g, (m, k) => {
     if (!(k in vars)) fail("template needs {{" + k + "}}");
@@ -82,6 +91,7 @@ function build(c) {
     YEAR: String(today.getFullYear()),
     UPDATED: today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     CONTACT_LINES: contact,
+    PLATFORM: platform(c),
     POSTHOG: readFileSync(join(TPL, "posthog.html.tpl"), "utf8").trim(),
     FORM_FIELDS: LEAD_FIELDS.map((f) => LONG_FIELDS.has(f) ? '  <textarea name="' + f + '"></textarea>' : '  <input type="hidden" name="' + f + '">').join("\n")
   };
@@ -109,6 +119,7 @@ function build(c) {
   writeFileSync(join(out, "index.html"), fill(readFileSync(join(TPL, "client-index.html.tpl"), "utf8"), vars));
   writeFileSync(join(out, "privacy.html"), fill(readFileSync(join(TPL, "client-privacy.html.tpl"), "utf8"), vars));
   writeFileSync(join(out, "sms-terms.html"), fill(readFileSync(join(TPL, "client-sms-terms.html.tpl"), "utf8"), vars));
+  writeFileSync(join(out, "install.html"), fill(readFileSync(join(TPL, "client-install.html.tpl"), "utf8"), vars));
   writeFileSync(join(out, "client.js"), lines.join("\n"));
   return out;
 }
@@ -124,5 +135,5 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   if (!c.mapCenter && !todo.some((t) => /^Add mapCenter/.test(t))) todo.push("Add mapCenter [longitude, latitude] for the client's area.");
   if (todo.length) console.log("Still to do:\n" + todo.map((t) => "  - " + t).join("\n"));
   console.log("Quote page: https://perchesolutions.com/q/" + c.id + "/");
-  console.log('Embed: <div id="tracequote"></div><script src="https://perchesolutions.com/embed.js" data-client="' + c.id + '" async></script>');
+  console.log("Install page (code and steps for their website): https://perchesolutions.com/q/" + c.id + "/install");
 }
