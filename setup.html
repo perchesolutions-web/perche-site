@@ -49,6 +49,11 @@
   .su-status { margin: 0; font-size: 14px; color: var(--danger); }
   .su-hidden { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
   .su-alert-ok { margin-top: 14px; font-size: 14px; line-height: 1.55; }
+  .su-modes { display: grid; gap: 12px; }
+  .su-modes label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 14.5px; }
+  .su-modes input { margin-top: 4px; accent-color: var(--accent); }
+  .su-modes b { display: block; font-weight: 650; }
+  .su-modes small { display: block; color: var(--muted); font-size: 13px; line-height: 1.5; }
   .su-foot { margin-top: 28px; font-size: 13px; color: var(--faint); display: flex; flex-wrap: wrap; gap: 6px 16px; }
   .su-foot a { color: var(--faint); }
   @media (max-width: 560px) {
@@ -188,6 +193,16 @@
       </div>
     </section>
 
+    <section class="su-card" aria-labelledby="su-show">
+      <h2 id="su-show">What homeowners see</h2>
+      <p class="su-sub">You get our estimate with every request either way. This only changes what homeowners see on your page.</p>
+      <div class="su-modes" role="radiogroup" aria-labelledby="su-show">
+        <label><input type="radio" name="price_display" value="range" checked><span><b>A price range (recommended)</b><small>Like $6,750–$9,600 for their fence, so they know the budget before they call.</small></span></label>
+        <label><input type="radio" name="price_display" value="from"><span><b>A starting price</b><small>Like “From $6,750”.</small></span></label>
+        <label><input type="radio" name="price_display" value="none"><span><b>No price</b><small>They measure and pick a fence, then ask you for the price.</small></span></label>
+      </div>
+    </section>
+
     <section class="su-card" aria-labelledby="su-fin">
       <h2 id="su-fin">Financing</h2>
       <p class="su-sub">If you offer financing, each price shows an estimated monthly payment next to it.</p>
@@ -313,7 +328,11 @@
     var gate = pair(num("walk_gate_lo"), num("walk_gate_hi")) || CFG.pricing.gates.walk.price;
     var ft = 150 - CFG.pricing.gates.walk.width, min = num("minimum_job") || 0;
     var lo = Math.max(ft * per[0] + gate[0], min), hi = Math.max(ft * per[1] + gate[1], min);
-    el.textContent = "Homeowners would see about " + money(lo) + "–" + money(hi) + " for 150 ft of " + h + " ft " + m.name.toLowerCase() + " with one walk gate.";
+    var job = " for 150 ft of " + h + " ft " + m.name.toLowerCase() + " with one walk gate.";
+    var range = lo === hi ? money(lo) : money(lo) + "–" + money(hi), mode = field("price_display").value;
+    el.textContent = mode === "none" ? "Homeowners wouldn’t see a price. Your estimate would be about " + range + job
+      : mode === "from" ? "Homeowners would see “From " + money(lo) + "”" + job
+      : "Homeowners would see about " + range + job;
   }
   function refresh() {
     MATS.forEach(function (m) {
@@ -422,6 +441,7 @@
       company: { name: name, phone: val("phone"), email: val("lead_email"), website: site(val("website")), logo: "" },
       serviceArea: val("service_area"),
       leadEmails: emails,
+      priceDisplay: field("price_display").value || "range",
       financing: financing,
       pricing: P,
       website: { platform: val("site_platform"), managedBy: val("site_managed_by") },
