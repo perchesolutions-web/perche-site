@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Instant Fence Quote · {{NAME}}</title>
-<meta name="description" content="See the price of a new fence in about a minute. Search your address, trace the fence on satellite imagery, and compare styles from {{NAME}}.">
+<meta name="description" content="{{DESCRIPTION}}">
 <meta name="robots" content="noindex">
 <link rel="icon" href="{{ICON}}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,8 +27,8 @@
   <main class="cq-main">
     <div class="wrap">
       <div class="cq-intro">
-        <h1>Get your fence price in about a minute</h1>
-        <p>Search your address, tap where the fence goes on the satellite photo, and compare styles and prices. No sign-up needed to see your price.</p>
+        <h1>{{HEADLINE}}</h1>
+        <p>{{LEDE}}</p>
       </div>
       <div id="quote" role="region" aria-label="Instant fence quote"></div>
     </div>
