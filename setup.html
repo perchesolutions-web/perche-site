@@ -48,6 +48,7 @@
   .su-submit { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
   .su-status { margin: 0; font-size: 14px; color: var(--danger); }
   .su-hidden { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .su-alert-ok { margin-top: 14px; font-size: 14px; line-height: 1.55; }
   .su-foot { margin-top: 28px; font-size: 13px; color: var(--faint); display: flex; flex-wrap: wrap; gap: 6px 16px; }
   .su-foot a { color: var(--faint); }
   @media (max-width: 560px) {
@@ -116,6 +117,19 @@
           <input class="tq-input" id="su-logo" name="logo" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp">
         </div>
       </div>
+    </section>
+
+    <section class="su-card" aria-labelledby="su-texts">
+      <h2 id="su-texts">Text alerts</h2>
+      <p class="su-sub">Optional. Get a text the moment a homeowner sends a request, so you can call while they’re still looking. Every request is emailed too.</p>
+      <div class="tq-fields">
+        <div class="tq-field">
+          <label class="tq-label" for="su-alert">Mobile number for alerts</label>
+          <input class="tq-input" id="su-alert" name="alert_phone" type="tel" inputmode="tel" autocomplete="off" placeholder="(305) 555-0123">
+        </div>
+      </div>
+      <label class="tq-check su-alert-ok"><input type="checkbox" name="alert_consent" value="yes"><span id="su-alert-terms">Text me at this number each time a homeowner sends a request on our quote page. Texts come from TraceQuote, one per request, so how many you get depends on your requests. Message and data rates may apply. Reply STOP to cancel or HELP for help. Text alerts are optional. See the <a href="/texting-terms" target="_blank" rel="noopener">texting terms</a> and <a href="/privacy" target="_blank" rel="noopener">privacy policy</a>.</span></label>
+      <input type="hidden" name="alert_consent_text">
     </section>
 
     <section class="su-card" aria-labelledby="su-prices">
@@ -324,6 +338,13 @@
     if (!val("service_area")) fail(field("service_area"), "Enter the main city or ZIP you serve.", errs);
     var logo = field("logo").files && field("logo").files[0];
     if (logo && logo.size > 5 * 1024 * 1024) fail(field("logo"), "That file is over 5 MB. Choose a smaller one.", errs);
+    // Text alerts are optional, but a number needs the box checked and the box needs a number.
+    var alertDigits = val("alert_phone").replace(/\D/g, "");
+    if (alertDigits.length === 11 && alertDigits[0] === "1") alertDigits = alertDigits.slice(1);
+    var wantsTexts = field("alert_consent").checked;
+    if (val("alert_phone") && alertDigits.length !== 10) fail(field("alert_phone"), "Enter a 10-digit mobile number, or leave it empty.", errs);
+    else if (val("alert_phone") && !wantsTexts) fail(field("alert_consent"), "Check this box to get text alerts, or clear the number.", errs);
+    else if (!val("alert_phone") && wantsTexts) fail(field("alert_phone"), "Enter the mobile number for text alerts, or uncheck the box.", errs);
 
     var offered = 0;
     MATS.forEach(function (m) {
@@ -393,6 +414,8 @@
     review.push("Add mapCenter [longitude, latitude] for " + val("service_area") + ".");
     var emails = [val("lead_email")].concat(val("more_emails").split(/[,;\s]+/).filter(Boolean));
     review.push("In Netlify, email new requests on form lead-" + id + " to: " + emails.join(", ") + ".");
+    // The number itself stays out of this file: it's committed to a public repository.
+    if (field("alert_consent").checked) review.push("Text alerts: they asked for them. In Netlify, add the variable TQ_TEXT_" + id.toUpperCase().replace(/-/g, "_") + " set to the alert_phone number in this email, then deploy.");
 
     return {
       id: id,
@@ -424,8 +447,13 @@
     }
     if (!form.querySelector('[aria-invalid="true"]')) status.textContent = "";
   }
-  form.addEventListener("input", function (e) { clearFor(e.target); refresh(); });
-  form.addEventListener("change", function (e) { clearFor(e.target); refresh(); });
+  // The alert number and its checkbox are checked together, so fixing one clears the other's message.
+  function clearAlertPair(t) {
+    if (t.name === "alert_phone") clearFor(field("alert_consent"));
+    if (t.name === "alert_consent") clearFor(field("alert_phone"));
+  }
+  form.addEventListener("input", function (e) { clearFor(e.target); clearAlertPair(e.target); refresh(); });
+  form.addEventListener("change", function (e) { clearFor(e.target); clearAlertPair(e.target); refresh(); });
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var errs = validate();
@@ -437,6 +465,8 @@
     var json = clientJson();
     field("client_json").value = JSON.stringify(json, null, 2);
     field("subject").value = "New client setup: " + json.company.name;
+    // A record of the exact wording they agreed to, kept with the submission.
+    field("alert_consent_text").value = field("alert_consent").checked ? document.getElementById("su-alert-terms").textContent.replace(/\s+/g, " ").trim() : "";
     var btn = document.getElementById("su-send");
     btn.disabled = true;
     btn.textContent = "Sending…";
