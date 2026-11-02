@@ -136,4 +136,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   if (todo.length) console.log("Still to do:\n" + todo.map((t) => "  - " + t).join("\n"));
   console.log("Quote page: https://perchesolutions.com/q/" + c.id + "/");
   console.log("Install page (code and steps for their website): https://perchesolutions.com/q/" + c.id + "/install");
+  // Alert numbers go in Netlify, not in clients/<id>.json, because this repository is public.
+  if (!todo.some((t) => /^Text alerts/.test(t))) console.log("Text alerts, if they want them: Netlify variable TQ_TEXT_" + c.id.toUpperCase().replace(/-/g, "_") + " (their mobile numbers, comma-separated), then deploy.");
 }
