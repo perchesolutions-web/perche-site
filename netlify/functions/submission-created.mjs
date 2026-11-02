@@ -30,11 +30,9 @@
     clients/directory.mjs by tools/new-client.mjs.
 */
 import CLIENTS from "../../clients/directory.mjs";
+import { TIMEOUT_MS, clean, e164, email, emails, esc, display, resendKey, fromAddress, sendEmail, WRAP, MUTED, table, textRows } from "../lib/common.mjs";
 
 const MAX_NUMBERS = 3;
-const MAX_EMAILS = 6;
-const TIMEOUT_MS = 8000;
-const DEFAULT_FROM = "quotes@perchesolutions.com";
 
 export default async (req) => {
   let body;
@@ -117,35 +115,6 @@ function leadMessage(d) {
 function isUpdate(d) { return /measure time/i.test(String(d.update || "")); }
 function shortFence(s) { return String(s || "").replace(/\s*\(length typed in by the homeowner, not traced\)/i, " (length typed in, not traced)"); }
 
-// Homeowners type the name and address, so keep them short, on one line, and free of links: these messages go
-// out under TraceQuote's name, and a link in one would look like ours. Texts also get plain punctuation, which
-// keeps them in the cheaper GSM character set; emails keep the original punctuation.
-function clean(s, max, keepPunctuation) {
-  let t = String(s == null ? "" : s)
-    .replace(/[\u0000-\u001f\u007f-\u009f\u2028\u2029]+/g, " ")
-    .replace(/https?:\/\/\S*/gi, " ")
-    .replace(/\bwww\.\S*/gi, " ")
-    .replace(/\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|net|org|info|biz|io|co|us|me|ly|gl|gd|link|xyz|top|site|online|app|club|shop|live|click|ru|cn|tk)\b\S*/gi, " ");
-  if (!keepPunctuation) {
-    t = t.replace(/[\u2010-\u2015\u2212]/g, "-")
-      .replace(/[\u2018\u2019\u201a\u2032]/g, "'")
-      .replace(/[\u201c\u201d\u201e\u2033]/g, '"')
-      .replace(/\u2026/g, "...");
-  }
-  return t.replace(/[\u00a0\u2000-\u200b\u202f\u205f\u3000]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, max)
-    .trim();
-}
-
-// A US number as +1 and 10 digits, or "" if it isn't one.
-function e164(s) {
-  let d = String(s == null ? "" : s).replace(/\D/g, "");
-  if (d.length === 11 && d[0] === "1") d = d.slice(1);
-  return /^[2-9]\d{2}[2-9]\d{6}$/.test(d) ? "+1" + d : "";
-}
-
 function numbers(s) {
   const out = [];
   String(s == null ? "" : s).split(/[,;\n]+/).forEach((part) => {
@@ -189,23 +158,12 @@ function mask(n) { return n.slice(0, 5) + "***" + n.slice(-2); }
 
 /* ---------- Emails (Resend) ---------- */
 
-const EMAIL = /^[^\s@<>",;:()\[\]\\]+@[^\s@<>",;:()\[\]\\]+\.[a-z]{2,}$/i;
-function email(s) { const e = String(s == null ? "" : s).trim(); return e.length <= 254 && EMAIL.test(e) ? e : ""; }
-function emails(list) {
-  const out = [];
-  (Array.isArray(list) ? list : String(list == null ? "" : list).split(/[,;\s]+/)).forEach((x) => {
-    const e = email(x);
-    if (e && !out.some((o) => o.toLowerCase() === e.toLowerCase()) && out.length < MAX_EMAILS) out.push(e);
-  });
-  return out;
-}
-
 async function leadEmails(id, d, env) {
-  const key = String(env.RESEND_API_KEY || "");
-  if (!/^re_[A-Za-z0-9_]{8,}$/.test(key)) return "emails: not sent (Resend isn't set up)";
+  const key = resendKey(env);
+  if (!key) return "emails: not sent (Resend isn't set up)";
   const co = CLIENTS[id];
   if (!co) return "emails: " + id + " isn't in clients/directory.mjs";
-  const fromAddress = email(env.TQ_EMAIL_FROM) || DEFAULT_FROM;
+  const sender = fromAddress(env);
   const homeowner = email(d.email);
   const out = [];
 
@@ -213,7 +171,7 @@ async function leadEmails(id, d, env) {
   if (team.length) {
     const msg = companyEmail(co, d);
     const r = await sendEmail(key, {
-      from: "TraceQuote <" + fromAddress + ">", to: team, subject: msg.subject, html: msg.html, text: msg.text,
+      from: "TraceQuote <" + sender + ">", to: team, subject: msg.subject, html: msg.html, text: msg.text,
       reply_to: homeowner || undefined
     });
     out.push("request to " + team.length + " address" + (team.length === 1 ? "" : "es") + ": " + r);
@@ -223,7 +181,7 @@ async function leadEmails(id, d, env) {
     const msg = homeownerEmail(co, d);
     const companyReply = email(co.email) || (co.leadEmails || []).map(email).filter(Boolean)[0] || "";
     const r = await sendEmail(key, {
-      from: display(co.name + " via TraceQuote") + " <" + fromAddress + ">", to: [homeowner], subject: msg.subject,
+      from: display(co.name + " via TraceQuote") + " <" + sender + ">", to: [homeowner], subject: msg.subject,
       html: msg.html, text: msg.text, reply_to: companyReply || undefined
     });
     out.push("confirmation to homeowner: " + r);
@@ -231,28 +189,6 @@ async function leadEmails(id, d, env) {
   return "emails: " + out.join("; ");
 }
 
-async function sendEmail(key, msg) {
-  try {
-    const r = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: "Bearer " + key, "Content-Type": "application/json" },
-      body: JSON.stringify(msg),
-      signal: AbortSignal.timeout(TIMEOUT_MS)
-    });
-    if (r.ok) return "sent";
-    const j = await r.json().catch(() => ({}));
-    const why = String(j.message || j.error || "").replace(/[^\s@<>"]+@[^\s@<>"]+/g, "[email]").slice(0, 160);
-    return "not sent (Resend " + (j.statusCode || r.status) + (why ? ": " + why : "") + ")";
-  } catch (e) {
-    return "not sent (" + (e && (e.name === "TimeoutError" || e.name === "AbortError") ? "Resend didn't answer in time" : e && e.message) + ")";
-  }
-}
-
-// A sender name that needs no escaping in the From line.
-function display(s) { return '"' + clean(s, 80, true).replace(/["\\]/g, "") + '"'; }
-function esc(s) {
-  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-}
 // Links in a request come from the quote tool, but a form can be posted by anyone, so only known kinds pass.
 function safeLink(url, kind) {
   const u = String(url || "").trim();
@@ -266,15 +202,6 @@ function safeLink(url, kind) {
 function origin(s) { const o = String(s || "").trim(); return /^https?:\/\/[a-z0-9.-]+(:\d+)?$/i.test(o) && o.length < 200 ? o : ""; }
 function telLink(s) { const n = e164(s); return n ? '<a href="tel:' + n + '">' + esc(clean(s, 20, true)) + "</a>" : esc(clean(s, 20, true)); }
 function firstName(s) { return clean(s, 40, true).split(" ")[0] || ""; }
-
-const WRAP = 'style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.55;color:#16221c;max-width:560px"';
-const MUTED = 'style="margin:16px 0 0;font-size:13px;line-height:1.5;color:#5b6b63"';
-function table(rows) {
-  return '<table role="presentation" style="border-collapse:collapse;width:100%;margin:8px 0 0">' + rows.map((r) =>
-    '<tr><td style="padding:7px 12px 7px 0;border-top:1px solid #dde3df;color:#5b6b63;vertical-align:top;white-space:nowrap">' + esc(r[0]) +
-    '</td><td style="padding:7px 0;border-top:1px solid #dde3df;vertical-align:top">' + (r[2] ? r[1] : esc(r[1])) + "</td></tr>").join("") + "</table>";
-}
-function textRows(rows) { return rows.map((r) => r[0] + ": " + (r[2] ? r[2] : r[1])).join("\n"); }
 
 // The request, for the fence company. Replying reaches the homeowner.
 function companyEmail(co, d) {
