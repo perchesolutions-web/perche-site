@@ -53,6 +53,11 @@
 
   function money(n) { return "$" + Math.round(n).toLocaleString("en-US"); }
   function moneyRange(lo, hi) { return lo === hi ? money(lo) : money(lo) + "–" + money(hi); }
+  // How the fence company shows prices: "range" (the default), "from" (only a starting price), or "none"
+  // (homeowners measure and pick a fence, then ask for the price; the company still gets the estimate).
+  function priceMode() { var m = CFG.priceDisplay; return m === "from" || m === "none" ? m : "range"; }
+  function shownPrice(lo, hi) { return priceMode() === "from" ? "From " + money(lo) : moneyRange(lo, hi); }
+  function perFtLabel(lo, hi) { return priceMode() === "from" ? "from $" + lo : lo === hi ? "$" + lo : "$" + lo + "–$" + hi; }
   function ftLabel(n) { return Math.round(n).toLocaleString("en-US") + " ft"; }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
@@ -783,7 +788,11 @@
 
     function steps() { return live ? ["address", "draw", "quote", "details"] : ["draw", "quote", "details"]; }
     var STEP_NAMES = { address: "Address", draw: "Draw", quote: "Quote", details: "Details" };
-    function stepName(s) { return s === "draw" && isManual() ? "Length" : STEP_NAMES[s]; }
+    function stepName(s) {
+      if (s === "draw" && isManual()) return "Length";
+      if (s === "quote" && priceMode() === "none") return "Fence";
+      return STEP_NAMES[s];
+    }
 
     function isManual() { return st.entry === "manual"; }
     function manualFt() {
@@ -1171,7 +1180,7 @@
       return '<div class="tq-pick">' + fenceArt(m.swatch, colorHex(m, color), +h, "tq-art--thumb") +
         '<span class="tq-prod-name"><b>' + esc(h + " ft " + m.name.toLowerCase()) + "</b><span>" +
         esc(color + " · " + ftLabel(q.fenceFt) + (gatesNow().length ? " · " + gateSummary(gatesNow()) : "")) + "</span></span>" +
-        '<span class="tq-prod-price"><b>' + moneyRange(q.lo, q.hi) + "</b></span></div>";
+        (priceMode() === "none" ? "" : '<span class="tq-prod-price"><b>' + shownPrice(q.lo, q.hi) + "</b></span>") + "</div>";
     }
 
     function visitChips() {
@@ -1196,14 +1205,15 @@
           ' value="' + esc(c[key]) + '"' + (e[key] ? ' aria-invalid="true"' : "") + ">" +
           (e[key] ? '<span class="tq-err">' + e[key] + "</span>" : "") + "</div>";
       }
+      var noPrice = priceMode() === "none";
       var help = client
         ? (measure
           ? "Pick a time that works and " + esc(COMPANY) + " will confirm it with you."
-          : "Send your details and " + esc(COMPANY) + " will follow up with your itemized quote and answer any questions.")
+          : "Send your details and " + esc(COMPANY) + " will follow up with your " + (noPrice ? "price" : "itemized quote") + " and answer any questions.")
         : (measure
           ? "Pick a time and " + esc(COMPANY) + " will text you to confirm."
           : "We'll email you an itemized quote for this fence. " + esc(COMPANY) + " can follow up with any questions.");
-      return '<p class="tq-lede">' + (measure ? "Book your free on-site measure" : "Get your detailed quote") + "</p>" +
+      return '<p class="tq-lede">' + (measure ? "Book your free on-site measure" : noPrice ? "Get your price" : "Get your detailed quote") + "</p>" +
         '<p class="tq-help">' + help + "</p>" +
         selectedSummary() +
         '<div class="tq-fields">' +
@@ -1252,22 +1262,25 @@
         : "<b>Thanks, " + esc(st.contact.first) + ". Your quote request is in.</b> ";
       return '<div class="tq-done" role="status">' + head + reach + "</div>" +
         selectedSummary() +
-        '<details class="tq-more" open><summary>Your itemized quote</summary><ul class="tq-lines">' + priceLines(st.material, q) + "</ul></details>" +
+        (priceMode() === "none"
+          ? '<p class="tq-fine">' + esc(COMPANY) + " will send you a price for this fence and confirm it after measuring on site.</p>"
+          : '<details class="tq-more" open><summary>Your itemized quote</summary><ul class="tq-lines">' + priceLines(st.material, q) + "</ul></details>") +
         (st.sendError ? '<p class="tq-err tq-send-err" role="alert">' + esc(st.sendError) + "</p>" : "") +
         visit +
         (client ? "" : '<a class="tq-link" href="' + esc(opts.contractorHref || "demo.html#contractor") + '">See what the contractor gets →</a>');
     }
 
+    // The itemized quote. With a starting price only, each line shows its low end, so the range stays private.
     function priceLines(mid, q) {
       var lines = [];
-      lines.push("<li><span>" + ftLabel(q.fenceFt) + " of " + esc(styleLabel(mid, heightFor(mid))) + " at $" + q.per[0] + "–$" + q.per[1] + "/ft</span><b>" + moneyRange(q.fence[0], q.fence[1]) + "</b></li>");
+      lines.push("<li><span>" + ftLabel(q.fenceFt) + " of " + esc(styleLabel(mid, heightFor(mid))) + (priceMode() === "from" ? ", " : " at ") + perFtLabel(q.per[0], q.per[1]) + "/ft</span><b>" + shownPrice(q.fence[0], q.fence[1]) + "</b></li>");
       var counts = {};
       gatesNow().forEach(function (g) { counts[g.type] = (counts[g.type] || 0) + 1; });
       Object.keys(counts).forEach(function (k) {
         var G = P.gates[k];
-        lines.push("<li><span>" + plural(counts[k], G.label.toLowerCase(), G.label.toLowerCase() + "s") + "</span><b>" + moneyRange(G.price[0] * counts[k], G.price[1] * counts[k]) + "</b></li>");
+        lines.push("<li><span>" + plural(counts[k], G.label.toLowerCase(), G.label.toLowerCase() + "s") + "</span><b>" + shownPrice(G.price[0] * counts[k], G.price[1] * counts[k]) + "</b></li>");
       });
-      if (st.removal) lines.push("<li><span>Old fence removal, " + ftLabel(drawnFt()) + "</span><b>" + moneyRange(q.removal[0], q.removal[1]) + "</b></li>");
+      if (st.removal) lines.push("<li><span>Old fence removal, " + ftLabel(drawnFt()) + "</span><b>" + shownPrice(q.removal[0], q.removal[1]) + "</b></li>");
       if (q.minApplied) lines.push("<li><span>Minimum job</span><b>" + money(P.minimumJob) + "</b></li>");
       return lines.join("");
     }
@@ -1282,42 +1295,44 @@
       }).join("");
       var facts = [["Typical lifespan", d.lifespan], ["Upkeep", d.upkeep], ["Privacy", d.privacy]].filter(function (f) { return f[1]; })
         .map(function (f) { return "<div><dt>" + f[0] + "</dt><dd>" + esc(f[1]) + "</dd></div>"; }).join("");
-      var lo = monthlyPayment(q.lo), hi = monthlyPayment(q.hi);
+      var mode = priceMode(), lo = mode === "none" ? 0 : monthlyPayment(q.lo), hi = monthlyPayment(q.hi);
       return '<div class="tq-prod-body">' +
         '<div class="tq-art-wrap">' + fenceArt(m.swatch, colorHex(m, color), +h, "tq-art--big") + '<span class="tq-art-cap">' + esc(h + " ft " + m.name.toLowerCase() + ", " + color.toLowerCase()) + "</span></div>" +
         '<div class="tq-opt"><span class="tq-label">Height</span><div class="tq-heights" role="group" aria-label="Height">' + heights + "</div></div>" +
         (colors ? '<div class="tq-opt"><span class="tq-label">Color</span><div class="tq-colors" role="group" aria-label="Color">' + colors + "</div></div>" : "") +
         (facts ? '<dl class="tq-facts">' + facts + "</dl>" : "") +
-        (lo ? '<div class="tq-finance"><div class="tq-finance-text"><b>' + money(lo) + "–" + money(hi) + "/mo</b><span>" + F.months + " months at " + F.apr + "% APR. " + esc(F.note || "") + "</span></div>" +
+        (lo ? '<div class="tq-finance"><div class="tq-finance-text"><b>' + (mode === "from" || lo === hi ? (mode === "from" ? "From " : "") + money(lo) : money(lo) + "–" + money(hi)) + "/mo</b><span>" + F.months + " months at " + F.apr + "% APR. " + esc(F.note || "") + "</span></div>" +
           (!client ? '<button type="button" class="tq-mini" data-act="finance">Check my rate</button>'
             : F.url ? '<a class="tq-mini" href="' + esc(F.url) + '" target="_blank" rel="noopener">Check my rate</a>' : "") + "</div>" : "") +
-        '<details class="tq-more"><summary>How this price adds up</summary><ul class="tq-lines">' + priceLines(m.id, q) + "</ul></details>" +
+        (mode === "none" ? "" : '<details class="tq-more"><summary>How this price adds up</summary><ul class="tq-lines">' + priceLines(m.id, q) + "</ul></details>") +
         "</div>";
     }
 
     // Installed price per linear foot for one material at one height, from the price sheet.
     function rateLabel(m, h) {
       var r = m.heights[h] || m.heights[m.defaultHeight];
-      return r ? "$" + r[0] + "–$" + r[1] + " per ft installed" : "";
+      if (!r || priceMode() === "none") return "";
+      var s = perFtLabel(r[0], r[1]) + " per ft installed";
+      return s.charAt(0).toUpperCase() + s.slice(1);
     }
 
     function bodyQuote() {
-      var ft = drawnFt();
+      var ft = drawnFt(), mode = priceMode();
       var rows = P.materials.map(function (m) {
-        var h = heightFor(m.id), q = quoteFor(m.id), on = m.id === st.material, mo = monthlyPayment(q.lo);
+        var h = heightFor(m.id), q = quoteFor(m.id), on = m.id === st.material, mo = mode === "none" ? 0 : monthlyPayment(q.lo);
         return '<li class="tq-prod' + (on ? " is-on" : "") + '">' +
           '<button type="button" class="tq-prod-head" data-pick-mat="' + m.id + '" aria-expanded="' + on + '">' +
           fenceArt(m.swatch, colorHex(m, colorFor(m.id)), +h, "tq-art--thumb") +
           '<span class="tq-prod-name"><b>' + esc(m.name) + "</b><span>" + esc(h + " ft · " + m.note) + "</span>" +
           '<span class="tq-prod-rate">' + rateLabel(m, h) + "</span>" +
           (m.tier ? '<em class="tq-tier' + (m.id === P.defaultMaterial ? " tq-tier--hot" : "") + '">' + esc(m.tier) + "</em>" : "") + "</span>" +
-          '<span class="tq-prod-price"><b>' + moneyRange(q.lo, q.hi) + "</b>" + (mo ? "<span>From " + money(mo) + "/mo</span>" : "") + "</span>" +
+          (mode === "none" ? "" : '<span class="tq-prod-price"><b>' + shownPrice(q.lo, q.hi) + "</b>" + (mo ? "<span>From " + money(mo) + "/mo</span>" : "") + "</span>") +
           "</button>" +
           (on ? productDetail(m, q) : "") +
           "</li>";
       }).join("");
       return '<div class="tq-quote-head">' +
-        '<p class="tq-eyebrow">Your fence quote</p>' +
+        '<p class="tq-eyebrow">' + (mode === "none" ? "Your fence" : "Your fence quote") + "</p>" +
         '<p class="tq-quote-where">' + esc(isManual() ? st.manual.address.trim() : st.address ? st.address.label : "Example home") + "</p>" +
         (isManual()
           ? '<p class="tq-sum">' + ftLabel(ft) + ", your estimate" + (gatesNow().length ? " · " + gateSummary(gatesNow()) : "") + " " +
@@ -1326,18 +1341,21 @@
             '<button type="button" class="tq-link tq-link--inline" data-act="edit-drawing">Edit drawing</button></p>') +
         "</div>" +
         '<label class="tq-check"><input type="checkbox" id="' + id + '-removal"' + (st.removal ? " checked" : "") + ">" +
-        "<span>Take out my old fence <small>+$" + P.removalPerFt[0] + "–$" + P.removalPerFt[1] + " per ft</small></span></label>" +
+        "<span>Take out my old fence" + (mode === "none" ? "" : " <small>+" + (mode === "from" ? " " : "") + perFtLabel(P.removalPerFt[0], P.removalPerFt[1]) + " per ft</small>") + "</span></label>" +
         '<p class="tq-label tq-label--flush">Choose a fence</p>' +
         '<ul class="tq-prods">' + rows + "</ul>" +
-        '<p class="tq-fine">' + (isManual() ? "Prices use the length you entered. " : "Prices come from a satellite measurement. ") + esc(COMPANY) + " confirms the final price after measuring on site.</p>";
+        '<p class="tq-fine">' + (mode === "none"
+          ? "Your measurement goes to " + esc(COMPANY) + " with your request. They’ll send your price and confirm it after measuring on site."
+          : (isManual() ? "Prices use the length you entered. " : "Prices come from a satellite measurement. ") + esc(COMPANY) + " confirms the final price after measuring on site.") + "</p>";
     }
 
     function renderActions() {
       var a = ref("actions"), s = st.step, html = "";
-      if (s === "draw") html = '<button type="button" class="tq-btn" data-act="next">See my price</button>';
+      var noPrice = priceMode() === "none";
+      if (s === "draw") html = '<button type="button" class="tq-btn" data-act="next">' + (noPrice ? "See fence styles" : "See my price") + "</button>";
       else if (s === "quote") {
         html = '<button type="button" class="tq-btn tq-btn--ghost" data-act="detail" data-intent="measure">Book a free measure</button>' +
-          '<button type="button" class="tq-btn" data-act="detail" data-intent="quote">Get my detailed quote</button>';
+          '<button type="button" class="tq-btn" data-act="detail" data-intent="quote">' + (noPrice ? "Get my price" : "Get my detailed quote") + "</button>";
       } else if (s === "details") {
         var busy = st.sending ? " disabled aria-busy=\"true\"" : "";
         html = !st.submitted
@@ -1536,8 +1554,10 @@
           (typed ? " (length typed in by the homeowner, not traced)" : ""),
         gates: gatesNow().length ? gateSummary(gatesNow()) : "None",
         old_fence_removal: st.removal ? "Yes" : "No",
-        price_shown: moneyRange(q.lo, q.hi),
-        monthly_shown: L.monthly ? "From " + money(L.monthly) + "/mo" : "",
+        // What the homeowner saw, and the full estimate for the company even when it wasn't shown.
+        price_shown: priceMode() === "none" ? "Not shown" : shownPrice(q.lo, q.hi),
+        price_estimate: moneyRange(q.lo, q.hi),
+        monthly_shown: L.monthly && priceMode() !== "none" ? "From " + money(L.monthly) + "/mo" : "",
         install_timing: L.timing || "Not given",
         measure_visit: L.visit || "",
         text_consent: L.consent ? "Yes" : "No",
