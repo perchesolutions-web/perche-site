@@ -6,12 +6,14 @@
 
   Writes q/<id>/index.html (quote page + hidden Netlify form), q/<id>/client.js (settings),
   q/<id>/privacy.html, q/<id>/sms-terms.html, and q/<id>/install.html (the code for the client's website,
-  with steps for each website builder). Commit those files; Netlify picks up the form on deploy.
-  Leads then appear in Netlify under Forms -> lead-<id>; add an email notification there for the client.
+  with steps for each website builder). It also rewrites clients/directory.mjs, the contact details the
+  request emails use for every client. Commit those files; Netlify picks up the form on deploy.
+  Leads then appear in Netlify under Forms -> lead-<id>. Once request emails are set up (RESEND_API_KEY in
+  Netlify), they go to the client's leadEmails automatically; until then, add a Netlify email notification.
 
   Send the client (or whoever runs their website) https://perchesolutions.com/q/<id>/install.
 */
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -22,7 +24,7 @@ const TPL = join(ROOT, "tools", "templates");
 // that exist in the page's form, so this list and the tool must match.
 export const LEAD_FIELDS = [
   "bot-field", "client", "lead_id", "update", "subject", "wants", "name", "phone", "email", "address", "fence", "gates",
-  "old_fence_removal", "price_shown", "monthly_shown", "install_timing", "measure_visit", "text_consent",
+  "old_fence_removal", "price_shown", "price_estimate", "monthly_shown", "install_timing", "measure_visit", "text_consent",
   "consent_text", "map_image", "directions", "drawing", "page", "embedded_on", "submitted_at"
 ];
 const LONG_FIELDS = new Set(["consent_text", "drawing", "map_image"]);
@@ -38,6 +40,7 @@ function load(path) {
   if (!c.company || !c.company.name) fail('"company.name" is required');
   if (c.mapCenter && !(Array.isArray(c.mapCenter) && c.mapCenter.length === 2 && c.mapCenter.every(Number.isFinite))) fail('"mapCenter" must be [longitude, latitude]');
   if (c.company.logo && !/^[a-z0-9._-]+\.(png|jpe?g|svg|webp)$/i.test(c.company.logo)) fail('"company.logo" must be a file name in q/<id>/, like logo.png');
+  if (c.priceDisplay != null && !["range", "from", "none"].includes(c.priceDisplay)) fail('"priceDisplay" must be "range", "from" or "none"');
   return c;
 }
 
@@ -80,7 +83,23 @@ function build(c) {
     web ? 'Website: <a href="https://' + esc(web) + '">' + esc(web) + "</a>" : ""
   ].filter(Boolean).map((l) => "<br>" + l).join("");
 
+  // The page's headline matches how the company shows prices (see priceDisplay in the quote tool).
+  const noPrice = c.priceDisplay === "none";
+  const nameEnd = esc(co.name).replace(/\.$/, ""); // "Acme Fence Co." ends a sentence without a second period
+  const words = noPrice
+    ? {
+        HEADLINE: "Measure your fence in about a minute",
+        LEDE: "Search your address, tap where the fence goes on the satellite photo, and pick a style. Then send it to " + esc(co.name) + " for your price.",
+        DESCRIPTION: "Measure your new fence in about a minute. Search your address, trace the fence on satellite imagery, pick a style, and get your price from " + nameEnd + "."
+      }
+    : {
+        HEADLINE: "Get your fence price in about a minute",
+        LEDE: "Search your address, tap where the fence goes on the satellite photo, and compare styles and prices. No sign-up needed to see your price.",
+        DESCRIPTION: "See the price of a new fence in about a minute. Search your address, trace the fence on satellite imagery, and compare styles from " + nameEnd + "."
+      };
+
   const vars = {
+    ...words,
     ID: c.id,
     NAME: esc(co.name),
     ICON: co.logo ? esc(co.logo) : "/assets/favicon.svg",
@@ -109,6 +128,7 @@ function build(c) {
     "  C.lead = " + JSON.stringify(settings.lead) + ";"
   ];
   if (c.mapCenter) lines.push("  C.mapCenter = " + JSON.stringify(c.mapCenter) + ";");
+  if (c.priceDisplay && c.priceDisplay !== "range") lines.push("  C.priceDisplay = " + JSON.stringify(c.priceDisplay) + ";");
   if (c.financing) lines.push("  C.financing = Object.assign({}, C.financing, " + JSON.stringify(c.financing) + ");");
   if (c.timingOptions) lines.push("  C.timingOptions = " + JSON.stringify(c.timingOptions) + ";");
   if (c.pricing) lines.push("  C.pricing = " + JSON.stringify(c.pricing) + ";");
@@ -124,12 +144,33 @@ function build(c) {
   return out;
 }
 
+const isEmail = (e) => typeof e === "string" && e.length <= 254 && /^[^\s@<>",;:()\[\]\\]+@[^\s@<>",;:()\[\]\\]+\.[a-z]{2,}$/i.test(e.trim());
+
+// clients/directory.mjs: each client's name, phone and request emails, for netlify/functions/submission-created.mjs.
+// Rebuilt from every clients/*.json, so it never goes stale. Text alert numbers are not here (see SETUP.md).
+export function writeDirectory() {
+  const dir = join(ROOT, "clients"), all = {};
+  for (const f of readdirSync(dir).filter((x) => x.endsWith(".json")).sort()) {
+    const c = load(join(dir, f)), co = c.company;
+    all[c.id] = {
+      name: co.name, phone: co.phone || "", email: isEmail(co.email) ? co.email.trim() : "", website: site(co.website),
+      leadEmails: (Array.isArray(c.leadEmails) ? c.leadEmails : []).filter(isEmail).map((e) => e.trim()),
+      priceDisplay: c.priceDisplay || "range", sample: !!c.sample
+    };
+  }
+  writeFileSync(join(dir, "directory.mjs"),
+    "// Generated by tools/new-client.mjs from clients/*.json: contact details for request emails. Don't edit by hand.\n" +
+    "export default " + JSON.stringify(all, null, 2) + ";\n");
+  return Object.keys(all);
+}
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const path = process.argv[2];
   if (!path) fail("usage: node tools/new-client.mjs clients/<id>.json");
   const c = load(resolve(path));
   const out = build(c);
   console.log("Built " + out.replace(ROOT + "/", "") + "/ (form lead-" + c.id + ")");
+  console.log("Updated clients/directory.mjs (" + writeDirectory().length + " clients). Commit it with the page.");
   // Settings from the /setup form list what still needs a person (blank prices, logo file, map center).
   const todo = (Array.isArray(c._review) ? c._review : []).filter((t) => !(c.mapCenter && /^Add mapCenter/.test(t)));
   if (!c.mapCenter && !todo.some((t) => /^Add mapCenter/.test(t))) todo.push("Add mapCenter [longitude, latitude] for the client's area.");
