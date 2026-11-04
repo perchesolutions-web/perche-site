@@ -11,6 +11,11 @@
     RESEND_API_KEY      the same key the request emails use (see submission-created.mjs)
     TQ_EMAIL_COPY       optional: gets a copy of every summary, and replies to the summary go there
     TQ_SUMMARY_MONTH    optional: "2026-10" summarizes that month instead of last month
+    POSTHOG_PERSONAL_API_KEY, POSTHOG_PROJECT_ID
+                        optional, both or neither: adds "how people used your page" (visits, who saw prices, who
+                        tapped to send details) from the page-view tracking in PostHog. A personal API key with the
+                        "query:read" scope. POSTHOG_HOST is only needed for the EU cloud (https://eu.posthog.com).
+                        If PostHog doesn't answer, the summary is sent without that part.
   Each summary goes to the client's leadEmails (clients/directory.mjs) plus TQ_EMAIL_COPY.
 */
 import CLIENTS from "../../clients/directory.mjs";
@@ -71,12 +76,45 @@ async function summarize(id, co, form, month, token, key, env) {
   let subs;
   try { subs = await submissionsIn(form.id, month, token); } catch (e) { return "couldn't read requests (" + e.message + ")"; }
   const s = stats(subs);
-  const msg = summaryEmail(co, month, s);
+  const t = await traffic(id, month, env);
+  const msg = summaryEmail(co, month, s, t);
   const r = await sendEmail(key, {
     from: "TraceQuote <" + fromAddress(env) + ">", to, subject: msg.subject, html: msg.html, text: msg.text,
     reply_to: email(env.TQ_EMAIL_COPY) || undefined
   });
-  return s.requests + " request" + (s.requests === 1 ? "" : "s") + ", " + r;
+  return s.requests + " request" + (s.requests === 1 ? "" : "s") + (t ? ", " + t.visits + " visit" + (t.visits === 1 ? "" : "s") : "") + ", " + r;
+}
+
+// How many visits the client's quote page had, how many saw prices, and how many tapped to send their details,
+// counted by browser session from PostHog (the page's analytics). Returns null when PostHog isn't set up or
+// doesn't answer: the summary is then sent without this part. The client id is checked before it goes into the query.
+const PH_HOSTS = /^https:\/\/(us|eu|app)\.posthog\.com$/;
+async function traffic(id, month, env) {
+  const key = String(env.POSTHOG_PERSONAL_API_KEY || "").trim(), project = String(env.POSTHOG_PROJECT_ID || "").trim();
+  if (!key || !project) return null;
+  const host = String(env.POSTHOG_HOST || "https://us.posthog.com").trim().replace(/\/+$/, "");
+  if (!/^\d{1,12}$/.test(project) || !PH_HOSTS.test(host) || !/^[a-z0-9-]{1,40}$/.test(id)) { console.log("monthly-summary: PostHog settings look wrong, skipping visits"); return null; }
+  const [y, m] = month.split("-").map(Number);
+  const start = month + "-01 00:00:00", end = (m === 12 ? y + 1 : y) + "-" + String(m === 12 ? 1 : m + 1).padStart(2, "0") + "-01 00:00:00";
+  const query = "SELECT event, count(DISTINCT properties.$session_id) FROM events WHERE event IN ('$pageview', 'tq_quote_viewed', 'tq_details_opened')" +
+    " AND timestamp >= toDateTime('" + start + "', '" + TZ + "') AND timestamp < toDateTime('" + end + "', '" + TZ + "')" +
+    " AND properties.$pathname IN ('/q/" + id + "/', '/q/" + id + "') GROUP BY event";
+  try {
+    const r = await fetch(host + "/api/projects/" + project + "/query/", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + key, "Content-Type": "application/json" },
+      body: JSON.stringify({ name: "TraceQuote monthly summary: " + id, query: { kind: "HogQLQuery", query } }),
+      signal: AbortSignal.timeout(TIMEOUT_MS)
+    });
+    if (!r.ok) { console.log("monthly-summary: PostHog " + r.status + " for " + id + ", skipping visits"); return null; }
+    const j = await r.json();
+    const n = {};
+    for (const row of Array.isArray(j.results) ? j.results : []) if (Array.isArray(row) && Number.isFinite(Number(row[1]))) n[String(row[0])] = Number(row[1]);
+    return { visits: n["$pageview"] || 0, saw: n.tq_quote_viewed || 0, details: n.tq_details_opened || 0 };
+  } catch (e) {
+    console.log("monthly-summary: PostHog didn't answer for " + id + ", skipping visits");
+    return null;
+  }
 }
 
 // Submissions come newest first, 100 to a page: stop at the first page that's entirely before the month.
@@ -148,7 +186,21 @@ function stats(subs) {
   };
 }
 
-function summaryEmail(co, month, s) {
+const num = (n) => Number(n).toLocaleString("en-US");
+const plural = (n, one, many) => n + " " + (n === 1 ? one : many);
+
+// "How people used your page": rows of [label, value], or none when PostHog gave no numbers. The requests-per-100
+// figure only shows with at least 20 visits (fewer is noise) and never above 100, since a visitor whose browser
+// blocks the page-view tracking can still send a request.
+function usageRows(s, t) {
+  if (!t) return [];
+  const rows = [["Opened your quote page", num(t.visits)], ["Saw prices", num(t.saw)], ["Tapped to request a quote or measure", num(t.details)]];
+  if (t.visits >= 20 && s.requests <= t.visits) rows.push(["Requests per 100 visits", String(Math.round(s.requests / t.visits * 1000) / 10)]);
+  return rows;
+}
+const USAGE_NOTE = "Visits are counted per browser session, so someone who comes back counts again. Visitors whose browsers block page-view tracking aren’t counted. Treat these numbers as a rough guide.";
+
+function summaryEmail(co, month, s, t) {
   const company = clean(co.name, 80, true), when = monthName(month);
   if (!s.requests) {
     const subject = when + " on your quote page: no requests yet";
@@ -157,18 +209,21 @@ function summaryEmail(co, month, s) {
       "Your Google Business Profile links to your quote page.",
       "You send your quote page link when someone calls or texts for a price."
     ];
+    if (t && t.saw > 0) steps.push("Your prices: people looked at them and didn’t ask for a quote, so we can go over your price sheet together.");
+    const seen = t ? "Your quote page was opened " + plural(t.visits, "time", "times") + (t.visits ? ", and " + plural(t.saw, "visit", "visits") + " got as far as seeing prices" : "") + "." : "";
+    const lead = "No homeowner sent a request through your quote page in " + when + "." + (seen ? " " + seen : "") + " " + (steps.length > 3 ? "Four" : "Three") + " things to check:";
     const html = "<div " + WRAP + ">" +
       '<p style="margin:0;font-size:13px;color:#5b6b63">' + esc(company) + "</p>" +
       '<h1 style="margin:2px 0 10px;font-size:20px;line-height:1.3">No quote requests in ' + esc(when) + "</h1>" +
-      "<p style=\"margin:0\">No homeowner sent a request through your quote page in " + esc(when) + ". Three things to check:</p>" +
+      "<p style=\"margin:0\">" + esc(lead) + "</p>" +
       '<ol style="margin:8px 0 0;padding-left:20px">' + steps.map((x) => "<li>" + esc(x) + "</li>").join("") + "</ol>" +
       '<p style="margin:14px 0 0">Reply to this email and we’ll look at your setup with you.</p>' +
+      (seen ? "<p " + MUTED + ">" + esc(USAGE_NOTE) + "</p>" : "") +
       "<p " + MUTED + ">TraceQuote monthly summary for " + esc(company) + ".</p></div>";
-    const text = "No quote requests in " + when + "\n\nNo homeowner sent a request through your quote page in " + when + ". Three things to check:\n" +
-      steps.map((x, i) => (i + 1) + ". " + x).join("\n") + "\n\nReply to this email and we'll look at your setup with you.";
+    const text = "No quote requests in " + when + "\n\n" + lead + "\n" +
+      steps.map((x, i) => (i + 1) + ". " + x).join("\n") + "\n\nReply to this email and we'll look at your setup with you." + (seen ? "\n\n" + USAGE_NOTE : "");
     return { subject, html, text };
   }
-  const plural = (n, one, many) => n + " " + (n === 1 ? one : many);
   const subject = when + " on your quote page: " + plural(s.requests, "quote request", "quote requests");
   const value = s.priced ? (s.lo === s.hi ? money(s.lo) : money(s.lo) + "–" + money(s.hi)) : "";
   const big = [["Quote requests", String(s.requests)], ["Free measures asked for", String(s.measures)]].concat(value ? [["Estimated value", value]] : []);
@@ -177,6 +232,7 @@ function summaryEmail(co, month, s) {
   if (s.times) rows.push(["Measure times picked", String(s.times)]);
   rows.push(["Wanted it as soon as possible", String(s.asap)]);
   rows.push(["Agreed to texts", String(s.texts)]);
+  const usage = usageRows(s, t);
   const shown = s.list.slice(0, LIST_MAX);
   const cell = 'style="padding:6px 10px 6px 0;border-top:1px solid #dde3df;vertical-align:top"';
   const head = 'style="padding:6px 10px 6px 0;text-align:left;font-weight:normal;color:#5b6b63;font-size:13px"';
@@ -199,9 +255,10 @@ function summaryEmail(co, month, s) {
     '<h1 style="margin:2px 0 6px;font-size:20px;line-height:1.3">Your quote page in ' + esc(when) + "</h1>" +
     '<table role="presentation" style="border-collapse:collapse"><tr>' + cells + "</tr></table>" +
     table(rows) +
+    (usage.length ? '<h2 style="margin:20px 0 0;font-size:16px">How people used your page</h2>' + table(usage) + "<p " + MUTED + ">" + esc(USAGE_NOTE) + "</p>" : "") +
     '<h2 style="margin:20px 0 0;font-size:16px">The requests</h2>' + listHtml +
     "<p " + MUTED + ">Each request was emailed to you when it came in. Estimated value adds up the price ranges your page worked out for these requests; it isn’t a forecast of jobs won. New prices or questions? Reply to this email.</p></div>";
-  const text = "Your quote page in " + when + " (" + company + ")\n\n" + textRows(big.concat(rows)) + "\n\nThe requests:\n" +
+  const text = "Your quote page in " + when + " (" + company + ")\n\n" + textRows(big.concat(rows)) + (usage.length ? "\n\nHow people used your page:\n" + textRows(usage) + "\n" + USAGE_NOTE : "") + "\n\nThe requests:\n" +
     shown.map((x) => {
       const d = x.data || {}, r = range(d.price_estimate) || range(d.price_shown);
       return "- " + dayLabel(x.created_at) + ", " + (clean(d.name, 40, true) || "Homeowner") + ": " + clean(d.fence, 80, true) + (r ? ", " + (r[0] === r[1] ? money(r[0]) : money(r[0]) + "–" + money(r[1])) : "");
