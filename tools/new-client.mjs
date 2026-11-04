@@ -106,7 +106,7 @@ function build(c) {
     HOME_URL: web ? "https://" + esc(web) : "./",
     BRAND_HTML: co.logo ? '<img src="' + esc(co.logo) + '" alt="' + esc(co.name) + '">' : esc(co.name),
     CALL_HTML: d ? '<a class="cq-call" href="tel:+1' + d + '">Call ' + esc(co.phone) + "</a>" : "",
-    SAMPLE_BANNER: c.sample ? '<p class="cq-sample">Sample client page for testing. Requests sent here go to TraceQuote, not to a fence company.</p>' : "",
+    SAMPLE_BANNER: c.sample ? '<aside class="cq-sample" aria-label="Sample page notice">Sample client page for testing. Requests sent here go to TraceQuote, not to a fence company.</aside>' : "",
     YEAR: String(today.getFullYear()),
     UPDATED: today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     CONTACT_LINES: contact,
