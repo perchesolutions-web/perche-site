@@ -5,7 +5,7 @@
   --card: #fcfdfb;
   --ink: #13231b;
   --muted: #4a5a51;
-  --faint: #66736b;
+  --faint: #5f6c64;
   --line: rgba(19, 35, 27, 0.12);
   --line-strong: rgba(19, 35, 27, 0.26);
   --accent: #0f5a43;
@@ -351,7 +351,7 @@ p { text-wrap: pretty; }
 .footer .wrap { padding-block: 48px 36px; }
 .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; }
 .footer p { margin: 10px 0 0; max-width: 30em; }
-.footer h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin: 0 0 12px; }
+.footer h4, .footer h3 { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin: 0 0 12px; }
 .footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .footer a { text-decoration: none; }
 .footer a:hover { color: var(--ink); }
@@ -777,3 +777,6 @@ p { text-wrap: pretty; }
 }
 .tq-manual-ft b { font-weight: 800; }
 .tq-quote-where { font-size: 21px; line-height: 1.2; }
+
+/* Text for screen readers only. */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
