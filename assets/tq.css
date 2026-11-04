@@ -496,7 +496,7 @@ p { text-wrap: pretty; }
   font-size: 13.5px; color: var(--muted); min-width: 0;
 }
 .tq-where span { min-width: 0; overflow-wrap: anywhere; }
-.tq-where .tq-link { font-size: 13.5px; }
+.tq-where .tq-link { font-size: 13.5px; padding: 4px 0; }
 .tq-sugg { list-style: none; margin: 6px 0 0; padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--card); }
 .tq-sugg:empty { display: none; }
 .tq-sugg button {
@@ -507,7 +507,7 @@ p { text-wrap: pretty; }
 .tq-sugg button:hover, .tq-sugg button:focus-visible { background: var(--accent-soft); }
 .tq-sugg-empty { padding: 10px 12px; font-size: 13.5px; color: var(--muted); }
 .tq-link {
-  align-self: flex-start; background: none; border: 0; padding: 0; color: var(--accent-text);
+  align-self: flex-start; background: none; border: 0; padding: 12px 0; color: var(--accent-text);
   font: 600 14px var(--sans); text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
 }
 
@@ -723,7 +723,7 @@ p { text-wrap: pretty; }
   display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 12px; align-items: center;
   padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--accent-soft);
 }
-.tq-link--inline { font-size: inherit; margin-left: 4px; }
+.tq-link--inline { font-size: inherit; margin-left: 4px; padding: 4px 0; }
 .tq-done--quiet { background: var(--bg-alt); }
 @media (max-width: 480px) {
   .tq-pick { grid-template-columns: 56px minmax(0, 1fr); }
@@ -734,7 +734,7 @@ p { text-wrap: pretty; }
 .cq-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; }
 .cq-name { display: inline-flex; align-items: center; gap: 10px; min-width: 0; font-weight: 800; font-size: 18px; letter-spacing: -0.01em; text-decoration: none; }
 .cq-name img { display: block; height: 36px; width: auto; max-width: 180px; object-fit: contain; }
-.cq-call { font-weight: 700; font-size: 14.5px; white-space: nowrap; text-decoration: none; color: var(--accent-text); }
+.cq-call { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 14.5px; white-space: nowrap; text-decoration: none; color: var(--accent-text); }
 .cq-call:hover { text-decoration: underline; }
 .cq-sample { margin: 0; padding: 8px 16px; background: var(--warn-soft); color: var(--warn); font-size: 13px; text-align: center; }
 .cq-main .wrap { padding-block: 26px 36px; }
@@ -742,9 +742,9 @@ p { text-wrap: pretty; }
 .cq-intro h1 { font-size: clamp(32px, 4.4vw, 48px); line-height: 1.04; letter-spacing: -0.02em; }
 .cq-intro p { margin: 8px 0 0; max-width: 40em; color: var(--muted); font-size: 16.5px; }
 .cq-foot { border-top: 1px solid var(--line); font-size: 13px; color: var(--faint); }
-.cq-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-block: 18px 26px; }
-.cq-foot nav { display: flex; flex-wrap: wrap; gap: 6px 14px; }
-.cq-foot a { color: inherit; }
+.cq-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 16px; padding-block: 14px 22px; }
+.cq-foot nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; }
+.cq-foot a { color: inherit; display: inline-block; padding-block: 6px; }
 /* Embedded on a client's website: just the quote tool and a one-line footer. */
 .cq-embed body { background: transparent; }
 .cq-embed body::before { display: none; }
