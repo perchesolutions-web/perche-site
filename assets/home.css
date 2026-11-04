@@ -212,7 +212,7 @@
 .h-final-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
 /* ---------- footer on this page ---------- */
-.home .footer h4 { text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--ink); }
+.home .footer h4, .home .footer h3 { text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--ink); }
 .home .footer-base a { margin-left: 12px; }
 
 /* Dark theme: the frame needs an edge, since its shadow disappears on a dark page. */
