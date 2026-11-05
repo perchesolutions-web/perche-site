@@ -16,7 +16,7 @@
 
 /* ---------- hero: the headline across the page, then the live tool, big ---------- */
 .h-hero { padding-block: clamp(36px, 5vw, 76px) clamp(56px, 7vw, 100px); }
-.h-hero h1 { font-size: clamp(44px, 6.7vw, 98px); line-height: 0.92; letter-spacing: -0.045em; font-stretch: 122%; max-width: 12.5em; }
+.h-hero h1 { font-size: clamp(36px, 5vw, 68px); line-height: 1.06; letter-spacing: -0.03em; font-weight: 700; font-stretch: 100%; max-width: 16em; }
 .h-hero-row { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 64px); align-items: end; margin-top: clamp(24px, 3vw, 40px); }
 .h-hero-sub { margin: 0; font-size: clamp(17.5px, 1.45vw, 20px); line-height: 1.6; color: var(--muted); max-width: 36em; }
 .h-hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -46,7 +46,7 @@
 .h-sec { padding-block: clamp(64px, 8vw, 124px); }
 .h-sec--alt { background: var(--bg-alt); }
 .h-head { max-width: 48em; margin-bottom: clamp(32px, 4.5vw, 60px); }
-.h-head h2 { font-size: clamp(34px, 4.3vw, 58px); line-height: 1.02; letter-spacing: -0.042em; }
+.h-head h2 { font-size: clamp(28px, 3.4vw, 44px); line-height: 1.12; letter-spacing: -0.025em; font-weight: 650; }
 .h-head p { margin: 18px 0 0; max-width: 38em; font-size: 18.5px; color: var(--muted); }
 
 /* ---------- how homeowners use it (a real sequence) ---------- */
@@ -173,7 +173,7 @@
 .h-plan h3 { font-size: 24px; letter-spacing: -0.02em; }
 .h-plan-for { margin: 6px 0 0; color: var(--muted); font-size: 15.5px; max-width: 30em; }
 .h-price { display: flex; align-items: baseline; gap: 8px; margin: 22px 0 2px; }
-.h-price b { font-size: clamp(54px, 5.6vw, 76px); line-height: 1; font-weight: 800; font-stretch: 120%; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; }
+.h-price b { font-size: clamp(46px, 4.6vw, 60px); line-height: 1; font-weight: 700; font-stretch: 100%; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .h-price span { color: var(--muted); font-size: 16px; }
 .h-price-note { margin: 0; color: var(--muted); font-size: 15px; }
 .h-plan ul { list-style: none; margin: 24px 0 28px; padding: 0; display: grid; gap: 11px; }
@@ -209,7 +209,7 @@
 
 /* ---------- closing call ---------- */
 .h-final { background: var(--aerial); color: var(--aerial-ink); padding-block: clamp(64px, 8vw, 116px); }
-.h-final h2 { color: var(--aerial-ink); font-size: clamp(36px, 5vw, 70px); line-height: 1.02; letter-spacing: -0.045em; max-width: 14em; }
+.h-final h2 { color: var(--aerial-ink); font-size: clamp(30px, 4vw, 52px); line-height: 1.1; letter-spacing: -0.03em; font-weight: 650; max-width: 16em; }
 .h-final p { margin: 22px 0 0; color: var(--aerial-muted); font-size: 18.5px; max-width: 36em; }
 .h-final-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
