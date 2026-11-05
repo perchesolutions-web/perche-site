@@ -5,7 +5,7 @@
 
   ?via= says how the visitor got here, for analytics: inline (on a page of the client's site), popup (the
   pop-up from a button), frame (a builder's own embed box, like Wix's), link (a button that opens this page),
-  or direct.
+  qr (scanned from the printed QR card, see card.html), text (the link in a text the company sent), or direct.
 */
 (function () {
   "use strict";
@@ -13,7 +13,7 @@
   var clientId = (C.lead && C.lead.clientId) || "";
   var q = window.location.search.slice(1);
   var embedded = /(?:^|&)embed=1(?:&|$)/.test(q);
-  var via = (q.match(/(?:^|&)via=(inline|popup|frame|link)(?:&|$)/) || [])[1] || (embedded ? "inline" : "direct");
+  var via = (q.match(/(?:^|&)via=(inline|popup|frame|link|qr|text)(?:&|$)/) || [])[1] || (embedded ? "inline" : "direct");
   if (embedded) document.documentElement.classList.add("cq-embed");
   if (embedded && via === "popup") document.documentElement.classList.add("cq-popup");
 

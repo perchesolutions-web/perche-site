@@ -65,6 +65,7 @@
       <button class="btn btn-ghost btn-sm" type="button" data-copy="link-page">Copy link</button>
     </div>
     <p>This link works anywhere, even without adding code: on a button on your website, your Google Business Profile, your Facebook page, emails, texts and invoices.</p>
+    <p>Want something to print for your truck or your estimates? <a href="./card">Get your QR card</a>, with a text you can send to homeowners who ask about a fence.</p>
   </div>
 
   <h2>1. Choose how it appears</h2>
