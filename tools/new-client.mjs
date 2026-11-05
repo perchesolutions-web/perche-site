@@ -5,8 +5,8 @@
     node tools/new-client.mjs clients/acme-fence.json
 
   Writes q/<id>/index.html (quote page + hidden Netlify form), q/<id>/client.js (settings),
-  q/<id>/privacy.html, q/<id>/sms-terms.html, and q/<id>/install.html (the code for the client's website,
-  with steps for each website builder). It also rewrites clients/directory.mjs, the contact details the
+  q/<id>/privacy.html, q/<id>/sms-terms.html, q/<id>/install.html (the code for the client's website,
+  with steps for each website builder), and q/<id>/card.html (a printable QR card and a text-back line). It also rewrites clients/directory.mjs, the contact details the
   request emails use for every client. Commit those files; Netlify picks up the form on deploy.
   Leads then appear in Netlify under Forms -> lead-<id>. Once request emails are set up (RESEND_API_KEY in
   Netlify), they go to the client's leadEmails automatically; until then, add a Netlify email notification.
@@ -16,9 +16,33 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { qrcode } from "./vendor/qrcode.mjs"; // qrcode-generator, MIT (see tools/vendor/LICENSE-qrcode-generator.txt)
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TPL = join(ROOT, "tools", "templates");
+// Printed QR codes can't be edited later, so the address in them is the one that has to keep working.
+const SITE = "https://perchesolutions.com";
+
+// The QR code as an inline SVG: black on white with a 4-module quiet zone, drawn as one path so it stays crisp at any size.
+// Error correction Q (about 25% of the code can be damaged), because these end up on trucks and windows.
+export function qrSvg(url, label) {
+  const qr = qrcode(0, "Q");
+  qr.addData(url);
+  qr.make();
+  const n = qr.getModuleCount(), pad = 4, d = [];
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      if (!qr.isDark(r, c)) continue;
+      let len = 1;
+      while (c + len < n && qr.isDark(r, c + len)) len++;
+      d.push("M" + (c + pad) + " " + (r + pad) + "h" + len + "v1h-" + len + "z");
+      c += len - 1;
+    }
+  }
+  const size = n + pad * 2;
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + size + " " + size + '" role="img" aria-label="' + esc(label) + '" shape-rendering="crispEdges">' +
+    '<rect width="' + size + '" height="' + size + '" fill="#fff"/><path fill="#000" d="' + d.join("") + '"/></svg>';
+}
 
 // Every field the quote tool sends (see leadFields in assets/tq-widget.js). Netlify only keeps fields
 // that exist in the page's form, so this list and the tool must match.
@@ -106,6 +130,21 @@ function build(c) {
     HOME_URL: web ? "https://" + esc(web) : "./",
     BRAND_HTML: co.logo ? '<img src="' + esc(co.logo) + '" alt="' + esc(co.name) + '">' : esc(co.name),
     CALL_HTML: d ? '<a class="cq-call" href="tel:+1' + d + '">Call ' + esc(co.phone) + "</a>" : "",
+    // The printable QR card (card.html): the code opens the quote page tagged ?via=qr, the text-back line is tagged ?via=text.
+    QR_SVG: qrSvg(SITE + "/q/" + c.id + "/?via=qr", "QR code that opens the " + co.name + " fence quote page"),
+    SHORT_URL: SITE.replace(/^https:\/\//, "") + "/q/" + c.id,
+    CARD_HEAD: noPrice ? "Scan to measure your fence" : "Scan to see your fence price",
+    CARD_MINOR: noPrice
+      ? "Trace your fence on a satellite photo and pick a style. Then send it to " + esc(co.name) + " for your price."
+      : "Trace your fence on a satellite photo and pick a style. Takes about a minute.",
+    CARD_PHONE: d ? '<p class="qc-phone">Call ' + esc(co.phone) + "</p>" : "",
+    TEXT_LINE: esc(
+      "Hi, this is " + co.name.replace(/\.$/, "") + ". Thanks for reaching out about a fence. " +
+      (noPrice
+        ? "Trace it on a satellite photo of your yard here, and we'll get back to you with your price: "
+        : "Trace it on a satellite photo of your yard here and see prices for different styles in about a minute: ") +
+      SITE + "/q/" + c.id + "/?via=text"
+    ),
     SAMPLE_BANNER: c.sample ? '<aside class="cq-sample" aria-label="Sample page notice">Sample client page for testing. Requests sent here go to TraceQuote, not to a fence company.</aside>' : "",
     YEAR: String(today.getFullYear()),
     UPDATED: today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
@@ -140,6 +179,7 @@ function build(c) {
   writeFileSync(join(out, "privacy.html"), fill(readFileSync(join(TPL, "client-privacy.html.tpl"), "utf8"), vars));
   writeFileSync(join(out, "sms-terms.html"), fill(readFileSync(join(TPL, "client-sms-terms.html.tpl"), "utf8"), vars));
   writeFileSync(join(out, "install.html"), fill(readFileSync(join(TPL, "client-install.html.tpl"), "utf8"), vars));
+  writeFileSync(join(out, "card.html"), fill(readFileSync(join(TPL, "client-card.html.tpl"), "utf8"), vars));
   writeFileSync(join(out, "client.js"), lines.join("\n"));
   return out;
 }
@@ -177,6 +217,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   if (todo.length) console.log("Still to do:\n" + todo.map((t) => "  - " + t).join("\n"));
   console.log("Quote page: https://perchesolutions.com/q/" + c.id + "/");
   console.log("Install page (code and steps for their website): https://perchesolutions.com/q/" + c.id + "/install");
+  console.log("QR card (print it, plus a text-back line): https://perchesolutions.com/q/" + c.id + "/card");
   // Alert numbers go in Netlify, not in clients/<id>.json, because this repository is public.
   if (!todo.some((t) => /^Text alerts/.test(t))) console.log("Text alerts, if they want them: Netlify variable TQ_TEXT_" + c.id.toUpperCase().replace(/-/g, "_") + " (their mobile numbers, comma-separated), then deploy.");
 }
