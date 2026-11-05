@@ -48,7 +48,7 @@ export function qrSvg(url, label) {
 // that exist in the page's form, so this list and the tool must match.
 export const LEAD_FIELDS = [
   "bot-field", "client", "lead_id", "update", "subject", "wants", "name", "phone", "email", "address", "fence", "gates",
-  "old_fence_removal", "price_shown", "price_estimate", "monthly_shown", "install_timing", "measure_visit", "text_consent",
+  "old_fence_removal", "site_conditions", "corners", "price_shown", "price_estimate", "monthly_shown", "install_timing", "measure_visit", "text_consent",
   "consent_text", "map_image", "directions", "drawing", "page", "embedded_on", "submitted_at"
 ];
 const LONG_FIELDS = new Set(["consent_text", "drawing", "map_image"]);
