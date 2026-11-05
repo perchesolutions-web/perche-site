@@ -74,9 +74,9 @@
         <div class="h-hero-act">
           <div class="h-hero-cta">
             <a class="btn btn-primary btn-lg" data-book="hero" href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
-            <a class="btn btn-ghost btn-lg" href="#try" data-try>Price a fence now</a>
+            <a class="btn btn-ghost btn-lg" href="#try" data-try>Try it as a homeowner</a>
           </div>
-          <p class="h-hero-offer"><b>Our first three fence companies pay nothing until their first quote request.</b> Everyone: a quote request in 60 days, or your money back. <a href="#pricing">Details</a></p>
+          <p class="h-hero-offer"><b>Our first three fence companies pay nothing until their first quote request.</b> On paid plans, a quote request in 60 days or your money back. <a href="#pricing">Details</a></p>
           <p class="h-hero-note">Set up and run for you: we load your prices, build the page and put it on your website.</p>
         </div>
       </div>
@@ -324,12 +324,20 @@
             <p>Yes. Send us the new numbers and we update your page.</p>
           </details>
           <details>
+            <summary>Who owns the requests homeowners send?</summary>
+            <p>You do. We store them for you, deliver them to you, and use them only to run and improve TraceQuote. We don’t sell them or pass them to other fence companies. On the founding offer, you agree that we can share your results, such as your company name and how many requests your page received. We never share homeowners’ personal details.</p>
+          </details>
+          <details>
+            <summary>How do I cancel?</summary>
+            <p>Email <a href="mailto:hello@perchesolutions.com">hello@perchesolutions.com</a> any time. Month to month, billing stops at the end of the current month. On a 12-month plan, cancelling in the first 12 months makes the $499 setup due. A yearly plan stops renewing, with no refund of the unused part except under the guarantee. The founding offer has no cancellation fee. When service ends, we take your page down, and you can ask for a copy of your requests within 30 days. The <a href="/agreement">customer agreement</a> has the details.</p>
+          </details>
+          <details>
             <summary>What does it cost?</summary>
             <p>The quote page is $149 a month. Month to month, there’s a one-time $499 setup. On a 12-month plan there’s no setup fee, and if you cancel in the first 12 months the $499 setup is due. Or pay $1,490 a year up front, also with no setup fee. With Google Ads management it’s $799 a month plus setup, and your ad budget is billed to you by Google. Our first three fence companies pay no setup fee and nothing until their first quote request comes in, then $149 a month, locked in.</p>
           </details>
           <details>
             <summary>What if no requests come in?</summary>
-            <p>You get your money back. Once your page is live, with the button on your homepage and the link on your Google Business Profile, if no homeowner sends a quote request within 60 days, we refund everything you’ve paid and you can cancel with nothing more owed.</p>
+            <p>On a paid plan, you get your money back. Once your page is live, with the button on your homepage and the link on your Google Business Profile, if no homeowner sends a quote request within 60 days, we refund everything you’ve paid and you can cancel with nothing more owed. On the founding offer you pay nothing until your first request comes in, so there is nothing to refund.</p>
           </details>
           <details>
             <summary>Do you work with trades besides fencing?</summary>
@@ -402,7 +410,7 @@
     ? "Search any address. The company and prices are samples, and no request is sent to anyone."
     : "An example home with a sample company and prices. On your site, homeowners search their own address on satellite imagery.";
 
-  // "Price a fence now": bring the tool into view and put the cursor in the address box.
+  // "Try it as a homeowner": bring the tool into view and put the cursor in the address box.
   var tryBtn = document.querySelector("[data-try]");
   if (tryBtn) tryBtn.addEventListener("click", function (e) {
     var frame = document.getElementById("try");
