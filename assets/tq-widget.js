@@ -131,11 +131,29 @@
       var G = P.gates[g.type];
       gateFt += G.width; gLo += G.price[0]; gHi += G.price[1];
     });
-    var fenceFt = Math.max(0, Math.round(drawnFt) - gateFt);
+    var ft = Math.round(drawnFt);
+    var fenceFt = Math.max(0, ft - gateFt);
     var fLo = fenceFt * per[0], fHi = fenceFt * per[1];
-    var rLo = sel.removal ? Math.round(drawnFt) * P.removalPerFt[0] : 0;
-    var rHi = sel.removal ? Math.round(drawnFt) * P.removalPerFt[1] : 0;
-    var lo = fLo + gLo + rLo, hi = fHi + gHi + rHi;
+    var rLo = sel.removal ? ft * P.removalPerFt[0] : 0;
+    var rHi = sel.removal ? ft * P.removalPerFt[1] : 0;
+    // Add-ons the company sets: corner posts, site conditions the homeowner ticks, and a flat permit fee.
+    var extras = [], eLo = 0, eHi = 0;
+    function addExtra(id, label, a, b) {
+      a = Math.round(a); b = Math.round(b);
+      if (!(a > 0 || b > 0)) return;
+      extras.push({ id: id, label: label, lo: a, hi: b });
+      eLo += a; eHi += b;
+    }
+    var corners = Math.max(0, Math.round(sel.corners || 0)), cp = P.cornerPrice;
+    if (corners && cp && (cp[0] > 0 || cp[1] > 0)) addExtra("corners", plural(corners, "corner post", "corner posts"), corners * cp[0], corners * cp[1]);
+    (P.options || []).forEach(function (o) {
+      if (!sel.opts || !sel.opts[o.id] || !o.amount) return;
+      if (o.type === "pct") addExtra(o.id, o.label, (fLo + gLo) * o.amount[0] / 100, (fHi + gHi) * o.amount[1] / 100);
+      else if (o.type === "perft") addExtra(o.id, o.label, ft * o.amount[0], ft * o.amount[1]);
+      else addExtra(o.id, o.label, o.amount[0], o.amount[1]);
+    });
+    if (P.permit && (P.permit.amount[0] > 0 || P.permit.amount[1] > 0) && ft > 0) addExtra("permit", P.permit.label || "Permit and fees", P.permit.amount[0], P.permit.amount[1]);
+    var lo = fLo + gLo + rLo + eLo, hi = fHi + gHi + rHi + eHi;
     var minApplied = lo < P.minimumJob;
     lo = Math.max(lo, P.minimumJob);
     hi = Math.max(hi, P.minimumJob);
@@ -144,7 +162,7 @@
     hi = Math.ceil(hi / r) * r;
     return {
       lo: lo, hi: hi, height: h, per: per, fenceFt: fenceFt, gateFt: gateFt,
-      fence: [fLo, fHi], gate: [gLo, gHi], removal: [rLo, rHi], minApplied: minApplied
+      fence: [fLo, fHi], gate: [gLo, gHi], removal: [rLo, rHi], extras: extras, minApplied: minApplied
     };
   }
 
@@ -755,7 +773,7 @@
     var st = {
       runs: [], gates: [], active: null, history: [], hover: null,
       tool: "draw", gateType: "walk",
-      material: P.defaultMaterial, heightBy: {}, colorBy: {}, removal: false,
+      material: P.defaultMaterial, heightBy: {}, colorBy: {}, removal: false, opts: {},
       contact: { first: "", last: "", email: "", phone: "", consent: false }, timing: "", submitted: false, intent: "quote",
       address: null, addrDraft: "", loading: false,
       step: live ? "address" : "draw",
@@ -810,7 +828,17 @@
     function heightFor(mid) { var m = materialById(mid); return heightOrDefault(m, st.heightBy[mid]); }
     function colorFor(mid) { var m = materialById(mid); return st.colorBy[mid] || (m.colors && m.colors.length ? m.colors[0].name : ""); }
     function drawnFt() { return isManual() ? manualFt() : surface ? totalLength(st.runs, surface.dist) : 0; }
-    function quoteFor(mid) { return priceFor(drawnFt(), gatesNow(), { material: mid, height: heightFor(mid), removal: st.removal }); }
+    function quoteFor(mid) { return priceFor(drawnFt(), gatesNow(), { material: mid, height: heightFor(mid), removal: st.removal, opts: st.opts, corners: cornerCount() }); }
+    function cornerCount() {
+      if (isManual() || !surface) return 0;
+      var n = 0;
+      st.runs.forEach(function (run) {
+        if (run.length < 3) return;
+        var a = run[0], b = run[run.length - 1];
+        n += (a[0] === b[0] && a[1] === b[1]) ? run.length - 1 : run.length - 2;
+      });
+      return n;
+    }
     function postCount() {
       var n = 0;
       st.runs.forEach(function (run) {
@@ -1281,8 +1309,29 @@
         lines.push("<li><span>" + plural(counts[k], G.label.toLowerCase(), G.label.toLowerCase() + "s") + "</span><b>" + shownPrice(G.price[0] * counts[k], G.price[1] * counts[k]) + "</b></li>");
       });
       if (st.removal) lines.push("<li><span>Old fence removal, " + ftLabel(drawnFt()) + "</span><b>" + shownPrice(q.removal[0], q.removal[1]) + "</b></li>");
+      (q.extras || []).forEach(function (x) {
+        lines.push("<li><span>" + esc(x.label) + "</span><b>" + shownPrice(x.lo, x.hi) + "</b></li>");
+      });
       if (q.minApplied) lines.push("<li><span>Minimum job</span><b>" + money(P.minimumJob) + "</b></li>");
       return lines.join("");
+    }
+
+    // Site conditions the company prices separately; the homeowner ticks what applies to their yard.
+    function siteOptionsHtml() {
+      var list = P.options || [];
+      if (!list.length) return "";
+      var mode = priceMode();
+      return '<p class="tq-label tq-label--flush">About your yard</p>' + list.map(function (o) {
+        var hint = "";
+        if (mode !== "none" && o.amount) {
+          hint = o.type === "pct" ? "+" + o.amount[0] + "–" + o.amount[1] + "%"
+            : o.type === "perft" ? "+$" + o.amount[0] + "–$" + o.amount[1] + " per ft"
+            : "+" + moneyRange(o.amount[0], o.amount[1]);
+          if (mode === "from") hint = o.type === "pct" ? "+" + o.amount[0] + "%" : o.type === "perft" ? "+$" + o.amount[0] + " per ft" : "+" + money(o.amount[0]);
+        }
+        return '<label class="tq-check"><input type="checkbox" data-opt="' + esc(o.id) + '"' + (st.opts[o.id] ? " checked" : "") + ">" +
+          "<span>" + esc(o.label) + (hint ? " <small>" + esc(hint) + "</small>" : "") + "</span></label>";
+      }).join("");
     }
 
     function productDetail(m, q) {
@@ -1342,6 +1391,7 @@
         "</div>" +
         '<label class="tq-check"><input type="checkbox" id="' + id + '-removal"' + (st.removal ? " checked" : "") + ">" +
         "<span>Take out my old fence" + (mode === "none" ? "" : " <small>+" + (mode === "from" ? " " : "") + perFtLabel(P.removalPerFt[0], P.removalPerFt[1]) + " per ft</small>") + "</span></label>" +
+        siteOptionsHtml() +
         '<p class="tq-label tq-label--flush">Choose a fence</p>' +
         '<ul class="tq-prods">' + rows + "</ul>" +
         '<p class="tq-fine">' + (mode === "none"
@@ -1507,12 +1557,17 @@
         height: q.height,
         color: colorFor(st.material),
         removal: st.removal,
+        siteOpts: siteOptLabels(),
+        corners: cornerCount(),
         quote: { lo: q.lo, hi: q.hi },
         monthly: monthlyPayment(q.lo),
         fenceFt: q.fenceFt,
         visit: null,
         status: "new"
       };
+    }
+    function siteOptLabels() {
+      return (P.options || []).filter(function (o) { return st.opts[o.id]; }).map(function (o) { return o.label; });
     }
     function publishLead() {
       saveLead(st.lead);
@@ -1554,6 +1609,8 @@
           (typed ? " (length typed in by the homeowner, not traced)" : ""),
         gates: gatesNow().length ? gateSummary(gatesNow()) : "None",
         old_fence_removal: st.removal ? "Yes" : "No",
+        site_conditions: siteOptLabels().join("; ") || "None ticked",
+        corners: String(cornerCount()),
         // What the homeowner saw, and the full estimate for the company even when it wasn't shown.
         price_shown: priceMode() === "none" ? "Not shown" : shownPrice(q.lo, q.hi),
         price_estimate: moneyRange(q.lo, q.hi),
@@ -1688,6 +1745,7 @@
 
     root.addEventListener("change", function (e) {
       if (e.target.id === id + "-removal") { st.removal = e.target.checked; render(); }
+      if (e.target.getAttribute && e.target.getAttribute("data-opt")) { st.opts[e.target.getAttribute("data-opt")] = e.target.checked; render(); }
     });
     root.addEventListener("input", function (e) {
       if (e.target.id && e.target.id.indexOf(id + "-") === 0 && st.step === "details") readContact();

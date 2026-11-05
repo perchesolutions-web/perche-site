@@ -94,6 +94,16 @@ window.TQ_CONFIG = {
       drive: { label: "Drive gate", width: 12, price: [1400, 2600] }
     },
     removalPerFt: [2, 4],
+    // Extra cost per corner post (counted from the traced line). Set [0, 0] to leave it in the per-foot price.
+    cornerPrice: [25, 50],
+    // Site conditions the homeowner can tick. type: "pct" (percent of fence and gates), "perft" ($ per foot), or "flat".
+    options: [
+      { id: "slope", label: "Yard slopes or is uneven", type: "pct", amount: [5, 12] },
+      { id: "obstacles", label: "Trees, roots, or rock along the line", type: "perft", amount: [2, 5] },
+      { id: "access", label: "No truck access to the backyard", type: "flat", amount: [150, 400] }
+    ],
+    // Flat permit and inspection fee added to every job. Leave [0, 0] if you include it elsewhere.
+    permit: { label: "Permit and fees", amount: [0, 0] },
     minimumJob: 1500,
     roundTo: 50,
     postSpacingFt: 8

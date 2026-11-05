@@ -98,6 +98,8 @@ function leadMessage(d) {
     const gates = clean(d.gates, 30);
     if (gates && !/^none$/i.test(gates)) extras.push(gates);
     if (/^yes$/i.test(String(d.old_fence_removal || ""))) extras.push("old fence removal");
+    const site = clean(d.site_conditions, 60);
+    if (site && !/^none/i.test(site)) extras.push(site);
     if (fence) lines.push([fence].concat(extras).join(", "));
     // A company can show a range, a starting price ("From $6,750") or no price; the estimate always comes along.
     const price = clean(d.price_shown, 30), estimate = clean(d.price_estimate, 30);
@@ -219,6 +221,10 @@ function companyEmail(co, d) {
     if (d.fence) rows.push(["Fence", clean(d.fence, 160, true)]);
     if (d.gates) rows.push(["Gates", clean(d.gates, 60, true)]);
     if (d.old_fence_removal) rows.push(["Old fence removal", clean(d.old_fence_removal, 10, true)]);
+    const site = clean(d.site_conditions, 160, true);
+    if (site && !/^none/i.test(site)) rows.push(["Yard conditions", site]);
+    const corners = parseInt(d.corners, 10);
+    if (corners > 0) rows.push(["Corners", String(corners)]);
     if (/^not shown/i.test(price)) rows.push(["Price shown", "None (your page doesn’t show prices)"]);
     else if (price) rows.push(["Price shown", price]);
     if (estimate && estimate !== price) rows.push(["Estimate", estimate]);
