@@ -222,3 +222,10 @@
   :root:not([data-theme="light"]) .h-frame { box-shadow: 0 0 0 1px rgba(232, 239, 233, 0.12), 0 40px 90px -36px rgba(0, 0, 0, 0.8); }
 }
 :root[data-theme="dark"] .h-frame { box-shadow: 0 0 0 1px rgba(232, 239, 233, 0.12), 0 40px 90px -36px rgba(0, 0, 0, 0.8); }
+
+/* Scan-to-try QR beside the hero. Hidden on phones, where the demo is already one tap away. */
+.h-hero-qr { display: flex; align-items: center; gap: 14px; margin-top: 18px; max-width: 26rem; }
+.h-qr-code { flex: none; width: 88px; line-height: 0; background: #fff; border-radius: 6px; padding: 2px; box-shadow: 0 0 0 1px rgba(20, 40, 28, 0.14); }
+.h-qr-code svg { width: 100%; height: auto; display: block; }
+.h-hero-qr p { margin: 0; font-size: 0.875rem; line-height: 1.45; color: var(--ink-2, inherit); }
+@media (max-width: 760px) { .h-hero-qr { display: none; } }
