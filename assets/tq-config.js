@@ -7,7 +7,7 @@ window.TQ_CONFIG = {
   productName: "TraceQuote",
   companyLegal: "Perché AI Solutions LLC",
   companyAddress: "1100 S Miami Ave, Miami, FL 33130",
-  contactEmail: "hello@perchesolutions.com",
+  contactEmail: "hello@gettracequote.com",
 
   // "Book a call" buttons on the site open this Calendly page.
   bookingUrl: "https://calendly.com/perchesolutions/tracequote-demo",

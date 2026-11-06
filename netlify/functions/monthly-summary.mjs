@@ -62,7 +62,7 @@ async function pool(items, n, fn) {
 
 async function api(token, path) {
   const r = await fetch(API + path, {
-    headers: { Authorization: "Bearer " + token, "User-Agent": "TraceQuote monthly summary (hello@perchesolutions.com)" },
+    headers: { Authorization: "Bearer " + token, "User-Agent": "TraceQuote monthly summary (hello@gettracequote.com)" },
     signal: AbortSignal.timeout(TIMEOUT_MS)
   });
   if (!r.ok) throw new Error("Netlify API " + r.status);

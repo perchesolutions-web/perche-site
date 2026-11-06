@@ -106,7 +106,7 @@
       <button class="btn btn-ghost btn-sm" type="button" data-copy="text-line">Copy text</button>
     </div>
 
-    <p class="qc-foot">Questions, or want a card with your logo? Email <a href="mailto:hello@perchesolutions.com">hello@perchesolutions.com</a>. Quote tool by TraceQuote.</p>
+    <p class="qc-foot">Questions, or want a card with your logo? Email <a href="mailto:hello@gettracequote.com">hello@gettracequote.com</a>. Quote tool by TraceQuote.</p>
   </div>
 </main>
 

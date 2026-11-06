@@ -3,7 +3,7 @@ export default {
   "sample": {
     "name": "Sample Fence Co.",
     "phone": "(305) 555-0142",
-    "email": "hello@perchesolutions.com",
+    "email": "hello@gettracequote.com",
     "website": "",
     "leadEmails": [],
     "priceDisplay": "range",
