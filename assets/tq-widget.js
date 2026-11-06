@@ -1773,7 +1773,9 @@
 
     // The home page hero opens on a real neighborhood on satellite, with the address search ready.
     if (opts.startOnMap && live && !client) {
-      setSurface("map", { center: CFG.heroCenter || CFG.mapCenter, zoom: CFG.heroZoom || 16.4, noPin: true });
+      var hc = CFG.heroCenter || CFG.mapCenter, hz = CFG.heroZoom || 16.4;
+      try { var q = /[?&]hc=(-?[\d.]+),(-?[\d.]+),([\d.]+)/.exec(location.search); if (q) { hc = [+q[1], +q[2]]; hz = +q[3]; } } catch (e) {}
+      setSurface("map", { center: hc, zoom: hz, noPin: true });
       st.address = null;
       render();
       return { getState: function () { return st; } };
