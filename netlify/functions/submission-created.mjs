@@ -197,7 +197,7 @@ function safeLink(url, kind) {
   const ok = {
     map: /^https:\/\/api\.mapbox\.com\/styles\/v1\/[^\s"<>]+$/,
     directions: /^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=[^\s"<>]+$/,
-    page: /^https:\/\/(perchesolutions\.com|[a-z0-9-]+--perchesolutions\.netlify\.app)\/[^\s"<>]*$/
+    page: /^https:\/\/((www\.)?(gettracequote|perchesolutions)\.com|[a-z0-9-]+--perchesolutions\.netlify\.app)\/[^\s"<>]*$/
   }[kind];
   return ok && ok.test(u) && u.length < 4000 ? u : "";
 }

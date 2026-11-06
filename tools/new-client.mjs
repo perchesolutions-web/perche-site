@@ -11,7 +11,7 @@
   Leads then appear in Netlify under Forms -> lead-<id>. Once request emails are set up (RESEND_API_KEY in
   Netlify), they go to the client's leadEmails automatically; until then, add a Netlify email notification.
 
-  Send the client (or whoever runs their website) https://perchesolutions.com/q/<id>/install.
+  Send the client (or whoever runs their website) https://gettracequote.com/q/<id>/install.
 */
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -21,7 +21,7 @@ import { qrcode } from "./vendor/qrcode.mjs"; // qrcode-generator, MIT (see tool
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TPL = join(ROOT, "tools", "templates");
 // Printed QR codes can't be edited later, so the address in them is the one that has to keep working.
-const SITE = "https://perchesolutions.com";
+const SITE = "https://gettracequote.com";
 
 // The QR code as an inline SVG: black on white with a 4-module quiet zone, drawn as one path so it stays crisp at any size.
 // Error correction Q (about 25% of the code can be damaged), because these end up on trucks and windows.
@@ -215,9 +215,9 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const todo = (Array.isArray(c._review) ? c._review : []).filter((t) => !(c.mapCenter && /^Add mapCenter/.test(t)));
   if (!c.mapCenter && !todo.some((t) => /^Add mapCenter/.test(t))) todo.push("Add mapCenter [longitude, latitude] for the client's area.");
   if (todo.length) console.log("Still to do:\n" + todo.map((t) => "  - " + t).join("\n"));
-  console.log("Quote page: https://perchesolutions.com/q/" + c.id + "/");
-  console.log("Install page (code and steps for their website): https://perchesolutions.com/q/" + c.id + "/install");
-  console.log("QR card (print it, plus a text-back line): https://perchesolutions.com/q/" + c.id + "/card");
+  console.log("Quote page: https://gettracequote.com/q/" + c.id + "/");
+  console.log("Install page (code and steps for their website): https://gettracequote.com/q/" + c.id + "/install");
+  console.log("QR card (print it, plus a text-back line): https://gettracequote.com/q/" + c.id + "/card");
   // Alert numbers go in Netlify, not in clients/<id>.json, because this repository is public.
   if (!todo.some((t) => /^Text alerts/.test(t))) console.log("Text alerts, if they want them: Netlify variable TQ_TEXT_" + c.id.toUpperCase().replace(/-/g, "_") + " (their mobile numbers, comma-separated), then deploy.");
 }
