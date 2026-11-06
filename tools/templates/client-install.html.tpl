@@ -257,7 +257,7 @@
     <a class="btn btn-primary" id="email-steps" href="mailto:?subject=Add%20our%20instant%20quote%20tool%20to%20the%20website">Email these steps</a>
   </div>
 
-  <p class="ins-foot">Questions, or want us to install it? Email <a href="mailto:hello@perchesolutions.com">hello@perchesolutions.com</a>. Quote tool by TraceQuote.</p>
+  <p class="ins-foot">Questions, or want us to install it? Email <a href="mailto:hello@gettracequote.com">hello@gettracequote.com</a>. Quote tool by TraceQuote.</p>
 </main>
 
 <script src="/embed.js" data-client="{{ID}}" data-mode="button" data-target="try-button" async></script>
