@@ -550,7 +550,7 @@
         container: mapEl,
         style: res[1],
         center: opts.center || CFG.mapCenter,
-        zoom: opts.center ? HOME_ZOOM : (CFG.mapStartZoom || 11),
+        zoom: opts.zoom || (opts.center ? HOME_ZOOM : (CFG.mapStartZoom || 11)),
         maxZoom: 21.5,
         dragRotate: false,
         pitchWithRotate: false,
@@ -561,7 +561,7 @@
       map.touchZoomRotate.disableRotation();
       map.addControl(new gl.NavigationControl({ showCompass: false }), "bottom-right");
       map.getCanvasContainer().appendChild(overlay);
-      setPin(opts.center);
+      if (!opts.noPin) setPin(opts.center);
       map.on("click", function (e) { handlers.tap([e.lngLat.lng, e.lngLat.lat], [e.point.x, e.point.y]); });
       map.on("mousemove", function (e) { handlers.hover([e.lngLat.lng, e.lngLat.lat], [e.point.x, e.point.y]); });
       map.on("mouseout", function () { handlers.hover(null, null); });
@@ -993,7 +993,7 @@
         fail: function () { if (surface === mine) mapFailed(); }
       };
       surface = kind === "map"
-        ? MapboxSurface(surfaceHost, handlers, { center: sopts && sopts.center, cooperative: layout === "compact" })
+        ? MapboxSurface(surfaceHost, handlers, { center: sopts && sopts.center, zoom: sopts && sopts.zoom, noPin: sopts && sopts.noPin, cooperative: layout === "compact" || !!opts.startOnMap })
         : SampleSurface(surfaceHost, handlers);
       mine = surface;
       root.classList.toggle("tq--map", kind === "map");
@@ -1771,6 +1771,13 @@
 
     /* ----- start: the example home, with the address search first when live ----- */
 
+    // The home page hero opens on a real neighborhood on satellite, with the address search ready.
+    if (opts.startOnMap && live && !client) {
+      setSurface("map", { center: CFG.heroCenter || CFG.mapCenter, zoom: CFG.heroZoom || 16.4, noPin: true });
+      st.address = null;
+      render();
+      return { getState: function () { return st; } };
+    }
     setSurface("sample");
     if (client && !live) {
       st.entry = "manual";
