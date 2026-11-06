@@ -285,3 +285,14 @@
   .h-frame { margin: 22px calc(50% - 50vw) 0; border-radius: 0; box-shadow: none; border-top: 1px solid var(--line-strong); }
   .h-frame-foot { padding-inline: 16px; }
 }
+
+/* Scan-to-try QR beside the buttons on wide screens; phones already have the demo one tap away. */
+.h-hero-qr { display: none; }
+@media (min-width: 961px) {
+  .h-hero-row { grid-template-columns: minmax(0, 1fr) auto auto; }
+  .h-hero-qr { display: flex; align-items: center; gap: 14px; max-width: 15em; }
+  .h-qr-code { flex: none; width: 84px; line-height: 0; background: #fff; border-radius: 8px; padding: 5px; }
+  .h-qr-code svg { width: 100%; height: auto; display: block; }
+  .h-hero-qr p { margin: 0; font-size: 13.5px; line-height: 1.4; color: var(--muted); }
+  .h-hero-qr b { color: var(--ink); }
+}
