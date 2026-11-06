@@ -19,6 +19,8 @@ window.TQ_CONFIG = {
   mapStyle: "mapbox://styles/mapbox/satellite-streets-v12",
   mapCenter: [-80.1918, 25.7617], // address search favors results near here (Miami)
   searchCountry: "us",
+  heroCenter: [-80.2686, 25.6762], // the home page opens on this neighborhood (Pinecrest, Miami)
+  heroZoom: 16.4,
   mapHomeZoom: 19.5,              // how close the map zooms in to a home
   minDrawZoom: 17,                // homeowners must zoom in at least this far to draw
 

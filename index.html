@@ -403,7 +403,7 @@
 (function () {
   "use strict";
   var TQ = window.TraceQuote;
-  TQ.mount(document.getElementById("hero-quote"), { layout: "full", contractorHref: "demo.html#contractor" });
+  TQ.mount(document.getElementById("hero-quote"), { layout: "full", startOnMap: true, contractorHref: "demo.html#contractor" });
 
   var foot = document.querySelector("[data-tq-foot]");
   if (foot) foot.textContent = TQ.live
