@@ -244,3 +244,28 @@
   .h-final { padding-block: 44px; }
   .h-final h2 { font-size: 28px; }
 }
+
+
+/* ---------- opening: headline, one line, buttons, and the live map already in view ---------- */
+@media (min-width: 701px) {
+  .h-hero { padding-block: clamp(28px, 3.4vw, 52px) clamp(36px, 4vw, 60px); }
+  .h-hero h1 { font-size: clamp(36px, 4.1vw, 58px); line-height: 1.05; max-width: 17em; }
+  .h-hero-row { align-items: start; margin-top: clamp(18px, 2vw, 28px); }
+  .h-hero-sub { font-size: clamp(17px, 1.3vw, 19px); }
+  .h-frame { margin-top: clamp(24px, 2.6vw, 40px); }
+}
+@media (max-width: 700px) {
+  .h-hero h1 { font-size: 28px; }
+  .h-hero-sub { font-size: 15.5px; }
+  .h-hero-offer { font-size: 14.5px; }
+  .h-frame { margin-top: 20px; }
+}
+
+/* Wide screens: the headline on the left, the one-line pitch and buttons beside it, the live map right below. */
+@media (min-width: 961px) {
+  .h-hero > .wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: clamp(40px, 5vw, 80px); align-items: center; }
+  .h-hero > .wrap > h1 { grid-column: 1; grid-row: 1; }
+  .h-hero > .wrap > .h-hero-row { grid-column: 2; grid-row: 1; grid-template-columns: minmax(0, 1fr); margin-top: 0; row-gap: 20px; }
+  .h-hero > .wrap > .h-frame { grid-column: 1 / -1; grid-row: 2; }
+  .h-hero-sub { max-width: 30em; }
+}
