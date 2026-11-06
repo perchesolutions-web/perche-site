@@ -19,8 +19,8 @@ window.TQ_CONFIG = {
   mapStyle: "mapbox://styles/mapbox/satellite-streets-v12",
   mapCenter: [-80.1918, 25.7617], // address search favors results near here (Miami)
   searchCountry: "us",
-  heroCenter: [-80.2712, 25.6727], // the home page opens on this neighborhood (Pinecrest, Miami)
-  heroZoom: 16.9,
+  heroCenter: [-80.2830, 25.7330], // the home page opens on this neighborhood (Coral Gables, Miami): houses, yards and pools
+  heroZoom: 17.2,
   mapHomeZoom: 19.5,              // how close the map zooms in to a home
   minDrawZoom: 17,                // homeowners must zoom in at least this far to draw
 
