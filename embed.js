@@ -1,23 +1,23 @@
 /*
   TraceQuote embed: one script, three ways to show a fence company's quote tool on their own website.
   Each client's install page has the code ready to copy, with steps for each website builder:
-  https://perchesolutions.com/q/CLIENT-ID/install
+  https://gettracequote.com/q/CLIENT-ID/install
 
   1. On a page. The quote tool itself, as tall as it needs to be:
 
        <div id="tracequote"></div>
-       <script src="https://perchesolutions.com/embed.js" data-client="CLIENT-ID" async></script>
+       <script src="https://gettracequote.com/embed.js" data-client="CLIENT-ID" async></script>
 
      data-target="some-id" puts it in another element. Without a #tracequote element on the page, it goes
      where the script is.
 
   2. A button that opens the quote tool in a pop-up, placed where the script is:
 
-       <script src="https://perchesolutions.com/embed.js" data-client="CLIENT-ID" data-mode="button" async></script>
+       <script src="https://gettracequote.com/embed.js" data-client="CLIENT-ID" data-mode="button" async></script>
 
   3. A floating button in the corner of every page. Paste it once into the site-wide footer code:
 
-       <script src="https://perchesolutions.com/embed.js" data-client="CLIENT-ID" data-mode="floating" async></script>
+       <script src="https://gettracequote.com/embed.js" data-client="CLIENT-ID" data-mode="floating" async></script>
 
   With any of these on a page, links to #instant-quote open the pop-up too, so the site's own buttons can
   open it. Buttons take data-label="Get a free quote" and data-color="#1a5d3a"; the floating one also takes
@@ -336,7 +336,7 @@
     try { u = new URL(s.src, w.location.href); } catch (e) { continue; }
     if (u.pathname !== "/embed.js") continue;
     // Only copies of this same script (or, if the browser didn't say which script is running, ours).
-    if (origin ? u.origin !== origin : !/(^|\.)perchesolutions\.com$|--perchesolutions\.netlify\.app$/.test(u.hostname)) continue;
+    if (origin ? u.origin !== origin : !/(^|\.)(gettracequote|perchesolutions)\.com$|--perchesolutions\.netlify\.app$/.test(u.hostname)) continue;
     run(s);
   }
 })();
