@@ -1,0 +1,19 @@
+{
+  "id": "preview-south-florida-fabrication",
+  "preview": true,
+  "company": {
+    "name": "South Florida Fabrication & Fencing",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.32,
+    25.75
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

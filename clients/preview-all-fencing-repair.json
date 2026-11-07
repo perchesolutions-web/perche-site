@@ -1,0 +1,19 @@
+{
+  "id": "preview-all-fencing-repair",
+  "preview": true,
+  "company": {
+    "name": "All Fencing & Repair",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.28,
+    26.15
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

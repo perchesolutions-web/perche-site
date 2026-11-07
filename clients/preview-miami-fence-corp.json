@@ -1,0 +1,19 @@
+{
+  "id": "preview-miami-fence-corp",
+  "preview": true,
+  "company": {
+    "name": "Miami Fence Corp",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.3,
+    25.74
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

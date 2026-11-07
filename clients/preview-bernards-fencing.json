@@ -1,0 +1,19 @@
+{
+  "id": "preview-bernards-fencing",
+  "preview": true,
+  "company": {
+    "name": "Bernard's Fencing Company",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.15,
+    26.03
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

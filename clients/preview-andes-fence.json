@@ -1,0 +1,19 @@
+{
+  "id": "preview-andes-fence",
+  "preview": true,
+  "company": {
+    "name": "Andes Fence",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.23,
+    26.08
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

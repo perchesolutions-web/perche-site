@@ -1,0 +1,19 @@
+{
+  "id": "preview-allday-fence",
+  "preview": true,
+  "company": {
+    "name": "Allday Fence",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.36,
+    25.69
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}
