@@ -1,0 +1,19 @@
+{
+  "id": "preview-xtreme-fence",
+  "preview": true,
+  "company": {
+    "name": "Xtreme Fence of Florida",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.27,
+    26.27
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}
