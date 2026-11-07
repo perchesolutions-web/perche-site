@@ -1,0 +1,19 @@
+{
+  "id": "preview-mgm-fence",
+  "preview": true,
+  "company": {
+    "name": "MGM Fence Company Miami",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.22,
+    25.80
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}
