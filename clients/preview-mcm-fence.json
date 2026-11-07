@@ -1,0 +1,7 @@
+{
+  "id": "preview-mcm-fence",
+  "preview": true,
+  "company": { "name": "MCM Fence LLC", "phone": "", "email": "", "website": "", "logo": "" },
+  "mapCenter": [-80.4000, 25.7000],
+  "financing": { "show": false, "url": "" }
+}
