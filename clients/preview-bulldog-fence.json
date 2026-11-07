@@ -1,0 +1,19 @@
+{
+  "id": "preview-bulldog-fence",
+  "preview": true,
+  "company": {
+    "name": "Bulldog Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.13,
+    26.32
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

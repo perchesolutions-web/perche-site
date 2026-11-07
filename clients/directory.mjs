@@ -54,6 +54,15 @@ export default {
     "priceDisplay": "range",
     "sample": true
   },
+  "preview-bulldog-fence": {
+    "name": "Bulldog Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "leadEmails": [],
+    "priceDisplay": "range",
+    "sample": true
+  },
   "preview-fence-with-style": {
     "name": "Fence With Style",
     "phone": "",
@@ -63,8 +72,26 @@ export default {
     "priceDisplay": "range",
     "sample": true
   },
+  "preview-havana-fence": {
+    "name": "Havana Fence LLC",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "leadEmails": [],
+    "priceDisplay": "range",
+    "sample": true
+  },
   "preview-mcm-fence": {
     "name": "MCM Fence LLC",
+    "phone": "",
+    "email": "",
+    "website": "",
+    "leadEmails": [],
+    "priceDisplay": "range",
+    "sample": true
+  },
+  "preview-mgm-fence": {
+    "name": "MGM Fence Company Miami",
     "phone": "",
     "email": "",
     "website": "",
