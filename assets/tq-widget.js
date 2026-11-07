@@ -1118,6 +1118,28 @@
       }).join("");
     }
 
+    // Live price while drawing: every fence style at its per-foot rate, and the running total for the picked one.
+    function updateLive(total) {
+      var el = root.querySelector('[data-ref="live"]');
+      if (!el) return;
+      var chips = P.materials.map(function (m) {
+        var h = heightFor(m.id), r = m.heights[h] || m.heights[m.defaultHeight];
+        return '<button type="button" class="tq-lm' + (m.id === st.material ? " is-on" : "") + '" data-live-mat="' + m.id + '" aria-pressed="' + (m.id === st.material) + '">' +
+          '<b>' + esc(m.name) + '</b><span>' + (r ? (priceMode() === "from" ? "from $" + r[0] : "$" + r[0] + "–$" + r[1]) + "/ft" : "") + '</span></button>';
+      }).join("");
+      var m = materialById(st.material), head;
+      if (total >= 10) {
+        var q = quoteFor(st.material), mo = monthlyPayment(q.lo);
+        head = '<span class="tq-live-k">Estimated price</span><b class="tq-live-price">' + shownPrice(q.lo, q.hi) + '</b>' +
+          '<span class="tq-live-sub">' + ftLabel(q.fenceFt) + ' of ' + esc(heightFor(st.material) + ' ft ' + m.name.toLowerCase()) +
+          (mo ? ' · from ' + money(mo) + '/mo' : '') + '</span>';
+      } else {
+        head = '<span class="tq-live-k">Estimated price</span><b class="tq-live-price tq-live-price--idle">Trace your fence</b>' +
+          '<span class="tq-live-sub">Your price appears as soon as you draw the first line.</span>';
+      }
+      el.innerHTML = '<div class="tq-live-card">' + head + '</div><p class="tq-label tq-label--flush">Compare styles</p><div class="tq-lms">' + chips + '</div>';
+    }
+
     function updateDrawMeter() {
       var m = root.querySelector('[data-ref="meter"]');
       if (!m) return;
@@ -1126,6 +1148,7 @@
       m.innerHTML = total > 0
         ? "<b>" + ftLabel(total) + "</b> of fence drawn" + (g ? " · " + g : "")
         : "Nothing drawn yet";
+      updateLive(total);
       var next = root.querySelector('[data-act="next"]');
       if (next) next.disabled = total < 10 || st.loading;
       var undoBtn = root.querySelector('[data-act="undo"]');
@@ -1200,6 +1223,7 @@
         (st.tool === "gate" ? '<div class="tq-gates" role="group" aria-label="Gate type">' + gateTypes + "</div>" : "") +
         help +
         '<p class="tq-meter" data-ref="meter"></p>' +
+        (layout === "full" && priceMode() !== "none" ? '<div class="tq-live" data-ref="live"></div>' : "") +
         (client && onMap ? '<button type="button" class="tq-link" data-act="manual" data-reason="cant_see">Can\'t see your yard? Enter the length instead</button>' : "");
     }
 
@@ -1421,7 +1445,7 @@
       a.hidden = !html;
     }
 
-    var FOCUS_KEYS = ["data-pick-mat", "data-height", "data-color", "data-timing", "data-day", "data-time", "data-tool", "data-gate", "data-act"];
+    var FOCUS_KEYS = ["data-live-mat", "data-pick-mat", "data-height", "data-color", "data-timing", "data-day", "data-time", "data-tool", "data-gate", "data-act"];
     function render() {
       // Keep keyboard focus on the same control after the panel redraws.
       var focusSel = null, focusId = null, ae = document.activeElement;
@@ -1655,6 +1679,7 @@
       var act = t.getAttribute("data-act");
       if (t.hasAttribute("data-tool")) { st.tool = t.getAttribute("data-tool"); render(); redraw(); return; }
       if (t.hasAttribute("data-gate")) { st.gateType = t.getAttribute("data-gate"); render(); return; }
+      if (t.hasAttribute("data-live-mat")) { st.material = t.getAttribute("data-live-mat"); track("tq_material_picked", { material: st.material }); updateLive(drawnFt()); return; }
       if (t.hasAttribute("data-pick-mat")) { st.material = t.getAttribute("data-pick-mat"); track("tq_material_picked", { material: st.material }); render(); return; }
       if (t.hasAttribute("data-height")) { st.heightBy[st.material] = t.getAttribute("data-height"); render(); return; }
       if (t.hasAttribute("data-color")) { st.colorBy[st.material] = t.getAttribute("data-color"); render(); return; }
