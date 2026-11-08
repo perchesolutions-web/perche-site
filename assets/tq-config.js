@@ -31,9 +31,10 @@ window.TQ_CONFIG = {
     phone: "(305) 555-0142"
   },
 
-  // Monthly payment estimate shown next to each price. Set by the contractor's lender.
+  // Monthly payment estimate shown next to each price. Off by default: turn it on only for a contractor
+  // who has a real lender and agreed terms, so homeowners never read it as an offer that doesn't exist.
   financing: {
-    show: true,
+    show: false,
     apr: 9.99,
     months: 120,
     note: "Example terms. The contractor's lender sets the actual rate, term and approval."
