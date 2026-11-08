@@ -1,0 +1,19 @@
+{
+  "id": "preview-peachtree-fence-and-gates",
+  "preview": true,
+  "company": {
+    "name": "Peachtree Fence & Gates",
+    "phone": "",
+    "email": "",
+    "website": "https://peachtreefence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -84.14,
+    34.21
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

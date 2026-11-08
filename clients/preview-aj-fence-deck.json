@@ -1,0 +1,19 @@
+{
+  "id": "preview-aj-fence-deck",
+  "preview": true,
+  "company": {
+    "name": "AJ Fence Deck",
+    "phone": "",
+    "email": "",
+    "website": "https://ajfencedeck.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -76.35,
+    39.54
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "preview-top-line-fence-company",
+  "preview": true,
+  "company": {
+    "name": "Top Line Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://toplinefenceco.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -83.46,
+    34.2
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

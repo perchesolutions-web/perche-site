@@ -1,0 +1,19 @@
+{
+  "id": "preview-bowden-fence",
+  "preview": true,
+  "company": {
+    "name": "Bowden Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://bowdenfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -83.0,
+    39.96
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

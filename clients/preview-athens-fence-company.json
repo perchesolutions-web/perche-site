@@ -1,0 +1,19 @@
+{
+  "id": "preview-athens-fence-company",
+  "preview": true,
+  "company": {
+    "name": "Athens Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://athensfencecompany.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -83.38,
+    33.96
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

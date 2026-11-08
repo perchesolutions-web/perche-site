@@ -1,0 +1,19 @@
+{
+  "id": "preview-florida-fence-and-deck",
+  "preview": true,
+  "company": {
+    "name": "Florida Fence and Deck",
+    "phone": "",
+    "email": "",
+    "website": "https://flfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -84.28,
+    30.44
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

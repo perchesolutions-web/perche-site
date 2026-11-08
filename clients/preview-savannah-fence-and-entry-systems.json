@@ -1,0 +1,19 @@
+{
+  "id": "preview-savannah-fence-and-entry-systems",
+  "preview": true,
+  "company": {
+    "name": "Savannah Fence & Entry Systems",
+    "phone": "",
+    "email": "",
+    "website": "https://savannahfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.25,
+    32.12
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

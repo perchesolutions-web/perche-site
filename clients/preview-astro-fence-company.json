@@ -1,0 +1,19 @@
+{
+  "id": "preview-astro-fence-company",
+  "preview": true,
+  "company": {
+    "name": "Astro Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://astrofencecompany.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -95.46,
+    30.31
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "preview-fox-fence-company",
+  "preview": true,
+  "company": {
+    "name": "Fox Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://foxfenceco.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -84.68,
+    34.07
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

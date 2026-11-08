@@ -1,0 +1,19 @@
+{
+  "id": "preview-armstrong-fence",
+  "preview": true,
+  "company": {
+    "name": "Armstrong Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://armstrong-fence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.66,
+    30.33
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

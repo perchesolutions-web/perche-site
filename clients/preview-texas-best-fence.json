@@ -1,0 +1,19 @@
+{
+  "id": "preview-texas-best-fence",
+  "preview": true,
+  "company": {
+    "name": "Texas Best Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://texasbestfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -96.89,
+    32.95
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

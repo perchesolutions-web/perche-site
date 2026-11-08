@@ -1,0 +1,19 @@
+{
+  "id": "preview-apex-fence-company",
+  "preview": true,
+  "company": {
+    "name": "Apex Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://apexfencecompany.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -84.39,
+    33.75
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

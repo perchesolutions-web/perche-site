@@ -1,0 +1,19 @@
+{
+  "id": "preview-fence-masters",
+  "preview": true,
+  "company": {
+    "name": "Fence Masters",
+    "phone": "",
+    "email": "",
+    "website": "https://fencemastersinc.net",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.19,
+    25.76
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}
