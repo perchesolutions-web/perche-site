@@ -308,3 +308,5 @@
 .h-note { margin-top: clamp(24px, 3vw, 36px); max-width: 46em; }
 .h-note h3 { margin: 0 0 6px; font-size: 18px; }
 .h-note p { margin: 0; color: var(--muted); font-size: 16.5px; }
+
+.h-fig-cap { margin: 10px 0 0; font-size: 13px; color: var(--muted); }
