@@ -296,3 +296,15 @@
   .h-hero-qr p { margin: 0; font-size: 13.5px; line-height: 1.4; color: var(--muted); }
   .h-hero-qr b { color: var(--ink); }
 }
+
+/* Fit checklist, pricing-control table, setup notes */
+.h-check { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; max-width: 40em; }
+.h-check li { position: relative; padding-left: 32px; font-size: 17px; }
+.h-check li::before { content: ""; position: absolute; left: 4px; top: 6px; width: 12px; height: 7px; border-left: 3px solid var(--accent-text); border-bottom: 3px solid var(--accent-text); transform: rotate(-45deg); }
+.h-table { width: 100%; max-width: 40em; border-collapse: collapse; margin: 0; font-size: 16.5px; }
+.h-table caption { text-align: left; color: var(--muted); font-size: 15px; padding-bottom: 10px; }
+.h-table th, .h-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.h-table th { width: 40%; font-weight: 600; }
+.h-note { margin-top: clamp(24px, 3vw, 36px); max-width: 46em; }
+.h-note h3 { margin: 0 0 6px; font-size: 18px; }
+.h-note p { margin: 0; color: var(--muted); font-size: 16.5px; }
