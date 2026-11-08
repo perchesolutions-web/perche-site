@@ -1,0 +1,19 @@
+{
+  "id": "preview-smith-fence-fort-myers",
+  "preview": true,
+  "company": {
+    "name": "Smith Fence Co. of Fort Myers",
+    "phone": "",
+    "email": "",
+    "website": "https://smithfencefm.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.87,
+    26.64
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "preview-henrys-fence",
+  "preview": true,
+  "company": {
+    "name": "Henry's Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://henrysfenceinc.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.3,
+    25.8
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

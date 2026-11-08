@@ -1,0 +1,19 @@
+{
+  "id": "preview-florifence",
+  "preview": true,
+  "company": {
+    "name": "FloriFence",
+    "phone": "",
+    "email": "",
+    "website": "https://florifence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -82.5,
+    27.96
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

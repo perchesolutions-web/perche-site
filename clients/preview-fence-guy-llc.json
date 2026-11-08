@@ -1,0 +1,19 @@
+{
+  "id": "preview-fence-guy-llc",
+  "preview": true,
+  "company": {
+    "name": "Fence Guy LLC",
+    "phone": "",
+    "email": "",
+    "website": "https://fenceguyus.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.64,
+    28.8
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

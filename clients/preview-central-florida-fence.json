@@ -1,0 +1,19 @@
+{
+  "id": "preview-central-florida-fence",
+  "preview": true,
+  "company": {
+    "name": "Central Florida Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://centralflfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.38,
+    28.54
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

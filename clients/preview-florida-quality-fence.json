@@ -1,0 +1,19 @@
+{
+  "id": "preview-florida-quality-fence",
+  "preview": true,
+  "company": {
+    "name": "Florida Quality Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://floridaqualityfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.38,
+    28.54
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

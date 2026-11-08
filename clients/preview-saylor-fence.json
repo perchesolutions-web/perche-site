@@ -1,0 +1,19 @@
+{
+  "id": "preview-saylor-fence",
+  "preview": true,
+  "company": {
+    "name": "Saylor Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://saylorfence.net",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.25,
+    26.08
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

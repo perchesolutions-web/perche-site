@@ -1,0 +1,19 @@
+{
+  "id": "preview-fence-central",
+  "preview": true,
+  "company": {
+    "name": "Fence Central",
+    "phone": "",
+    "email": "",
+    "website": "https://fencecentralfl.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.95,
+    28.04
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}
