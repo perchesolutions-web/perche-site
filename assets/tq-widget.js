@@ -1265,7 +1265,7 @@
         : (measure
           ? "Pick a time and " + esc(COMPANY) + " will text you to confirm."
           : "We'll email you an itemized quote for this fence. " + esc(COMPANY) + " can follow up with any questions.");
-      return '<p class="tq-lede">' + (measure ? "Book your free on-site measure" : noPrice ? "Get your price" : "Get your detailed quote") + "</p>" +
+      return '<p class="tq-lede">' + (measure ? "Request your free on-site measurement" : noPrice ? "Get your price" : "Get your detailed quote") + "</p>" +
         '<p class="tq-help">' + help + "</p>" +
         selectedSummary() +
         '<div class="tq-fields">' +
@@ -1300,17 +1300,17 @@
     function bodyDone() {
       var q = quoteFor(st.material), days = nextVisitDays();
       var head = st.intent === "measure"
-        ? "<b>Thanks, " + esc(st.contact.first) + ". Your free measure is requested.</b> "
+        ? "<b>Thanks, " + esc(st.contact.first) + ". Your free measurement is requested.</b> "
         : "<b>Your detailed quote is on its way, " + esc(st.contact.first) + ".</b> ";
       var visit = st.visitRequested
-        ? '<div class="tq-done tq-done--quiet"><b>Free measure: ' + esc(dayLabel(days[st.visitDay])) + ", " + st.visitTime.toLowerCase() + ".</b> " + esc(COMPANY) +
+        ? '<div class="tq-done tq-done--quiet"><b>Measurement requested for ' + esc(dayLabel(days[st.visitDay])) + ", " + st.visitTime.toLowerCase() + ".</b> " + esc(COMPANY) +
           (client ? " will confirm it with you." : " would text you to confirm.") + "</div>"
-        : '<div class="tq-visit"><p class="tq-label">Want us to measure? It\'s free.</p>' + visitChips() + "</div>";
+        : '<div class="tq-visit"><p class="tq-label">Want us to measure? It\'s free. Pick a time to request.</p>' + visitChips() + "</div>";
       var reach = client
         ? esc(COMPANY) + " has your request and will reach you at " + esc(formatPhone(st.contact.phone)) + " or " + esc(st.contact.email) + "."
         : "It goes to " + esc(st.contact.email) + " and " + esc(formatPhone(st.contact.phone)) + ". In this demo, nothing is sent.";
       if (client) head = st.intent === "measure"
-        ? "<b>Thanks, " + esc(st.contact.first) + ". Your free measure request is in.</b> "
+        ? "<b>Thanks, " + esc(st.contact.first) + ". Your free measurement request is in.</b> "
         : "<b>Thanks, " + esc(st.contact.first) + ". Your quote request is in.</b> ";
       return '<div class="tq-done" role="status">' + head + reach + "</div>" +
         selectedSummary() +
@@ -1428,18 +1428,18 @@
       var noPrice = priceMode() === "none";
       if (s === "draw") html = '<button type="button" class="tq-btn" data-act="next">' + (noPrice ? "See fence styles" : "See my price") + "</button>";
       else if (s === "quote") {
-        html = '<button type="button" class="tq-btn tq-btn--ghost" data-act="detail" data-intent="measure">Book a free measure</button>' +
+        html = '<button type="button" class="tq-btn tq-btn--ghost" data-act="detail" data-intent="measure">Request a free measurement</button>' +
           '<button type="button" class="tq-btn" data-act="detail" data-intent="quote">' + (noPrice ? "Get my price" : "Get my detailed quote") + "</button>";
       } else if (s === "details") {
         var busy = st.sending ? " disabled aria-busy=\"true\"" : "";
         html = !st.submitted
           ? '<button type="button" class="tq-btn tq-btn--ghost" data-act="back"' + busy + ">Back</button>" +
             '<button type="button" class="tq-btn" data-act="submit"' + busy + ">" +
-            (st.sending ? "Sending…" : st.intent === "measure" ? "Request my free measure" : client ? "Send my quote request" : "Send my detailed quote") + "</button>"
+            (st.sending ? "Sending…" : st.intent === "measure" ? "Request my free measurement" : client ? "Send my quote request" : "Send my detailed quote") + "</button>"
           : '<button type="button" class="tq-btn tq-btn--ghost" data-act="restart"' + busy + ">Start over</button>" +
             (st.visitRequested
               ? (client ? "" : '<a class="tq-btn" href="' + esc(opts.contractorHref || "demo.html#contractor") + '" data-act="contractor">See what the contractor gets</a>')
-              : '<button type="button" class="tq-btn" data-act="visit"' + busy + ">" + (st.sending ? "Sending…" : "Book my free measure") + "</button>");
+              : '<button type="button" class="tq-btn" data-act="visit"' + busy + ">" + (st.sending ? "Sending…" : "Request my free measurement") + "</button>");
       }
       a.innerHTML = html;
       a.hidden = !html;
