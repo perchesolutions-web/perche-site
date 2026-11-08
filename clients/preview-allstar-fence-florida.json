@@ -1,0 +1,19 @@
+{
+  "id": "preview-allstar-fence-florida",
+  "preview": true,
+  "company": {
+    "name": "Allstar Fence Florida",
+    "phone": "",
+    "email": "",
+    "website": "https://allstarfenceflorida.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.73,
+    28.8
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

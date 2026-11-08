@@ -1,0 +1,19 @@
+{
+  "id": "preview-level-up-fencing",
+  "preview": true,
+  "company": {
+    "name": "Level Up Fencing",
+    "phone": "",
+    "email": "",
+    "website": "https://levelupfencing.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -82.53,
+    27.34
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

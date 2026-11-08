@@ -1,0 +1,19 @@
+{
+  "id": "preview-fence-pros-orlando",
+  "preview": true,
+  "company": {
+    "name": "Fence Pros",
+    "phone": "",
+    "email": "",
+    "website": "https://fenceprosorlando.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.59,
+    28.57
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

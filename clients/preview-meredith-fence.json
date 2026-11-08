@@ -1,0 +1,19 @@
+{
+  "id": "preview-meredith-fence",
+  "preview": true,
+  "company": {
+    "name": "Meredith Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://meredithfencecompany.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -87.22,
+    30.42
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

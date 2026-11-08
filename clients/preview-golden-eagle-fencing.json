@@ -1,0 +1,19 @@
+{
+  "id": "preview-golden-eagle-fencing",
+  "preview": true,
+  "company": {
+    "name": "Golden Eagle Fencing",
+    "phone": "",
+    "email": "",
+    "website": "https://goldeneaglefencing.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -82.49,
+    27.91
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

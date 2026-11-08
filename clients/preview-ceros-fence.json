@@ -1,0 +1,19 @@
+{
+  "id": "preview-ceros-fence",
+  "preview": true,
+  "company": {
+    "name": "Ceros Fence Contractors",
+    "phone": "",
+    "email": "",
+    "website": "https://cerosfencecontractors.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.35,
+    25.82
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

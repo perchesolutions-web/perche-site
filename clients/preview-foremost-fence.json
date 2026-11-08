@@ -1,0 +1,19 @@
+{
+  "id": "preview-foremost-fence",
+  "preview": true,
+  "company": {
+    "name": "Foremost Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://foremostfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -82.45,
+    27.37
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

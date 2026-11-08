@@ -1,0 +1,19 @@
+{
+  "id": "preview-fence-fanatics",
+  "preview": true,
+  "company": {
+    "name": "Fence Fanatics",
+    "phone": "",
+    "email": "",
+    "website": "https://fencefanaticsllc.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -82.4,
+    27.4
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

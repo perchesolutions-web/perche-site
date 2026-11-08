@@ -1,0 +1,19 @@
+{
+  "id": "preview-amelio-fence",
+  "preview": true,
+  "company": {
+    "name": "Amelio Fence Corp.",
+    "phone": "",
+    "email": "",
+    "website": "https://ameliofence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.28,
+    25.86
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

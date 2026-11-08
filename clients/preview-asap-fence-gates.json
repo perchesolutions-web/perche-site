@@ -1,0 +1,19 @@
+{
+  "id": "preview-asap-fence-gates",
+  "preview": true,
+  "company": {
+    "name": "ASAP Fence & Gates",
+    "phone": "",
+    "email": "",
+    "website": "https://asapfenceandgate.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -82.53,
+    27.34
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

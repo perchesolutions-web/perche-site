@@ -1,0 +1,19 @@
+{
+  "id": "preview-all-pro-fence-builders",
+  "preview": true,
+  "company": {
+    "name": "All-Pro Fence Builders",
+    "phone": "",
+    "email": "",
+    "website": "https://allprofencebuilders.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.1,
+    26.7
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "preview-adron-fence",
+  "preview": true,
+  "company": {
+    "name": "Adron Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://adronfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.35,
+    27.29
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}
