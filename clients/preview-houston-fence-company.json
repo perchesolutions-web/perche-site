@@ -1,0 +1,19 @@
+{
+  "id": "preview-houston-fence-company",
+  "preview": true,
+  "company": {
+    "name": "Houston Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://houstonfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -95.2,
+    29.53
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "preview-russ-carter-fence",
+  "preview": true,
+  "company": {
+    "name": "Russ Carter Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://russcarterfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.79,
+    26.14
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

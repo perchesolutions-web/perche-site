@@ -1,0 +1,19 @@
+{
+  "id": "preview-best-fence-cincinnati",
+  "preview": true,
+  "company": {
+    "name": "Best Fence Cincinnati",
+    "phone": "",
+    "email": "",
+    "website": "https://bestfencecincinnati.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -84.51,
+    39.1
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

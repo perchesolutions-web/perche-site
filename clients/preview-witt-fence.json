@@ -1,0 +1,19 @@
+{
+  "id": "preview-witt-fence",
+  "preview": true,
+  "company": {
+    "name": "Witt Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://wittfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -82.46,
+    27.95
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

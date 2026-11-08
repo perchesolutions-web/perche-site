@@ -1,0 +1,19 @@
+{
+  "id": "preview-ekren-fence-company",
+  "preview": true,
+  "company": {
+    "name": "Ekren Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://ekrenfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -75.33,
+    40.69
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

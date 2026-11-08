@@ -1,0 +1,19 @@
+{
+  "id": "preview-thomas-fence",
+  "preview": true,
+  "company": {
+    "name": "Thomas Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://thomasfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -80.79,
+    41.87
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

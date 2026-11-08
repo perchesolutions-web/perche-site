@@ -1,0 +1,19 @@
+{
+  "id": "preview-jnt-fence",
+  "preview": true,
+  "company": {
+    "name": "JNT Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://jntfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -82.14,
+    29.19
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

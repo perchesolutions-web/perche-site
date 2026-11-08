@@ -1,0 +1,19 @@
+{
+  "id": "preview-ashlee-fence-company",
+  "preview": true,
+  "company": {
+    "name": "Ashlee Fence Company",
+    "phone": "",
+    "email": "",
+    "website": "https://ashleefence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -84.23,
+    39.31
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

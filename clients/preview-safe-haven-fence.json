@@ -1,0 +1,19 @@
+{
+  "id": "preview-safe-haven-fence",
+  "preview": true,
+  "company": {
+    "name": "Safe Haven Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://safehavenfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -81.66,
+    30.33
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

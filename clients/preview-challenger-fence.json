@@ -1,0 +1,19 @@
+{
+  "id": "preview-challenger-fence",
+  "preview": true,
+  "company": {
+    "name": "Challenger Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://challengerfence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -74.17,
+    40.92
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "preview-elyria-fence",
+  "preview": true,
+  "company": {
+    "name": "Elyria Fence",
+    "phone": "",
+    "email": "",
+    "website": "https://elyriafence.com",
+    "logo": ""
+  },
+  "mapCenter": [
+    -82.11,
+    41.37
+  ],
+  "financing": {
+    "show": false,
+    "url": ""
+  }
+}
