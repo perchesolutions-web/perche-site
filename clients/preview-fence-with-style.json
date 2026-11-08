@@ -2,15 +2,15 @@
   "id": "preview-fence-with-style",
   "preview": true,
   "company": {
-    "name": "Fence with Style",
+    "name": "Fence With Style",
     "phone": "",
     "email": "",
-    "website": "https://fencewithstyle.com",
+    "website": "",
     "logo": ""
   },
   "mapCenter": [
-    -80.19,
-    25.76
+    -80.14,
+    26.12
   ],
   "financing": {
     "show": false,

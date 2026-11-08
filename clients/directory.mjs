@@ -298,10 +298,10 @@ export default {
     "sample": true
   },
   "preview-fence-with-style": {
-    "name": "Fence with Style",
+    "name": "Fence With Style",
     "phone": "",
     "email": "",
-    "website": "fencewithstyle.com",
+    "website": "",
     "leadEmails": [],
     "priceDisplay": "range",
     "sample": true
