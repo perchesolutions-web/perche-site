@@ -1835,6 +1835,15 @@
     renderLeadMap: renderLeadMap,
     layouts: LAYOUTS,
     lengthOf: function (runs) { return totalLength(runs, planeFt); },
+    cornersOf: function (runs) {
+      var n = 0;
+      runs.forEach(function (run) {
+        if (run.length < 3) return;
+        var a = run[0], b = run[run.length - 1];
+        n += (a[0] === b[0] && a[1] === b[1]) ? run.length - 1 : run.length - 2;
+      });
+      return n;
+    },
     loadLead: loadLead,
     saveLead: saveLead,
     lastLead: null

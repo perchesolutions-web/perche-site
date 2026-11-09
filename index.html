@@ -71,9 +71,9 @@
 
   <section class="h-hero" aria-labelledby="hero-title">
     <div class="wrap">
-      <h1 id="hero-title">Instant fence price estimates on your website. Homeowners see an estimated price range before they call.</h1>
+      <h1 id="hero-title">Let homeowners price their fence in 60 seconds.</h1>
       <div class="h-hero-row">
-        <p class="h-hero-sub">TraceQuote is fence estimating software for contractors. Homeowners trace their fence on a satellite map and see an estimated price range in about a minute. You get the address, footage and phone number. We set it up and run it for you.</p>
+        <p class="h-hero-sub">On your website, homeowners trace their fence on a satellite map and see an estimated price range. You get their address, footage and phone number. We set it up and run it for you.</p>
         <div class="h-hero-cta">
           <a class="btn btn-primary btn-lg" data-book="hero" href="https://calendly.com/perchesolutions/tracequote-demo">Book a 15-minute demo</a>
           <a class="btn btn-ghost btn-lg" href="#try" data-try>Try it as a homeowner</a>
@@ -124,9 +124,9 @@
           <p>Every fence type you install, priced from your sheet, with heights and colors.</p>
           <div class="h-fig" aria-hidden="true">
             <div class="h-fig-box" data-fig="sheet">
-              <div class="h-fig-row"><span>Vinyl privacy, 6 ft</span><b>$6,850–$9,700</b></div>
-              <div class="h-fig-row"><span>Wood privacy, 6 ft</span><b>$5,050–$7,550</b></div>
-              <div class="h-fig-row"><span>Aluminum, 4 ft</span><b>$6,150–$8,600</b></div>
+              <div class="h-fig-row"><span>Vinyl privacy, 6 ft</span><b>$6,600–$9,150</b></div>
+              <div class="h-fig-row"><span>Wood privacy, 6 ft</span><b>$4,800–$7,050</b></div>
+              <div class="h-fig-row"><span>Aluminum, 4 ft</span><b>$5,850–$8,100</b></div>
             </div>
           </div>
         </li>
@@ -166,7 +166,7 @@
       </div>
       <article class="h-mail" aria-label="Sample quote request email">
         <div class="h-mail-top"><span>New request, just now</span><span class="h-mail-tag">Sample request</span></div>
-        <p class="h-mail-subject" data-mail-subject>Quote request: Maria Gómez, 12 Oak Lane, Miami — 178 ft of 6 ft vinyl privacy, $6,850–$9,700</p>
+        <p class="h-mail-subject" data-mail-subject>Quote request: Maria Gómez, 12 Oak Lane, Miami — 178 ft of 6 ft vinyl privacy, $6,600–$9,150</p>
         <p class="h-mail-to">To: estimates@yourfencecompany.com</p>
         <div class="h-mail-body">
           <dl class="h-mail-rows">
@@ -175,8 +175,8 @@
             <div><dt>Address</dt><dd>12 Oak Lane, Miami, FL 33145</dd></div>
             <div><dt>Fence</dt><dd data-mail-fence>178 ft of 6 ft vinyl privacy, white</dd></div>
             <div><dt>Gates</dt><dd>1 walk gate</dd></div>
-            <div><dt>Old fence removal</dt><dd>Yes</dd></div>
-            <div><dt>Price shown</dt><dd data-mail-price>$6,850–$9,700</dd></div>
+            <div><dt>Old fence removal</dt><dd>No</dd></div>
+            <div><dt>Price shown</dt><dd data-mail-price>$6,600–$9,150</dd></div>
             <div><dt>Timing</dt><dd>In 1 to 3 months</dd></div>
             <div><dt>Directions</dt><dd><a href="#inbox" tabindex="-1">Open in Google Maps</a></dd></div>
           </dl>
@@ -229,8 +229,8 @@
           <tr><th scope="row">Height</th><td>6 ft</td></tr>
           <tr><th scope="row">Fence length (gate excluded)</th><td data-sample-ft>178 ft</td></tr>
           <tr><th scope="row">Gates</th><td>1 walk gate</td></tr>
-          <tr><th scope="row">Old fence removal</th><td>Yes</td></tr>
-          <tr><th scope="row">Homeowner sees</th><td>An estimated range: <span data-sample-range>$6,850&#8211;$9,700</span></td></tr>
+          <tr><th scope="row">Old fence removal</th><td>No</td></tr>
+          <tr><th scope="row">Homeowner sees</th><td>An estimated range: <span data-sample-range>$6,600&#8211;$9,150</span></td></tr>
         </tbody>
       </table>
       <p class="h-aside"><span>You choose whether homeowners see a range, a starting price, or no price. When your prices change, send us the new numbers.</span></p>
@@ -282,7 +282,7 @@
           <p class="h-plan-for">For fence companies that already get website visitors and want more of them to request a measurement. It does not bring visitors by itself.</p>
           <p class="h-price"><b>$149</b><span>a month</span></p>
           <p class="h-price-note">Plus a one-time $499 setup, or no setup fee on a 12-month plan.</p>
-          <p class="h-anchor">A full year month to month, setup included, is $2,287. One 178-ft vinyl privacy job at the sample prices on this page is <span data-sample-range>$6,850&#8211;$9,700</span>.</p>
+          <p class="h-anchor">A full year month to month, setup included, is $2,287. One 178-ft vinyl privacy job at the sample prices on this page is <span data-sample-range>$6,600&#8211;$9,150</span>.</p>
           <p class="h-anchor">An illustration, not a promise: at a $5,000 installed fence job, one extra job would cover more than 33 months of $149. TraceQuote can&#8217;t guarantee extra jobs.</p>
           <ul>
             <li>A quote page on your website with your prices, name and phone</li>
@@ -484,15 +484,15 @@
   // The example yard priced in three fence types, straight from the price sheet.
   var sheet = document.querySelector('[data-fig="sheet"]');
   if (sheet) {
-    var lay = TQ.layouts.backyard, len = TQ.lengthOf(lay.runs);
+    var lay = TQ.layouts.backyard, len = TQ.lengthOf(lay.runs), corners = TQ.cornersOf(lay.runs);
     sheet.innerHTML = ["vinyl", "wood", "aluminum"].map(function (mid) {
-      var m = TQ.materialById(mid), q = TQ.priceFor(len, lay.gates, { material: mid, height: m.defaultHeight, removal: true });
+      var m = TQ.materialById(mid), q = TQ.priceFor(len, lay.gates, { material: mid, height: m.defaultHeight, removal: false, corners: corners });
       return '<div class="h-fig-row"><span>' + TQ.esc(m.name + ", " + m.defaultHeight + " ft") + "</span><b>" + TQ.moneyRange(q.lo, q.hi) + "</b></div>";
-    }).join("") + '<p class="h-fig-cap">' + "The same sample project as the email below: 1 walk gate, old fence removed.</p>";
+    }).join("") + '<p class="h-fig-cap">' + "The same sample project as the email below: 1 walk gate, no old fence removal.</p>";
   }
 
   // The sample email, priced the way a real request would be: 180 ft traced, one walk gate, old fence out.
-  var lay2 = TQ.layouts.backyard, vin = TQ.materialById("vinyl"), mq = TQ.priceFor(TQ.lengthOf(lay2.runs), lay2.gates, { material: vin.id, height: "6", removal: true });
+  var lay2 = TQ.layouts.backyard, vin = TQ.materialById("vinyl"), mq = TQ.priceFor(TQ.lengthOf(lay2.runs), lay2.gates, { material: vin.id, height: "6", removal: false, corners: TQ.cornersOf(lay2.runs) });
   var fence = TQ.ftLabel(mq.fenceFt) + " of " + TQ.styleLabel(vin.id, "6");
   var set = function (sel, text) { var el = document.querySelector(sel); if (el) el.textContent = text; };
   set("[data-mail-subject]", "Quote request: Maria Gómez, 12 Oak Lane, Miami — " + fence + ", " + TQ.moneyRange(mq.lo, mq.hi));
